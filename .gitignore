@@ -7,4 +7,3 @@
 */target/
 */bin/
 *.DS_Store
-*.mvn/
