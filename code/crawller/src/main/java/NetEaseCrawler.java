@@ -24,11 +24,22 @@ import java.util.List;
 public class
 NetEaseCrawler {
 
-    public static final String HTTP_SCHEME = "http";
-    public static final String HOST_IP = "47.97.206.169:3000";
+    /* API service was deployed on own machine. simplify API
+    *  and batching */
+    public static  String HTTP_SCHEME = "http";
+    public static  String HOST_IP = "47.97.206.169:3000";
+
     CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-
+    public NetEaseCrawler(String http_scheme, String hostname){
+        if (http_scheme != null) {
+            HTTP_SCHEME = http_scheme;
+        }
+        if (hostname != null){
+            HOST_IP = hostname;
+        }
+    }
+    public NetEaseCrawler(){ }
     String postRequest(String path, List<NameValuePair> parameters){
         try {
             URI uri = new URIBuilder()
@@ -49,34 +60,13 @@ NetEaseCrawler {
         }
         return null;
     }
-    String loginRequest(String phone, String password)  {
+
+    public String loginRequest(String phone, String password)  {
         List<NameValuePair> parameters = new ArrayList<>();
         parameters.add(new BasicNameValuePair("phone", phone));
         parameters.add(new BasicNameValuePair("password", password));
         return postRequest("/login/cellphone",parameters);
     }
-
-//    String loginRequest(String phone, String password)  {
-//        try {
-//            URI uri = new URIBuilder()
-//                    .setScheme(HTTP_SCHEME)
-//                    .setHost(HOST_IP)
-//                    .setPath("/login/cellphone")
-//                    .setParameter("phone", phone)
-//                    .setParameter("password", password)
-//                    .build();
-//            HttpPost post = new HttpPost(uri);
-//
-//            CloseableHttpResponse response = httpClient.execute(post);
-//
-//            HttpEntity contentEntity = response.getEntity();
-//            return EntityUtils.toString(contentEntity);
-//
-//        }catch (URISyntaxException | IOException e){
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
 
     String getRequest(String path, List<NameValuePair> parameters){
         try {
@@ -97,19 +87,19 @@ NetEaseCrawler {
         }
         return null;
     }
-    String getPlayListRequest(Integer uid) {
+    public String getPlayListRequest(Integer uid) {
         List<NameValuePair> parameters = new ArrayList<>();
         parameters.add(new BasicNameValuePair("uid", uid.toString()));
         return getRequest("/user/playlist",parameters);
     }
-    String getUserSubCount() {
+    public String getUserSubCount() {
         List<NameValuePair> parameters = new ArrayList<>();
         return getRequest("/user/subcount",parameters);
     }
     /*
      * weekData = true : only return week data
      * */
-    String getUserPlayHistory(Integer uid, boolean weekData){
+     public String getUserPlayHistory(Integer uid, boolean weekData){
         List<NameValuePair> parameters = new ArrayList<>();
         parameters.add(new BasicNameValuePair("uid", uid.toString()));
         int flag = weekData ? 1 : 0 ;
@@ -130,7 +120,7 @@ NetEaseCrawler {
         String phone = "your phone";
         String password = "your password"; // don't push this to remote
 
-        NetEaseCrawler netEaseCrawler = new NetEaseCrawler();
+        NetEaseCrawler netEaseCrawler = new NetEaseCrawler(null, null);
         String response = netEaseCrawler.loginRequest(phone, password);
         JSONObject object = JSON.parseObject(response);
         String cookies = (String) object.get("cookie");
