@@ -5,4 +5,6 @@
 
 .idea/
 */target/
-*/bin
+*/bin/
+*.DS_Store
+*.mvn/

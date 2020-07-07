@@ -1,0 +1,11 @@
+server:
+  port: 1000
+spring:
+  application:
+    name: zuul-proxy
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:1001/eureka/
