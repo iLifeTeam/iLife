@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import MenuItem from '../components/MenuItem'
 
 export default class Menu extends Component {
   render() {
@@ -14,7 +15,7 @@ export default class Menu extends Component {
               </div>
               <div className="pull-left info">
                 <p>Alexander Pierce</p>
-                <a href="fake_url"><i className="fa fa-circle text-success" /> Online</a>
+                <a><i className="fa fa-circle text-success" /> Online</a>
               </div>
             </div>
             {/* search form */}
@@ -31,19 +32,8 @@ export default class Menu extends Component {
             {/* /.search form */}
             {/* sidebar menu: : style can be found in sidebar.less */}
             <ul className="sidebar-menu" data-widget="tree">
-              <li className="header">MAIN NAVIGATION</li>
-              <li className="active treeview menu-open">
-                <a href="fake_url">
-                  <i className="fa fa-dashboard" /> <span>Dashboard</span>
-                  <span className="pull-right-container">
-                    <i className="fa fa-angle-left pull-right" />
-                  </span>
-                </a>
-                <ul className="treeview-menu">
-                  <li><a href="index.html"><i className="fa fa-circle-o" /> Dashboard v1</a></li>
-                  <li className="active"><a href="index2.html"><i className="fa fa-circle-o" /> Dashboard v2</a></li>
-                </ul>
-              </li>
+              <li className="header">导航栏</li>
+              <MenuItem />
               <li className="treeview">
                 <a href="fake_url">
                   <i className="fa fa-files-o" />

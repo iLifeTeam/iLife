@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import Header from './components/Header'
-import Footer from './components/Footer'
-import Menu from './components/Menu'
-import Content from './components/Content'
-import ControlSidebar from './components/ControlSidebar'
+import Header from './sections/Header'
+import Footer from './sections/Footer'
+import Menu from './sections/Menu'
+import Content from './sections/Content'
+import ControlSidebar from './sections/ControlSidebar'
 
 export default class App extends Component {
   render() {
