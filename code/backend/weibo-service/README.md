@@ -10,6 +10,6 @@
 * 用spring initializer创建了一份初始框架，作为微服务weibo_service。  
 * 后端分层controller-service-dto-dao-repository-entity
 * 建立了初步的ORM
-* 个人觉得用户应该可以对爬到的数据进行修改，以及可以保存一些想要的数据(设置一个字段，则爬虫更新数据库时不会删除这个tuple)
+* 个人觉得用户应该可以对爬到的数据进行修改，以及可以保存一些想要的数据(TODO：设置一个字段，则爬虫更新数据库时不会删除这个tuple)
 * 在dao层和repository层实现了了评论(Comment)，微博(Weibo)，用户(User)的CRUD
 
