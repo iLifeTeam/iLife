@@ -1,0 +1,27 @@
+# 数据库结构
+## week1day2
+### 实现用户与网易云音乐结构化
+1. 用户：  
+   * id
+   * wyyid
+   * account
+   * password
+   * email
+   * nickname  
+2. 网易云音乐：
+   1. 音乐：  
+   * m_id
+   * mname
+   * style
+   * times(年代)
+   1. singers:
+   * s_id
+   * sname
+   1. sing:
+   * m_id
+   * s_id
+   1. wyyuser(相当于个人听歌历史,wyyid与m_id共同构成主键)
+   * wyyid
+   * m_id
+   * playcount
+   * score
