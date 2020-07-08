@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import MenuItem from '../components/MenuItem'
+import Oauth from '../components/weibo/Oauth'
 
 export default class Menu extends Component {
   render() {
@@ -33,7 +34,10 @@ export default class Menu extends Component {
             {/* sidebar menu: : style can be found in sidebar.less */}
             <ul className="sidebar-menu" data-widget="tree">
               <li className="header">导航栏</li>
-              <MenuItem />
+              <Oauth />
+              {menuItems.map((menuItem, index) =>
+                <MenuItem key={index} itemURL={menuItem.itemURL} itemName={menuItem.itemName} childItems={menuItem.childItems} />
+              )}
               <li className="treeview">
                 <a href="fake_url">
                   <i className="fa fa-files-o" />
@@ -199,3 +203,33 @@ export default class Menu extends Component {
     )
   }
 }
+
+
+const menuItems = [
+  {
+    itemURL: "/alipay",
+    itemName: "支付宝",
+    childItems: [{
+      name: "账单信息",
+      url: "/bills"
+    },
+    {
+      name: "趋势分析",
+      url: "/analyse"
+    }
+    ]
+  },
+  {
+    itemURL: "/weibo",
+    itemName: "微博",
+    childItems: [{
+      name: "浏览信息",
+      url: "/info"
+    },
+    {
+      name: "趋势分析",
+      url: "/analyse"
+    }
+    ]
+  }
+]

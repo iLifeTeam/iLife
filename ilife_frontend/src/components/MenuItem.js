@@ -6,7 +6,7 @@ export default class MenuItem extends Component {
     this.state = {
       itemURL: "/alipay",
       itemName: "支付宝",
-      chileItems: [{
+      childItems: [{
         name: "账单信息",
         url: "/bills"
       },
@@ -17,22 +17,44 @@ export default class MenuItem extends Component {
       ]
     }
   }
+
+  componentDidMount() {
+    this.setState(
+      {
+        itemURL: this.props.itemURL,
+        itemName: this.props.itemName,
+        childItems: this.props.childItems
+      });
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.itemName !== state.itemName) {
+      return {
+        itemURL: props.itemURL,
+        itemName: props.itemName,
+        childItems: props.childItems
+      };
+    }
+  }
+
   render() {
-    const { chileItems } = this.state;
+    const { childItems } = this.state;
     return (
-      <li className="active treeview menu-open">
+      <li className="treeview">
         <a href="fake_url">
           <i className="fa fa-dashboard" /> <span>{this.state.itemName}</span>
           <span className="pull-right-container">
             <i className="fa fa-angle-left pull-right" />
           </span>
         </a>
-        <ul className="treeview-menu">
-          {chileItems.map((childItem, index) => (
-            <li key={index}><a href={childItem.url}><i className="fa fa-circle-o" />{childItem.name}</a></li>
-          ))}
-          <li className="active"><a href="index2.html"><i className="fa fa-circle-o" /> Dashboard v2</a></li>
-        </ul>
+        {childItems === undefined ? null :
+          <ul className="treeview-menu">
+            {childItems.map((childItem, index) => (
+              <li key={index}><a href={childItem.url}><i className="fa fa-circle-o" />{childItem.name}</a></li>
+            ))}
+            <li className="active"><a href="index2.html"><i className="fa fa-circle-o" /> Dashboard v2</a></li>
+          </ul>
+        }
       </li>
     )
   }
