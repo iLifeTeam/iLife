@@ -18,9 +18,9 @@ public class Weibo {
 
     @Id
     @Column(name = "W_ID")
-    private Integer w_id;
+    private Integer wid;
     @Column(name = "U_ID")
-    private Integer u_id;
+    private Integer uid;
     @Column(name = "TEXT")
     private String text;
     @Column(name = "REPOSTS_COUNT")

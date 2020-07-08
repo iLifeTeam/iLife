@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class User {
     @Id
     @Column(name = "U_ID")
-    private Integer u_id;
+    private Integer uid;
     @Column(name = "NICKNAME")
     private String nickname;
     @Column(name = "FOLLOWERS_COUNT")

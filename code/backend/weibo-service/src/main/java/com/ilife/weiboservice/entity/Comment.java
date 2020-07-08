@@ -17,11 +17,11 @@ import javax.persistence.Table;
 public class Comment {
     @Id
     @Column(name = "P_ID")
-    private Integer p_id;
+    private Integer pid;
     @Column(name = "U_ID")
-    private Integer u_id;
+    private Integer uid;
     @Column(name = "W_ID")
-    private Integer w_id;
+    private Integer wid;
     @Column(name = "TEXT")
     private String text;
     @Column(name = "DIRECTION")
