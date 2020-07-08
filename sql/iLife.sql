@@ -1,19 +1,10 @@
-/*==============================================================*/
-/* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2020/7/7 15:44:12                            */
-/*==============================================================*/
+drop database if exists iLife;
+drop database if exists wyy;
+drop database if exists weibo;
 
-
-drop table if exists musics;
-
-drop table if exists sing;
-
-drop table if exists singers;
-
-drop table if exists users;
-
-drop table if exists wyyuser;
-
+/* wyy */
+CREATE database wyy;
+USE wyy;
 /*==============================================================*/
 /* Table: musics                                                */
 /*==============================================================*/
@@ -61,26 +52,86 @@ create table wyyuser
    foreign key (m_id) references musics (m_id) 
 );
 
+/* weibo */
+create database weibo;
+use weibo;
 
 
 /*==============================================================*/
-/* Table: users                                                 */
+/* DBMS name:      MySQL 5.0                                    */
+/* Created on:     7/8/2020 11:49:25 AM                         */
 /*==============================================================*/
+
+
+/*==============================================================*/
+/* Table: comments                                              */
+/*==============================================================*/
+create table comments
+(
+   pid                  bigint not null,
+   uid                  bigint,
+   wid                  bigint,
+   text                 varchar(1024),
+   created_at           date,
+   attitudes_count      integer,
+   primary key (pid)
+);
+
+/*==============================================================*/
+/* Table: user                                                  */
+/*==============================================================*/
+create table user
+(
+   uid                  bigint not null,
+   name                 varchar(1024) not null,
+   followers_count      int,
+   followings_count     int,
+   weibo_count          int,
+   friends_count        int,
+   register_time        date,
+   username             varchar(1024),
+   primary key (uid)
+);
+
+/*==============================================================*/
+/* Table: weibo                                                 */
+/*==============================================================*/
+create table weibo
+(
+   wid                  bigint not null,
+   uid                  bigint,
+   text                 varchar(1024),
+   reposts_count        integer,
+   comments_count       integer,
+   attitudes_count      integer,
+   read_count           integer,
+   primary key (wid)
+);
+
+alter table comments add constraint FK_comment foreign key (wid)
+      references weibo (wid) on delete restrict on update restrict;
+
+alter table comments add constraint FK_issue foreign key (uid)
+      references user (uid) on delete restrict on update restrict;
+
+alter table weibo add constraint FK_publish foreign key (uid)
+      references user (uid) on delete restrict on update restrict;
+
+
+
+/* ilife  */
+create database iLife;
+use iLife;
 create table users
 (
    id                   int not null,
    wyyid                int,
+   weibid               bigint,
    nickname             varchar(20),
    account              char(20),
    password             char(20),
    email                varchar(50),
    primary key (id),
-   foreign key (wyyid) references wyyuser (wyyid) 
+   foreign key (wyyid) references wyy.wyyuser (wyyid),
+   foreign key (weibid) references weibo.user (uid)
 );
-
-
-
-
-
-
-
