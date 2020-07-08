@@ -20,6 +20,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -56,109 +58,32 @@ ZhihuCrawller {
         return null;
     }
 
-
-
-    String postRequest(String path, List<NameValuePair> parameters){
-        try {
-            URI uri = new URIBuilder()
-                    .setScheme(HTTP_SCHEME)
-                    .setHost(HOST_IP)
-                    .setPath(path)
-                    .setParameters(parameters)
-                    .build();
-            HttpPost post = new HttpPost(uri);
-
-            CloseableHttpResponse response = httpClient.execute(post);
-
-            HttpEntity contentEntity = response.getEntity();
-            return EntityUtils.toString(contentEntity);
-
-        }catch (URISyntaxException | IOException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public String loginRequest(String phone, String password)  {
-        List<NameValuePair> parameters = new ArrayList<>();
-        parameters.add(new BasicNameValuePair("phone", phone));
-        parameters.add(new BasicNameValuePair("password", password));
-        return postRequest("/login/cellphone",parameters);
-    }
-
-    String getRequest(String path, List<NameValuePair> parameters){
-        try {
-            URI uri = new URIBuilder()
-                    .setScheme(HTTP_SCHEME)
-                    .setHost(HOST_IP)
-                    .setPath(path)
-                    .setParameters(parameters)
-                    .build();
-            System.out.println(uri.toString());
-            HttpGet get = new HttpGet(uri);
-            CloseableHttpResponse response = httpClient.execute(get);
-            HttpEntity contentEntity = response.getEntity();
-            return EntityUtils.toString(contentEntity);
-
-        }catch (URISyntaxException | IOException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-    public String getPlayListRequest(Integer uid) {
-        List<NameValuePair> parameters = new ArrayList<>();
-        parameters.add(new BasicNameValuePair("uid", uid.toString()));
-        return getRequest("/user/playlist",parameters);
-    }
-    public String getUserSubCount() {
-        List<NameValuePair> parameters = new ArrayList<>();
-        return getRequest("/user/subcount",parameters);
-    }
-    /*
-     * weekData = true : only return week data
-     * */
-     public String getUserPlayHistory(Integer uid, boolean weekData){
-        List<NameValuePair> parameters = new ArrayList<>();
-        parameters.add(new BasicNameValuePair("uid", uid.toString()));
-        int flag = weekData ? 1 : 0 ;
-        parameters.add(new BasicNameValuePair("type", Integer.toString(flag)));
-        return getRequest("/user/record",parameters);
-    }
-    public static Integer ParseUid (String response) {
-        JSONObject object = JSON.parseObject(response);
-        JSONObject account = JSON.parseObject((object.getString("account")));
-        Integer uid = account.getInteger("id");
-        System.out.println("uid: " + uid);
-        return uid;
-    }
-
-    Integer parseFollower(Document document){
-        Elements followships = document.select(".FollowshipCard strong");
-        assert followships.size() == 2;
-        return  Integer.getInteger(followships.get(1).text());
-    }
-    Integer parseFollowing(Document document){
-        Elements followships = document.select(".FollowshipCard strong");
-        assert followships.size() == 2;
-        return  Integer.getInteger(followships.get(0).text());
+    ZhihuUser parseUser(Document document){
+         Elements userData = document.select("main > div > meta");
+        ZhihuUser user = new ZhihuUser();
+        user.gender = userData.get(1).attr("content");
+        user.image = userData.get(2).attr("content");
+        user.voteUpCount = Integer.parseInt(userData.get(3).attr("content"));
+        user.thankCount = Integer.parseInt(userData.get(4).attr("content"));
+        user.followerCount = Integer.parseInt(userData.get(5).attr("content"));
+        user.answerCount = Integer.parseInt(userData.get(6).attr("content"));
+        user.articleCount = Integer.parseInt(userData.get(7).attr("content"));
+        return user;
     }
     public static void main(String[] args) throws IOException, URISyntaxException {
 
-        String phone = "your phone";
-        String password = "your password"; // don't push this to remote
 
         ZhihuCrawller zhihuCrawller = new ZhihuCrawller();
-        String response = zhihuCrawller.userInfoRequest("zhao-xu-yang-78");
+        String response = zhihuCrawller.userInfoRequest("jin-chuan-yi-yuan-41");
         System.out.println(response);
 
         Document document = Jsoup.parse(response);  //  将字符串解析成Document对象
         System.out.println(document);
 
-        Elements followships = document.select(".FollowshipCard strong");
-        assert followships.size() == 2;
-        Integer following = zhihuCrawller.parseFollowing(document);
-        Integer follower = zhihuCrawller.parseFollower(document);
-        System.out.println("follower: " + follower + ", following: " + following );
+        ZhihuUser user = zhihuCrawller.parseUser(document);
+        System.out.println(user);
+
+
 
     }
 
