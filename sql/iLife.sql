@@ -58,23 +58,18 @@ use weibo;
 
 
 /*==============================================================*/
-/* DBMS name:      MySQL 5.0                                    */
-/* Created on:     7/8/2020 11:49:25 AM                         */
+/* Table: comment                                              */
 /*==============================================================*/
-
-
-/*==============================================================*/
-/* Table: comments                                              */
-/*==============================================================*/
-create table comments
+create table comment
 (
-   pid                  bigint not null,
-   uid                  bigint,
-   wid                  bigint,
+   p_id                 bigint not null,
+   u_id                 bigint,
+   w_id                 bigint,
    text                 varchar(1024),
    created_at           date,
    attitudes_count      integer,
-   primary key (pid)
+   direction            varchar(32),
+   primary key (p_id)
 );
 
 /*==============================================================*/
@@ -82,15 +77,14 @@ create table comments
 /*==============================================================*/
 create table user
 (
-   uid                  bigint not null,
-   name                 varchar(1024) not null,
+   u_id                 bigint not null,
    followers_count      int,
    followings_count     int,
    weibo_count          int,
    friends_count        int,
    register_time        date,
-   username             varchar(1024),
-   primary key (uid)
+   nickname             varchar(1024),
+   primary key (u_id)
 );
 
 /*==============================================================*/
@@ -98,24 +92,25 @@ create table user
 /*==============================================================*/
 create table weibo
 (
-   wid                  bigint not null,
-   uid                  bigint,
+   w_id                 bigint not null,
+   u_id                 bigint,
    text                 varchar(1024),
    reposts_count        integer,
    comments_count       integer,
    attitudes_count      integer,
    read_count           integer,
-   primary key (wid)
+   publish_time         date,
+   primary key (w_id)
 );
 
-alter table comments add constraint FK_comment foreign key (wid)
-      references weibo (wid) on delete restrict on update restrict;
+alter table comment add constraint FK_comment foreign key (w_id)
+      references weibo (w_id) on delete restrict on update restrict;
 
-alter table comments add constraint FK_issue foreign key (uid)
-      references user (uid) on delete restrict on update restrict;
+alter table comment add constraint FK_issue foreign key (u_id)
+      references user (u_id) on delete restrict on update restrict;
 
-alter table weibo add constraint FK_publish foreign key (uid)
-      references user (uid) on delete restrict on update restrict;
+alter table weibo add constraint FK_publish foreign key (u_id)
+      references user (u_id) on delete restrict on update restrict;
 
 
 
@@ -133,5 +128,5 @@ create table users
    email                varchar(50),
    primary key (id),
    foreign key (wyyid) references wyy.wyyuser (wyyid),
-   foreign key (weibid) references weibo.user (uid)
+   foreign key (weibid) references weibo.user (u_id)
 );
