@@ -25,3 +25,12 @@
    * m_id
    * playcount
    * score
+-------
+## week1day3
+### 更新：  
+1. 实现各个软件数据分库管理  
+2. 新增微博数据库：  
+  * weibo
+  * user
+  * comments  
+3. iLife中user新增weibid
