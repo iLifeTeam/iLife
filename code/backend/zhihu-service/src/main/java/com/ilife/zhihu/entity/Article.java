@@ -35,9 +35,6 @@ public class Article {
     @Column(name = "column_name")
     String column_name;
 
-    @Column(name = "create_time")
-    Timestamp created_time;
-
     @Column(name = "update_time")
     Timestamp update_time;
 

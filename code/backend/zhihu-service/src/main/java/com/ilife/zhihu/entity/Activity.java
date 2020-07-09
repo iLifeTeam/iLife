@@ -20,7 +20,7 @@ public class Activity {
     @Column(name = "activity_id")
     Integer id;
 
-    @Column(name = "zhihu_user_id")
+    @Column(name = "zhihu_user_id") // this zhihu id is actually username
     String zhihuId;
 
     @Column(name = "type")
@@ -32,7 +32,7 @@ public class Activity {
     @Column(name = "target_id")
     Integer target_id;
 
-    @Column(name = "created_time")
+    @Column(name = "create_time")
     Timestamp created_time;
 
 }

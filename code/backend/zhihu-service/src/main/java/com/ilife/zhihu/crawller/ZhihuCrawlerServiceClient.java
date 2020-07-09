@@ -1,7 +1,10 @@
 package com.ilife.zhihu.crawller;
 
+import com.ilife.zhihu.service.ZhihuService;
+import com.ilife.zhihu.service.serviceimpl.ZhihuServiceImpl;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -51,7 +54,8 @@ public class ZhihuCrawlerServiceClient {
     }
     public static void main(String[] args) throws InterruptedException {
         ZhihuCrawlerServiceClient client = new ZhihuCrawlerServiceClient("127.0.0.1", 4001);
-
+        String username = "zxy771906409@163.com";
+        String password = "zxy13,./0904";
         String response = client.login(username,password);
         switch (response){
             case "already login":

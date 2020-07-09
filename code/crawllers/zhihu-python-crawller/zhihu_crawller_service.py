@@ -22,7 +22,7 @@ class Question:
         self.title = title
         self.create_time = create_time
         self.update_time = update_time
-        self.excerp =excerpt
+        self.excerpt =excerpt
         self.content=content
         self.answer_count = answer_count
         self.answers = []
@@ -30,7 +30,7 @@ class Question:
         self.title = ""
         self.create_time = 0
         self.update_time = 0
-        self.excerp =""
+        self.excerpt =""
         self.content=""
         self.answer_count = 0
         self.answers = []
@@ -72,10 +72,9 @@ class Answer:
         self.comment_count = answer.comment_count
 
 class Article:
-    def __init__(self,title, author,excerp,content, create_time, update_time,image_url,column_name):
+    def __init__(self,title, author,excerp,content, update_time,image_url,column_name):
         self.title =title
         self.author = author
-        self.create_time = create_time
         self.update_time = update_time
         self.excerpt =excerpt
         self.content=content
@@ -84,7 +83,6 @@ class Article:
     def __init__(self):
         self.title =""
         self.author = ""
-        self.create_time = 0
         self.update_time = 0
         self.excerpt =""
         self.content=""
@@ -95,10 +93,12 @@ class Article:
         self.author = article.author.name
         self.content = article.content
         self.excerpt = article.excerpt
-        self.create_time = article.created_time
         self.update_time = article.updated_time
         self.image_url = article.image_url
-        self.column_name = article.column_name
+        if article.column != None:
+            self.column_name = article.column.title
+        else: 
+            self.column_name = ""
 
 class Activity:
     def __init__(self,type,action_text,create_time):
@@ -200,7 +200,7 @@ class ZhihuService(zhihu_pb2_grpc.ZhihuServiceServicer):
             if activity.type == ActType.CREATE_ARTICLE or activity.type == ActType.VOTEUP_ARTICLE:
                 activity.article.setValue(act.target)
             result.append(activity)
-            if len(result) >= 10:
+            if len(result) > 50:
                 break
         return result
             
@@ -209,7 +209,7 @@ class ZhihuService(zhihu_pb2_grpc.ZhihuServiceServicer):
         username = request.username
         client = self.clientpool.get(username)
         if client == None:
-            return zhihu_pb2.ActivityResponse("not log in\n")
+            return zhihu_pb2.ActivityResponse("not login")
         me = client.me()
         json_object = self.GenActivityJson(me)
         return zhihu_pb2.ActivityResponse(responseJson = json_object)
