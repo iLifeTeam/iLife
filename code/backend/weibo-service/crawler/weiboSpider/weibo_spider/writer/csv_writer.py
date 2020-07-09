@@ -9,16 +9,10 @@ class CsvWriter(Writer):
         self.file_path = file_path
 
         self.result_headers = [('微博id', 'id'), ('微博正文', 'content'),
-                               ('头条文章url', 'article_url'),
-                               ('原始图片url', 'original_pictures'),
-                               ('微博视频url', 'video_url'),
                                ('发布位置', 'publish_place'),
                                ('发布时间', 'publish_time'),
-                               ('发布工具', 'publish_tool'), ('点赞数', 'up_num'),
+                               ('点赞数', 'up_num'),
                                ('转发数', 'retweet_num'), ('评论数', 'comment_num')]
-        if not filter:
-            self.result_headers.insert(4, ('被转发微博原始图片url', 'retweet_pictures'))
-            self.result_headers.insert(5, ('是否为原创微博', 'original'))
         try:
             with open(self.file_path, "a", encoding="utf-8-sig",
                       newline="") as f:

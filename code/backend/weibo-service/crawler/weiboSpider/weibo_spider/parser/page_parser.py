@@ -310,19 +310,19 @@ class PageParser(Parser):
                 weibo.id = info.xpath('@id')[0][2:]
                 weibo.content = self.get_weibo_content(info,
                                                        is_original)  # 微博内容
-                weibo.article_url = self.get_article_url(info)  # 头条文章url
-                picture_urls = self.get_picture_urls(info, is_original)
-                weibo.original_pictures = picture_urls[
-                    'original_pictures']  # 原创图片url
-                if not self.filter:
-                    weibo.retweet_pictures = picture_urls[
-                        'retweet_pictures']  # 转发图片url
-                    weibo.original = is_original  # 是否原创微博
-                weibo.video_url = self.get_video_url(info,
-                                                     is_original)  # 微博视频url
+                # weibo.article_url = self.get_article_url(info)  # 头条文章url
+                # picture_urls = self.get_picture_urls(info, is_original)
+                # weibo.original_pictures = picture_urls[
+                #     'original_pictures']  # 原创图片url
+                # if not self.filter:
+                #     weibo.retweet_pictures = picture_urls[
+                #         'retweet_pictures']  # 转发图片url
+                #     weibo.original = is_original  # 是否原创微博
+                # weibo.video_url = self.get_video_url(info,
+                #                                      is_original)  # 微博视频url
                 weibo.publish_place = self.get_publish_place(info)  # 微博发布位置
                 weibo.publish_time = self.get_publish_time(info)  # 微博发布时间
-                weibo.publish_tool = self.get_publish_tool(info)  # 微博发布工具
+                # weibo.publish_tool = self.get_publish_tool(info)  # 微博发布工具
                 footer = self.get_weibo_footer(info)
                 weibo.up_num = footer['up_num']  # 微博点赞数
                 weibo.retweet_num = footer['retweet_num']  # 转发数

@@ -24,10 +24,9 @@ class InfoParser(Parser):
             user.nickname = nickname
 
             basic_info = self.selector.xpath("//div[@class='c'][3]/text()")
-            zh_list = [u"性别", u"地区", u"生日", u"简介", u"认证", u"达人"]
+            zh_list = [u"性别", u"地区", u"生日", u"简介"]
             en_list = [
-                "gender", "location", "birthday", "description",
-                "verified_reason", "talent"
+                "gender", "location", "birthday", "description"
             ]
             for i in basic_info:
                 if i.split(":", 1)[0] in zh_list:
