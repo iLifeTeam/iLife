@@ -1,14 +1,61 @@
+drop database if exists iLife;
+drop database if exists wyy;
+drop database if exists weibo;
+
+/* wyy */
+CREATE database wyy;
+USE wyy;
 /*==============================================================*/
-/* DBMS name:      MySQL 5.0                                    */
-/* Created on:     7/8/2020 3:13:31 PM                          */
+/* Table: musics                                                */
 /*==============================================================*/
+create table musics
+(
+   m_id                 int not null,
+   mname                varchar(20),
+   style                varchar(20),
+   times                varchar(20),
+   primary key (m_id)
+);
 
+/*==============================================================*/
+/* Table: singers                                               */
+/*==============================================================*/
+create table singers
+(
+   s_id                 int not null,
+   sname                varchar(20),
+   primary key (s_id)
+);
 
-drop table if exists comment;
+/*==============================================================*/
+/* Table: sing                                                  */
+/*==============================================================*/
+create table sing
+(
+   m_id                 int not null,
+   s_id                 int not null,
+   primary key (m_id, s_id),
+   foreign key (m_id) references musics (m_id) ,
+   foreign key (s_id) references singers (s_id)
+);
 
-drop table if exists user;
+/*==============================================================*/
+/* Table: wyyuser                                               */
+/*==============================================================*/
+create table wyyuser
+(
+   wyyid                int not null,
+   m_id                 int not null,
+   playcount            int,
+   score                int,
+   primary key (wyyid,m_id),
+   foreign key (m_id) references musics (m_id)
+);
 
-drop table if exists weibo;
+/* weibo */
+create database weibo;
+use weibo;
+
 
 /*==============================================================*/
 /* Table: comment                                              */
@@ -65,3 +112,21 @@ alter table comment add constraint FK_issue foreign key (u_id)
 alter table weibo add constraint FK_publish foreign key (u_id)
       references user (u_id) on delete restrict on update restrict;
 
+
+
+/* ilife  */
+create database iLife;
+use iLife;
+create table users
+(
+   id                   int not null,
+   wyyid                int,
+   weibid               bigint,
+   nickname             varchar(20),
+   account              char(20),
+   password             char(20),
+   email                varchar(50),
+   primary key (id),
+   foreign key (wyyid) references wyy.wyyuser (wyyid),
+   foreign key (weibid) references weibo.user (u_id)
+);
