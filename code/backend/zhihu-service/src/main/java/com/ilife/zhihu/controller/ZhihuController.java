@@ -1,0 +1,11 @@
+package com.ilife.zhihu.controller;
+
+
+import org.springframework.web.bind.annotation.RestController;
+
+
+@RestController
+public class ZhihuController {
+
+
+}
