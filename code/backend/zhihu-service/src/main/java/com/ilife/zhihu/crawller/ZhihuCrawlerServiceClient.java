@@ -51,8 +51,7 @@ public class ZhihuCrawlerServiceClient {
     }
     public static void main(String[] args) throws InterruptedException {
         ZhihuCrawlerServiceClient client = new ZhihuCrawlerServiceClient("127.0.0.1", 4001);
-        String username = "zxy771906409@163.com";
-        String password = "zxy13,./0904";
+
         String response = client.login(username,password);
         switch (response){
             case "already login":
