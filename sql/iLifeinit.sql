@@ -57,34 +57,24 @@ create database weibo;
 use weibo;
 
 
-/*==============================================================*/
-/* Table: comment                                              */
-/*==============================================================*/
-create table comment
-(
-   p_id                 bigint not null,
-   u_id                 bigint,
-   w_id                 bigint,
-   text                 varchar(1024),
-   created_at           date,
-   attitudes_count      integer,
-   direction            varchar(32),
-   primary key (p_id)
-)CHARSET=utf8;
 
 /*==============================================================*/
 /* Table: user                                                  */
 /*==============================================================*/
 create table user
 (
-   u_id                 bigint not null,
-   followers_count      int,
-   followings_count     int,
-   weibo_count          int,
-   friends_count        int,
-   register_time        date,
-   nickname             varchar(1024),
-   primary key (u_id)
+   id                 bigint not null,
+   followers            int,
+   following            int,
+   weibo_num            int,
+   birthday             varchar(128),
+   nickname             varchar(128),
+   gender               varchar(128),
+   location             varchar(128),
+   description          varchar(128),
+   education            varchar(128),
+   work                 varchar(128),
+   primary key (id)
 )CHARSET=utf8;
 
 /*==============================================================*/
@@ -92,25 +82,20 @@ create table user
 /*==============================================================*/
 create table weibo
 (
-   w_id                 bigint not null,
-   u_id                 bigint,
-   text                 varchar(1024),
-   reposts_count        integer,
-   comments_count       integer,
-   attitudes_count      integer,
-   read_count           integer,
+   id                   varchar(32) not null,
+   user_id              bigint,
+   content              varchar(1024),
+   publish_place        varchar(32),
+   up_num               integer,
+   retweet_num          integer,
+   comment_num          integer,
    publish_time         date,
-   primary key (w_id)
+   primary key (id)
 )CHARSET=utf8;
 
-alter table comment add constraint FK_comment foreign key (w_id)
-      references weibo (w_id) on delete restrict on update restrict;
 
-alter table comment add constraint FK_issue foreign key (u_id)
-      references user (u_id) on delete restrict on update restrict;
-
-alter table weibo add constraint FK_publish foreign key (u_id)
-      references user (u_id) on delete restrict on update restrict;
+alter table weibo add constraint FK_publish foreign key (user_id)
+       references user (id) on delete restrict on update restrict;
 
 
 
@@ -128,7 +113,7 @@ create table users
    email                varchar(50),
    primary key (id),
    foreign key (wyyid) references wyy.wyyuser (wyyid),
-   foreign key (weibid) references weibo.user (u_id)
+   foreign key (weibid) references weibo.user (id)
 )CHARSET=utf8;
 
 
