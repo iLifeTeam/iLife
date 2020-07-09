@@ -8,14 +8,14 @@ import javax.transaction.Transactional;
 
 public interface UserRepository extends CrudRepository<User,Integer> {
 
-
-    User findByUid(Integer uid);
+    //这里findById会报错，所以改了一下
+    User findAllById(Integer id);
 
     User findByNickname(String nickname);
 
     @Transactional
     @Modifying
-    void deleteByUid(Integer uid);
+    void deleteById(Integer uid);
 
 
 

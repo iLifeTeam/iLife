@@ -15,18 +15,26 @@ import javax.persistence.Table;
 @Table(name = "USER")
 public class User {
     @Id
-    @Column(name = "U_ID")
-    private Integer uid;
+    @Column(name = "ID")
+    private Integer id;
     @Column(name = "NICKNAME")
     private String nickname;
-    @Column(name = "FOLLOWERS_COUNT")
-    private Integer followers_count;
-    @Column(name = "FOLLOWINGS_COUNT")
-    private Integer followings_count;
-    @Column(name = "WEIBO_COUNT")
-    private Integer weibo_count;
-    @Column(name = "FRIENDS_COUNT")
-    private Integer friends_count;
-    @Column(name = "REGISTER_TIME")
-    private Integer register_time;
+    @Column(name = "FOLLOWERS")
+    private Integer followers;
+    @Column(name = "FOLLOWING")
+    private Integer following;
+    @Column(name = "WEIBO_NUM")
+    private Integer weibo_num;
+    @Column(name = "BIRTHDAY")
+    private String birthday;
+    @Column(name = "GENDER")
+    private String gender;
+    @Column(name = "LOCATION")
+    private String location;
+    @Column(name = "DESCRIPTION")
+    private String description;
+    @Column(name = "EDUCATION")
+    private String education;
+    @Column(name = "WORK")
+    private String work;
 }
