@@ -34,3 +34,17 @@
   * user
   * comments  
 3. iLife中user新增weibid
+-------
+
+## week1day4
+### 更新：
+1. 新增大麦网数据库，存储爬取数据，用于后续分析（共两百条）  
+   * 表的结构：
+     * projectid作为pk
+     * name：演唱会名称
+     * actors：记录演员主要信息（部份演唱会不包含）
+     * price_str：票价信息
+     * showtime：演出时间
+     * venue与venuecity：记录演出地点与城市
+     * showstatus：演出时间
+2. 部份int属性改成bigint
