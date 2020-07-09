@@ -15,7 +15,7 @@ create table musics
    style                varchar(20),
    times                varchar(20),
    primary key (m_id)
-)CHARSET=utf8;
+)DEFAULT CHARSET=utf8mb4;
 
 /*==============================================================*/
 /* Table: singers                                               */
@@ -25,7 +25,7 @@ create table singers
    s_id                 bigint not null,
    sname                varchar(20),
    primary key (s_id)
-)CHARSET=utf8;
+)DEFAULT CHARSET=utf8mb4;
 
 /*==============================================================*/
 /* Table: sing                                                  */
@@ -37,7 +37,7 @@ create table sing
    primary key (m_id, s_id),
    foreign key (m_id) references musics (m_id) ,
    foreign key (s_id) references singers (s_id)
-)CHARSET=utf8;
+)DEFAULT CHARSET=utf8mb4;
 
 /*==============================================================*/
 /* Table: wyyuser                                               */
@@ -50,7 +50,7 @@ create table wyyuser
    score                int,
    primary key (wyyid,m_id),
    foreign key (m_id) references musics (m_id) 
-)CHARSET=utf8;
+)DEFAULT CHARSET=utf8mb4;
 
 /* weibo */
 create database weibo;
@@ -75,7 +75,7 @@ create table user
    education            varchar(128),
    work                 varchar(128),
    primary key (id)
-)CHARSET=utf8;
+)DEFAULT CHARSET=utf8mb4;
 
 /*==============================================================*/
 /* Table: weibo                                                 */
@@ -89,9 +89,9 @@ create table weibo
    up_num               integer,
    retweet_num          integer,
    comment_num          integer,
-   publish_time         date,
+   publish_time         DATETIME,
    primary key (id)
-)CHARSET=utf8;
+)DEFAULT CHARSET=utf8mb4;
 
 
 alter table weibo add constraint FK_publish foreign key (user_id)
@@ -114,7 +114,7 @@ create table users
    primary key (id),
    foreign key (wyyid) references wyy.wyyuser (wyyid),
    foreign key (weibid) references weibo.user (id)
-)CHARSET=utf8;
+)DEFAULT CHARSET=utf8mb4;
 
 
 
@@ -134,4 +134,4 @@ create table dmw
    venue                varchar(1024),
    venuecity            varchar(1024),
 	primary key(projectid)
-)CHARSET=utf8;
+)DEFAULT CHARSET=utf8mb4;
