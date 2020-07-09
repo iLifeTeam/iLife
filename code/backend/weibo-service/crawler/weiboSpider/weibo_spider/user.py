@@ -8,8 +8,6 @@ class User:
         self.location = ''
         self.birthday = ''
         self.description = ''
-        self.verified_reason = ''
-        self.talent = ''
 
         self.education = ''
         self.work = ''
