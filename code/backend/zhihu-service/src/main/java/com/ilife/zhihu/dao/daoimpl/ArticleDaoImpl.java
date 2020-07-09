@@ -24,12 +24,12 @@ public class ArticleDaoImpl implements ArticleDao {
     }
 
     @Override
-    public Article findArticleByArticleId(Integer id) {
+    public Article findArticleById(Integer id) {
         return articleRepository.findById(id).orElse(null);
     }
 
     @Override
-    public List<Article> findArticleByArticleIds(List<Integer> Ids) {
+    public List<Article> findArticleByIds(List<Integer> Ids) {
         List<Article> articles = new ArrayList<>();
         articleRepository.findAllById(Ids).forEach(articles::add);
         return articles;

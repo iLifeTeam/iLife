@@ -166,6 +166,7 @@ class ZhihuService(zhihu_pb2_grpc.ZhihuServiceServicer):
 
             if activity.type == ActType.CREATE_ANSWER or activity.type == ActType.VOTEUP_ANSWER:
                 activity.answer.setValue(act.target)
+                print(activity.answer.content)
                 # activity.answer.author = act.target.author.name
                 # activity.answer.content = act.target.content
                 # activity.answer.excerpt = act.target.excerpt
@@ -174,6 +175,7 @@ class ZhihuService(zhihu_pb2_grpc.ZhihuServiceServicer):
                 # activity.answer.voteup_count = act.target.voteup_count
                 # activity.answer.comment_count = act.target.comment_count
                 activity.answer.question.setValue(act.target.question)
+                
                 # question = act.target.question
                 # activity.answer.question.title = question.title
                 # activity.answer.question.answer_count = question.answer_count

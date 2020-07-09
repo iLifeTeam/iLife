@@ -1,5 +1,6 @@
 package com.ilife.zhihu;
 
+import com.alibaba.fastjson.JSON;
 import com.ilife.zhihu.dao.AnswerDao;
 import com.ilife.zhihu.dao.QuestionDao;
 import com.ilife.zhihu.entity.Answer;
@@ -45,9 +46,9 @@ class ZhihuApplicationTests {
     @Test
     @Transactional
     void AnswerDaoReadTest(){
-        Question question = questionDao.findQuestionById(4);
+        Question question = questionDao.findQuestionById(10);
         for (Answer answer : question.getAnswerList()){
-            System.out.println("answer: " + answer.getAuthor());
+            System.out.println(answer.getExcerpt());
         }
     }
 
