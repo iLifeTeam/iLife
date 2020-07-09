@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
 @Table(name = "WEIBO")
@@ -17,20 +18,20 @@ import javax.persistence.Table;
 public class Weibo {
 
     @Id
-    @Column(name = "W_ID")
-    private Integer wid;
-    @Column(name = "U_ID")
+    @Column(name = "ID")
+    private String id;
+    @Column(name = "USER_ID")
     private Integer uid;
-    @Column(name = "TEXT")
-    private String text;
-    @Column(name = "REPOSTS_COUNT")
-    private Integer reposts_count;
-    @Column(name = "COMMENTS_COUNT")
-    private Integer comments_count;
-    @Column(name = "ATTITUDES_COUNT")
-    private Integer attitudes_count;
-    @Column(name = "READ_COUNT")
-    private Integer read_count;
+    @Column(name = "CONTENT")
+    private String content;
+    @Column(name = "PUBLISH_PLACE")
+    private String publish_place;
+    @Column(name = "RETWEET_NUM")
+    private Integer retweet_num;
+    @Column(name = "COMMENT_NUM")
+    private Integer comment_count;
+    @Column(name = "UP_NUM")
+    private Integer up_num;
     @Column(name = "PUBLISH_TIME")
-    private Integer publish_time;
+    private Date publish_time;
 }

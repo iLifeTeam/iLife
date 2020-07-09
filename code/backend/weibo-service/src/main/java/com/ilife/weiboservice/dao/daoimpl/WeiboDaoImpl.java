@@ -14,8 +14,8 @@ public class WeiboDaoImpl implements WeiboDao {
     @Autowired
     private WeiboRepository weiboRepository;
 
-    public Weibo findByWid(Integer wid){
-        return weiboRepository.findByWid(wid);
+    public Weibo findById(String id){
+        return weiboRepository.findById(id);
     }
 
     public List<Weibo> findAllByUid(Integer uid){
@@ -26,8 +26,8 @@ public class WeiboDaoImpl implements WeiboDao {
         weiboRepository.deleteByUid(uid);
     }
 
-    public void deleteByWid(Integer wid){
-        weiboRepository.deleteByWid(wid);
+    public void deleteById(Integer id){
+        weiboRepository.deleteById(id);
     }
 
     public Weibo save(Weibo weibo){
