@@ -10,47 +10,47 @@ USE wyy;
 /*==============================================================*/
 create table musics
 (
-   m_id                 int not null,
+   m_id                 bigint not null,
    mname                varchar(20),
    style                varchar(20),
    times                varchar(20),
    primary key (m_id)
-);
+)CHARSET=utf8;
 
 /*==============================================================*/
 /* Table: singers                                               */
 /*==============================================================*/
 create table singers
 (
-   s_id                 int not null,
+   s_id                 bigint not null,
    sname                varchar(20),
    primary key (s_id)
-);
+)CHARSET=utf8;
 
 /*==============================================================*/
 /* Table: sing                                                  */
 /*==============================================================*/
 create table sing
 (
-   m_id                 int not null,
-   s_id                 int not null,
+   m_id                 bigint not null,
+   s_id                 bigint not null,
    primary key (m_id, s_id),
    foreign key (m_id) references musics (m_id) ,
    foreign key (s_id) references singers (s_id)
-);
+)CHARSET=utf8;
 
 /*==============================================================*/
 /* Table: wyyuser                                               */
 /*==============================================================*/
 create table wyyuser
 (
-   wyyid                int not null,
-   m_id                 int not null,
+   wyyid                bigint not null,
+   m_id                 bigint not null,
    playcount            int,
    score                int,
    primary key (wyyid,m_id),
    foreign key (m_id) references musics (m_id) 
-);
+)CHARSET=utf8;
 
 /* weibo */
 create database weibo;
@@ -70,7 +70,7 @@ create table comment
    attitudes_count      integer,
    direction            varchar(32),
    primary key (p_id)
-);
+)CHARSET=utf8;
 
 /*==============================================================*/
 /* Table: user                                                  */
@@ -85,7 +85,7 @@ create table user
    register_time        date,
    nickname             varchar(1024),
    primary key (u_id)
-);
+)CHARSET=utf8;
 
 /*==============================================================*/
 /* Table: weibo                                                 */
@@ -101,7 +101,7 @@ create table weibo
    read_count           integer,
    publish_time         date,
    primary key (w_id)
-);
+)CHARSET=utf8;
 
 alter table comment add constraint FK_comment foreign key (w_id)
       references weibo (w_id) on delete restrict on update restrict;
@@ -119,8 +119,8 @@ create database iLife;
 use iLife;
 create table users
 (
-   id                   int not null,
-   wyyid                int,
+   id                   bigint not null,
+   wyyid                bigint,
    weibid               bigint,
    nickname             varchar(20),
    account              char(20),
@@ -129,4 +129,24 @@ create table users
    primary key (id),
    foreign key (wyyid) references wyy.wyyuser (wyyid),
    foreign key (weibid) references weibo.user (u_id)
-);
+)CHARSET=utf8;
+
+
+
+/* 大麦网数据存储 */
+drop database if exists dmw;
+create database dmw;
+use dmw;
+create table dmw
+(
+	projectid            bigint not null,
+	actors	            varchar(1024),
+	name	               varchar(1024),
+	price_str	         varchar(1024),
+	showtime	            varchar(1024),
+	img	               varchar(1024),
+	showstatus	         varchar(1024),
+   venue                varchar(1024),
+   venuecity            varchar(1024),
+	primary key(projectid)
+)CHARSET=utf8;
