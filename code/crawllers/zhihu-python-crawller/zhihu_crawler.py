@@ -1,6 +1,5 @@
 from zhihu_oauth import ZhihuClient, ActType
 from zhihu_oauth.exception import NeedCaptchaException
-import codecs
 import time
 
 client = ZhihuClient()

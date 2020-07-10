@@ -1,19 +1,15 @@
 import json
 import time
 import grpc
-import jsonpickle
 from concurrent import futures
+from base64 import b64encode
 
 from zhihu_oauth import ZhihuClient,ActType
 from zhihu_oauth.exception import NeedCaptchaException
 import os 
 import zhihu_pb2
 import zhihu_pb2_grpc
-class MyEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if not isinstance(obj, Activity):
-            return super(MyEncoder, self).default(obj)
-        return obj.__dict__ 
+
 
 
 
@@ -137,8 +133,8 @@ class ZhihuService(zhihu_pb2_grpc.ZhihuServiceServicer):
             except NeedCaptchaException:
                 with open('a.gif', 'wb') as f:
                     f.write(client.get_captcha())
-                
-                return zhihu_pb2.LoginResponse(response = "need captcha")
+                    base64_bytes = b64encode(client.get_captcha()) 
+                return zhihu_pb2.LoginResponse(response = base64_bytes)
             client.save_token('./tokens/' + username + '.pkl')
             self.userpool[username] = 1
         else:

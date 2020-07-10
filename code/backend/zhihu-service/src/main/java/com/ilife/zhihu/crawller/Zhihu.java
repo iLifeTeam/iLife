@@ -6,62 +6,62 @@ package com.ilife.zhihu.crawller;
 public final class Zhihu {
   private Zhihu() {}
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
+          com.google.protobuf.ExtensionRegistryLite registry) {
   }
 
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistry registry) {
+          com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
+            (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   public interface LoginRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:LoginRequest)
-      com.google.protobuf.MessageOrBuilder {
+          // @@protoc_insertion_point(interface_extends:LoginRequest)
+          com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>string username = 1;</code>
      * @return The username.
      */
-    String getUsername();
+    java.lang.String getUsername();
     /**
      * <code>string username = 1;</code>
      * @return The bytes for username.
      */
     com.google.protobuf.ByteString
-        getUsernameBytes();
+    getUsernameBytes();
 
     /**
      * <code>string password = 2;</code>
      * @return The password.
      */
-    String getPassword();
+    java.lang.String getPassword();
     /**
      * <code>string password = 2;</code>
      * @return The bytes for password.
      */
     com.google.protobuf.ByteString
-        getPasswordBytes();
+    getPasswordBytes();
 
     /**
      * <code>string captcha = 3;</code>
      * @return The captcha.
      */
-    String getCaptcha();
+    java.lang.String getCaptcha();
     /**
      * <code>string captcha = 3;</code>
      * @return The bytes for captcha.
      */
     com.google.protobuf.ByteString
-        getCaptchaBytes();
+    getCaptchaBytes();
   }
   /**
    * Protobuf type {@code LoginRequest}
    */
   public static final class LoginRequest extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:LoginRequest)
-      LoginRequestOrBuilder {
-  private static final long serialVersionUID = 0L;
+          com.google.protobuf.GeneratedMessageV3 implements
+          // @@protoc_insertion_point(message_implements:LoginRequest)
+          LoginRequestOrBuilder {
+    private static final long serialVersionUID = 0L;
     // Use LoginRequest.newBuilder() to construct.
     private LoginRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -72,28 +72,28 @@ public final class Zhihu {
       captcha_ = "";
     }
 
-    @Override
+    @java.lang.Override
     @SuppressWarnings({"unused"})
-    protected Object newInstance(
-        UnusedPrivateParameter unused) {
+    protected java.lang.Object newInstance(
+            UnusedPrivateParameter unused) {
       return new LoginRequest();
     }
 
-    @Override
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
     }
     private LoginRequest(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new NullPointerException();
+        throw new java.lang.NullPointerException();
       }
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
+              com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -103,26 +103,26 @@ public final class Zhihu {
               done = true;
               break;
             case 10: {
-              String s = input.readStringRequireUtf8();
+              java.lang.String s = input.readStringRequireUtf8();
 
               username_ = s;
               break;
             }
             case 18: {
-              String s = input.readStringRequireUtf8();
+              java.lang.String s = input.readStringRequireUtf8();
 
               password_ = s;
               break;
             }
             case 26: {
-              String s = input.readStringRequireUtf8();
+              java.lang.String s = input.readStringRequireUtf8();
 
               captcha_ = s;
               break;
             }
             default: {
               if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+                      input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -133,40 +133,40 @@ public final class Zhihu {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+                e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return Zhihu.internal_static_LoginRequest_descriptor;
+    getDescriptor() {
+      return com.ilife.zhihu.crawller.Zhihu.internal_static_LoginRequest_descriptor;
     }
 
-    @Override
-    protected FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return Zhihu.internal_static_LoginRequest_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              LoginRequest.class, Builder.class);
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    internalGetFieldAccessorTable() {
+      return com.ilife.zhihu.crawller.Zhihu.internal_static_LoginRequest_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                      com.ilife.zhihu.crawller.Zhihu.LoginRequest.class, com.ilife.zhihu.crawller.Zhihu.LoginRequest.Builder.class);
     }
 
     public static final int USERNAME_FIELD_NUMBER = 1;
-    private volatile Object username_;
+    private volatile java.lang.Object username_;
     /**
      * <code>string username = 1;</code>
      * @return The username.
      */
-    @Override
-    public String getUsername() {
-      Object ref = username_;
-      if (ref instanceof String) {
-        return (String) ref;
+    @java.lang.Override
+    public java.lang.String getUsername() {
+      java.lang.Object ref = username_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
+        com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
         username_ = s;
         return s;
       }
@@ -175,14 +175,14 @@ public final class Zhihu {
      * <code>string username = 1;</code>
      * @return The bytes for username.
      */
-    @Override
+    @java.lang.Override
     public com.google.protobuf.ByteString
-        getUsernameBytes() {
-      Object ref = username_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (String) ref);
+    getUsernameBytes() {
+      java.lang.Object ref = username_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                        (java.lang.String) ref);
         username_ = b;
         return b;
       } else {
@@ -191,20 +191,20 @@ public final class Zhihu {
     }
 
     public static final int PASSWORD_FIELD_NUMBER = 2;
-    private volatile Object password_;
+    private volatile java.lang.Object password_;
     /**
      * <code>string password = 2;</code>
      * @return The password.
      */
-    @Override
-    public String getPassword() {
-      Object ref = password_;
-      if (ref instanceof String) {
-        return (String) ref;
+    @java.lang.Override
+    public java.lang.String getPassword() {
+      java.lang.Object ref = password_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
+        com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
         password_ = s;
         return s;
       }
@@ -213,14 +213,14 @@ public final class Zhihu {
      * <code>string password = 2;</code>
      * @return The bytes for password.
      */
-    @Override
+    @java.lang.Override
     public com.google.protobuf.ByteString
-        getPasswordBytes() {
-      Object ref = password_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (String) ref);
+    getPasswordBytes() {
+      java.lang.Object ref = password_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                        (java.lang.String) ref);
         password_ = b;
         return b;
       } else {
@@ -229,20 +229,20 @@ public final class Zhihu {
     }
 
     public static final int CAPTCHA_FIELD_NUMBER = 3;
-    private volatile Object captcha_;
+    private volatile java.lang.Object captcha_;
     /**
      * <code>string captcha = 3;</code>
      * @return The captcha.
      */
-    @Override
-    public String getCaptcha() {
-      Object ref = captcha_;
-      if (ref instanceof String) {
-        return (String) ref;
+    @java.lang.Override
+    public java.lang.String getCaptcha() {
+      java.lang.Object ref = captcha_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
+        com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
         captcha_ = s;
         return s;
       }
@@ -251,14 +251,14 @@ public final class Zhihu {
      * <code>string captcha = 3;</code>
      * @return The bytes for captcha.
      */
-    @Override
+    @java.lang.Override
     public com.google.protobuf.ByteString
-        getCaptchaBytes() {
-      Object ref = captcha_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (String) ref);
+    getCaptchaBytes() {
+      java.lang.Object ref = captcha_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                        (java.lang.String) ref);
         captcha_ = b;
         return b;
       } else {
@@ -267,7 +267,7 @@ public final class Zhihu {
     }
 
     private byte memoizedIsInitialized = -1;
-    @Override
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -277,9 +277,9 @@ public final class Zhihu {
       return true;
     }
 
-    @Override
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
+            throws java.io.IOException {
       if (!getUsernameBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, username_);
       }
@@ -292,7 +292,7 @@ public final class Zhihu {
       unknownFields.writeTo(output);
     }
 
-    @Override
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -312,27 +312,27 @@ public final class Zhihu {
       return size;
     }
 
-    @Override
-    public boolean equals(final Object obj) {
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-       return true;
+        return true;
       }
-      if (!(obj instanceof LoginRequest)) {
+      if (!(obj instanceof com.ilife.zhihu.crawller.Zhihu.LoginRequest)) {
         return super.equals(obj);
       }
-      LoginRequest other = (LoginRequest) obj;
+      com.ilife.zhihu.crawller.Zhihu.LoginRequest other = (com.ilife.zhihu.crawller.Zhihu.LoginRequest) obj;
 
       if (!getUsername()
-          .equals(other.getUsername())) return false;
+              .equals(other.getUsername())) return false;
       if (!getPassword()
-          .equals(other.getPassword())) return false;
+              .equals(other.getPassword())) return false;
       if (!getCaptcha()
-          .equals(other.getCaptcha())) return false;
+              .equals(other.getCaptcha())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -350,93 +350,93 @@ public final class Zhihu {
       return hash;
     }
 
-    public static LoginRequest parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginRequest parseFrom(
+            java.nio.ByteBuffer data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static LoginRequest parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginRequest parseFrom(
+            java.nio.ByteBuffer data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static LoginRequest parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginRequest parseFrom(
+            com.google.protobuf.ByteString data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static LoginRequest parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginRequest parseFrom(
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static LoginRequest parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginRequest parseFrom(byte[] data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static LoginRequest parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginRequest parseFrom(
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static LoginRequest parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginRequest parseFrom(java.io.InputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+              .parseWithIOException(PARSER, input);
     }
-    public static LoginRequest parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginRequest parseFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+              .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static LoginRequest parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginRequest parseDelimitedFrom(java.io.InputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+              .parseDelimitedWithIOException(PARSER, input);
     }
-    public static LoginRequest parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginRequest parseDelimitedFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+              .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static LoginRequest parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginRequest parseFrom(
+            com.google.protobuf.CodedInputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+              .parseWithIOException(PARSER, input);
     }
-    public static LoginRequest parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginRequest parseFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+              .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @Override
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(LoginRequest prototype) {
+    public static Builder newBuilder(com.ilife.zhihu.crawller.Zhihu.LoginRequest prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @Override
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
+              ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @Override
+    @java.lang.Override
     protected Builder newBuilderForType(
-        BuilderParent parent) {
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -444,20 +444,20 @@ public final class Zhihu {
      * Protobuf type {@code LoginRequest}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:LoginRequest)
-        LoginRequestOrBuilder {
+            com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+            // @@protoc_insertion_point(builder_implements:LoginRequest)
+            com.ilife.zhihu.crawller.Zhihu.LoginRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return Zhihu.internal_static_LoginRequest_descriptor;
+      getDescriptor() {
+        return com.ilife.zhihu.crawller.Zhihu.internal_static_LoginRequest_descriptor;
       }
 
-      @Override
-      protected FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return Zhihu.internal_static_LoginRequest_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                LoginRequest.class, Builder.class);
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internalGetFieldAccessorTable() {
+        return com.ilife.zhihu.crawller.Zhihu.internal_static_LoginRequest_fieldAccessorTable
+                .ensureFieldAccessorsInitialized(
+                        com.ilife.zhihu.crawller.Zhihu.LoginRequest.class, com.ilife.zhihu.crawller.Zhihu.LoginRequest.Builder.class);
       }
 
       // Construct using com.ilife.zhihu.crawller.Zhihu.LoginRequest.newBuilder()
@@ -466,7 +466,7 @@ public final class Zhihu {
       }
 
       private Builder(
-          BuilderParent parent) {
+              com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -475,7 +475,7 @@ public final class Zhihu {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @Override
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         username_ = "";
@@ -487,29 +487,29 @@ public final class Zhihu {
         return this;
       }
 
-      @Override
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return Zhihu.internal_static_LoginRequest_descriptor;
+      getDescriptorForType() {
+        return com.ilife.zhihu.crawller.Zhihu.internal_static_LoginRequest_descriptor;
       }
 
-      @Override
-      public LoginRequest getDefaultInstanceForType() {
-        return LoginRequest.getDefaultInstance();
+      @java.lang.Override
+      public com.ilife.zhihu.crawller.Zhihu.LoginRequest getDefaultInstanceForType() {
+        return com.ilife.zhihu.crawller.Zhihu.LoginRequest.getDefaultInstance();
       }
 
-      @Override
-      public LoginRequest build() {
-        LoginRequest result = buildPartial();
+      @java.lang.Override
+      public com.ilife.zhihu.crawller.Zhihu.LoginRequest build() {
+        com.ilife.zhihu.crawller.Zhihu.LoginRequest result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      @Override
-      public LoginRequest buildPartial() {
-        LoginRequest result = new LoginRequest(this);
+      @java.lang.Override
+      public com.ilife.zhihu.crawller.Zhihu.LoginRequest buildPartial() {
+        com.ilife.zhihu.crawller.Zhihu.LoginRequest result = new com.ilife.zhihu.crawller.Zhihu.LoginRequest(this);
         result.username_ = username_;
         result.password_ = password_;
         result.captcha_ = captcha_;
@@ -517,50 +517,50 @@ public final class Zhihu {
         return result;
       }
 
-      @Override
+      @java.lang.Override
       public Builder clone() {
         return super.clone();
       }
-      @Override
+      @java.lang.Override
       public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
         return super.setField(field, value);
       }
-      @Override
+      @java.lang.Override
       public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
+              com.google.protobuf.Descriptors.FieldDescriptor field) {
         return super.clearField(field);
       }
-      @Override
+      @java.lang.Override
       public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+              com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return super.clearOneof(oneof);
       }
-      @Override
+      @java.lang.Override
       public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              int index, java.lang.Object value) {
         return super.setRepeatedField(field, index, value);
       }
-      @Override
+      @java.lang.Override
       public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
         return super.addRepeatedField(field, value);
       }
-      @Override
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof LoginRequest) {
-          return mergeFrom((LoginRequest)other);
+        if (other instanceof com.ilife.zhihu.crawller.Zhihu.LoginRequest) {
+          return mergeFrom((com.ilife.zhihu.crawller.Zhihu.LoginRequest)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(LoginRequest other) {
-        if (other == LoginRequest.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.ilife.zhihu.crawller.Zhihu.LoginRequest other) {
+        if (other == com.ilife.zhihu.crawller.Zhihu.LoginRequest.getDefaultInstance()) return this;
         if (!other.getUsername().isEmpty()) {
           username_ = other.username_;
           onChanged();
@@ -578,21 +578,21 @@ public final class Zhihu {
         return this;
       }
 
-      @Override
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @Override
+      @java.lang.Override
       public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        LoginRequest parsedMessage = null;
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws java.io.IOException {
+        com.ilife.zhihu.crawller.Zhihu.LoginRequest parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (LoginRequest) e.getUnfinishedMessage();
+          parsedMessage = (com.ilife.zhihu.crawller.Zhihu.LoginRequest) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -602,21 +602,21 @@ public final class Zhihu {
         return this;
       }
 
-      private Object username_ = "";
+      private java.lang.Object username_ = "";
       /**
        * <code>string username = 1;</code>
        * @return The username.
        */
-      public String getUsername() {
-        Object ref = username_;
-        if (!(ref instanceof String)) {
+      public java.lang.String getUsername() {
+        java.lang.Object ref = username_;
+        if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
+                  (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
           username_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
       /**
@@ -624,12 +624,12 @@ public final class Zhihu {
        * @return The bytes for username.
        */
       public com.google.protobuf.ByteString
-          getUsernameBytes() {
-        Object ref = username_;
+      getUsernameBytes() {
+        java.lang.Object ref = username_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (String) ref);
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (java.lang.String) ref);
           username_ = b;
           return b;
         } else {
@@ -642,11 +642,11 @@ public final class Zhihu {
        * @return This builder for chaining.
        */
       public Builder setUsername(
-          String value) {
+              java.lang.String value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  
+          throw new NullPointerException();
+        }
+
         username_ = value;
         onChanged();
         return this;
@@ -656,7 +656,7 @@ public final class Zhihu {
        * @return This builder for chaining.
        */
       public Builder clearUsername() {
-        
+
         username_ = getDefaultInstance().getUsername();
         onChanged();
         return this;
@@ -667,32 +667,32 @@ public final class Zhihu {
        * @return This builder for chaining.
        */
       public Builder setUsernameBytes(
-          com.google.protobuf.ByteString value) {
+              com.google.protobuf.ByteString value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
+          throw new NullPointerException();
+        }
+        checkByteStringIsUtf8(value);
+
         username_ = value;
         onChanged();
         return this;
       }
 
-      private Object password_ = "";
+      private java.lang.Object password_ = "";
       /**
        * <code>string password = 2;</code>
        * @return The password.
        */
-      public String getPassword() {
-        Object ref = password_;
-        if (!(ref instanceof String)) {
+      public java.lang.String getPassword() {
+        java.lang.Object ref = password_;
+        if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
+                  (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
           password_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
       /**
@@ -700,12 +700,12 @@ public final class Zhihu {
        * @return The bytes for password.
        */
       public com.google.protobuf.ByteString
-          getPasswordBytes() {
-        Object ref = password_;
+      getPasswordBytes() {
+        java.lang.Object ref = password_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (String) ref);
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (java.lang.String) ref);
           password_ = b;
           return b;
         } else {
@@ -718,11 +718,11 @@ public final class Zhihu {
        * @return This builder for chaining.
        */
       public Builder setPassword(
-          String value) {
+              java.lang.String value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  
+          throw new NullPointerException();
+        }
+
         password_ = value;
         onChanged();
         return this;
@@ -732,7 +732,7 @@ public final class Zhihu {
        * @return This builder for chaining.
        */
       public Builder clearPassword() {
-        
+
         password_ = getDefaultInstance().getPassword();
         onChanged();
         return this;
@@ -743,32 +743,32 @@ public final class Zhihu {
        * @return This builder for chaining.
        */
       public Builder setPasswordBytes(
-          com.google.protobuf.ByteString value) {
+              com.google.protobuf.ByteString value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
+          throw new NullPointerException();
+        }
+        checkByteStringIsUtf8(value);
+
         password_ = value;
         onChanged();
         return this;
       }
 
-      private Object captcha_ = "";
+      private java.lang.Object captcha_ = "";
       /**
        * <code>string captcha = 3;</code>
        * @return The captcha.
        */
-      public String getCaptcha() {
-        Object ref = captcha_;
-        if (!(ref instanceof String)) {
+      public java.lang.String getCaptcha() {
+        java.lang.Object ref = captcha_;
+        if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
+                  (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
           captcha_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
       /**
@@ -776,12 +776,12 @@ public final class Zhihu {
        * @return The bytes for captcha.
        */
       public com.google.protobuf.ByteString
-          getCaptchaBytes() {
-        Object ref = captcha_;
+      getCaptchaBytes() {
+        java.lang.Object ref = captcha_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (String) ref);
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (java.lang.String) ref);
           captcha_ = b;
           return b;
         } else {
@@ -794,11 +794,11 @@ public final class Zhihu {
        * @return This builder for chaining.
        */
       public Builder setCaptcha(
-          String value) {
+              java.lang.String value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  
+          throw new NullPointerException();
+        }
+
         captcha_ = value;
         onChanged();
         return this;
@@ -808,7 +808,7 @@ public final class Zhihu {
        * @return This builder for chaining.
        */
       public Builder clearCaptcha() {
-        
+
         captcha_ = getDefaultInstance().getCaptcha();
         onChanged();
         return this;
@@ -819,25 +819,25 @@ public final class Zhihu {
        * @return This builder for chaining.
        */
       public Builder setCaptchaBytes(
-          com.google.protobuf.ByteString value) {
+              com.google.protobuf.ByteString value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
+          throw new NullPointerException();
+        }
+        checkByteStringIsUtf8(value);
+
         captcha_ = value;
         onChanged();
         return this;
       }
-      @Override
+      @java.lang.Override
       public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @Override
+      @java.lang.Override
       public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
       }
 
@@ -846,22 +846,22 @@ public final class Zhihu {
     }
 
     // @@protoc_insertion_point(class_scope:LoginRequest)
-    private static final LoginRequest DEFAULT_INSTANCE;
+    private static final com.ilife.zhihu.crawller.Zhihu.LoginRequest DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new LoginRequest();
+      DEFAULT_INSTANCE = new com.ilife.zhihu.crawller.Zhihu.LoginRequest();
     }
 
-    public static LoginRequest getDefaultInstance() {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginRequest getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
     private static final com.google.protobuf.Parser<LoginRequest>
-        PARSER = new com.google.protobuf.AbstractParser<LoginRequest>() {
-      @Override
+            PARSER = new com.google.protobuf.AbstractParser<LoginRequest>() {
+      @java.lang.Override
       public LoginRequest parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws com.google.protobuf.InvalidProtocolBufferException {
         return new LoginRequest(input, extensionRegistry);
       }
     };
@@ -870,42 +870,42 @@ public final class Zhihu {
       return PARSER;
     }
 
-    @Override
+    @java.lang.Override
     public com.google.protobuf.Parser<LoginRequest> getParserForType() {
       return PARSER;
     }
 
-    @Override
-    public LoginRequest getDefaultInstanceForType() {
+    @java.lang.Override
+    public com.ilife.zhihu.crawller.Zhihu.LoginRequest getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   public interface LoginResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:LoginResponse)
-      com.google.protobuf.MessageOrBuilder {
+          // @@protoc_insertion_point(interface_extends:LoginResponse)
+          com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>string response = 1;</code>
      * @return The response.
      */
-    String getResponse();
+    java.lang.String getResponse();
     /**
      * <code>string response = 1;</code>
      * @return The bytes for response.
      */
     com.google.protobuf.ByteString
-        getResponseBytes();
+    getResponseBytes();
   }
   /**
    * Protobuf type {@code LoginResponse}
    */
   public static final class LoginResponse extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:LoginResponse)
-      LoginResponseOrBuilder {
-  private static final long serialVersionUID = 0L;
+          com.google.protobuf.GeneratedMessageV3 implements
+          // @@protoc_insertion_point(message_implements:LoginResponse)
+          LoginResponseOrBuilder {
+    private static final long serialVersionUID = 0L;
     // Use LoginResponse.newBuilder() to construct.
     private LoginResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -914,28 +914,28 @@ public final class Zhihu {
       response_ = "";
     }
 
-    @Override
+    @java.lang.Override
     @SuppressWarnings({"unused"})
-    protected Object newInstance(
-        UnusedPrivateParameter unused) {
+    protected java.lang.Object newInstance(
+            UnusedPrivateParameter unused) {
       return new LoginResponse();
     }
 
-    @Override
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
     }
     private LoginResponse(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new NullPointerException();
+        throw new java.lang.NullPointerException();
       }
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
+              com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -945,14 +945,14 @@ public final class Zhihu {
               done = true;
               break;
             case 10: {
-              String s = input.readStringRequireUtf8();
+              java.lang.String s = input.readStringRequireUtf8();
 
               response_ = s;
               break;
             }
             default: {
               if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+                      input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -963,40 +963,40 @@ public final class Zhihu {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+                e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return Zhihu.internal_static_LoginResponse_descriptor;
+    getDescriptor() {
+      return com.ilife.zhihu.crawller.Zhihu.internal_static_LoginResponse_descriptor;
     }
 
-    @Override
-    protected FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return Zhihu.internal_static_LoginResponse_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              LoginResponse.class, Builder.class);
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    internalGetFieldAccessorTable() {
+      return com.ilife.zhihu.crawller.Zhihu.internal_static_LoginResponse_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                      com.ilife.zhihu.crawller.Zhihu.LoginResponse.class, com.ilife.zhihu.crawller.Zhihu.LoginResponse.Builder.class);
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
-    private volatile Object response_;
+    private volatile java.lang.Object response_;
     /**
      * <code>string response = 1;</code>
      * @return The response.
      */
-    @Override
-    public String getResponse() {
-      Object ref = response_;
-      if (ref instanceof String) {
-        return (String) ref;
+    @java.lang.Override
+    public java.lang.String getResponse() {
+      java.lang.Object ref = response_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
+        com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
         response_ = s;
         return s;
       }
@@ -1005,14 +1005,14 @@ public final class Zhihu {
      * <code>string response = 1;</code>
      * @return The bytes for response.
      */
-    @Override
+    @java.lang.Override
     public com.google.protobuf.ByteString
-        getResponseBytes() {
-      Object ref = response_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (String) ref);
+    getResponseBytes() {
+      java.lang.Object ref = response_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                        (java.lang.String) ref);
         response_ = b;
         return b;
       } else {
@@ -1021,7 +1021,7 @@ public final class Zhihu {
     }
 
     private byte memoizedIsInitialized = -1;
-    @Override
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -1031,16 +1031,16 @@ public final class Zhihu {
       return true;
     }
 
-    @Override
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
+            throws java.io.IOException {
       if (!getResponseBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, response_);
       }
       unknownFields.writeTo(output);
     }
 
-    @Override
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -1054,23 +1054,23 @@ public final class Zhihu {
       return size;
     }
 
-    @Override
-    public boolean equals(final Object obj) {
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-       return true;
+        return true;
       }
-      if (!(obj instanceof LoginResponse)) {
+      if (!(obj instanceof com.ilife.zhihu.crawller.Zhihu.LoginResponse)) {
         return super.equals(obj);
       }
-      LoginResponse other = (LoginResponse) obj;
+      com.ilife.zhihu.crawller.Zhihu.LoginResponse other = (com.ilife.zhihu.crawller.Zhihu.LoginResponse) obj;
 
       if (!getResponse()
-          .equals(other.getResponse())) return false;
+              .equals(other.getResponse())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -1084,93 +1084,93 @@ public final class Zhihu {
       return hash;
     }
 
-    public static LoginResponse parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginResponse parseFrom(
+            java.nio.ByteBuffer data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static LoginResponse parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginResponse parseFrom(
+            java.nio.ByteBuffer data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static LoginResponse parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginResponse parseFrom(
+            com.google.protobuf.ByteString data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static LoginResponse parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginResponse parseFrom(
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static LoginResponse parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginResponse parseFrom(byte[] data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static LoginResponse parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginResponse parseFrom(
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static LoginResponse parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginResponse parseFrom(java.io.InputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+              .parseWithIOException(PARSER, input);
     }
-    public static LoginResponse parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginResponse parseFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+              .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static LoginResponse parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginResponse parseDelimitedFrom(java.io.InputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+              .parseDelimitedWithIOException(PARSER, input);
     }
-    public static LoginResponse parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginResponse parseDelimitedFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+              .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static LoginResponse parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginResponse parseFrom(
+            com.google.protobuf.CodedInputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+              .parseWithIOException(PARSER, input);
     }
-    public static LoginResponse parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginResponse parseFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+              .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @Override
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(LoginResponse prototype) {
+    public static Builder newBuilder(com.ilife.zhihu.crawller.Zhihu.LoginResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @Override
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
+              ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @Override
+    @java.lang.Override
     protected Builder newBuilderForType(
-        BuilderParent parent) {
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -1178,20 +1178,20 @@ public final class Zhihu {
      * Protobuf type {@code LoginResponse}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:LoginResponse)
-        LoginResponseOrBuilder {
+            com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+            // @@protoc_insertion_point(builder_implements:LoginResponse)
+            com.ilife.zhihu.crawller.Zhihu.LoginResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return Zhihu.internal_static_LoginResponse_descriptor;
+      getDescriptor() {
+        return com.ilife.zhihu.crawller.Zhihu.internal_static_LoginResponse_descriptor;
       }
 
-      @Override
-      protected FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return Zhihu.internal_static_LoginResponse_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                LoginResponse.class, Builder.class);
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internalGetFieldAccessorTable() {
+        return com.ilife.zhihu.crawller.Zhihu.internal_static_LoginResponse_fieldAccessorTable
+                .ensureFieldAccessorsInitialized(
+                        com.ilife.zhihu.crawller.Zhihu.LoginResponse.class, com.ilife.zhihu.crawller.Zhihu.LoginResponse.Builder.class);
       }
 
       // Construct using com.ilife.zhihu.crawller.Zhihu.LoginResponse.newBuilder()
@@ -1200,7 +1200,7 @@ public final class Zhihu {
       }
 
       private Builder(
-          BuilderParent parent) {
+              com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -1209,7 +1209,7 @@ public final class Zhihu {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @Override
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         response_ = "";
@@ -1217,78 +1217,78 @@ public final class Zhihu {
         return this;
       }
 
-      @Override
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return Zhihu.internal_static_LoginResponse_descriptor;
+      getDescriptorForType() {
+        return com.ilife.zhihu.crawller.Zhihu.internal_static_LoginResponse_descriptor;
       }
 
-      @Override
-      public LoginResponse getDefaultInstanceForType() {
-        return LoginResponse.getDefaultInstance();
+      @java.lang.Override
+      public com.ilife.zhihu.crawller.Zhihu.LoginResponse getDefaultInstanceForType() {
+        return com.ilife.zhihu.crawller.Zhihu.LoginResponse.getDefaultInstance();
       }
 
-      @Override
-      public LoginResponse build() {
-        LoginResponse result = buildPartial();
+      @java.lang.Override
+      public com.ilife.zhihu.crawller.Zhihu.LoginResponse build() {
+        com.ilife.zhihu.crawller.Zhihu.LoginResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      @Override
-      public LoginResponse buildPartial() {
-        LoginResponse result = new LoginResponse(this);
+      @java.lang.Override
+      public com.ilife.zhihu.crawller.Zhihu.LoginResponse buildPartial() {
+        com.ilife.zhihu.crawller.Zhihu.LoginResponse result = new com.ilife.zhihu.crawller.Zhihu.LoginResponse(this);
         result.response_ = response_;
         onBuilt();
         return result;
       }
 
-      @Override
+      @java.lang.Override
       public Builder clone() {
         return super.clone();
       }
-      @Override
+      @java.lang.Override
       public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
         return super.setField(field, value);
       }
-      @Override
+      @java.lang.Override
       public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
+              com.google.protobuf.Descriptors.FieldDescriptor field) {
         return super.clearField(field);
       }
-      @Override
+      @java.lang.Override
       public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+              com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return super.clearOneof(oneof);
       }
-      @Override
+      @java.lang.Override
       public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              int index, java.lang.Object value) {
         return super.setRepeatedField(field, index, value);
       }
-      @Override
+      @java.lang.Override
       public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
         return super.addRepeatedField(field, value);
       }
-      @Override
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof LoginResponse) {
-          return mergeFrom((LoginResponse)other);
+        if (other instanceof com.ilife.zhihu.crawller.Zhihu.LoginResponse) {
+          return mergeFrom((com.ilife.zhihu.crawller.Zhihu.LoginResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(LoginResponse other) {
-        if (other == LoginResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.ilife.zhihu.crawller.Zhihu.LoginResponse other) {
+        if (other == com.ilife.zhihu.crawller.Zhihu.LoginResponse.getDefaultInstance()) return this;
         if (!other.getResponse().isEmpty()) {
           response_ = other.response_;
           onChanged();
@@ -1298,21 +1298,21 @@ public final class Zhihu {
         return this;
       }
 
-      @Override
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @Override
+      @java.lang.Override
       public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        LoginResponse parsedMessage = null;
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws java.io.IOException {
+        com.ilife.zhihu.crawller.Zhihu.LoginResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (LoginResponse) e.getUnfinishedMessage();
+          parsedMessage = (com.ilife.zhihu.crawller.Zhihu.LoginResponse) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1322,21 +1322,21 @@ public final class Zhihu {
         return this;
       }
 
-      private Object response_ = "";
+      private java.lang.Object response_ = "";
       /**
        * <code>string response = 1;</code>
        * @return The response.
        */
-      public String getResponse() {
-        Object ref = response_;
-        if (!(ref instanceof String)) {
+      public java.lang.String getResponse() {
+        java.lang.Object ref = response_;
+        if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
+                  (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
           response_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
       /**
@@ -1344,12 +1344,12 @@ public final class Zhihu {
        * @return The bytes for response.
        */
       public com.google.protobuf.ByteString
-          getResponseBytes() {
-        Object ref = response_;
+      getResponseBytes() {
+        java.lang.Object ref = response_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (String) ref);
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (java.lang.String) ref);
           response_ = b;
           return b;
         } else {
@@ -1362,11 +1362,11 @@ public final class Zhihu {
        * @return This builder for chaining.
        */
       public Builder setResponse(
-          String value) {
+              java.lang.String value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  
+          throw new NullPointerException();
+        }
+
         response_ = value;
         onChanged();
         return this;
@@ -1376,7 +1376,7 @@ public final class Zhihu {
        * @return This builder for chaining.
        */
       public Builder clearResponse() {
-        
+
         response_ = getDefaultInstance().getResponse();
         onChanged();
         return this;
@@ -1387,25 +1387,25 @@ public final class Zhihu {
        * @return This builder for chaining.
        */
       public Builder setResponseBytes(
-          com.google.protobuf.ByteString value) {
+              com.google.protobuf.ByteString value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
+          throw new NullPointerException();
+        }
+        checkByteStringIsUtf8(value);
+
         response_ = value;
         onChanged();
         return this;
       }
-      @Override
+      @java.lang.Override
       public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @Override
+      @java.lang.Override
       public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
       }
 
@@ -1414,22 +1414,22 @@ public final class Zhihu {
     }
 
     // @@protoc_insertion_point(class_scope:LoginResponse)
-    private static final LoginResponse DEFAULT_INSTANCE;
+    private static final com.ilife.zhihu.crawller.Zhihu.LoginResponse DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new LoginResponse();
+      DEFAULT_INSTANCE = new com.ilife.zhihu.crawller.Zhihu.LoginResponse();
     }
 
-    public static LoginResponse getDefaultInstance() {
+    public static com.ilife.zhihu.crawller.Zhihu.LoginResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
     private static final com.google.protobuf.Parser<LoginResponse>
-        PARSER = new com.google.protobuf.AbstractParser<LoginResponse>() {
-      @Override
+            PARSER = new com.google.protobuf.AbstractParser<LoginResponse>() {
+      @java.lang.Override
       public LoginResponse parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws com.google.protobuf.InvalidProtocolBufferException {
         return new LoginResponse(input, extensionRegistry);
       }
     };
@@ -1438,42 +1438,42 @@ public final class Zhihu {
       return PARSER;
     }
 
-    @Override
+    @java.lang.Override
     public com.google.protobuf.Parser<LoginResponse> getParserForType() {
       return PARSER;
     }
 
-    @Override
-    public LoginResponse getDefaultInstanceForType() {
+    @java.lang.Override
+    public com.ilife.zhihu.crawller.Zhihu.LoginResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   public interface ActivitiyRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:ActivitiyRequest)
-      com.google.protobuf.MessageOrBuilder {
+          // @@protoc_insertion_point(interface_extends:ActivitiyRequest)
+          com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>string username = 1;</code>
      * @return The username.
      */
-    String getUsername();
+    java.lang.String getUsername();
     /**
      * <code>string username = 1;</code>
      * @return The bytes for username.
      */
     com.google.protobuf.ByteString
-        getUsernameBytes();
+    getUsernameBytes();
   }
   /**
    * Protobuf type {@code ActivitiyRequest}
    */
   public static final class ActivitiyRequest extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:ActivitiyRequest)
-      ActivitiyRequestOrBuilder {
-  private static final long serialVersionUID = 0L;
+          com.google.protobuf.GeneratedMessageV3 implements
+          // @@protoc_insertion_point(message_implements:ActivitiyRequest)
+          ActivitiyRequestOrBuilder {
+    private static final long serialVersionUID = 0L;
     // Use ActivitiyRequest.newBuilder() to construct.
     private ActivitiyRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -1482,28 +1482,28 @@ public final class Zhihu {
       username_ = "";
     }
 
-    @Override
+    @java.lang.Override
     @SuppressWarnings({"unused"})
-    protected Object newInstance(
-        UnusedPrivateParameter unused) {
+    protected java.lang.Object newInstance(
+            UnusedPrivateParameter unused) {
       return new ActivitiyRequest();
     }
 
-    @Override
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
     }
     private ActivitiyRequest(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new NullPointerException();
+        throw new java.lang.NullPointerException();
       }
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
+              com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -1513,14 +1513,14 @@ public final class Zhihu {
               done = true;
               break;
             case 10: {
-              String s = input.readStringRequireUtf8();
+              java.lang.String s = input.readStringRequireUtf8();
 
               username_ = s;
               break;
             }
             default: {
               if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+                      input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -1531,40 +1531,40 @@ public final class Zhihu {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+                e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return Zhihu.internal_static_ActivitiyRequest_descriptor;
+    getDescriptor() {
+      return com.ilife.zhihu.crawller.Zhihu.internal_static_ActivitiyRequest_descriptor;
     }
 
-    @Override
-    protected FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return Zhihu.internal_static_ActivitiyRequest_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              ActivitiyRequest.class, Builder.class);
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    internalGetFieldAccessorTable() {
+      return com.ilife.zhihu.crawller.Zhihu.internal_static_ActivitiyRequest_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                      com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest.class, com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest.Builder.class);
     }
 
     public static final int USERNAME_FIELD_NUMBER = 1;
-    private volatile Object username_;
+    private volatile java.lang.Object username_;
     /**
      * <code>string username = 1;</code>
      * @return The username.
      */
-    @Override
-    public String getUsername() {
-      Object ref = username_;
-      if (ref instanceof String) {
-        return (String) ref;
+    @java.lang.Override
+    public java.lang.String getUsername() {
+      java.lang.Object ref = username_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
+        com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
         username_ = s;
         return s;
       }
@@ -1573,14 +1573,14 @@ public final class Zhihu {
      * <code>string username = 1;</code>
      * @return The bytes for username.
      */
-    @Override
+    @java.lang.Override
     public com.google.protobuf.ByteString
-        getUsernameBytes() {
-      Object ref = username_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (String) ref);
+    getUsernameBytes() {
+      java.lang.Object ref = username_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                        (java.lang.String) ref);
         username_ = b;
         return b;
       } else {
@@ -1589,7 +1589,7 @@ public final class Zhihu {
     }
 
     private byte memoizedIsInitialized = -1;
-    @Override
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -1599,16 +1599,16 @@ public final class Zhihu {
       return true;
     }
 
-    @Override
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
+            throws java.io.IOException {
       if (!getUsernameBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, username_);
       }
       unknownFields.writeTo(output);
     }
 
-    @Override
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -1622,23 +1622,23 @@ public final class Zhihu {
       return size;
     }
 
-    @Override
-    public boolean equals(final Object obj) {
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-       return true;
+        return true;
       }
-      if (!(obj instanceof ActivitiyRequest)) {
+      if (!(obj instanceof com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest)) {
         return super.equals(obj);
       }
-      ActivitiyRequest other = (ActivitiyRequest) obj;
+      com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest other = (com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest) obj;
 
       if (!getUsername()
-          .equals(other.getUsername())) return false;
+              .equals(other.getUsername())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -1652,93 +1652,93 @@ public final class Zhihu {
       return hash;
     }
 
-    public static ActivitiyRequest parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest parseFrom(
+            java.nio.ByteBuffer data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static ActivitiyRequest parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest parseFrom(
+            java.nio.ByteBuffer data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static ActivitiyRequest parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest parseFrom(
+            com.google.protobuf.ByteString data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static ActivitiyRequest parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest parseFrom(
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static ActivitiyRequest parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest parseFrom(byte[] data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static ActivitiyRequest parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest parseFrom(
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static ActivitiyRequest parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest parseFrom(java.io.InputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+              .parseWithIOException(PARSER, input);
     }
-    public static ActivitiyRequest parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest parseFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+              .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static ActivitiyRequest parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest parseDelimitedFrom(java.io.InputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+              .parseDelimitedWithIOException(PARSER, input);
     }
-    public static ActivitiyRequest parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest parseDelimitedFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+              .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static ActivitiyRequest parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest parseFrom(
+            com.google.protobuf.CodedInputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+              .parseWithIOException(PARSER, input);
     }
-    public static ActivitiyRequest parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest parseFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+              .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @Override
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(ActivitiyRequest prototype) {
+    public static Builder newBuilder(com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @Override
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
+              ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @Override
+    @java.lang.Override
     protected Builder newBuilderForType(
-        BuilderParent parent) {
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -1746,20 +1746,20 @@ public final class Zhihu {
      * Protobuf type {@code ActivitiyRequest}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:ActivitiyRequest)
-        ActivitiyRequestOrBuilder {
+            com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+            // @@protoc_insertion_point(builder_implements:ActivitiyRequest)
+            com.ilife.zhihu.crawller.Zhihu.ActivitiyRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return Zhihu.internal_static_ActivitiyRequest_descriptor;
+      getDescriptor() {
+        return com.ilife.zhihu.crawller.Zhihu.internal_static_ActivitiyRequest_descriptor;
       }
 
-      @Override
-      protected FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return Zhihu.internal_static_ActivitiyRequest_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                ActivitiyRequest.class, Builder.class);
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internalGetFieldAccessorTable() {
+        return com.ilife.zhihu.crawller.Zhihu.internal_static_ActivitiyRequest_fieldAccessorTable
+                .ensureFieldAccessorsInitialized(
+                        com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest.class, com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest.Builder.class);
       }
 
       // Construct using com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest.newBuilder()
@@ -1768,7 +1768,7 @@ public final class Zhihu {
       }
 
       private Builder(
-          BuilderParent parent) {
+              com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -1777,7 +1777,7 @@ public final class Zhihu {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @Override
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         username_ = "";
@@ -1785,78 +1785,78 @@ public final class Zhihu {
         return this;
       }
 
-      @Override
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return Zhihu.internal_static_ActivitiyRequest_descriptor;
+      getDescriptorForType() {
+        return com.ilife.zhihu.crawller.Zhihu.internal_static_ActivitiyRequest_descriptor;
       }
 
-      @Override
-      public ActivitiyRequest getDefaultInstanceForType() {
-        return ActivitiyRequest.getDefaultInstance();
+      @java.lang.Override
+      public com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest getDefaultInstanceForType() {
+        return com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest.getDefaultInstance();
       }
 
-      @Override
-      public ActivitiyRequest build() {
-        ActivitiyRequest result = buildPartial();
+      @java.lang.Override
+      public com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest build() {
+        com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      @Override
-      public ActivitiyRequest buildPartial() {
-        ActivitiyRequest result = new ActivitiyRequest(this);
+      @java.lang.Override
+      public com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest buildPartial() {
+        com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest result = new com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest(this);
         result.username_ = username_;
         onBuilt();
         return result;
       }
 
-      @Override
+      @java.lang.Override
       public Builder clone() {
         return super.clone();
       }
-      @Override
+      @java.lang.Override
       public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
         return super.setField(field, value);
       }
-      @Override
+      @java.lang.Override
       public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
+              com.google.protobuf.Descriptors.FieldDescriptor field) {
         return super.clearField(field);
       }
-      @Override
+      @java.lang.Override
       public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+              com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return super.clearOneof(oneof);
       }
-      @Override
+      @java.lang.Override
       public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              int index, java.lang.Object value) {
         return super.setRepeatedField(field, index, value);
       }
-      @Override
+      @java.lang.Override
       public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
         return super.addRepeatedField(field, value);
       }
-      @Override
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof ActivitiyRequest) {
-          return mergeFrom((ActivitiyRequest)other);
+        if (other instanceof com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest) {
+          return mergeFrom((com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(ActivitiyRequest other) {
-        if (other == ActivitiyRequest.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest other) {
+        if (other == com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest.getDefaultInstance()) return this;
         if (!other.getUsername().isEmpty()) {
           username_ = other.username_;
           onChanged();
@@ -1866,21 +1866,21 @@ public final class Zhihu {
         return this;
       }
 
-      @Override
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @Override
+      @java.lang.Override
       public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        ActivitiyRequest parsedMessage = null;
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws java.io.IOException {
+        com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (ActivitiyRequest) e.getUnfinishedMessage();
+          parsedMessage = (com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1890,21 +1890,21 @@ public final class Zhihu {
         return this;
       }
 
-      private Object username_ = "";
+      private java.lang.Object username_ = "";
       /**
        * <code>string username = 1;</code>
        * @return The username.
        */
-      public String getUsername() {
-        Object ref = username_;
-        if (!(ref instanceof String)) {
+      public java.lang.String getUsername() {
+        java.lang.Object ref = username_;
+        if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
+                  (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
           username_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
       /**
@@ -1912,12 +1912,12 @@ public final class Zhihu {
        * @return The bytes for username.
        */
       public com.google.protobuf.ByteString
-          getUsernameBytes() {
-        Object ref = username_;
+      getUsernameBytes() {
+        java.lang.Object ref = username_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (String) ref);
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (java.lang.String) ref);
           username_ = b;
           return b;
         } else {
@@ -1930,11 +1930,11 @@ public final class Zhihu {
        * @return This builder for chaining.
        */
       public Builder setUsername(
-          String value) {
+              java.lang.String value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  
+          throw new NullPointerException();
+        }
+
         username_ = value;
         onChanged();
         return this;
@@ -1944,7 +1944,7 @@ public final class Zhihu {
        * @return This builder for chaining.
        */
       public Builder clearUsername() {
-        
+
         username_ = getDefaultInstance().getUsername();
         onChanged();
         return this;
@@ -1955,25 +1955,25 @@ public final class Zhihu {
        * @return This builder for chaining.
        */
       public Builder setUsernameBytes(
-          com.google.protobuf.ByteString value) {
+              com.google.protobuf.ByteString value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
+          throw new NullPointerException();
+        }
+        checkByteStringIsUtf8(value);
+
         username_ = value;
         onChanged();
         return this;
       }
-      @Override
+      @java.lang.Override
       public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @Override
+      @java.lang.Override
       public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
       }
 
@@ -1982,22 +1982,22 @@ public final class Zhihu {
     }
 
     // @@protoc_insertion_point(class_scope:ActivitiyRequest)
-    private static final ActivitiyRequest DEFAULT_INSTANCE;
+    private static final com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new ActivitiyRequest();
+      DEFAULT_INSTANCE = new com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest();
     }
 
-    public static ActivitiyRequest getDefaultInstance() {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
     private static final com.google.protobuf.Parser<ActivitiyRequest>
-        PARSER = new com.google.protobuf.AbstractParser<ActivitiyRequest>() {
-      @Override
+            PARSER = new com.google.protobuf.AbstractParser<ActivitiyRequest>() {
+      @java.lang.Override
       public ActivitiyRequest parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws com.google.protobuf.InvalidProtocolBufferException {
         return new ActivitiyRequest(input, extensionRegistry);
       }
     };
@@ -2006,42 +2006,42 @@ public final class Zhihu {
       return PARSER;
     }
 
-    @Override
+    @java.lang.Override
     public com.google.protobuf.Parser<ActivitiyRequest> getParserForType() {
       return PARSER;
     }
 
-    @Override
-    public ActivitiyRequest getDefaultInstanceForType() {
+    @java.lang.Override
+    public com.ilife.zhihu.crawller.Zhihu.ActivitiyRequest getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   public interface ActivityResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:ActivityResponse)
-      com.google.protobuf.MessageOrBuilder {
+          // @@protoc_insertion_point(interface_extends:ActivityResponse)
+          com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>string responseJson = 1;</code>
      * @return The responseJson.
      */
-    String getResponseJson();
+    java.lang.String getResponseJson();
     /**
      * <code>string responseJson = 1;</code>
      * @return The bytes for responseJson.
      */
     com.google.protobuf.ByteString
-        getResponseJsonBytes();
+    getResponseJsonBytes();
   }
   /**
    * Protobuf type {@code ActivityResponse}
    */
   public static final class ActivityResponse extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:ActivityResponse)
-      ActivityResponseOrBuilder {
-  private static final long serialVersionUID = 0L;
+          com.google.protobuf.GeneratedMessageV3 implements
+          // @@protoc_insertion_point(message_implements:ActivityResponse)
+          ActivityResponseOrBuilder {
+    private static final long serialVersionUID = 0L;
     // Use ActivityResponse.newBuilder() to construct.
     private ActivityResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -2050,28 +2050,28 @@ public final class Zhihu {
       responseJson_ = "";
     }
 
-    @Override
+    @java.lang.Override
     @SuppressWarnings({"unused"})
-    protected Object newInstance(
-        UnusedPrivateParameter unused) {
+    protected java.lang.Object newInstance(
+            UnusedPrivateParameter unused) {
       return new ActivityResponse();
     }
 
-    @Override
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
     }
     private ActivityResponse(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new NullPointerException();
+        throw new java.lang.NullPointerException();
       }
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
+              com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -2081,14 +2081,14 @@ public final class Zhihu {
               done = true;
               break;
             case 10: {
-              String s = input.readStringRequireUtf8();
+              java.lang.String s = input.readStringRequireUtf8();
 
               responseJson_ = s;
               break;
             }
             default: {
               if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+                      input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -2099,40 +2099,40 @@ public final class Zhihu {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+                e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return Zhihu.internal_static_ActivityResponse_descriptor;
+    getDescriptor() {
+      return com.ilife.zhihu.crawller.Zhihu.internal_static_ActivityResponse_descriptor;
     }
 
-    @Override
-    protected FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return Zhihu.internal_static_ActivityResponse_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              ActivityResponse.class, Builder.class);
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    internalGetFieldAccessorTable() {
+      return com.ilife.zhihu.crawller.Zhihu.internal_static_ActivityResponse_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                      com.ilife.zhihu.crawller.Zhihu.ActivityResponse.class, com.ilife.zhihu.crawller.Zhihu.ActivityResponse.Builder.class);
     }
 
     public static final int RESPONSEJSON_FIELD_NUMBER = 1;
-    private volatile Object responseJson_;
+    private volatile java.lang.Object responseJson_;
     /**
      * <code>string responseJson = 1;</code>
      * @return The responseJson.
      */
-    @Override
-    public String getResponseJson() {
-      Object ref = responseJson_;
-      if (ref instanceof String) {
-        return (String) ref;
+    @java.lang.Override
+    public java.lang.String getResponseJson() {
+      java.lang.Object ref = responseJson_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
+        com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
         responseJson_ = s;
         return s;
       }
@@ -2141,14 +2141,14 @@ public final class Zhihu {
      * <code>string responseJson = 1;</code>
      * @return The bytes for responseJson.
      */
-    @Override
+    @java.lang.Override
     public com.google.protobuf.ByteString
-        getResponseJsonBytes() {
-      Object ref = responseJson_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (String) ref);
+    getResponseJsonBytes() {
+      java.lang.Object ref = responseJson_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                        (java.lang.String) ref);
         responseJson_ = b;
         return b;
       } else {
@@ -2157,7 +2157,7 @@ public final class Zhihu {
     }
 
     private byte memoizedIsInitialized = -1;
-    @Override
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -2167,16 +2167,16 @@ public final class Zhihu {
       return true;
     }
 
-    @Override
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
+            throws java.io.IOException {
       if (!getResponseJsonBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, responseJson_);
       }
       unknownFields.writeTo(output);
     }
 
-    @Override
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -2190,23 +2190,23 @@ public final class Zhihu {
       return size;
     }
 
-    @Override
-    public boolean equals(final Object obj) {
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-       return true;
+        return true;
       }
-      if (!(obj instanceof ActivityResponse)) {
+      if (!(obj instanceof com.ilife.zhihu.crawller.Zhihu.ActivityResponse)) {
         return super.equals(obj);
       }
-      ActivityResponse other = (ActivityResponse) obj;
+      com.ilife.zhihu.crawller.Zhihu.ActivityResponse other = (com.ilife.zhihu.crawller.Zhihu.ActivityResponse) obj;
 
       if (!getResponseJson()
-          .equals(other.getResponseJson())) return false;
+              .equals(other.getResponseJson())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -2220,93 +2220,93 @@ public final class Zhihu {
       return hash;
     }
 
-    public static ActivityResponse parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivityResponse parseFrom(
+            java.nio.ByteBuffer data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static ActivityResponse parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivityResponse parseFrom(
+            java.nio.ByteBuffer data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static ActivityResponse parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivityResponse parseFrom(
+            com.google.protobuf.ByteString data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static ActivityResponse parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivityResponse parseFrom(
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static ActivityResponse parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivityResponse parseFrom(byte[] data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static ActivityResponse parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivityResponse parseFrom(
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static ActivityResponse parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivityResponse parseFrom(java.io.InputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+              .parseWithIOException(PARSER, input);
     }
-    public static ActivityResponse parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivityResponse parseFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+              .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static ActivityResponse parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivityResponse parseDelimitedFrom(java.io.InputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+              .parseDelimitedWithIOException(PARSER, input);
     }
-    public static ActivityResponse parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivityResponse parseDelimitedFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+              .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static ActivityResponse parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivityResponse parseFrom(
+            com.google.protobuf.CodedInputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+              .parseWithIOException(PARSER, input);
     }
-    public static ActivityResponse parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivityResponse parseFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+              .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @Override
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(ActivityResponse prototype) {
+    public static Builder newBuilder(com.ilife.zhihu.crawller.Zhihu.ActivityResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @Override
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
+              ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @Override
+    @java.lang.Override
     protected Builder newBuilderForType(
-        BuilderParent parent) {
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -2314,20 +2314,20 @@ public final class Zhihu {
      * Protobuf type {@code ActivityResponse}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:ActivityResponse)
-        ActivityResponseOrBuilder {
+            com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+            // @@protoc_insertion_point(builder_implements:ActivityResponse)
+            com.ilife.zhihu.crawller.Zhihu.ActivityResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return Zhihu.internal_static_ActivityResponse_descriptor;
+      getDescriptor() {
+        return com.ilife.zhihu.crawller.Zhihu.internal_static_ActivityResponse_descriptor;
       }
 
-      @Override
-      protected FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return Zhihu.internal_static_ActivityResponse_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                ActivityResponse.class, Builder.class);
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internalGetFieldAccessorTable() {
+        return com.ilife.zhihu.crawller.Zhihu.internal_static_ActivityResponse_fieldAccessorTable
+                .ensureFieldAccessorsInitialized(
+                        com.ilife.zhihu.crawller.Zhihu.ActivityResponse.class, com.ilife.zhihu.crawller.Zhihu.ActivityResponse.Builder.class);
       }
 
       // Construct using com.ilife.zhihu.crawller.Zhihu.ActivityResponse.newBuilder()
@@ -2336,7 +2336,7 @@ public final class Zhihu {
       }
 
       private Builder(
-          BuilderParent parent) {
+              com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -2345,7 +2345,7 @@ public final class Zhihu {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @Override
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         responseJson_ = "";
@@ -2353,78 +2353,78 @@ public final class Zhihu {
         return this;
       }
 
-      @Override
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return Zhihu.internal_static_ActivityResponse_descriptor;
+      getDescriptorForType() {
+        return com.ilife.zhihu.crawller.Zhihu.internal_static_ActivityResponse_descriptor;
       }
 
-      @Override
-      public ActivityResponse getDefaultInstanceForType() {
-        return ActivityResponse.getDefaultInstance();
+      @java.lang.Override
+      public com.ilife.zhihu.crawller.Zhihu.ActivityResponse getDefaultInstanceForType() {
+        return com.ilife.zhihu.crawller.Zhihu.ActivityResponse.getDefaultInstance();
       }
 
-      @Override
-      public ActivityResponse build() {
-        ActivityResponse result = buildPartial();
+      @java.lang.Override
+      public com.ilife.zhihu.crawller.Zhihu.ActivityResponse build() {
+        com.ilife.zhihu.crawller.Zhihu.ActivityResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      @Override
-      public ActivityResponse buildPartial() {
-        ActivityResponse result = new ActivityResponse(this);
+      @java.lang.Override
+      public com.ilife.zhihu.crawller.Zhihu.ActivityResponse buildPartial() {
+        com.ilife.zhihu.crawller.Zhihu.ActivityResponse result = new com.ilife.zhihu.crawller.Zhihu.ActivityResponse(this);
         result.responseJson_ = responseJson_;
         onBuilt();
         return result;
       }
 
-      @Override
+      @java.lang.Override
       public Builder clone() {
         return super.clone();
       }
-      @Override
+      @java.lang.Override
       public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
         return super.setField(field, value);
       }
-      @Override
+      @java.lang.Override
       public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
+              com.google.protobuf.Descriptors.FieldDescriptor field) {
         return super.clearField(field);
       }
-      @Override
+      @java.lang.Override
       public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+              com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return super.clearOneof(oneof);
       }
-      @Override
+      @java.lang.Override
       public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              int index, java.lang.Object value) {
         return super.setRepeatedField(field, index, value);
       }
-      @Override
+      @java.lang.Override
       public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
         return super.addRepeatedField(field, value);
       }
-      @Override
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof ActivityResponse) {
-          return mergeFrom((ActivityResponse)other);
+        if (other instanceof com.ilife.zhihu.crawller.Zhihu.ActivityResponse) {
+          return mergeFrom((com.ilife.zhihu.crawller.Zhihu.ActivityResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(ActivityResponse other) {
-        if (other == ActivityResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.ilife.zhihu.crawller.Zhihu.ActivityResponse other) {
+        if (other == com.ilife.zhihu.crawller.Zhihu.ActivityResponse.getDefaultInstance()) return this;
         if (!other.getResponseJson().isEmpty()) {
           responseJson_ = other.responseJson_;
           onChanged();
@@ -2434,21 +2434,21 @@ public final class Zhihu {
         return this;
       }
 
-      @Override
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @Override
+      @java.lang.Override
       public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        ActivityResponse parsedMessage = null;
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws java.io.IOException {
+        com.ilife.zhihu.crawller.Zhihu.ActivityResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (ActivityResponse) e.getUnfinishedMessage();
+          parsedMessage = (com.ilife.zhihu.crawller.Zhihu.ActivityResponse) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -2458,21 +2458,21 @@ public final class Zhihu {
         return this;
       }
 
-      private Object responseJson_ = "";
+      private java.lang.Object responseJson_ = "";
       /**
        * <code>string responseJson = 1;</code>
        * @return The responseJson.
        */
-      public String getResponseJson() {
-        Object ref = responseJson_;
-        if (!(ref instanceof String)) {
+      public java.lang.String getResponseJson() {
+        java.lang.Object ref = responseJson_;
+        if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
+                  (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
           responseJson_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
       /**
@@ -2480,12 +2480,12 @@ public final class Zhihu {
        * @return The bytes for responseJson.
        */
       public com.google.protobuf.ByteString
-          getResponseJsonBytes() {
-        Object ref = responseJson_;
+      getResponseJsonBytes() {
+        java.lang.Object ref = responseJson_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (String) ref);
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (java.lang.String) ref);
           responseJson_ = b;
           return b;
         } else {
@@ -2498,11 +2498,11 @@ public final class Zhihu {
        * @return This builder for chaining.
        */
       public Builder setResponseJson(
-          String value) {
+              java.lang.String value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  
+          throw new NullPointerException();
+        }
+
         responseJson_ = value;
         onChanged();
         return this;
@@ -2512,7 +2512,7 @@ public final class Zhihu {
        * @return This builder for chaining.
        */
       public Builder clearResponseJson() {
-        
+
         responseJson_ = getDefaultInstance().getResponseJson();
         onChanged();
         return this;
@@ -2523,25 +2523,25 @@ public final class Zhihu {
        * @return This builder for chaining.
        */
       public Builder setResponseJsonBytes(
-          com.google.protobuf.ByteString value) {
+              com.google.protobuf.ByteString value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
+          throw new NullPointerException();
+        }
+        checkByteStringIsUtf8(value);
+
         responseJson_ = value;
         onChanged();
         return this;
       }
-      @Override
+      @java.lang.Override
       public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @Override
+      @java.lang.Override
       public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
       }
 
@@ -2550,22 +2550,22 @@ public final class Zhihu {
     }
 
     // @@protoc_insertion_point(class_scope:ActivityResponse)
-    private static final ActivityResponse DEFAULT_INSTANCE;
+    private static final com.ilife.zhihu.crawller.Zhihu.ActivityResponse DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new ActivityResponse();
+      DEFAULT_INSTANCE = new com.ilife.zhihu.crawller.Zhihu.ActivityResponse();
     }
 
-    public static ActivityResponse getDefaultInstance() {
+    public static com.ilife.zhihu.crawller.Zhihu.ActivityResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
     private static final com.google.protobuf.Parser<ActivityResponse>
-        PARSER = new com.google.protobuf.AbstractParser<ActivityResponse>() {
-      @Override
+            PARSER = new com.google.protobuf.AbstractParser<ActivityResponse>() {
+      @java.lang.Override
       public ActivityResponse parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws com.google.protobuf.InvalidProtocolBufferException {
         return new ActivityResponse(input, extensionRegistry);
       }
     };
@@ -2574,85 +2574,85 @@ public final class Zhihu {
       return PARSER;
     }
 
-    @Override
+    @java.lang.Override
     public com.google.protobuf.Parser<ActivityResponse> getParserForType() {
       return PARSER;
     }
 
-    @Override
-    public ActivityResponse getDefaultInstanceForType() {
+    @java.lang.Override
+    public com.ilife.zhihu.crawller.Zhihu.ActivityResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_LoginRequest_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_LoginRequest_fieldAccessorTable;
+          internal_static_LoginRequest_descriptor;
+  private static final
+  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internal_static_LoginRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_LoginResponse_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_LoginResponse_fieldAccessorTable;
+          internal_static_LoginResponse_descriptor;
+  private static final
+  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internal_static_LoginResponse_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ActivitiyRequest_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_ActivitiyRequest_fieldAccessorTable;
+          internal_static_ActivitiyRequest_descriptor;
+  private static final
+  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internal_static_ActivitiyRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ActivityResponse_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_ActivityResponse_fieldAccessorTable;
+          internal_static_ActivityResponse_descriptor;
+  private static final
+  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internal_static_ActivityResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
-      getDescriptor() {
+  getDescriptor() {
     return descriptor;
   }
   private static  com.google.protobuf.Descriptors.FileDescriptor
-      descriptor;
+          descriptor;
   static {
-    String[] descriptorData = {
-      "\n\013zhihu.proto\"C\n\014LoginRequest\022\020\n\010usernam" +
-      "e\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\017\n\007captcha\030\003 \001" +
-      "(\t\"!\n\rLoginResponse\022\020\n\010response\030\001 \001(\t\"$\n" +
-      "\020ActivitiyRequest\022\020\n\010username\030\001 \001(\t\"(\n\020A" +
-      "ctivityResponse\022\024\n\014responseJson\030\001 \001(\t2o\n" +
-      "\014ZhihuService\022(\n\005Login\022\r.LoginRequest\032\016." +
-      "LoginResponse\"\000\0225\n\013GetActivity\022\021.Activit" +
-      "iyRequest\032\021.ActivityResponse\"\000B\032\n\030com.il" +
-      "ife.zhihu.crawllerb\006proto3"
+    java.lang.String[] descriptorData = {
+            "\n\013zhihu.proto\"C\n\014LoginRequest\022\020\n\010usernam" +
+                    "e\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\017\n\007captcha\030\003 \001" +
+                    "(\t\"!\n\rLoginResponse\022\020\n\010response\030\001 \001(\t\"$\n" +
+                    "\020ActivitiyRequest\022\020\n\010username\030\001 \001(\t\"(\n\020A" +
+                    "ctivityResponse\022\024\n\014responseJson\030\001 \001(\t2o\n" +
+                    "\014ZhihuService\022(\n\005Login\022\r.LoginRequest\032\016." +
+                    "LoginResponse\"\000\0225\n\013GetActivity\022\021.Activit" +
+                    "iyRequest\032\021.ActivityResponse\"\000B\032\n\030com.il" +
+                    "ife.zhihu.crawllerb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
-      .internalBuildGeneratedFileFrom(descriptorData,
-        new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
+            .internalBuildGeneratedFileFrom(descriptorData,
+                    new com.google.protobuf.Descriptors.FileDescriptor[] {
+                    });
     internal_static_LoginRequest_descriptor =
-      getDescriptor().getMessageTypes().get(0);
+            getDescriptor().getMessageTypes().get(0);
     internal_static_LoginRequest_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_LoginRequest_descriptor,
-        new String[] { "Username", "Password", "Captcha", });
+            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_LoginRequest_descriptor,
+            new java.lang.String[] { "Username", "Password", "Captcha", });
     internal_static_LoginResponse_descriptor =
-      getDescriptor().getMessageTypes().get(1);
+            getDescriptor().getMessageTypes().get(1);
     internal_static_LoginResponse_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_LoginResponse_descriptor,
-        new String[] { "Response", });
+            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_LoginResponse_descriptor,
+            new java.lang.String[] { "Response", });
     internal_static_ActivitiyRequest_descriptor =
-      getDescriptor().getMessageTypes().get(2);
+            getDescriptor().getMessageTypes().get(2);
     internal_static_ActivitiyRequest_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_ActivitiyRequest_descriptor,
-        new String[] { "Username", });
+            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_ActivitiyRequest_descriptor,
+            new java.lang.String[] { "Username", });
     internal_static_ActivityResponse_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+            getDescriptor().getMessageTypes().get(3);
     internal_static_ActivityResponse_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_ActivityResponse_descriptor,
-        new String[] { "ResponseJson", });
+            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_ActivityResponse_descriptor,
+            new java.lang.String[] { "ResponseJson", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

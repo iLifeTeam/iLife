@@ -1,5 +1,6 @@
 package com.ilife.zhihu.crawller;
 
+import com.google.protobuf.ByteString;
 import com.ilife.zhihu.service.ZhihuService;
 import com.ilife.zhihu.service.serviceimpl.ZhihuServiceImpl;
 import io.grpc.ManagedChannel;
@@ -32,7 +33,6 @@ public class ZhihuCrawlerServiceClient {
                 .setPassword(password)
                 .build();
         Zhihu.LoginResponse response =  blockingStub.login(request);
-
         return response.getResponse();
     }
     public String login(String username, String password,String captcha){

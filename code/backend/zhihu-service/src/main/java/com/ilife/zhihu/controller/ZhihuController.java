@@ -6,7 +6,8 @@ import com.ilife.zhihu.service.ZhihuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Scanner;
+import java.io.*;
+import java.util.Base64;
 
 
 @RestController
@@ -17,12 +18,34 @@ public class ZhihuController {
     @Autowired
     ZhihuService zhihuService;
 
+
+    void saveImageString(String token, String filename) {
+        try {
+            File file = new File("./captcha"+ "/" + filename);
+            if(!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
+            }
+            if(!file.exists()) {
+                file.createNewFile();
+            }
+            OutputStream out = new FileOutputStream(file);
+            byte[] bytes = Base64.getDecoder().decode(token);
+            out.write(bytes);
+            out.flush();
+            out.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
     @PostMapping(value = "/login", produces = "application/json")
     String loginIntoZhihu(@RequestParam("username") String username,
                           @RequestParam("password") String password,
                           @RequestParam(name = "captcha", required = false) String captcha){
         String response = captcha == null ? crawlerServiceClient.login(username,password)
                                           : crawlerServiceClient.login(username,password,captcha);
+        if (!response.equals( "success")){
+           saveImageString(response,  username + ".gif");
+        }
         System.out.println(response);
         return response;
     }
