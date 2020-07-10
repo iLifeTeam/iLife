@@ -45,15 +45,14 @@ jobs:
         tags: latest
         path: ./code/backend/zhihu-service
 
-    - name: Setup SSH
-      uses: MrSquaare/ssh-setup-action@v1
-      with:
-        host: root@47.97.206.169
-        private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-    - name: Docker-Compose
-      run: 
-        if [ -d "./iLife" ]; then rm -Rf ./iLife; fi
-        git clone -b zhihu-crawller https://github.com/iLifeTeam/iLife.git
-        cd ./code/backend/zhihu-service
-        docker-compose up
+    - name: ls -a via ssh
+      uses: fifsky/ssh-action@master
+       with:
+        command: |
+          if [ -d "./iLife" ]; then rm -Rf ./iLife; fi
+          git clone -b zhihu-crawller https://github.com/iLifeTeam/iLife.git
+          cd ./code/backend/zhihu-service
+          docker-compose up
+        host: 47.97.206.169
+        user: root
+        key: ${{ secrets.SSH_PRIVATE_KEY}}
