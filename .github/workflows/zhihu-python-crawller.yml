@@ -29,7 +29,15 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_TOKEN }}
+        repository: ilife2020/zhihu-python-crawller
+        tags: latest
+        path: ./code/crawllers/zhihu-python-crawller
+
+    - name: Build and push zhihu-serive Docker image
+      uses: docker/build-push-action@v1.1.0
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_TOKEN }}
         repository: ilife2020/zhihu-service
         tags: latest
         path: ./code/backend/zhihu-service
-
