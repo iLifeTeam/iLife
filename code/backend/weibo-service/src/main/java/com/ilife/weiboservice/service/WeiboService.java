@@ -7,4 +7,6 @@ import java.util.List;
 public interface WeiboService {
 
     List<Weibo> findAllByUid(Integer uid);
+
+    void crawlWeibo(Integer uid);
 }

@@ -27,8 +27,13 @@ public class WeiboServiceController {
         return  null;
     }
     @RequestMapping(path="/weibo/getWeibo")
-    public List<Weibo> getBook(@RequestParam("userId") Integer uid){
+    public List<Weibo> getWeibo(@RequestParam("userId") Integer uid){
         System.out.println("*****getWeibo*****");
         return weiboService.findAllByUid(uid);
+    }
+    @RequestMapping(path="/weibo/crawlWeibo")
+    public void crawlWeibo(@RequestParam("userId") Integer uid){
+        System.out.println("*****getWeibo*****");
+        weiboService.crawlWeibo(uid);
     }
 }
