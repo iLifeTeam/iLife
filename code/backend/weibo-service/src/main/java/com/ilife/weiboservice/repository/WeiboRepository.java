@@ -9,7 +9,9 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 public interface WeiboRepository extends CrudRepository<Weibo,Integer> {
-    Weibo findByWid(Integer wid);
+
+
+    Weibo findById(String id);
 
     List<Weibo> findAllByUid(Integer uid);
 
@@ -19,7 +21,7 @@ public interface WeiboRepository extends CrudRepository<Weibo,Integer> {
 
     @Transactional
     @Modifying
-    void deleteByWid(Integer wid);
+    void deleteById(Integer id);
 
 
 }

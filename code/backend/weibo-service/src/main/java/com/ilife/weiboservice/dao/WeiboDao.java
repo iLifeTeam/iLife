@@ -4,13 +4,13 @@ import com.ilife.weiboservice.entity.Weibo;
 import java.util.List;
 
 public interface WeiboDao {
-    Weibo findByWid(Integer wid);
+    Weibo findById(String id);
 
     List<Weibo> findAllByUid(Integer uid);
 
     void deleteByUid(Integer uid);
 
-    void deleteByWid(Integer wid);
+    void deleteById(Integer id);
 
     Weibo save(Weibo weibo);
 }
