@@ -44,7 +44,15 @@ jobs:
         repository: ilife2020/zhihu-service
         tags: latest
         path: ./code/backend/zhihu-service
-
+    
+    # Step that does that actual cache save and restore
+    - uses: actions/cache@v1
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+         ${{ runner.os }}-maven-
+    
     - name: ls -a via ssh
       uses: fifsky/ssh-action@master
       with:
