@@ -10,7 +10,7 @@ import java.util.List;
 import static java.lang.Integer.parseInt;
 
 
-
+@CrossOrigin(origins = "*")
 @RestController
 public class WeiboServiceController {
 
