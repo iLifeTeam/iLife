@@ -71,7 +71,7 @@ class Answer:
 
 
 class Article:
-    def __init__(self, title, author, excerp, content, update_time, image_url, column_name):
+    def __init__(self, title, author, excerpt, content, update_time, image_url, column_name):
         self.title = title
         self.author = author
         self.update_time = update_time
@@ -220,11 +220,12 @@ class ZhihuService(zhihu_pb2_grpc.ZhihuServiceServicer):
         return zhihu_pb2.ActivityResponse(responseJson=json_object)
 
 
+
+
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
-ip = "127.0.0.1"
+ip = "0.0.0.0"
 port = "4001"
 serverString = ip + ":" + port
-
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
@@ -239,5 +240,5 @@ def serve():
 
 
 if __name__ == '__main__':
-    print("server running. at port 4001")
+    print("server running. at port 4001\n")
     serve()

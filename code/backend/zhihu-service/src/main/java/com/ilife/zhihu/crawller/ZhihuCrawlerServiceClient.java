@@ -53,15 +53,19 @@ public class ZhihuCrawlerServiceClient {
         return response.getResponseJson();
     }
     public static void main(String[] args) throws InterruptedException {
-        ZhihuCrawlerServiceClient client = new ZhihuCrawlerServiceClient("127.0.0.1", 4001);
+        ZhihuCrawlerServiceClient client = new ZhihuCrawlerServiceClient("localhost", 4001);
         String username = "zxy771906409@163.com";
         String password = "zxy13,./0904";
         String response = client.login(username,password);
+        System.out.println(response);
         switch (response){
             case "already login":
                 System.out.println("already login");
                 break;
-            case "need captcha":
+            case "success":
+                System.out.println("success");
+                break;
+            default:
                 Scanner scanner = new Scanner (System.in);
                 System.out.print("Enter your captcha:");
                 String captcha = scanner.next();
@@ -69,8 +73,6 @@ public class ZhihuCrawlerServiceClient {
                 String okresponse = client.login(username,password,captcha);
                 System.out.println(okresponse);
                 break;
-            case "success":
-                System.out.println("success");
         }
         String activities = client.getActivities(username);
         System.out.println(activities);
