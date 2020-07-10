@@ -47,7 +47,7 @@ jobs:
 
     - name: ls -a via ssh
       uses: fifsky/ssh-action@master
-       with:
+      with:
         command: |
           if [ -d "./iLife" ]; then rm -Rf ./iLife; fi
           git clone -b zhihu-crawller https://github.com/iLifeTeam/iLife.git
