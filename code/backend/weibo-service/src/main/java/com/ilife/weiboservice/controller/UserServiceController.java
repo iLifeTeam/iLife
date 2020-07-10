@@ -24,7 +24,7 @@ public class UserServiceController {
     private UserService userService;
 
     @RequestMapping(path="/user/getUser")
-    public User getBook(@RequestParam("userId") Integer uid){
+    public User getBook(@RequestParam("userId") Long uid){
         System.out.println("*****getWeibo*****");
         return userService.findAllById(uid);
     }

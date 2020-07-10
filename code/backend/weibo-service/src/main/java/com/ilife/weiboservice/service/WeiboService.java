@@ -8,5 +8,5 @@ public interface WeiboService {
 
     List<Weibo> findAllByUid(Integer uid);
 
-    void crawlWeibo(Integer uid);
+    void crawlWeibo(Long uid);
 }

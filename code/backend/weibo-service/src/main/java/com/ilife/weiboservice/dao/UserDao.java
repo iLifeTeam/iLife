@@ -4,7 +4,7 @@ package com.ilife.weiboservice.dao;
 
 
 public interface UserDao {
-    User findAllById(Integer id);
+    User findAllById(Long id);
 
     User findByNickname(String nickname);
 

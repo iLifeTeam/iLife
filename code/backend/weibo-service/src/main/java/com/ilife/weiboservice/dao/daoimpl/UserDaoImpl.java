@@ -12,7 +12,7 @@ public class UserDaoImpl implements UserDao {
     @Autowired
     private UserRepository userRepository;
 
-    public User findAllById(Integer id) {
+    public User findAllById(Long id) {
         return userRepository.findAllById(id);
     }
 

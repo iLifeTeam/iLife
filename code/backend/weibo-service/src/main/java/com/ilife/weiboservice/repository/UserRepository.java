@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 public interface UserRepository extends CrudRepository<User, Integer> {
 
     //这里findById会报错，所以改了一下
-    User findAllById(Integer id);
+    User findAllById(Long id);
 
     User findByNickname(String nickname);
 

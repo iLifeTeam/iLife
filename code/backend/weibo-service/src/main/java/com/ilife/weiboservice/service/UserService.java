@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface UserService {
 
-    User findAllById(Integer id);
+    User findAllById(Long id);
 }

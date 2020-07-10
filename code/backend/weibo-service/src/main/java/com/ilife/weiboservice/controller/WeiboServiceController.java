@@ -32,7 +32,7 @@ public class WeiboServiceController {
         return weiboService.findAllByUid(uid);
     }
     @RequestMapping(path="/weibo/crawlWeibo")
-    public void crawlWeibo(@RequestParam("userId") Integer uid){
+    public void crawlWeibo(@RequestParam("userId") Long uid){
         System.out.println("*****getWeibo*****");
         weiboService.crawlWeibo(uid);
     }

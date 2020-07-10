@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public User findAllById(Integer id) {
+    public User findAllById(Long id) {
         return userDao.findAllById(id);
     }
 }

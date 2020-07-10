@@ -20,7 +20,7 @@ public class WeiboServiceImpl implements WeiboService {
         return weiboDao.findAllByUid(uid);
     }
 
-    public void crawlWeibo(Integer uid) {
+    public void crawlWeibo(Long uid) {
         try {
             // TODO:should go to crawl.py and modify some parameter
             String[] args = new String[]{"python", "crawler\\weiboSpider\\weibo_spider\\crawl.py", uid.toString()};
