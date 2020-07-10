@@ -23,7 +23,22 @@
    $ docker run -p 4001:4001 zhihu-crawller:0.1
    ```
 
+4. 上传到Docker Hub
+
+   ```shell
+   # 登录
+   $ docker login
+   # 打tag  第一个参数是docker IMAGE ID, 第二个参数是你发布后的 仓库名/镜像名:版本
+   $ docker tag 87f716f546b3  ilife2020/zhihu-python-crawller:latest
+   # 上传
+   $ docker push ilife2020/zhihu-python-crawller:latest
+   ```
+
+   或者通过CI/CD，在git push的时候进行自动化上传。这部分参考CI/CD文档。
+
 ---
+
+
 
 #####  知乎python爬虫docker镜像经验
 
@@ -72,8 +87,4 @@
    $ docker run container_name -c
    # 如果是ENTRYPOINT ["top","-b"], 实际执行的是 top -b -c
    ```
-
----
-
-### 使用GithubAction进行CI/CD
 
