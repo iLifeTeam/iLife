@@ -44,3 +44,10 @@ jobs:
         repository: ilife2020/zhihu-service
         tags: latest
         path: ./code/backend/zhihu-service
+
+    - name: deploy to aliyun-server 
+      run: 
+        ssh root@47.97.206.169 -p ${{ secrets.ALIYUN_PASSWD }}
+        git clone -b zhihu-crawller 
+        cd ./code/backend/zhihu-service
+        docker-compose up
