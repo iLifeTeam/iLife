@@ -33,6 +33,9 @@ jobs:
         tags: latest
         path: ./code/crawllers/zhihu-python-crawller
 
+    - name: package with maven
+      run: cd ./code/backend/zhihu-service/ && mvn -B clean package
+
     - name: Build and push zhihu-serive Docker image
       uses: docker/build-push-action@v1.1.0
       with:
