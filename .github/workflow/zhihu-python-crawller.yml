@@ -6,12 +6,10 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    branches: 
-      - zhihu-crawller 
+    branches: [ zhihu-crawller ]
   pull_request:
-    branches: 
-      - zhihu-crawller 
-
+    branches: [ zhihu-crawller ]
+  
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
