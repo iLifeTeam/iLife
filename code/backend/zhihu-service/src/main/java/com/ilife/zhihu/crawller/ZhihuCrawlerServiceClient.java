@@ -3,6 +3,7 @@ package com.ilife.zhihu.crawller;
 import com.google.protobuf.ByteString;
 import com.ilife.zhihu.service.ZhihuService;
 import com.ilife.zhihu.service.serviceimpl.ZhihuServiceImpl;
+import io.grpc.ConnectivityState;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ public class ZhihuCrawlerServiceClient {
         channel = ManagedChannelBuilder.forAddress(host, port)
                 .usePlaintext()
                 .build();
-
         blockingStub = ZhihuServiceGrpc.newBlockingStub(channel);
     }
 
@@ -28,6 +28,8 @@ public class ZhihuCrawlerServiceClient {
         channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
     }
     public String login(String username, String password){
+//        ConnectivityState state = channel.getState(true);
+//        System.out.println( state.toString());
         Zhihu.LoginRequest request = Zhihu.LoginRequest.newBuilder()
                 .setUsername(username)
                 .setPassword(password)
@@ -53,7 +55,7 @@ public class ZhihuCrawlerServiceClient {
         return response.getResponseJson();
     }
     public static void main(String[] args) throws InterruptedException {
-        ZhihuCrawlerServiceClient client = new ZhihuCrawlerServiceClient("localhost", 4001);
+        ZhihuCrawlerServiceClient client = new ZhihuCrawlerServiceClient("python-crawller", 4001);
         String username = "zxy771906409@163.com";
         String password = "zxy13,./0904";
         String response = client.login(username,password);

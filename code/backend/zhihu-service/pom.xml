@@ -9,13 +9,14 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.ilife</groupId>
-    <artifactId>zhihu</artifactId>
+    <artifactId>zhihu-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>zhihu</name>
     <description>zhihu-backend</description>
 
     <properties>
         <java.version>8</java.version>
+        <docker.image.prefix>ilife</docker.image.prefix>
     </properties>
 
     <dependencies>
@@ -108,14 +109,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.9</version>
                 <configuration>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>1.18.12</version>
-                        </path>
-                    </annotationProcessorPaths>
+                    <repository>${docker.image.prefix}/${project.artifactId}</repository>
                 </configuration>
             </plugin>
             <plugin>
