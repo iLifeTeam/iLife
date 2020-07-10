@@ -1,4 +1,5 @@
 package com.ilife.weiboservice.entity;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

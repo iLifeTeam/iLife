@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;
 
-public interface UserRepository extends CrudRepository<User,Integer> {
+public interface UserRepository extends CrudRepository<User, Integer> {
 
     //这里findById会报错，所以改了一下
     User findAllById(Integer id);
@@ -16,9 +16,6 @@ public interface UserRepository extends CrudRepository<User,Integer> {
     @Transactional
     @Modifying
     void deleteById(Integer uid);
-
-
-
 
 
 }
