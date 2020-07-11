@@ -12,8 +12,9 @@ import java.util.Base64;
 
 @RestController
 public class ZhihuController {
-
-    ZhihuCrawlerServiceClient crawlerServiceClient = new ZhihuCrawlerServiceClient("127.0.0.1", 4001); //todo: hardcoded ip and port
+    private final String CRAWLER_HOSTNAME  = "python-crawller";
+    private final int CRAWLLER_PORT = 4001;
+    ZhihuCrawlerServiceClient crawlerServiceClient = new ZhihuCrawlerServiceClient(CRAWLER_HOSTNAME, CRAWLLER_PORT);
 
     @Autowired
     ZhihuService zhihuService;
@@ -41,6 +42,7 @@ public class ZhihuController {
     String loginIntoZhihu(@RequestParam("username") String username,
                           @RequestParam("password") String password,
                           @RequestParam(name = "captcha", required = false) String captcha){
+
         String response = captcha == null ? crawlerServiceClient.login(username,password)
                                           : crawlerServiceClient.login(username,password,captcha);
         if (!response.equals( "success")){
