@@ -2,6 +2,7 @@ package com.ilife.zhihu.controller;
 
 
 import com.ilife.zhihu.crawller.ZhihuCrawlerServiceClient;
+import com.ilife.zhihu.entity.User;
 import com.ilife.zhihu.service.ZhihuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +48,8 @@ public class ZhihuController {
                                           : crawlerServiceClient.login(username,password,captcha);
         if (!response.equals( "success")){
            saveImageString(response,  username + ".gif");
+        }else {
+
         }
         System.out.println(response);
         return response;
@@ -58,8 +61,18 @@ public class ZhihuController {
 //        System.out.println(response);
         if(response.equals("not login"))
             return response;
-        Integer updated = zhihuService.saveActivitiesFromJsonString(username, response);
+        User user = new User();
+        zhihuService.saveActivitiesFromJsonString(user, response);
         return "";
     }
+    @GetMapping(value = "/user",produces = "application/json")
+    User getUser(
+            @RequestParam("username") String username){
+        String response = crawlerServiceClient.getUserInfo(username);
+        if(response.equals("not login"))
+            return null;
+        return zhihuService.saveUserFromJsonString(response);
+    }
+
 
 }

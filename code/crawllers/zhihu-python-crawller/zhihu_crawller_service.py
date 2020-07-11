@@ -101,6 +101,35 @@ class Article:
         else:
             self.column_name = ""
 
+class User:
+    def __init__(self, uid, name, email, phone_no, answer_count, gender, thanked_count,voteup_count):
+        self.uid = uid
+        self.name = name
+        self.email = email
+        self.phone = phone_no
+        self.answer_count = answer_count
+        self.gender = gender
+        self.thanked_count = thanked_count
+        self.voteup_count = voteup_count
+    def __init__(self):
+        self.uid = ""
+        self.name = ""
+        self.email = ""
+        self.phone = ""
+        self.answer_count = 0
+        self.gender = -1
+        self.thanked_count = 0
+        self.voteup_count = 0
+
+    def setValue(self, me):
+        self.uid = me.uid
+        self.name = me.name
+        self.email = me.email
+        self.phone = me.phone_no
+        self.gender = me.gender 
+        self.answer_count = me.answer_count
+        self.thanked_count = me.thanked_count
+        self.voteup_count = me.voteup_count
 
 class Activity:
     def __init__(self, type, action_text, create_time):
@@ -218,9 +247,20 @@ class ZhihuService(zhihu_pb2_grpc.ZhihuServiceServicer):
         me = client.me()
         json_object = self.GenActivityJson(me)
         return zhihu_pb2.ActivityResponse(responseJson=json_object)
+    
+    def GenUserJson(self, user):
+        return json.dumps(self.GetActivityDict(user), default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
-
-
+    def GetUserInfo(self, request, context):
+        username = request.username
+        client = self.clientpool.get(username)
+        if client == None:
+            return zhihu_pb2.ActivityResponse("not login")
+        me = client.me()
+        user = User()
+        user.setValue(me)
+        json_object = self.GenUserJson(user)
+        return zhihu_pb2.UserinfoResponse(responseJson = json_object)
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 ip = "0.0.0.0"
