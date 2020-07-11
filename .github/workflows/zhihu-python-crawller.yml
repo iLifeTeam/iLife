@@ -58,7 +58,7 @@ jobs:
       with:
         command: |
           if [ -d "./iLife" ]; then rm -Rf ./iLife; fi
-          git clone -b zhihu-crawller git@github.com:iLifeTeam/iLife.git
+          git clone -b zhihu-crawller -T git@github.com:iLifeTeam/iLife.git
           cd ./code/backend/zhihu-service
           docker-compose up -d
         host: 47.97.206.169
