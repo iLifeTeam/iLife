@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import javax.transaction.Transactional;
 import java.util.List;
 
-public interface WeiboRepository extends CrudRepository<Weibo,Integer> {
+public interface WeiboRepository extends CrudRepository<Weibo, Integer> {
 
 
     Weibo findById(String id);
