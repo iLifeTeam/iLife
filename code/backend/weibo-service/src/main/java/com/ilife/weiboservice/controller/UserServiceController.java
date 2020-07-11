@@ -22,7 +22,7 @@ public class UserServiceController {
     @ApiOperation(notes = "Get user info by userID", value = "get user info",httpMethod = "GET")
     @RequestMapping(path="/user/getUser")
     public User getUser(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid){
-        System.out.println("*****getWeibo*****");
+        System.out.println("********** getUser **********");
         return userService.findAllById(uid);
     }
 }
