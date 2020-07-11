@@ -7,23 +7,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static java.lang.Integer.parseInt;
-
 
 @CrossOrigin(origins = "*")
 @RestController
 public class WeiboServiceController {
 
-//    @Autowired
-//    DiscoveryClient discoveryClient;
-
     @Autowired
     private WeiboService weiboService;
     @RequestMapping(path="/weibo/dc")
     public String dc(){
-//        String services = "Services: " + discoveryClient.getServices();
-//        System.out.println(services);
-//        return services;
         return  null;
     }
     @RequestMapping(path="/weibo/getWeibo")

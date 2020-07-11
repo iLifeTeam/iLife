@@ -1,9 +1,7 @@
 package com.ilife.weiboservice.controller;
 
 import com.ilife.weiboservice.entity.User;
-import com.ilife.weiboservice.entity.Weibo;
 import com.ilife.weiboservice.service.UserService;
-import com.ilife.weiboservice.service.WeiboService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +15,6 @@ import java.util.List;
 @RestController
 public class UserServiceController {
 
-//    @Autowired
-//    DiscoveryClient discoveryClient;
 
     @Autowired
     private UserService userService;
