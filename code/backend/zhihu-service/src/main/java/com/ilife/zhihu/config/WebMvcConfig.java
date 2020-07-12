@@ -7,7 +7,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
-
     /*
     * 解决swagger-ui 404的问题
     * */
@@ -22,6 +21,6 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         // 解决swagger的js文件无法访问
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
-
+//        super.addResourceHandlers(registry);
     }
 }
