@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 public class ZhihuServiceImpl implements ZhihuService {
@@ -32,8 +33,10 @@ public class ZhihuServiceImpl implements ZhihuService {
     }
 
     @Override
-    public Activity getUserActivity(String zhihuId) {
-        return null;
+    @Transactional
+    public List<Activity> getUserActivity(String username) {
+        User user = userDao.findByName(username);
+        return user.getActivities();
     }
 
     private Timestamp convertEpochToTimestamp(Long epoch){

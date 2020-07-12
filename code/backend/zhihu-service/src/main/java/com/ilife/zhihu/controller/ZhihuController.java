@@ -9,9 +9,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
+import org.graalvm.compiler.lir.LIRInstruction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.io.*;
 import java.util.Base64;
 
@@ -90,6 +92,13 @@ public class ZhihuController {
         if(response.equals("not login"))
             return response;
         return JSON.toJSONString(zhihuService.saveUserFromJsonString(response)) ;
+    }
+
+    @ApiOperation(notes = "GET user activities", value = "",httpMethod = "GET")
+    @GetMapping(value = "/activity/all",produces = "application/json")
+    String getActivity(
+            @RequestParam("username") String username){
+        return JSON.toJSONString(zhihuService.getUserActivity(username));
     }
 
 
