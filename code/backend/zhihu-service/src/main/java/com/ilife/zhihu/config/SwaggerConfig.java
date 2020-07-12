@@ -3,6 +3,7 @@ package com.ilife.zhihu.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -14,7 +15,7 @@ import springfox.documentation.service.Contact;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig {
+public class SwaggerConfig  {
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -25,6 +26,7 @@ public class SwaggerConfig {
                 // RequestHandlerSelectors.any() 所有都暴露，会多出一个默认的error-service-controller
                 // RequestHandlerSelectors.basePackage("com.info.*")  指定包位置
                 .apis(RequestHandlerSelectors.any())
+
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -42,4 +44,5 @@ public class SwaggerConfig {
                 .version("1.0.0-SNAPSHOT")
                 .build();
     }
+
 }
