@@ -34,11 +34,10 @@ export default class Menu extends Component {
             {/* sidebar menu: : style can be found in sidebar.less */}
             <ul className="sidebar-menu" data-widget="tree">
               <li className="header">导航栏</li>
-              <Oauth />
               {menuItems.map((menuItem, index) =>
                 <MenuItem key={index} itemURL={menuItem.itemURL} itemName={menuItem.itemName} childItems={menuItem.childItems} />
               )}
-              <li className="treeview">
+              {/*<li className="treeview">
                 <a href="fake_url">
                   <i className="fa fa-files-o" />
                   <span>Layout Options</span>
@@ -189,7 +188,7 @@ export default class Menu extends Component {
                   <li><a href="fake_url"><i className="fa fa-circle-o" /> Level One</a></li>
                 </ul>
               </li>
-              <li><a href="https://adminlte.io/docs"><i className="fa fa-book" /> <span>Documentation</span></a></li>
+              <li><a href="https://adminlte.io/docs"><i className="fa fa-book" /> <span>Documentation</span></a></li>*/}
               <li className="header">LABELS</li>
               <li><a href="fake_url"><i className="fa fa-circle-o text-red" /> <span>Important</span></a></li>
               <li><a href="fake_url"><i className="fa fa-circle-o text-yellow" /> <span>Warning</span></a></li>
@@ -228,6 +227,19 @@ const menuItems = [
     },
     {
       name: "趋势分析",
+      url: "/analyse"
+    }
+    ]
+  },
+  {
+    itemURL: "/zhihu",
+    itemName: "知乎",
+    childItems: [{
+      name: "动态信息",
+      url: "/info"
+    },
+    {
+      name: "分析",
       url: "/analyse"
     }
     ]
