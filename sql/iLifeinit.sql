@@ -98,9 +98,10 @@ create table singers
 /*==============================================================*/
 create table sing
 (
+   singid               bigint not null AUTO_INCREMENT,
    m_id                 bigint not null,
    s_id                 bigint not null,
-   primary key (m_id, s_id),
+   primary key (singid),
    foreign key (m_id) references musics (m_id) ,
    foreign key (s_id) references singers (s_id)
 )DEFAULT CHARSET=utf8mb4;
@@ -110,11 +111,12 @@ create table sing
 /*==============================================================*/
 create table wyyuser
 (
+   hisid                bigint not null AUTO_INCREMENT,
    wyyid                bigint not null,
    m_id                 bigint not null,
    playcount            int,
    score                int,
-   primary key (wyyid,m_id),
+   primary key (hisid),
    foreign key (m_id) references musics (m_id) 
 )DEFAULT CHARSET=utf8mb4;
 
@@ -178,9 +180,7 @@ create table users
    account              char(20),
    password             char(20),
    email                varchar(50),
-   primary key (id),
-   foreign key (wyyid) references wyy.wyyuser (wyyid),
-   foreign key (weibid) references weibo.user (id)
+   primary key (id)
 )DEFAULT CHARSET=utf8mb4;
 
 
