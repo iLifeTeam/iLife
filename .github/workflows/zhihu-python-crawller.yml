@@ -33,6 +33,14 @@ jobs:
         tags: latest
         path: ./code/crawllers/zhihu-python-crawller
 
+    # Step that does that actual cache save and restore
+    - uses: actions/cache@v1
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+         ${{ runner.os }}-maven-
+
     - name: package with maven
       run: cd ./code/backend/zhihu-service/ && mvn -B clean package
 
@@ -44,15 +52,18 @@ jobs:
         repository: ilife2020/zhihu-service
         tags: latest
         path: ./code/backend/zhihu-service
-
-    - name: ls -a via ssh
+    
+    
+    
+    - name: deploy via ssh
       uses: fifsky/ssh-action@master
       with:
         command: |
-          if [ -d "./iLife" ]; then rm -Rf ./iLife; fi
-          git clone -b zhihu-crawller https://github.com/iLifeTeam/iLife.git
+          cd iLife 
+          git pull 
           cd ./code/backend/zhihu-service
-          docker-compose up
+          docker-compose down
+          docker-compose up -d
         host: 47.97.206.169
         user: root
         key: ${{ secrets.SSH_PRIVATE_KEY}}

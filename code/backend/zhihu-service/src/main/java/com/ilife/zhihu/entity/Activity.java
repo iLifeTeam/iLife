@@ -20,8 +20,9 @@ public class Activity {
     @Column(name = "activity_id")
     Integer id;
 
-    @Column(name = "zhihu_user_id") // this zhihu id is actually username
-    String zhihuId;
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
+    @JoinColumn(name="zhihu_uid",referencedColumnName = "uid")
+    User user;
 
     @Column(name = "type")
     String type;
