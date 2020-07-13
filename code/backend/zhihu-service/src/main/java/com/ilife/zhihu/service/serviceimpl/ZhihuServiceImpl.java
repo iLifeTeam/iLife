@@ -35,6 +35,21 @@ public class ZhihuServiceImpl implements ZhihuService {
     }
 
     @Override
+    public Question getQuestionById(Integer id) {
+        return questionDao.findQuestionById(id);
+    }
+
+    @Override
+    public Article getArticleById(Integer id) {
+        return articleDao.findArticleById(id);
+    }
+
+    @Override
+    public Answer getAnswerById(Integer id) {
+        return answerDao.findAnswerById(id);
+    }
+
+    @Override
     public List<Activity> getUserActivity(String email) {
         User user = userDao.findByEmail(email);
         return user.getActivities();
@@ -179,4 +194,6 @@ public class ZhihuServiceImpl implements ZhihuService {
     public User getUserWithName(String name) {
         return userDao.findByName(name);
     }
+
+
 }

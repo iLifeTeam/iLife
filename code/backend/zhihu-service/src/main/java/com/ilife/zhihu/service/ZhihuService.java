@@ -1,8 +1,6 @@
 package com.ilife.zhihu.service;
 
-import com.ilife.zhihu.entity.Activity;
-import com.ilife.zhihu.entity.Question;
-import com.ilife.zhihu.entity.User;
+import com.ilife.zhihu.entity.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +8,11 @@ import java.util.List;
 
 public interface ZhihuService {
     Question addQuestion(Question question);
+
+    Question getQuestionById(Integer id);
+    Article getArticleById(Integer id);
+    Answer getAnswerById(Integer id);
+
     List<Activity> getUserActivity(String username);
     String getUserActivityJson(String username);
     User getUserWithEmail(String email);

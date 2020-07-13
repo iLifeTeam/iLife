@@ -3,6 +3,9 @@ package com.ilife.zhihu.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.ilife.zhihu.crawller.ZhihuCrawlerServiceClient;
+import com.ilife.zhihu.entity.Answer;
+import com.ilife.zhihu.entity.Article;
+import com.ilife.zhihu.entity.Question;
 import com.ilife.zhihu.entity.User;
 import com.ilife.zhihu.service.ZhihuService;
 import io.swagger.annotations.Api;
@@ -20,7 +23,7 @@ import java.util.Base64;
 @Api(value = "ZhihuServiceController")
 public class ZhihuController {
 
-    private final String CRAWLER_HOSTNAME  = "python-crawller";
+    private final String CRAWLER_HOSTNAME  = "python-crallwer";
     private final int CRAWLLER_PORT = 4001;
     ZhihuCrawlerServiceClient crawlerServiceClient = new ZhihuCrawlerServiceClient(CRAWLER_HOSTNAME, CRAWLLER_PORT);
 
@@ -99,6 +102,25 @@ public class ZhihuController {
         return zhihuService.getUserActivityJson(username);
     }
 
+    @ApiOperation(notes = "GET article", value = "",httpMethod = "GET")
+    @GetMapping(value = "/article",produces = "application/json")
+    String getArticle(
+            @RequestParam("id") Integer id){
+        return JSON.toJSONString( zhihuService.getArticleById(id));
+    }
+
+    @ApiOperation(notes = "GET question", value = "",httpMethod = "GET")
+    @GetMapping(value = "/question",produces = "application/json")
+    String getActivity(
+            @RequestParam("id") Integer id){
+        return JSON.toJSONString(zhihuService.getQuestionById(id));
+    }
+    @ApiOperation(notes = "GET user activities", value = "",httpMethod = "GET")
+    @GetMapping(value = "/answer",produces = "application/json")
+    String getAnswer(
+            @RequestParam("id") Integer id){
+        return JSON.toJSONString(zhihuService.getAnswerById(id));
+    }
 
 
 }
