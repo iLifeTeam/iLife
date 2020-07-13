@@ -3,10 +3,7 @@ package com.ilife.zhihu.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.ilife.zhihu.crawller.ZhihuCrawlerServiceClient;
-import com.ilife.zhihu.entity.Answer;
-import com.ilife.zhihu.entity.Article;
-import com.ilife.zhihu.entity.Question;
-import com.ilife.zhihu.entity.User;
+import com.ilife.zhihu.entity.*;
 import com.ilife.zhihu.service.ZhihuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import java.io.*;
 import java.util.Base64;
+import java.util.List;
 
 @RestController
 @Api(value = "ZhihuServiceController")
@@ -87,43 +85,43 @@ public class ZhihuController {
 
     @ApiOperation(notes = "GET user information", value = "",httpMethod = "GET")
     @GetMapping(value = "/user",produces = "application/json")
-    public String getUser(
+    @ResponseBody
+    public User getUser(
             @RequestParam("username") String username){
         String response = crawlerServiceClient.getUserInfo(username);
-        if(response.equals("not login"))
-            return response;
-        return JSON.toJSONString(zhihuService.saveUserFromJsonString(username, response)) ;
+        return zhihuService.saveUserFromJsonString(username, response);
     }
 
     @ApiOperation(notes = "GET user activities", value = "",httpMethod = "GET")
     @GetMapping(value = "/activity/all",produces = "application/json")
-    @Transactional
-    public String getActivity(
+    @ResponseBody
+    public List<Activity> getActivity(
             @RequestParam("username") String username){
-        return  JSON.toJSONString(zhihuService.getUserActivity(username));
+        return  zhihuService.getUserActivity(username);
     }
 
     @ApiOperation(notes = "GET article", value = "",httpMethod = "GET")
     @GetMapping(value = "/article",produces = "application/json")
-    @Transactional
-    public String getArticle(
+    @ResponseBody
+    public Article getArticle(
             @RequestParam("id") Integer id){
-        return JSON.toJSONString(zhihuService.getArticleById(id));
+        return zhihuService.getArticleById(id);
     }
 
     @ApiOperation(notes = "GET question", value = "",httpMethod = "GET")
     @GetMapping(value = "/question",produces = "application/json")
-    @Transactional
-    public String getQuestion(
+    @ResponseBody
+    public Question getQuestion(
             @RequestParam("id") Integer id){
-        return JSON.toJSONString(zhihuService.getQuestionById(id));
+        return zhihuService.getQuestionById(id);
     }
+
     @ApiOperation(notes = "GET user activities", value = "",httpMethod = "GET")
     @GetMapping(value = "/answer",produces = "application/json")
-    @Transactional
-    public String getAnswer(
+    @ResponseBody
+    public Answer getAnswer(
             @RequestParam("id") Integer id){
-        return JSON.toJSONString(zhihuService.getAnswerById(id));
+        return zhihuService.getAnswerById(id);
     }
 
 

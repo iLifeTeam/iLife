@@ -48,9 +48,12 @@ public class ZhihuServiceImpl implements ZhihuService {
     public Answer getAnswerById(Integer id) {
         return answerDao.findAnswerById(id);
     }
+
     @Override
+    @Transactional
     public List<Activity> getUserActivity(String email) {
         User user = userDao.findByEmail(email);
+        user.getActivities().size();
         return user.getActivities();
     }
 
