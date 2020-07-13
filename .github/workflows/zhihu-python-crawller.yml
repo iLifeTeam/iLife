@@ -62,7 +62,7 @@ jobs:
           cd iLife 
           git pull 
           cd ./code/backend/zhihu-service
-          docker-compose down
+          docker-compose pull
           docker-compose up -d
         host: 47.97.206.169
         user: root
