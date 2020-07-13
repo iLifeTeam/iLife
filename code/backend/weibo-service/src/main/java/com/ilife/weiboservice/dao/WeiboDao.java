@@ -1,6 +1,7 @@
 package com.ilife.weiboservice.dao;
 
 import com.ilife.weiboservice.entity.Weibo;
+
 import java.util.List;
 
 public interface WeiboDao {
@@ -12,5 +13,4 @@ public interface WeiboDao {
 
     void deleteById(Integer id);
 
-    Weibo save(Weibo weibo);
 }
