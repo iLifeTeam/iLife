@@ -33,4 +33,9 @@ public class UserDaoImpl implements UserDao {
         userRepository.save(user);
     }
 
+    @Override
+    public void updateWyyId(Long id, Long wyyId){
+        userRepository. updateWyyId(id, wyyId);
+    }
+
 }

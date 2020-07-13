@@ -8,4 +8,6 @@ public interface UserDao {
 
     void deleteById(Long id);
     void save(Users user);
+
+    void updateWyyId(Long id, Long wyyId);
 }

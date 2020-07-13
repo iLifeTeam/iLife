@@ -18,6 +18,7 @@ import static java.lang.Long.parseLong;
 @CrossOrigin(origins = "*")
 @RestController
 
+@Api(tags={"User Service Controller"},description = "adsadas")
 public class UserServiceController {
 
 
@@ -66,5 +67,19 @@ public class UserServiceController {
         String email = params.get("email");
         System.out.println("********** deleteById **********");
         return userService.save(nickname, account, password, email);
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "wyyId", value = "the WangYiYun ID of the iLife user"),
+            @ApiImplicitParam(name = "userId", value = "the user ID of the iLife user"),
+    }
+    )
+    @ApiOperation(notes = "update user's WangYiYun ID", value = "update wyy ID", httpMethod = "POST")
+    @RequestMapping(path = "/auth/updateWyyId")
+    public ResponseEntity<?> updateWyy(@ApiParam(name = "userId", value = "The user ID of a iLife user") @RequestBody Map<String, String> params) {
+        Long id = parseLong(params.get("userId"));
+        Long wyyId = parseLong(params.get("wyyId"));
+        System.out.println("********** updateWyyId **********");
+        return userService.updateWyyId(id,wyyId);
     }
 }

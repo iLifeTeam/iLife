@@ -36,4 +36,10 @@ public class UserServiceImpl implements UserService {
         return ResponseEntity.ok().body("successfully save user");
     }
 
+    @Override
+    public ResponseEntity<?> updateWyyId(Long id, Long wyyId){
+        userDao.updateWyyId(id, wyyId);
+        return ResponseEntity.ok().body("successfully update user "+id+"'s wyyid "+ wyyId);
+    }
+
 }
