@@ -14,4 +14,6 @@ public interface UserDao {
     void updateWyyId(Long id, Long wyyId);
 
     void updateWbId(Long id, Long wbId);
+
+    void updateZhId(Long id, String zhId);
 }

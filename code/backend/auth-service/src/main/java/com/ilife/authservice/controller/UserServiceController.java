@@ -1,7 +1,6 @@
 package com.ilife.authservice.controller;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ilife.authservice.entity.Users;
 import com.ilife.authservice.service.UserService;
 import io.swagger.annotations.*;
@@ -18,7 +17,7 @@ import static java.lang.Long.parseLong;
 @CrossOrigin(origins = "*")
 @RestController
 
-@Api(tags={"User Service Controller"},description = "adsadas")
+@Api(tags = {"User Service Controller"}, description = "adsadas")
 public class UserServiceController {
 
 
@@ -80,7 +79,7 @@ public class UserServiceController {
         Long id = parseLong(params.get("userId"));
         Long wyyId = parseLong(params.get("wyyId"));
         System.out.println("********** updateWyyId **********");
-        return userService.updateWyyId(id,wyyId);
+        return userService.updateWyyId(id, wyyId);
     }
 
     @ApiOperation(notes = "update user's Weibo ID", value = "update Weibo ID", httpMethod = "POST")
@@ -89,6 +88,15 @@ public class UserServiceController {
         Long id = parseLong(params.get("userId"));
         Long wbId = parseLong(params.get("wbId"));
         System.out.println("********** updateWbId **********");
-        return userService.updateWbId(id,wbId);
+        return userService.updateWbId(id, wbId);
+    }
+
+    @ApiOperation(notes = "update user's Zhihu ID", value = "update Zhihu ID", httpMethod = "POST")
+    @RequestMapping(path = "/auth/updateZhId")
+    public ResponseEntity<?> updateZh(@ApiIgnore @RequestBody Map<String, String> params) {
+        Long id = parseLong(params.get("userId"));
+        String zhId = params.get("zhId");
+        System.out.println("********** updateZhId **********");
+        return userService.updateZhId(id, zhId);
     }
 }

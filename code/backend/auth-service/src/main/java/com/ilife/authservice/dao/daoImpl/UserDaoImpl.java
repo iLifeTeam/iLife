@@ -43,4 +43,9 @@ public class UserDaoImpl implements UserDao {
         userRepository.updateWbId(id, wbId);
     }
 
+    @Override
+    public void updateZhId(Long id, String zhId){
+        userRepository.updateZhId(id, zhId);
+    }
+
 }

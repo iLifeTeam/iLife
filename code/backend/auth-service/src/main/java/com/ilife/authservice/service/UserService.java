@@ -17,4 +17,6 @@ public interface UserService {
     ResponseEntity<?> updateWyyId(Long id, Long wyyId);
 
     ResponseEntity<?> updateWbId(Long id, Long wbId);
+
+    ResponseEntity<?> updateZhId(Long id, String zhId);
 }

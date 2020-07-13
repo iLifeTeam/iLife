@@ -48,4 +48,10 @@ public class UserServiceImpl implements UserService {
         return ResponseEntity.ok().body("successfully update user " + id + "'s wbid " + wbId);
     }
 
+    @Override
+    public ResponseEntity<?> updateZhId(Long id, String zhId) {
+        userDao.updateZhId(id, zhId);
+        return ResponseEntity.ok().body("successfully update user " + id + "'s zhid " + zhId);
+    }
+
 }

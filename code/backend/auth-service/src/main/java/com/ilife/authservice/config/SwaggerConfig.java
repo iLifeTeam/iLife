@@ -23,10 +23,11 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build();
     }
+
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Auth Backend API Documentation")
-                .contact(new Contact("杨亘@sjtu","","zhull991122@sjtu.edu.cn"))
+                .contact(new Contact("杨亘@sjtu", "", "zhull991122@sjtu.edu.cn"))
                 .version("1.0.0-SNAPSHOT")
                 .build();
     }
