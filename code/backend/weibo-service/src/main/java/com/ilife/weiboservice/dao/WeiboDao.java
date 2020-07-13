@@ -13,5 +13,4 @@ public interface WeiboDao {
 
     void deleteById(Integer id);
 
-    Weibo save(Weibo weibo);
 }

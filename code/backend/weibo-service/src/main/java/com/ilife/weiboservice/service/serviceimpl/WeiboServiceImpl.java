@@ -5,6 +5,8 @@ import com.ilife.weiboservice.dao.WeiboDao;
 import com.ilife.weiboservice.entity.Weibo;
 import com.ilife.weiboservice.service.WeiboService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -23,6 +25,13 @@ public class WeiboServiceImpl implements WeiboService {
         return weiboDao.findAllByUid(uid);
     }
 
+    public ResponseEntity<?> deleteByUid(Integer uid){
+        weiboDao.deleteByUid(uid);
+        return new ResponseEntity<>("delete all Weibos of "+uid.toString(), HttpStatus.OK);
+    }
+    public Weibo findById(String id){
+        return weiboDao.findById(id);
+    }
     public void crawlWeibo(Long uid) {
         try {
             // TODO:should go to crawl.py and modify some parameter
@@ -46,5 +55,9 @@ public class WeiboServiceImpl implements WeiboService {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
+    }
+    public ResponseEntity<?> deleteById(Integer id){
+        weiboDao.deleteById(id);
+        return ResponseEntity.ok("delete Weibo "+id.toString());
     }
 }
