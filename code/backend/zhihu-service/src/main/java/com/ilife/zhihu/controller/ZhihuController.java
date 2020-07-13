@@ -20,7 +20,7 @@ import java.util.Base64;
 @Api(value = "ZhihuServiceController")
 public class ZhihuController {
 
-    private final String CRAWLER_HOSTNAME  = "localhost";
+    private final String CRAWLER_HOSTNAME  = "python-crawller";
     private final int CRAWLLER_PORT = 4001;
     ZhihuCrawlerServiceClient crawlerServiceClient = new ZhihuCrawlerServiceClient(CRAWLER_HOSTNAME, CRAWLLER_PORT);
 
