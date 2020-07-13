@@ -83,15 +83,7 @@ create table musics
    primary key (m_id)
 )DEFAULT CHARSET=utf8mb4;
 
-/*==============================================================*/
-/* Table: singers                                               */
-/*==============================================================*/
-create table singers
-(
-   s_id                 bigint not null,
-   sname                varchar(20),
-   primary key (s_id)
-)DEFAULT CHARSET=utf8mb4;
+
 
 /*==============================================================*/
 /* Table: sing                                                  */
@@ -101,9 +93,9 @@ create table sing
    singid               bigint not null AUTO_INCREMENT,
    m_id                 bigint not null,
    s_id                 bigint not null,
+   sname                varchar(20),
    primary key (singid),
-   foreign key (m_id) references musics (m_id) ,
-   foreign key (s_id) references singers (s_id)
+   foreign key (m_id) references musics (m_id)
 )DEFAULT CHARSET=utf8mb4;
 
 /*==============================================================*/
