@@ -6,5 +6,5 @@ import com.ilife.zhihu.entity.Question;
 
 public interface QuestionService {
     Question saveQuestionFromJsonObject(JSONObject questionObject);
-
+    Question getQuestionById(Integer id);
 }

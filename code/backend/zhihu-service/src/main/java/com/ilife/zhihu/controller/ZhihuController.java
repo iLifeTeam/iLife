@@ -53,7 +53,7 @@ public class ZhihuController {
 
     @ApiOperation(notes = "login with username, password, and optional captcha", value = "",httpMethod = "POST")
     @PostMapping(value = "/login", produces = "application/json")
-    String loginIntoZhihu(@RequestParam("username") String username,
+    public String loginIntoZhihu(@RequestParam("username") String username,
                           @RequestParam("password") String password,
                           @RequestParam(name = "captcha", required = false) String captcha){
 
@@ -72,7 +72,7 @@ public class ZhihuController {
 
     @ApiOperation(notes = "update user activities", value = "",httpMethod = "POST")
     @PostMapping(value = "/updateActivities",produces = "application/json")
-    String updateUserActivities(
+    public String updateUserActivities(
             @RequestParam("username") String username
     ){
         String response = crawlerServiceClient.getActivities(username);
@@ -87,7 +87,7 @@ public class ZhihuController {
 
     @ApiOperation(notes = "GET user information", value = "",httpMethod = "GET")
     @GetMapping(value = "/user",produces = "application/json")
-    String getUser(
+    public String getUser(
             @RequestParam("username") String username){
         String response = crawlerServiceClient.getUserInfo(username);
         if(response.equals("not login"))
@@ -97,31 +97,33 @@ public class ZhihuController {
 
     @ApiOperation(notes = "GET user activities", value = "",httpMethod = "GET")
     @GetMapping(value = "/activity/all",produces = "application/json")
-    String getActivity(
+    @Transactional
+    public String getActivity(
             @RequestParam("username") String username){
-        return zhihuService.getUserActivityJson(username);
+        return  JSON.toJSONString(zhihuService.getUserActivity(username));
     }
 
     @ApiOperation(notes = "GET article", value = "",httpMethod = "GET")
     @GetMapping(value = "/article",produces = "application/json")
     @Transactional
-    String getArticle(
+    public String getArticle(
             @RequestParam("id") Integer id){
-        return zhihuService.getArticleJsonById(id);
+        return JSON.toJSONString(zhihuService.getArticleById(id));
     }
 
     @ApiOperation(notes = "GET question", value = "",httpMethod = "GET")
     @GetMapping(value = "/question",produces = "application/json")
     @Transactional
-    String getActivity(
+    public String getQuestion(
             @RequestParam("id") Integer id){
-        return zhihuService.getQuestionJsonById(id);
+        return JSON.toJSONString(zhihuService.getQuestionById(id));
     }
     @ApiOperation(notes = "GET user activities", value = "",httpMethod = "GET")
     @GetMapping(value = "/answer",produces = "application/json")
-    String getAnswer(
+    @Transactional
+    public String getAnswer(
             @RequestParam("id") Integer id){
-        return zhihuService.getAnswerJsonById(id);
+        return JSON.toJSONString(zhihuService.getAnswerById(id));
     }
 
 

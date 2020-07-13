@@ -48,37 +48,11 @@ public class ZhihuServiceImpl implements ZhihuService {
     public Answer getAnswerById(Integer id) {
         return answerDao.findAnswerById(id);
     }
-
-    @Override
-    @Transactional
-    public String getQuestionJsonById(Integer id) {
-        return JSON.toJSONString(getQuestionById(id));
-    }
-
-    @Override
-    @Transactional
-    public String getArticleJsonById(Integer id) {
-        return JSON.toJSONString(getArticleById(id));
-    }
-
-    @Override
-    @Transactional
-    public String getAnswerJsonById(Integer id) {
-        return JSON.toJSONString(getAnswerById(id));
-    }
-
     @Override
     public List<Activity> getUserActivity(String email) {
         User user = userDao.findByEmail(email);
         return user.getActivities();
     }
-
-    @Override
-    @Transactional
-    public String getUserActivityJson(String username) {
-        return JSON.toJSONString(getUserActivity(username));
-    }
-
 
     private Timestamp convertEpochToTimestamp(Long epoch){
         return new Timestamp(epoch * 1000);

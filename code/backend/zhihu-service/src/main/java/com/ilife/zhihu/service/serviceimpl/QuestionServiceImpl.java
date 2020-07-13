@@ -12,4 +12,9 @@ public class QuestionServiceImpl implements QuestionService {
     public Question saveQuestionFromJsonObject(JSONObject questionObject) {
         return null;
     }
+
+    @Override
+    public Question getQuestionById(Integer id) {
+        return null;
+    }
 }

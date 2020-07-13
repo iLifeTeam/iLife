@@ -12,12 +12,7 @@ public interface ZhihuService {
     Question getQuestionById(Integer id);
     Article getArticleById(Integer id);
     Answer getAnswerById(Integer id);
-    String getQuestionJsonById(Integer id);
-    String getArticleJsonById(Integer id);
-    String getAnswerJsonById(Integer id);
-
     List<Activity> getUserActivity(String username);
-    String getUserActivityJson(String username);
     User getUserWithEmail(String email);
     User getUserWithName(String name);
     void saveActivitiesFromJsonString(User user , String json);
