@@ -14,3 +14,9 @@
 - 7.10 
   - 使用github action 实现 zhihu-service和zhihu-python-crawller的CICD。在分支push的时候自动部署到云服务器上
   - 使用docker 打包zhihu-service和zhihu-python-crawller
+- 7.11~7.12
+  - 完善zhihu-service，提供Question/Answer/Article接口。
+- 7.13
+  - 对接前端，完善zhihu-service API。
+  - 讨论本周计划
+  - 对alipay爬虫进行调查
