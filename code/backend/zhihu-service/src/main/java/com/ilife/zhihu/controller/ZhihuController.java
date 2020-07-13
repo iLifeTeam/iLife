@@ -20,7 +20,7 @@ import java.util.Base64;
 @Api(value = "ZhihuServiceController")
 public class ZhihuController {
 
-    private final String CRAWLER_HOSTNAME  = "python-crawller";
+    private final String CRAWLER_HOSTNAME  = "localhost";
     private final int CRAWLLER_PORT = 4001;
     ZhihuCrawlerServiceClient crawlerServiceClient = new ZhihuCrawlerServiceClient(CRAWLER_HOSTNAME, CRAWLLER_PORT);
 
@@ -60,7 +60,7 @@ public class ZhihuController {
            saveImageString(response,  username + ".gif");
         }else {
             String userInfoJson = crawlerServiceClient.getUserInfo(username);
-            zhihuService.saveUserFromJsonString(userInfoJson);
+            zhihuService.saveUserFromJsonString(username, userInfoJson);
         }
         System.out.println(response);
         return response;
@@ -89,14 +89,14 @@ public class ZhihuController {
         String response = crawlerServiceClient.getUserInfo(username);
         if(response.equals("not login"))
             return response;
-        return JSON.toJSONString(zhihuService.saveUserFromJsonString(response)) ;
+        return JSON.toJSONString(zhihuService.saveUserFromJsonString(username, response)) ;
     }
 
     @ApiOperation(notes = "GET user activities", value = "",httpMethod = "GET")
     @GetMapping(value = "/activity/all",produces = "application/json")
     String getActivity(
             @RequestParam("username") String username){
-        return JSON.toJSONString(zhihuService.getUserActivity(username));
+        return zhihuService.getUserActivityJson(username);
     }
 
 

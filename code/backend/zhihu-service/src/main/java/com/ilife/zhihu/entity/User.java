@@ -18,7 +18,7 @@ public class User {
 
     @Id
     @Column(name = "uid")
-    Integer uid;
+    String uid;
 
     @Column(name = "name")
     String name;
@@ -33,7 +33,7 @@ public class User {
     Integer answerCount;
 
     @Column(name = "voteup_count")
-    Timestamp voteupCount;
+    Integer voteupCount;
 
     @Column(name = "thanked_count")
     Integer thankedCount;

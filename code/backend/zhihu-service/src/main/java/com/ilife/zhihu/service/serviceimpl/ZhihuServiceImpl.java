@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.ilife.zhihu.dao.*;
 import com.ilife.zhihu.entity.*;
 import com.ilife.zhihu.service.ZhihuService;
+import io.grpc.netty.shaded.io.netty.handler.codec.json.JsonObjectDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,11 +34,17 @@ public class ZhihuServiceImpl implements ZhihuService {
     }
 
     @Override
-    @Transactional
-    public List<Activity> getUserActivity(String username) {
-        User user = userDao.findByName(username);
+    public List<Activity> getUserActivity(String email) {
+        User user = userDao.findByEmail(email);
         return user.getActivities();
     }
+
+    @Override
+    @Transactional
+    public String getUserActivityJson(String username) {
+        return JSON.toJSONString(getUserActivity(username));
+    }
+
 
     private Timestamp convertEpochToTimestamp(Long epoch){
         return new Timestamp(epoch * 1000);
@@ -83,6 +90,18 @@ public class ZhihuServiceImpl implements ZhihuService {
         article.setTitle(articleObject.getString("title"));
         article.setUpdate_time(convertEpochToTimestamp(articleObject.getLong("update_time")));
         return article;
+    }
+    private User makeUserFromJsonObject(JSONObject userObject){
+        User user = new User();
+        user.setUid(userObject.getString("uid"));
+        user.setName(userObject.getString("name"));
+        user.setEmail(userObject.getString("email"));
+        user.setPhone(userObject.getString("phone"));
+        user.setGender(userObject.getInteger("gender"));
+        user.setThankedCount(userObject.getInteger("thanked_count"));
+        user.setAnswerCount(userObject.getInteger("answer_count"));
+        user.setVoteupCount(userObject.getInteger("voteup_count"));
+        return user;
     }
     @Override
     @Transactional
@@ -142,8 +161,12 @@ public class ZhihuServiceImpl implements ZhihuService {
     }
 
     @Override
-    public User saveUserFromJsonString(String json) {
-        return JSON.parseObject(json,User.class);
+    public User saveUserFromJsonString(String email, String json) {
+        JSONObject userObject = JSON.parseObject(json);
+        User user = makeUserFromJsonObject(userObject);
+        user.setEmail(email);
+        System.out.println(JSON.toJSONString(user));
+        return userDao.save(user);
     }
 
     @Override

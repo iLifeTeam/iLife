@@ -249,7 +249,7 @@ class ZhihuService(zhihu_pb2_grpc.ZhihuServiceServicer):
         return zhihu_pb2.ActivityResponse(responseJson=json_object)
     
     def GenUserJson(self, user):
-        return json.dumps(self.GetActivityDict(user), default=lambda o: o.__dict__, sort_keys=True, indent=4)
+        return json.dumps(user, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
     def GetUserInfo(self, request, context):
         username = request.username
@@ -268,6 +268,8 @@ port = "4001"
 serverString = ip + ":" + port
 
 def serve():
+    if not os.path.exists("./tokens"):
+        os.makedirs("./tokens")
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     zhihu_pb2_grpc.add_ZhihuServiceServicer_to_server(ZhihuService(), server)
     server.add_insecure_port(serverString)
