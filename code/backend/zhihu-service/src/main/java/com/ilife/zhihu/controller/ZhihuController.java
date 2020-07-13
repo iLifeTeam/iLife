@@ -21,7 +21,7 @@ import java.util.List;
 @Api(value = "ZhihuServiceController")
 public class ZhihuController {
 
-    private final String CRAWLER_HOSTNAME  = "python-crallwer";
+    private final String CRAWLER_HOSTNAME  = "python-crawller";
     private final int CRAWLLER_PORT = 4001;
     ZhihuCrawlerServiceClient crawlerServiceClient = new ZhihuCrawlerServiceClient(CRAWLER_HOSTNAME, CRAWLLER_PORT);
 
