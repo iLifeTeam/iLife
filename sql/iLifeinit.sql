@@ -77,7 +77,7 @@ USE wyy;
 create table musics
 (
    m_id                 bigint not null,
-   mname                varchar(20),
+   mname                varchar(128),
    style                varchar(20),
    times                varchar(20),
    primary key (m_id)
@@ -164,7 +164,7 @@ create database iLife;
 use iLife;
 create table users
 (
-   id                   bigint not null,
+   id                   bigint not null AUTO_INCREMENT,
    wyyid                bigint,
    weibid               bigint,
    zhid                 varchar(30),
