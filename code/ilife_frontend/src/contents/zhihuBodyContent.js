@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-
 export default class zhihuBodyContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       username: "",
       password: "",
+      code: "",
+      picBase64: "",
     }
+    this.login = this.login.bind(this);
+    this.loginTwice = this.loginTwice.bind(this);
   }
   componentDidMount() {
     const script = document.createElement("script");
@@ -18,16 +21,48 @@ export default class zhihuBodyContent extends Component {
 
   }
 
-  async login() {
-    await axios.post("http://47.97.206.169:8090/login", {
-      username: this.state.username,
-      password: this.state.password,
+  nameOnChange(val) {
+    this.setState({
+      username: val.target.value,
     })
+  }
+  codeOnChange(val) {
+    this.setState({
+      code: val.target.value,
+    })
+  }
+  psdOnChange(val) {
+    this.setState({
+      password: val.target.value,
+    })
+  }
+
+  async login() {
+    var pic;
+    await axios.post("http://47.97.206.169:8090/login?username=" + this.state.username + "&password=" + this.state.password)
+      .then(function (response) {
+        console.log(response);
+        pic = response.data;
+      })
+
+    this.setState({
+      picBase64: `data:image/png;base64,${pic}`
+    });
+
+  }
+
+  async loginTwice() {
+    await axios.post("http://47.97.206.169:8090/login?username=" + this.state.username + "&password=" + this.state.password + "&captcha=" + this.state.code)
       .then(function (response) {
         console.log(response);
       })
     console.log("done");
+    await axios.get("http://47.97.206.169:8090/activity/all?username=" + this.state.username)
+      .then(function (response) {
+        console.log(response);
+      })
   }
+
 
 
   render() {
@@ -35,6 +70,54 @@ export default class zhihuBodyContent extends Component {
     return (
       <div className="content-wrapper">
         <section className="content">
+          <div className="row">
+            <div className="col-md-9">
+              <div className="box box-primary">
+                <div className="box-header with-border">
+                  <h3 className="box-title">登录</h3>
+                </div>
+                {/* form start */}
+                <form role="form">
+                  <div className="box-body">
+                    <div className="form-group">
+                      <label htmlFor="exampleInputEmail1">Email地址</label>
+                      <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Enter email"
+                        onChange={(val) => this.nameOnChange(val)} />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="exampleInputPassword1">密码</label>
+                      <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"
+                        onChange={(val) => this.psdOnChange(val)} />
+                    </div>
+                  </div>
+                </form>
+                {/* /.box-body */}
+                <div className="box-footer">
+                  <button className="btn btn-primary" onClick={this.login}>Submit</button>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-3">
+              <div className="box box-primary">
+                <div className="box-header with-border">
+                  <h3 className="box-title">验证码</h3>
+                </div>
+                <img src={this.state.picBase64} className="img-square" alt="验证码" />
+                <form role="form">
+                  <div className="box-body">
+                    <div className="form-group">
+                      <label htmlFor="exampleInputCode1">验证码</label>
+                      <input className="form-control" id="exampleInputCode1"
+                        onChange={(val) => this.codeOnChange(val)} />
+                    </div>
+                  </div>
+                </form>
+                <div className="box-footer">
+                  <button className="btn btn-primary" onClick={this.loginTwice}>Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="row">
             <div className="col-xs-12">
               <div className="box">
