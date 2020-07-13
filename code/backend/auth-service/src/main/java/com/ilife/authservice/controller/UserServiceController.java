@@ -76,10 +76,19 @@ public class UserServiceController {
     )
     @ApiOperation(notes = "update user's WangYiYun ID", value = "update wyy ID", httpMethod = "POST")
     @RequestMapping(path = "/auth/updateWyyId")
-    public ResponseEntity<?> updateWyy(@ApiParam(name = "userId", value = "The user ID of a iLife user") @RequestBody Map<String, String> params) {
+    public ResponseEntity<?> updateWyy(@ApiIgnore @RequestBody Map<String, String> params) {
         Long id = parseLong(params.get("userId"));
         Long wyyId = parseLong(params.get("wyyId"));
         System.out.println("********** updateWyyId **********");
         return userService.updateWyyId(id,wyyId);
+    }
+
+    @ApiOperation(notes = "update user's Weibo ID", value = "update Weibo ID", httpMethod = "POST")
+    @RequestMapping(path = "/auth/updateWbId")
+    public ResponseEntity<?> updateWb(@ApiIgnore @RequestBody Map<String, String> params) {
+        Long id = parseLong(params.get("userId"));
+        Long wbId = parseLong(params.get("wbId"));
+        System.out.println("********** updateWbId **********");
+        return userService.updateWbId(id,wbId);
     }
 }

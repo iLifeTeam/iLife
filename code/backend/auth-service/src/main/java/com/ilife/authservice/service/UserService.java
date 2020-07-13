@@ -7,8 +7,14 @@ import org.springframework.http.ResponseEntity;
 public interface UserService {
 
     Users findById(Long id);
+
     Users findByNickname(String nickname);
+
     ResponseEntity<?> deleteById(Long id);
-    ResponseEntity<?> save(String nickname,String account,String password,String email);
+
+    ResponseEntity<?> save(String nickname, String account, String password, String email);
+
     ResponseEntity<?> updateWyyId(Long id, Long wyyId);
+
+    ResponseEntity<?> updateWbId(Long id, Long wbId);
 }

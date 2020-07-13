@@ -14,32 +14,38 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public Users findById(Long id){
+    public Users findById(Long id) {
         return userDao.findById(id);
     }
 
     @Override
-    public Users findByNickname(String nickname){
+    public Users findByNickname(String nickname) {
         return userDao.findByNickname(nickname);
     }
 
     @Override
-    public ResponseEntity<?> deleteById(Long id){
+    public ResponseEntity<?> deleteById(Long id) {
         userDao.deleteById(id);
-        return ResponseEntity.ok().body("successfully delete user "+ id);
+        return ResponseEntity.ok().body("successfully delete user " + id);
     }
 
     @Override
-    public ResponseEntity<?> save(String nickname,String account,String password,String email){
-        Users user=new Users(nickname,account,password,email);
+    public ResponseEntity<?> save(String nickname, String account, String password, String email) {
+        Users user = new Users(nickname, account, password, email);
         userDao.save(user);
         return ResponseEntity.ok().body("successfully save user");
     }
 
     @Override
-    public ResponseEntity<?> updateWyyId(Long id, Long wyyId){
+    public ResponseEntity<?> updateWyyId(Long id, Long wyyId) {
         userDao.updateWyyId(id, wyyId);
-        return ResponseEntity.ok().body("successfully update user "+id+"'s wyyid "+ wyyId);
+        return ResponseEntity.ok().body("successfully update user " + id + "'s wyyid " + wyyId);
+    }
+
+    @Override
+    public ResponseEntity<?> updateWbId(Long id, Long wbId) {
+        userDao.updateWbId(id, wbId);
+        return ResponseEntity.ok().body("successfully update user " + id + "'s wbid " + wbId);
     }
 
 }
