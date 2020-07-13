@@ -104,22 +104,24 @@ public class ZhihuController {
 
     @ApiOperation(notes = "GET article", value = "",httpMethod = "GET")
     @GetMapping(value = "/article",produces = "application/json")
+    @Transactional
     String getArticle(
             @RequestParam("id") Integer id){
-        return JSON.toJSONString( zhihuService.getArticleById(id));
+        return zhihuService.getArticleJsonById(id);
     }
 
     @ApiOperation(notes = "GET question", value = "",httpMethod = "GET")
     @GetMapping(value = "/question",produces = "application/json")
+    @Transactional
     String getActivity(
             @RequestParam("id") Integer id){
-        return JSON.toJSONString(zhihuService.getQuestionById(id));
+        return zhihuService.getQuestionJsonById(id);
     }
     @ApiOperation(notes = "GET user activities", value = "",httpMethod = "GET")
     @GetMapping(value = "/answer",produces = "application/json")
     String getAnswer(
             @RequestParam("id") Integer id){
-        return JSON.toJSONString(zhihuService.getAnswerById(id));
+        return zhihuService.getAnswerJsonById(id);
     }
 
 

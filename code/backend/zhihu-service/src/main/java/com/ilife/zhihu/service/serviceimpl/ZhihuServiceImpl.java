@@ -50,6 +50,24 @@ public class ZhihuServiceImpl implements ZhihuService {
     }
 
     @Override
+    @Transactional
+    public String getQuestionJsonById(Integer id) {
+        return JSON.toJSONString(getQuestionById(id));
+    }
+
+    @Override
+    @Transactional
+    public String getArticleJsonById(Integer id) {
+        return JSON.toJSONString(getArticleById(id));
+    }
+
+    @Override
+    @Transactional
+    public String getAnswerJsonById(Integer id) {
+        return JSON.toJSONString(getAnswerById(id));
+    }
+
+    @Override
     public List<Activity> getUserActivity(String email) {
         User user = userDao.findByEmail(email);
         return user.getActivities();
