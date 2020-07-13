@@ -21,17 +21,23 @@ public class WeiboServiceImpl implements WeiboService {
     @Autowired
     private WeiboDao weiboDao;
 
+    @Override
     public List<Weibo> findAllByUid(Integer uid) {
         return weiboDao.findAllByUid(uid);
     }
 
+    @Override
     public ResponseEntity<?> deleteByUid(Integer uid){
         weiboDao.deleteByUid(uid);
         return new ResponseEntity<>("delete all Weibos of "+uid.toString(), HttpStatus.OK);
     }
+
+    @Override
     public Weibo findById(String id){
         return weiboDao.findById(id);
     }
+
+    @Override
     public void crawlWeibo(Long uid) {
         try {
             // TODO:should go to crawl.py and modify some parameter
@@ -56,6 +62,8 @@ public class WeiboServiceImpl implements WeiboService {
             e1.printStackTrace();
         }
     }
+
+    @Override
     public ResponseEntity<?> deleteById(Integer id){
         weiboDao.deleteById(id);
         return ResponseEntity.ok("delete Weibo "+id.toString());

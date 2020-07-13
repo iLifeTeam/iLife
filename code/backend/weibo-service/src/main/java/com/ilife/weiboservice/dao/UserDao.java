@@ -8,7 +8,7 @@ public interface UserDao {
 
     User findByNickname(String nickname);
 
-    void deleteById(Integer id);
+    void deleteById(Long id);
 
     User save(User user);
 
