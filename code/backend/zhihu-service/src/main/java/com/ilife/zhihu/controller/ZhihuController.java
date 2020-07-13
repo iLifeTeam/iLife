@@ -21,13 +21,12 @@ import java.util.List;
 @Api(value = "ZhihuServiceController")
 public class ZhihuController {
 
-    private final String CRAWLER_HOSTNAME  = "python-crawller";
+    private final String CRAWLER_HOSTNAME  = "localhost";
     private final int CRAWLLER_PORT = 4001;
     ZhihuCrawlerServiceClient crawlerServiceClient = new ZhihuCrawlerServiceClient(CRAWLER_HOSTNAME, CRAWLLER_PORT);
 
     @Autowired
     ZhihuService zhihuService;
-
 
     void saveImageString(String token, String filename) {
         try {
@@ -84,7 +83,7 @@ public class ZhihuController {
 
 
     @ApiOperation(notes = "GET user information", value = "",httpMethod = "GET")
-    @GetMapping(value = "/user",produces = "application/json")
+    @GetMapping(value = "/user", produces = "application/json")
     @ResponseBody
     public User getUser(
             @RequestParam("username") String username){

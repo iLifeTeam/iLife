@@ -57,10 +57,11 @@ public class ZhihuServiceImpl implements ZhihuService {
         return user.getActivities();
     }
 
-    private Timestamp convertEpochToTimestamp(Long epoch){
+    private Timestamp convertEpochToTimestamp(Long epoch) {
         return new Timestamp(epoch * 1000);
     }
-    private Activity makeActivityFromJsonObject(JSONObject activityObject){
+
+    private Activity makeActivityFromJsonObject(JSONObject activityObject) {
         Activity activity = new Activity();
         activity.setAction_text(activityObject.getString("action_text"));
         activity.setCreated_time(
@@ -68,7 +69,8 @@ public class ZhihuServiceImpl implements ZhihuService {
         activity.setType(activityObject.getString("type"));
         return activity;
     }
-    private Question makeQuestionFromJsonObject(JSONObject questionObject){
+
+    private Question makeQuestionFromJsonObject(JSONObject questionObject) {
         Question question = new Question();
         question.setTitle(questionObject.getString("title"));
         question.setContent(questionObject.getString("content"));
@@ -80,7 +82,8 @@ public class ZhihuServiceImpl implements ZhihuService {
                 convertEpochToTimestamp(questionObject.getLong("update_time")));
         return question;
     }
-    private Answer makeAnswerFromJsonObject(JSONObject answerObject){
+
+    private Answer makeAnswerFromJsonObject(JSONObject answerObject) {
         Answer answer = new Answer();
         answer.setAuthor(answerObject.getString("author"));
         answer.setComment_count(answerObject.getInteger("comment_count"));
@@ -91,7 +94,8 @@ public class ZhihuServiceImpl implements ZhihuService {
         answer.setVoteup_count(answerObject.getInteger("voteup_count"));
         return answer;
     }
-    private Article makeArticleFromJsonObject(JSONObject articleObject){
+
+    private Article makeArticleFromJsonObject(JSONObject articleObject) {
         Article article = new Article();
         article.setAuthor(articleObject.getString("author"));
         article.setContent(articleObject.getString("content"));
@@ -102,7 +106,8 @@ public class ZhihuServiceImpl implements ZhihuService {
         article.setUpdate_time(convertEpochToTimestamp(articleObject.getLong("update_time")));
         return article;
     }
-    private User makeUserFromJsonObject(JSONObject userObject){
+
+    private User makeUserFromJsonObject(JSONObject userObject) {
         User user = new User();
         user.setUid(userObject.getString("uid"));
         user.setName(userObject.getString("name"));
@@ -114,17 +119,18 @@ public class ZhihuServiceImpl implements ZhihuService {
         user.setVoteupCount(userObject.getInteger("voteup_count"));
         return user;
     }
+
     @Override
     @Transactional
-    public void saveActivitiesFromJsonString(User user ,String json) {
+    public void saveActivitiesFromJsonString(User user, String json) {
         JSONArray jsonArray = JSON.parseArray(json);
-        for (Object object : jsonArray){
+        for (Object object : jsonArray) {
             JSONObject activityObject = (JSONObject) object;
             System.out.println(activityObject.toJSONString());
             Activity activity = makeActivityFromJsonObject(activityObject);
             System.out.println(activity.getCreated_time().toString());
             activity.setUser(user);
-            switch(activity.getType()){
+            switch (activity.getType()) {
                 case "CREATE_QUESTION":
                 case "FOLLOW_QUESTION": {
                     JSONObject questionObject = activityObject.getJSONObject("question");
@@ -154,7 +160,7 @@ public class ZhihuServiceImpl implements ZhihuService {
                     break;
                 }
                 case "CREATE_ARTICLE":
-                case "VOTEUP_ARTICLE":{
+                case "VOTEUP_ARTICLE": {
                     JSONObject articleObject = (JSONObject) activityObject.get("article");
                     Article article = makeArticleFromJsonObject(articleObject);
                     articleDao.save(article);
