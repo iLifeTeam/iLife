@@ -24,12 +24,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByNickname(String nickname){
+    public User findByNickname(String nickname) {
         return userDao.findByNickname(nickname);
     }
+
     @Override
-    public ResponseEntity<?> deleteById(Long uid){
+    public ResponseEntity<?> deleteById(Long uid) {
         userDao.deleteById(uid);
-        return ResponseEntity.ok().body("successful delete user "+ uid.toString());
+        return ResponseEntity.ok().body("successful delete user " + uid.toString());
     }
 }

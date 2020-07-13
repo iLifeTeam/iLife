@@ -1,6 +1,6 @@
 package com.ilife.weiboservice.dao;
 
-        import com.ilife.weiboservice.entity.User;
+import com.ilife.weiboservice.entity.User;
 
 
 public interface UserDao {

@@ -27,13 +27,13 @@ public class WeiboServiceImpl implements WeiboService {
     }
 
     @Override
-    public ResponseEntity<?> deleteByUid(Integer uid){
+    public ResponseEntity<?> deleteByUid(Integer uid) {
         weiboDao.deleteByUid(uid);
-        return new ResponseEntity<>("delete all Weibos of "+uid.toString(), HttpStatus.OK);
+        return new ResponseEntity<>("delete all Weibos of " + uid.toString(), HttpStatus.OK);
     }
 
     @Override
-    public Weibo findById(String id){
+    public Weibo findById(String id) {
         return weiboDao.findById(id);
     }
 
@@ -47,8 +47,8 @@ public class WeiboServiceImpl implements WeiboService {
             BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream(), StandardCharsets.UTF_8));//建立一个BufferedReader对象，从字符输入流中读取文本即读取python脚本
             String line;
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");//设置日期格式
-            String date=df.format(new Date());
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("log/crawler_log/"+date+".log"), StandardCharsets.UTF_8));
+            String date = df.format(new Date());
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("log/crawler_log/" + date + ".log"), StandardCharsets.UTF_8));
             while ((line = in.readLine()) != null) {
                 out.write(line);
                 out.write("\n");
@@ -64,8 +64,8 @@ public class WeiboServiceImpl implements WeiboService {
     }
 
     @Override
-    public ResponseEntity<?> deleteById(Integer id){
+    public ResponseEntity<?> deleteById(Integer id) {
         weiboDao.deleteById(id);
-        return ResponseEntity.ok("delete Weibo "+id.toString());
+        return ResponseEntity.ok("delete Weibo " + id.toString());
     }
 }
