@@ -42,7 +42,7 @@ public class UserServiceController {
             @ApiImplicitParam(name = "nickname", value = "the nickname of the iLife user"),
     }
     )
-    @ApiOperation(notes = "deleteById", value = "delete one user", httpMethod = "POST")
+    @ApiOperation(notes = "Delete one ilife user By user Id", value = "delete one user", httpMethod = "POST")
     @RequestMapping(path = "/auth/delById")
     public ResponseEntity<?> deleteById(@ApiParam(name = "userId", value = "The user ID of a iLife user") @RequestBody Map<String, String> params) {
         Long id = parseLong(params.get("userId"));
@@ -50,7 +50,7 @@ public class UserServiceController {
         return userService.deleteById(id);
     }
 
-    @ApiOperation(notes = "deleteById", value = "delete one user", httpMethod = "POST")
+    @ApiOperation(notes = "Save one iLife user by giving nickname,account.password and email", value = "delete one user", httpMethod = "POST")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "nickname", value = "the nickname of the iLife user"),
             @ApiImplicitParam(name = "account", value = "the account of the iLife user"),
