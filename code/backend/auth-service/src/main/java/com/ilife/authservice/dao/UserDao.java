@@ -16,4 +16,6 @@ public interface UserDao {
     void updateWbId(Long id, Long wbId);
 
     void updateZhId(Long id, String zhId);
+
+    Users findByAccount(String account);
 }

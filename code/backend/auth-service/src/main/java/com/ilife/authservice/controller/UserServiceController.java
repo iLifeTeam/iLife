@@ -17,7 +17,7 @@ import static java.lang.Long.parseLong;
 @CrossOrigin(origins = "*")
 @RestController
 
-@Api(tags = {"User Service Controller"}, description = "adsadas")
+@Api(tags = {"User Service Controller"}, description = "Everything about auth & CRUD of iLife User")
 public class UserServiceController {
 
 
@@ -29,6 +29,13 @@ public class UserServiceController {
     public Users getUserById(@ApiParam(name = "userId", value = "The user ID of a iLife user") @RequestParam("userId") Long uid) {
         System.out.println("********** getUserById **********");
         return userService.findById(uid);
+    }
+
+    @ApiOperation(notes = "Get user info by account", value = "get user info", httpMethod = "GET")
+    @RequestMapping(path = "/auth/getByAccount")
+    public Users getUserByAccount(@ApiParam(name = "account", value = "The account number of a iLife user") @RequestParam("account") String account) {
+        System.out.println("********** getUserByAccount **********");
+        return userService.findByAccount(account);
     }
 
     @ApiOperation(notes = "Get user info by Nickname", value = "get user info", httpMethod = "GET")
@@ -50,7 +57,10 @@ public class UserServiceController {
         return userService.deleteById(id);
     }
 
-    @ApiOperation(notes = "Save one iLife user by giving nickname,account.password and email", value = "delete one user", httpMethod = "POST")
+    @ApiOperation(notes = "Register one iLife user by giving nickname,account.password and email", value = "User register", httpMethod = "POST")
+    @ApiResponses({
+            @ApiResponse(code = 500, message = "account or nickname already exists"),
+    })
     @ApiImplicitParams({
             @ApiImplicitParam(name = "nickname", value = "the nickname of the iLife user"),
             @ApiImplicitParam(name = "account", value = "the account of the iLife user"),
@@ -58,14 +68,33 @@ public class UserServiceController {
             @ApiImplicitParam(name = "email", value = "the email of the iLife user")
     }
     )
-    @RequestMapping(path = "/auth/logUp")
-    public ResponseEntity<?> logUp(@ApiIgnore @RequestBody Map<String, String> params) {
+    @RequestMapping(path = "/auth/register")
+    public ResponseEntity<?> register(@ApiIgnore @RequestBody Map<String, String> params) {
         String nickname = params.get("nickname");
         String account = params.get("account");
         String password = params.get("password");
         String email = params.get("email");
-        System.out.println("********** deleteById **********");
+        System.out.println("********** register **********");
         return userService.save(nickname, account, password, email);
+    }
+
+
+    @ApiOperation(notes = "Auth one iLife user by giving account.password", value = "User log in", httpMethod = "POST")
+    @ApiResponses({
+            @ApiResponse(code = 500, message = "user not exists"),
+            @ApiResponse(code = 501, message = "account and password not match"),
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "account", value = "the account of the iLife user"),
+            @ApiImplicitParam(name = "password", value = "the password of the iLife user"),
+    }
+    )
+    @RequestMapping(path = "/auth/auth")
+    public ResponseEntity<?> auth(@ApiIgnore @RequestBody Map<String, String> params) {
+        String account = params.get("account");
+        String password = params.get("password");
+        System.out.println("********** auth **********");
+        return userService.auth(account, password);
     }
 
     @ApiImplicitParams({

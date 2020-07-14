@@ -24,6 +24,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public Users findByAccount(String account){
+        return userRepository.findByAccount(account);
+    }
+
+    @Override
     public void deleteById(Long id){
         userRepository.deleteById(id);
     }

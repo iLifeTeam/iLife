@@ -19,4 +19,8 @@ public interface UserService {
     ResponseEntity<?> updateWbId(Long id, Long wbId);
 
     ResponseEntity<?> updateZhId(Long id, String zhId);
+
+    Users findByAccount(String account);
+
+    ResponseEntity<?> auth(String account, String password);
 }
