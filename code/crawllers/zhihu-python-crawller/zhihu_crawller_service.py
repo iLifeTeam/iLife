@@ -4,34 +4,33 @@ import grpc
 from concurrent import futures
 from base64 import b64encode
 
-from zhihu_oauth import ZhihuClient,ActType
+from zhihu_oauth import ZhihuClient, ActType
 from zhihu_oauth.exception import NeedCaptchaException
-import os 
+import os
 import zhihu_pb2
 import zhihu_pb2_grpc
 
 
-
-
 class Question:
-    def __init__(self, title,excerpt,content, create_time, update_time,answer_count):
+    def __init__(self, title, excerpt, content, create_time, update_time, answer_count):
         self.title = title
         self.create_time = create_time
         self.update_time = update_time
-        self.excerpt =excerpt
-        self.content=content
+        self.excerpt = excerpt
+        self.content = content
         self.answer_count = answer_count
         self.answers = []
+
     def __init__(self):
         self.title = ""
         self.create_time = 0
         self.update_time = 0
-        self.excerpt =""
-        self.content=""
+        self.excerpt = ""
+        self.content = ""
         self.answer_count = 0
         self.answers = []
 
-    def setValue(self,question):
+    def setValue(self, question):
         self.title = question.title
         self.content = question.detail
         self.excerpt = question.excerpt
@@ -39,26 +38,29 @@ class Question:
         self.update_time = question.updated_time
         self.answer_count = question.answer_count
 
+
 class Answer:
-    def __init__(self, author,excerp,content, create_time, update_time,voteup_count,comment_count):
+    def __init__(self, author, excerpt, content, create_time, update_time, voteup_count, comment_count):
         self.author = author
         self.create_time = create_time
         self.update_time = update_time
-        self.excerpt =excerpt
-        self.content=content
+        self.excerpt = excerpt
+        self.content = content
         self.voteup_count = voteup_count
         self.comment_count = comment_count
         self.question = Question()
+
     def __init__(self):
         self.author = ""
         self.create_time = 0
         self.update_time = 0
-        self.excerpt =""
-        self.content=""
+        self.excerpt = ""
+        self.content = ""
         self.voteup_count = 0
         self.comment_count = 0
         self.question = Question()
-    def setValue(self,answer):
+
+    def setValue(self, answer):
         self.author = answer.author.name
         self.content = answer.content
         self.excerpt = answer.excerpt
@@ -67,24 +69,27 @@ class Answer:
         self.voteup_count = answer.voteup_count
         self.comment_count = answer.comment_count
 
+
 class Article:
-    def __init__(self,title, author,excerp,content, update_time,image_url,column_name):
-        self.title =title
+    def __init__(self, title, author, excerpt, content, update_time, image_url, column_name):
+        self.title = title
         self.author = author
         self.update_time = update_time
-        self.excerpt =excerpt
-        self.content=content
+        self.excerpt = excerpt
+        self.content = content
         self.image_url = image_url
         self.column_name = column_name
+
     def __init__(self):
-        self.title =""
+        self.title = ""
         self.author = ""
         self.update_time = 0
-        self.excerpt =""
-        self.content=""
+        self.excerpt = ""
+        self.content = ""
         self.image_url = ""
         self.column_name = ""
-    def setValue(self,article):
+
+    def setValue(self, article):
         self.title = article.title
         self.author = article.author.name
         self.content = article.content
@@ -93,72 +98,104 @@ class Article:
         self.image_url = article.image_url
         if article.column != None:
             self.column_name = article.column.title
-        else: 
+        else:
             self.column_name = ""
 
+class User:
+    def __init__(self, uid, name, email, phone_no, answer_count, gender, thanked_count,voteup_count):
+        self.uid = uid
+        self.name = name
+        self.email = email
+        self.phone = phone_no
+        self.answer_count = answer_count
+        self.gender = gender
+        self.thanked_count = thanked_count
+        self.voteup_count = voteup_count
+    def __init__(self):
+        self.uid = ""
+        self.name = ""
+        self.email = ""
+        self.phone = ""
+        self.answer_count = 0
+        self.gender = -1
+        self.thanked_count = 0
+        self.voteup_count = 0
+
+    def setValue(self, me):
+        self.uid = me.uid
+        self.name = me.name
+        self.email = me.email
+        self.phone = me.phone_no
+        self.gender = me.gender 
+        self.answer_count = me.answer_count
+        self.thanked_count = me.thanked_count
+        self.voteup_count = me.voteup_count
+
 class Activity:
-    def __init__(self,type,action_text,create_time):
+    def __init__(self, type, action_text, create_time):
         self.type = type
         self.action_text = action_text
-        self.create_time =create_time
+        self.create_time = create_time
         if type == ActType.CREATE_ANSWER or type == ActType.VOTEUP_ANSWER:
             self.answer = Answer()
         if type == ActType.CREATE_QUESTION or type == ActType.FOLLOW_QUESTION:
             self.question = Question()
         if type == ActType.CREATE_ARTICLE or type == ActType.VOTEUP_ARTICLE:
             self.article = Article()
-    
+
 
 class ZhihuService(zhihu_pb2_grpc.ZhihuServiceServicer):
     clientpool = {}
     userpool = {}
-    def Login(self,request, context):
+
+    def Login(self, request, context):
         username = request.username
         password = request.password
         captcha = request.captcha
         print("login request: " + username, ", ", password, ", ", captcha)
         client = self.clientpool.get(username)
         if client == None:
-            client = ZhihuClient() 
+            client = ZhihuClient()
             self.clientpool[username] = client
         tokenPath = './tokens/' + username + '.pkl'
         if os.path.isfile(tokenPath):
             client.load_token(tokenPath)
-            return zhihu_pb2.LoginResponse(response = "success")
-        
+            return zhihu_pb2.LoginResponse(response="success")
+
         if captcha == "":
-            try: 
-                success,err = client.login(username, password)
-                print(success,",",err)
+            try:
+                success, err = client.login(username, password)
+                print(success, ",", err)
             except NeedCaptchaException:
                 with open('a.gif', 'wb') as f:
                     f.write(client.get_captcha())
-                    base64_bytes = b64encode(client.get_captcha()) 
-                return zhihu_pb2.LoginResponse(response = base64_bytes)
+                    base64_bytes = b64encode(client.get_captcha())
+                return zhihu_pb2.LoginResponse(response=base64_bytes)
             client.save_token('./tokens/' + username + '.pkl')
             self.userpool[username] = 1
         else:
             try:
                 print("try with captcha:"+captcha+"---")
                 success, err = client.login(username, password, captcha)
-                print(success,",",err)
+                print(success, ",", err)
             except NeedCaptchaException:
                 with open('a.gif', 'wb') as f:
                     f.write(client.get_captcha())
-                return zhihu_pb2.LoginResponse(response = "wrong captcha")
+                return zhihu_pb2.LoginResponse(response="wrong captcha")
             if success:
                 client.save_token('./tokens/' + username + '.pkl')
                 self.userpool[username] = 1
-                return zhihu_pb2.LoginResponse(response = "success")
-            else :
-                return zhihu_pb2.LoginResponse(response = err)
+                return zhihu_pb2.LoginResponse(response="success")
+            else:
+                return zhihu_pb2.LoginResponse(response=err)
 
-    def GenActivityJson(self,me):
-        return json.dumps(self.GetActivityDict(me),default=lambda o: o.__dict__, sort_keys=True, indent=4) 
-    def GetActivityDict(self,me):
+    def GenActivityJson(self, me):
+        return json.dumps(self.GetActivityDict(me), default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
+    def GetActivityDict(self, me):
         result = []
-        for act in  me.activities:
-            activity = Activity(act.type,act.action_text,act.created_time)
+        for act in me.activities:
+            activity = Activity(act.type, act.action_text, act.created_time)
 
             if activity.type == ActType.CREATE_ANSWER or activity.type == ActType.VOTEUP_ANSWER:
                 activity.answer.setValue(act.target)
@@ -171,7 +208,7 @@ class ZhihuService(zhihu_pb2_grpc.ZhihuServiceServicer):
                 # activity.answer.voteup_count = act.target.voteup_count
                 # activity.answer.comment_count = act.target.comment_count
                 activity.answer.question.setValue(act.target.question)
-                
+
                 # question = act.target.question
                 # activity.answer.question.title = question.title
                 # activity.answer.question.answer_count = question.answer_count
@@ -201,25 +238,38 @@ class ZhihuService(zhihu_pb2_grpc.ZhihuServiceServicer):
             if len(result) > 50:
                 break
         return result
-            
-        
-    def GetActivity(self,request, context):
+
+    def GetActivity(self, request, context):
         username = request.username
         client = self.clientpool.get(username)
         if client == None:
             return zhihu_pb2.ActivityResponse("not login")
         me = client.me()
         json_object = self.GenActivityJson(me)
-        return zhihu_pb2.ActivityResponse(responseJson = json_object)
+        return zhihu_pb2.ActivityResponse(responseJson=json_object)
+    
+    def GenUserJson(self, user):
+        return json.dumps(self.GetActivityDict(user), default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
+    def GetUserInfo(self, request, context):
+        username = request.username
+        client = self.clientpool.get(username)
+        if client == None:
+            return zhihu_pb2.ActivityResponse("not login")
+        me = client.me()
+        user = User()
+        user.setValue(me)
+        json_object = self.GenUserJson(user)
+        return zhihu_pb2.UserinfoResponse(responseJson = json_object)
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
-ip = "127.0.0.1"
+ip = "0.0.0.0"
 port = "4001"
 serverString = ip + ":" + port
+
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    zhihu_pb2_grpc.add_ZhihuServiceServicer_to_server(ZhihuService(),server)
+    zhihu_pb2_grpc.add_ZhihuServiceServicer_to_server(ZhihuService(), server)
     server.add_insecure_port(serverString)
     server.start()
     try:
@@ -228,6 +278,7 @@ def serve():
     except KeyboardInterrupt:
         server.stop(0)
 
+
 if __name__ == '__main__':
-    print("server running. at port 4001")
+    print("server running. at port 4001\n")
     serve()

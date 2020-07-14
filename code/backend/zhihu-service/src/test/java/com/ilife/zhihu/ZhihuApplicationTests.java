@@ -46,7 +46,10 @@ class ZhihuApplicationTests {
     @Test
     @Transactional
     void AnswerDaoReadTest(){
-        Question question = questionDao.findQuestionById(10);
+        Question question = questionDao.findQuestionById(1);
+        if(question == null){
+            return;
+        }
         for (Answer answer : question.getAnswerList()){
             System.out.println(answer.getExcerpt());
         }

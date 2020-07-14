@@ -1,0 +1,69 @@
+# This is a basic workflow to help you get started with Actions
+
+name: zhihu-serive CI/CD
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: 
+      - zhihu-crawller 
+  pull_request:
+    branches: 
+      - zhihu-crawller 
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    - name: Build and push crawller Docker image
+      uses: docker/build-push-action@v1.1.0
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+        repository: ilife2020/zhihu-python-crawller
+        tags: latest
+        path: ./code/crawllers/zhihu-python-crawller
+
+    # Step that does that actual cache save and restore
+    - uses: actions/cache@v1
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+         ${{ runner.os }}-maven-
+
+    - name: package with maven
+      run: cd ./code/backend/zhihu-service/ && mvn -B clean package
+
+    - name: Build and push zhihu-serive Docker image
+      uses: docker/build-push-action@v1.1.0
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+        repository: ilife2020/zhihu-service
+        tags: latest
+        path: ./code/backend/zhihu-service
+    
+    
+    
+    - name: deploy via ssh
+      uses: fifsky/ssh-action@master
+      with:
+        command: |
+          cd iLife 
+          git pull 
+          cd ./code/backend/zhihu-service
+          docker-compose down
+          docker-compose up -d
+        host: 47.97.206.169
+        user: root
+        key: ${{ secrets.SSH_PRIVATE_KEY}}

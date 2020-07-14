@@ -1,0 +1,10 @@
+version: "3"
+services:
+  zhihu-service:
+    image: ilife2020/zhihu-service:latest
+    ports:
+      - "8090:8090"
+  python-crawller:
+    image: ilife2020/zhihu-python-crawller:latest
+    expose:
+      - "4001"

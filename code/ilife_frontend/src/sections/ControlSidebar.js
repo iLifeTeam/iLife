@@ -17,7 +17,7 @@ export default class ControlSidebar extends Component {
               <h3 className="control-sidebar-heading">Recent Activity</h3>
               <ul className="control-sidebar-menu">
                 <li>
-                  <a href="javascript:void(0)">
+                  <a >
                     <i className="menu-icon fa fa-birthday-cake bg-red" />
                     <div className="menu-info">
                       <h4 className="control-sidebar-subheading">Langdon's Birthday</h4>
@@ -26,7 +26,7 @@ export default class ControlSidebar extends Component {
                   </a>
                 </li>
                 <li>
-                  <a href="javascript:void(0)">
+                  <a >
                     <i className="menu-icon fa fa-user bg-yellow" />
                     <div className="menu-info">
                       <h4 className="control-sidebar-subheading">Frodo Updated His Profile</h4>
@@ -35,7 +35,7 @@ export default class ControlSidebar extends Component {
                   </a>
                 </li>
                 <li>
-                  <a href="javascript:void(0)">
+                  <a >
                     <i className="menu-icon fa fa-envelope-o bg-light-blue" />
                     <div className="menu-info">
                       <h4 className="control-sidebar-subheading">Nora Joined Mailing List</h4>
@@ -44,7 +44,7 @@ export default class ControlSidebar extends Component {
                   </a>
                 </li>
                 <li>
-                  <a href="javascript:void(0)">
+                  <a >
                     <i className="menu-icon fa fa-file-code-o bg-green" />
                     <div className="menu-info">
                       <h4 className="control-sidebar-subheading">Cron Job 254 Executed</h4>
@@ -57,7 +57,7 @@ export default class ControlSidebar extends Component {
               <h3 className="control-sidebar-heading">Tasks Progress</h3>
               <ul className="control-sidebar-menu">
                 <li>
-                  <a href="javascript:void(0)">
+                  <a >
                     <h4 className="control-sidebar-subheading">
                       Custom Template Design
                 <span className="label label-danger pull-right">70%</span>
@@ -68,7 +68,7 @@ export default class ControlSidebar extends Component {
                   </a>
                 </li>
                 <li>
-                  <a href="javascript:void(0)">
+                  <a >
                     <h4 className="control-sidebar-subheading">
                       Update Resume
                 <span className="label label-success pull-right">95%</span>
@@ -79,7 +79,7 @@ export default class ControlSidebar extends Component {
                   </a>
                 </li>
                 <li>
-                  <a href="javascript:void(0)">
+                  <a >
                     <h4 className="control-sidebar-subheading">
                       Laravel Integration
                 <span className="label label-warning pull-right">50%</span>
@@ -90,7 +90,7 @@ export default class ControlSidebar extends Component {
                   </a>
                 </li>
                 <li>
-                  <a href="javascript:void(0)">
+                  <a >
                     <h4 className="control-sidebar-subheading">
                       Back End Framework
                 <span className="label label-primary pull-right">68%</span>
@@ -156,7 +156,7 @@ export default class ControlSidebar extends Component {
                 <div className="form-group">
                   <label className="control-sidebar-subheading">
                     Delete chat history
-              <a href="javascript:void(0)" className="text-red pull-right"><i className="fa fa-trash-o" /></a>
+              <a className="text-red pull-right"><i className="fa fa-trash-o" /></a>
                   </label>
                 </div>
                 {/* /.form-group */}
