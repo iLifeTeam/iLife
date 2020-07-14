@@ -30,11 +30,6 @@ public class ZhihuServiceImpl implements ZhihuService {
     UserDao userDao;
 
     @Override
-    public Question addQuestion(Question question) {
-        return null;
-    }
-
-    @Override
     public Question getQuestionById(Integer id) {
         return questionDao.findQuestionById(id);
     }
@@ -53,7 +48,6 @@ public class ZhihuServiceImpl implements ZhihuService {
     @Transactional
     public List<Activity> getUserActivity(String email) {
         User user = userDao.findByEmail(email);
-        user.getActivities().size();
         return user.getActivities();
     }
 
@@ -117,6 +111,7 @@ public class ZhihuServiceImpl implements ZhihuService {
         user.setThankedCount(userObject.getInteger("thanked_count"));
         user.setAnswerCount(userObject.getInteger("answer_count"));
         user.setVoteupCount(userObject.getInteger("voteup_count"));
+
         return user;
     }
 
@@ -179,21 +174,19 @@ public class ZhihuServiceImpl implements ZhihuService {
 
     @Override
     public User saveUserFromJsonString(String email, String json) {
-        JSONObject userObject = JSON.parseObject(json);
-        User user = makeUserFromJsonObject(userObject);
+//        JSONObject userObject = JSON.parseObject(json);
+//        User user = makeUserFromJsonObject(userObject);
+        User user = JSON.parseObject(email,User.class);
         user.setEmail(email);
         System.out.println(JSON.toJSONString(user));
         return userDao.save(user);
     }
 
+
+
     @Override
     public User getUserWithEmail(String email) {
         return userDao.findByEmail(email);
-    }
-
-    @Override
-    public User getUserWithName(String name) {
-        return userDao.findByName(name);
     }
 
 
