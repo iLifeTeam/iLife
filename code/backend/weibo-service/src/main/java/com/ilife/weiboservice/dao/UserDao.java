@@ -1,6 +1,6 @@
 package com.ilife.weiboservice.dao;
 
-        import com.ilife.weiboservice.entity.User;
+import com.ilife.weiboservice.entity.User;
 
 
 public interface UserDao {
@@ -8,7 +8,7 @@ public interface UserDao {
 
     User findByNickname(String nickname);
 
-    void deleteById(Integer id);
+    void deleteById(Long id);
 
     User save(User user);
 
