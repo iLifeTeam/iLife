@@ -24,21 +24,23 @@ public class ZhihuController {
 
     private final String CRAWLER_HOSTNAME  = "localhost";
     private final int CRAWLLER_PORT = 4001;
-    ZhihuCrawlerServiceClient crawlerServiceClient = new ZhihuCrawlerServiceClient(CRAWLER_HOSTNAME, CRAWLLER_PORT);
+    ZhihuCrawlerServiceClient crawlerServiceClient ;
 
     @Autowired
     ZhihuService zhihuService;
 
+    public ZhihuController() {
+        this.crawlerServiceClient = new ZhihuCrawlerServiceClient(CRAWLER_HOSTNAME, CRAWLLER_PORT);
+    }
 
+    public void setCrawlerServiceClient(ZhihuCrawlerServiceClient crawlerServiceClient) {
+        this.crawlerServiceClient = crawlerServiceClient;
+    }
 
-    @Data @AllArgsConstructor
-    private static class LoginRequest{
+    @Data @AllArgsConstructor @NoArgsConstructor
+    public static class LoginRequest{
         String username; /* its actually email */
         String password;
-        String captcha;
-    }
-    @Data @AllArgsConstructor
-    private static class CaptchaResponse{
         String captcha;
     }
     @ApiOperation(notes = "login with username, password, and optional captcha", value = "",httpMethod = "POST")
@@ -51,11 +53,13 @@ public class ZhihuController {
         }
         String captcha = loginRequest.captcha;
         String response = login(email,password,captcha);
+        System.out.println("login response: " + response);
         if (!response.equals( "success")){
             saveImage(response,  email + ".gif");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new CaptchaResponse(response));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }else {
             String userInfoJson = crawlerServiceClient.getUserInfo(email);
+            System.out.println("user info json \n " + userInfoJson);
             User user = zhihuService.saveUserFromJsonString(email, userInfoJson);
             return ResponseEntity.ok().body("Login successfully!");
         }
@@ -124,7 +128,7 @@ public class ZhihuController {
             out.write(bytes);
             out.flush();
             out.close();
-        }catch (IOException e){
+        }catch (IOException | IllegalArgumentException e){
             e.printStackTrace();
         }
     }

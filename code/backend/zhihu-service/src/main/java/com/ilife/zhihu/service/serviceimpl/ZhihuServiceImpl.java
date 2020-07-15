@@ -176,7 +176,7 @@ public class ZhihuServiceImpl implements ZhihuService {
     public User saveUserFromJsonString(String email, String json) {
 //        JSONObject userObject = JSON.parseObject(json);
 //        User user = makeUserFromJsonObject(userObject);
-        User user = JSON.parseObject(email,User.class);
+        User user = JSON.parseObject(json,User.class);
         user.setEmail(email);
         System.out.println(JSON.toJSONString(user));
         return userDao.save(user);

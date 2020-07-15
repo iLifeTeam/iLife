@@ -246,6 +246,9 @@ class ZhihuService(zhihu_pb2_grpc.ZhihuServiceServicer):
             return zhihu_pb2.ActivityResponse("not login")
         me = client.me()
         json_object = self.GenActivityJson(me)
+        # f = open("test.txt","w")
+        # f.write(json_object)
+        # f.close()
         return zhihu_pb2.ActivityResponse(responseJson=json_object)
     
     def GenUserJson(self, user):
