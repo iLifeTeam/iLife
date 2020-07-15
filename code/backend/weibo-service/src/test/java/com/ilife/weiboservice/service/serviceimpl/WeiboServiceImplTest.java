@@ -1,5 +1,6 @@
-package com.ilife.weiboservice.service.serviceimpl; 
+package com.ilife.weiboservice.service.serviceimpl;
 
+import static org.junit.Assert.*;
 import org.junit.Test; 
 import org.junit.Before; 
 import org.junit.After; 

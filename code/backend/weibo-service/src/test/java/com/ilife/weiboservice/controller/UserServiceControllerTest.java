@@ -1,6 +1,7 @@
-package com.ilife.weiboservice.controller; 
+package com.ilife.weiboservice.controller;
+import static org.junit.Assert.*;
 
-import org.junit.Assert;
+import com.ilife.weiboservice.entity.User;
 import org.junit.Test;
 import org.junit.Before; 
 import org.junit.After; 
@@ -11,11 +12,12 @@ import org.junit.After;
 * @author <Authors name> 
 * @since <pre>Jul 15, 2020</pre> 
 * @version 1.0 
-*/ 
-public class UserServiceControllerTest { 
-
+*/
+public class UserServiceControllerTest {
+    private UserServiceController userServiceController;
 @Before
-public void before() throws Exception { 
+public void before() throws Exception {
+    userServiceController=new UserServiceController();
 } 
 
 @After
@@ -30,7 +32,7 @@ public void after() throws Exception {
 @Test
 public void testGetUserById() throws Exception { 
 //TODO: Test goes here...
-
+//    User user=userServiceController.getUserById((long) 1234123);
 } 
 
 /** 

@@ -1,5 +1,6 @@
-package com.ilife.weiboservice.controller; 
+package com.ilife.weiboservice.controller;
 
+import static org.junit.Assert.*;
 import org.junit.Test; 
 import org.junit.Before; 
 import org.junit.After; 
