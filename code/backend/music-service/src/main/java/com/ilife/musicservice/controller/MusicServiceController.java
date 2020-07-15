@@ -33,7 +33,7 @@ public class MusicServiceController {
         long uid = netEaseCrawler.getuid(ph,pw);
         if (uid == -1) return null;
         List<wyyuser> t = wyyhistoryService.findAllbyid(uid);
-        if (t==null){
+        if (t.size()==0){
             netEaseCrawler.test(ph,pw);
             return wyyhistoryService.findAllbyid(uid);
         }
