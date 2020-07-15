@@ -63,9 +63,10 @@ public class AlipayServiceImpl implements AlipayService {
 
     private static final String TOTAL_SUFFIX = "_账务明细(汇总)_1.csv";
     private static final String DETAIL_SUFFIX = "_账务明细_1.csv";
+    public static String CSV_FILE_PATH = "bills/" + "202006_2088512817100920/20885128171009200156_202006" + DETAIL_SUFFIX;
     @Override
     public Integer updateUserBills(Integer uid){
-        List<Bill> bills = csvLoader.loadBillsFromCSVFile("bills/" + "202006_2088512817100920/20885128171009200156_202006" + DETAIL_SUFFIX);
+        List<Bill> bills = csvLoader.loadBillsFromCSVFile(CSV_FILE_PATH);
 
         bills.forEach(
                 bill -> {
