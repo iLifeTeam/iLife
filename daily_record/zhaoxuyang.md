@@ -20,3 +20,10 @@
   - 对接前端，完善zhihu-service API。
   - 讨论本周计划
   - 对alipay爬虫进行调查
+- 7.14
+  - 学习Junit进行简单的测试
+  - 对alipay爬虫进行尝试
+- 7.15
+  - 完成alipay后端（假设已经通过爬虫获取了用户账单csv文件）
+  - docker打包后端服务
+  - 学习docker swarm/ docker compose相关技术，整理资料，为后续更好的开发/部署做准备。
