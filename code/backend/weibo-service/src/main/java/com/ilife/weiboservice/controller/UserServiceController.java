@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
-//@Api(tags={"User Service Controller"})
 public class UserServiceController {
-
 
     @Autowired
     private UserService userService;
