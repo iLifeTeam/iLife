@@ -68,4 +68,14 @@ public class WeiboServiceImpl implements WeiboService {
         weiboDao.deleteById(id);
         return ResponseEntity.ok("delete Weibo " + id.toString());
     }
+
+    @Override
+    public ResponseEntity<?> save(Weibo weibo){
+        if(findById(weibo.getId())!=null){
+            return ResponseEntity.status(501).body("Weibo id "+weibo.getId()+" already exists");
+        }else{
+            Weibo _weibo=weiboDao.save(weibo);
+            return ResponseEntity.ok().body(_weibo.toString());
+        }
+    }
 }

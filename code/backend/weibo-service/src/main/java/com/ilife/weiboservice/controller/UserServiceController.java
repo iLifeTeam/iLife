@@ -34,7 +34,7 @@ public class UserServiceController {
 
     @ApiOperation(notes = "Delete one user info specified by userId", value = "delete one user", httpMethod = "GET")
     @RequestMapping(path = "/user/delById")
-    public ResponseEntity<?> getUserByNickname(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid) {
+    public ResponseEntity<?> delUserByUserId(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid) {
         System.out.println("********** deleteUser **********");
         return userService.deleteById(uid);
     }

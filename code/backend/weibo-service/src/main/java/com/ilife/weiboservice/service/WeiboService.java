@@ -15,4 +15,6 @@ public interface WeiboService {
     ResponseEntity<?> deleteByUid(Integer uid);
 
     ResponseEntity<?> deleteById(Integer id);
+    
+    ResponseEntity<?> save(Weibo weibo);
 }
