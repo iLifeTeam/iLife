@@ -24,10 +24,11 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build();
     }
+
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Weibo Backend API Documentation")
-                .contact(new Contact("杨亘@sjtu","","888888@qq.com"))
+                .contact(new Contact("杨亘@sjtu", "", "888888@qq.com"))
                 .version("1.0.0-SNAPSHOT")
                 .build();
     }
