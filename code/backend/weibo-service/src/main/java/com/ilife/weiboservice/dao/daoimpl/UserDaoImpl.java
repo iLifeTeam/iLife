@@ -12,19 +12,19 @@ public class UserDaoImpl implements UserDao {
     @Autowired
     private UserRepository userRepository;
 
-    public User findAllById(Integer id){
+    public User findAllById(Long id) {
         return userRepository.findAllById(id);
     }
 
-    public User findByNickname(String nickname){
+    public User findByNickname(String nickname) {
         return userRepository.findByNickname(nickname);
     }
 
-    public void deleteById(Integer id){
+    public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
 
-    public User save(User user){
+    public User save(User user) {
         userRepository.save(user);
         return user;
     }
