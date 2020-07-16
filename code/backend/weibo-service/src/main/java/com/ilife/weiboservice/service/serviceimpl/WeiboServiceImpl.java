@@ -1,6 +1,7 @@
 package com.ilife.weiboservice.service.serviceimpl;
 
 import com.google.common.base.Utf8;
+import com.ilife.weiboservice.dao.UserDao;
 import com.ilife.weiboservice.dao.WeiboDao;
 import com.ilife.weiboservice.entity.Weibo;
 import com.ilife.weiboservice.service.WeiboService;
@@ -21,13 +22,19 @@ public class WeiboServiceImpl implements WeiboService {
     @Autowired
     private WeiboDao weiboDao;
 
+    @Autowired
+    private UserDao userDao;
+
     @Override
-    public List<Weibo> findAllByUid(Integer uid) {
+    public List<Weibo> findAllByUid(Long uid) {
         return weiboDao.findAllByUid(uid);
     }
 
     @Override
-    public ResponseEntity<?> deleteByUid(Integer uid) {
+    public ResponseEntity<?> deleteByUid(Long uid) {
+        if(userDao.findAllById(uid)==null){
+            return ResponseEntity.status(501).body("user "+uid.toString()+" not exist");
+        }
         weiboDao.deleteByUid(uid);
         return new ResponseEntity<>("delete all Weibos of " + uid.toString(), HttpStatus.OK);
     }
@@ -64,9 +71,9 @@ public class WeiboServiceImpl implements WeiboService {
     }
 
     @Override
-    public ResponseEntity<?> deleteById(Integer id) {
+    public ResponseEntity<?> deleteById(String id) {
         weiboDao.deleteById(id);
-        return ResponseEntity.ok("delete Weibo " + id.toString());
+        return ResponseEntity.ok("delete Weibo " + id);
     }
 
     @Override

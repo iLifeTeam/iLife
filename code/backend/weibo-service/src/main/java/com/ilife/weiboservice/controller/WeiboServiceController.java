@@ -21,7 +21,7 @@ public class WeiboServiceController {
 
     @ApiOperation(notes = "Get all Weibos from database of one user specified by userID", value = "get one user's Weibos", httpMethod = "GET")
     @RequestMapping(path = "/weibo/getWeibos")
-    public List<Weibo> getWeibos(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Integer uid) {
+    public List<Weibo> getWeibos(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid) {
         System.out.println("********** getWeibos **********");
         return weiboService.findAllByUid(uid);
     }
@@ -42,14 +42,14 @@ public class WeiboServiceController {
 
     @ApiOperation(notes = "Delete all Weibos from database of one user specified by userID,success if the response.status = 200 ", value = "delete one user's Weibos", httpMethod = "GET")
     @RequestMapping(path = "/weibo/deleteWeibos")
-    public ResponseEntity<?> deleteWeibos(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Integer uid) {
+    public ResponseEntity<?> deleteWeibos(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid) {
         System.out.println("********** deleteWeibos **********");
         return weiboService.deleteByUid(uid);
     }
 
     @ApiOperation(notes = "Delete one Weibos from database specified by Weibo ID,success if the response.status = 200 ", value = "delete one Weibo", httpMethod = "GET")
     @RequestMapping(path = "/weibo/deleteWeibo")
-    public ResponseEntity<?> deleteWeibo(@ApiParam(name = "Id", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("Id") Integer id) {
+    public ResponseEntity<?> deleteWeibo(@ApiParam(name = "Id", value = "The ID of a WeiBo,should be a String") @RequestParam("Id") String id) {
         System.out.println("********** deleteWeibos **********");
         return weiboService.deleteById(id);
     }

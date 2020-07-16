@@ -55,8 +55,8 @@ public class WeiboServiceControllerTest {
     @Before
     public void before() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-        for(int i = 0; i<10; ++i){
-            Weibo weibo=new Weibo("sE2Rhe7epn"+ i,123,"today is a good day","home",100*i,200*i,300*i,new Date());
+        for (int i = 0; i < 10; ++i) {
+            Weibo weibo = new Weibo("sE2Rhe7epn" + i, 123, "today is a good day", "home", 100 * i, 200 * i, 300 * i, new Date());
             weiboDao.save(weibo);
         }
     }
@@ -70,6 +70,7 @@ public class WeiboServiceControllerTest {
      */
     @Test
     public void testGetWeibos() throws Exception {
+        //valid userId
         MvcResult authResult;
         authResult = mockMvc.perform(get("/weibo/getWeibos")//使用get方式来调用接口。
                 .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
@@ -77,10 +78,17 @@ public class WeiboServiceControllerTest {
         ).andExpect(status().isOk())
                 .andReturn();
         JSONArray jsonArray = new JSONArray(authResult.getResponse().getContentAsString());
-        JSONObject jsonObject=jsonArray.getJSONObject(3);
-        Assert.assertEquals(jsonObject.get("retweet_num"),300);
-        Assert.assertEquals(jsonArray.length(),10);
-
+        JSONObject jsonObject = jsonArray.getJSONObject(3);
+        Assert.assertEquals(jsonObject.get("retweet_num"), 300);
+        Assert.assertEquals(jsonArray.length(), 10);
+        //invalid userId
+        authResult = mockMvc.perform(get("/weibo/getWeibos")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .param("userId", "090909090")//请求的参数（可多个）
+        ).andExpect(status().isOk())
+                .andReturn();
+        jsonArray = new JSONArray(authResult.getResponse().getContentAsString());
+        Assert.assertEquals(jsonArray.length(), 0);
     }
 
     /**
@@ -88,7 +96,22 @@ public class WeiboServiceControllerTest {
      */
     @Test
     public void testGetWeibo() throws Exception {
-//TODO: Test goes here... 
+        //valid weiboId
+        MvcResult authResult;
+        authResult = mockMvc.perform(get("/weibo/getWeibo")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .param("Id", "sE2Rhe7epn3")//请求的参数（可多个）
+        ).andExpect(status().isOk())
+                .andReturn();
+        JSONObject jsonWeibo = new JSONObject(authResult.getResponse().getContentAsString());
+        Assert.assertEquals(jsonWeibo.get("retweet_num"), 300);
+        //invalid weiboId
+        authResult = mockMvc.perform(get("/weibo/getWeibo")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .param("Id", "sE2Rhe7epn10")//请求的参数（可多个）
+        ).andExpect(status().isOk()).andReturn();
+        Assert.assertEquals(authResult.getResponse().getContentAsString(), "");
+
     }
 
     /**
@@ -96,19 +119,29 @@ public class WeiboServiceControllerTest {
      */
     @Test
     public void testCrawlWeibo() throws Exception {
+        mockMvc.perform(get("/weibo/crawlWeibo")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .param("userId", "")//请求的参数（可多个）
+        ).andExpect(status().isOk());
 //TODO: Test goes here... 
     }
 
     /**
-     * Method: deleteWeibos(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Integer uid)
+     * Method: deleteWeibos(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid)
      */
     @Test
     public void testDeleteWeibos() throws Exception {
+        MvcResult authResult;
+        mockMvc.perform(get("/weibo/deleteWeibos")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .param("userId", "123")//请求的参数（可多个）
+        ).andExpect(status().isOk());
+
 //TODO: Test goes here... 
     }
 
     /**
-     * Method: deleteWeibo(@ApiParam(name = "Id", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("Id") Integer id)
+     * Method: deleteWeibo(@ApiParam(name = "Id", value = "The ID of a WeiBo,should be a String") @RequestParam("Id") String id)
      */
     @Test
     public void testDeleteWeibo() throws Exception {
