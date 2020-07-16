@@ -21,8 +21,8 @@ import java.util.List;
 @RestController
 @Api(value = "ZhihuServiceController")
 public class ZhihuController {
-
-    private final String CRAWLER_HOSTNAME  = "zhihu-crawller";
+    private final String CRAWLER_HOSTNAME  = "localhost";
+//    private final String CRAWLER_HOSTNAME  = "zhihu-crawller";
     private final int CRAWLLER_PORT = 4001;
     ZhihuCrawlerServiceClient crawlerServiceClient ;
 
@@ -96,21 +96,21 @@ public class ZhihuController {
     @ApiOperation(notes = "GET article", value = "",httpMethod = "GET")
     @GetMapping(value = "/article",produces = "application/json")
     public Article getArticle(
-            @RequestParam("id") Integer id){
+            @RequestParam("id") String id){
         return zhihuService.getArticleById(id);
     }
 
     @ApiOperation(notes = "GET question", value = "",httpMethod = "GET")
     @GetMapping(value = "/question",produces = "application/json")
     public Question getQuestion(
-            @RequestParam("id") Integer id){
+            @RequestParam("id") String id){
         return zhihuService.getQuestionById(id);
     }
 
     @ApiOperation(notes = "GET answer", value = "",httpMethod = "GET")
     @GetMapping(value = "/answer",produces = "application/json")
     public Answer getAnswer(
-            @RequestParam("id") Integer id){
+            @RequestParam("id") String id){
         return zhihuService.getAnswerById(id);
     }
 

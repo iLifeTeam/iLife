@@ -16,7 +16,7 @@ public class ActivityDaoImpl implements ActivityDao {
 
 
     @Override
-    public Activity findById(Integer id) {
+    public Activity findById(String id) {
         return activityRepository.findById(id).orElse(null);
     }
 
@@ -27,9 +27,8 @@ public class ActivityDaoImpl implements ActivityDao {
 
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(String id) {
         activityRepository.deleteById(id);
-
     }
 
 }
