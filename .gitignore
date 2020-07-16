@@ -8,7 +8,4 @@
 */bin/
 *.DS_Store
 ignore/
-code/backend/weibo-service/docker/demo-0.0.1-SNAPSHOT.jar
-code/backend/weibo-service/log/crawler_log/2020-07-16-07-31-21.log
-code/backend/weibo-service/log/crawler_log/2020-07-16-07-32-59.log
-code/backend/weibo-service/log/crawler_log/2020-07-16-07-34-40.log
+
