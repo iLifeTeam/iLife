@@ -45,9 +45,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void updateWbId(Long id, Long wbId){
-        System.out.println(wbId);
-        System.out.println(id);
-        userRepository.updateWbId(id, wbId);
+        System.out.println(userRepository.updateWbId(id, wbId));
     }
 
     @Override

@@ -29,7 +29,7 @@ public interface UserRepository extends CrudRepository<Users, Long> {
     @Transactional
     @Modifying
     @Query(value = "update Users set weibid=?2 where id =?1")
-    void updateWbId(Long id, Long wbId);
+    int updateWbId(Long id, Long wbId);
 
     @Transactional
     @Modifying
