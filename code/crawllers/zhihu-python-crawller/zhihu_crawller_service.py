@@ -4,24 +4,51 @@ import grpc
 from concurrent import futures
 from base64 import b64encode
 
-from zhihu_oauth import ZhihuClient, ActType
+from zhihu_oauth import ZhihuClient, ActType, ts2str, act2str
 from zhihu_oauth.exception import NeedCaptchaException
 import os
 import zhihu_pb2
 import zhihu_pb2_grpc
+# patch a buggy function
+import zhihu_oauth.zhcls.activity
+from zhihu_oauth.zhcls.normal import normal_attr
+from zhihu_oauth.zhcls.streaming import StreamingJSON
+from zhihu_oauth.zhcls.utils import build_zhihu_obj_from_dict, get_class_from_name, SimpleEnum
+from zhihu_oauth.exception import UnimplementedException
+from zhihu_oauth.zhcls.collection import Collection
+
+def my_get_target(self):
+        pos = self._type.rfind('_')
+        if pos == -1:
+            raise UnimplementedException('Unable to get class from type name')
+        filename = self._type[pos + 1:].lower()
+        class_name = filename.capitalize()
+
+        obj_cls = get_class_from_name(class_name, filename)
+        self._target = build_zhihu_obj_from_dict(
+            self._data['target'], self._session, cls=obj_cls
+        )
+        # 对收藏答案类型的特殊处理
+        if self._type in {ActType.COLLECT_ANSWER, ActType.COLLECT_ARTICLE}:
+            
+            obj = self._target
+            collection = build_zhihu_obj_from_dict(
+                self._data['target'], self._session,
+                cls=Collection,
+            )
+            self._target = {
+                'collection': collection,
+                class_name.lower(): obj,
+            }
+# patch complete here
+
+small_prime = 300001573
 
 
 class Question:
-    def __init__(self, title, excerpt, content, create_time, update_time, answer_count):
-        self.title = title
-        self.create_time = create_time
-        self.update_time = update_time
-        self.excerpt = excerpt
-        self.content = content
-        self.answer_count = answer_count
-        self.answers = []
 
     def __init__(self):
+        self.id = 0,
         self.title = ""
         self.create_time = 0
         self.update_time = 0
@@ -31,6 +58,7 @@ class Question:
         self.answers = []
 
     def setValue(self, question):
+        self.id = question.id,
         self.title = question.title
         self.content = question.detail
         self.excerpt = question.excerpt
@@ -40,17 +68,9 @@ class Question:
 
 
 class Answer:
-    def __init__(self, author, excerpt, content, create_time, update_time, voteup_count, comment_count):
-        self.author = author
-        self.create_time = create_time
-        self.update_time = update_time
-        self.excerpt = excerpt
-        self.content = content
-        self.voteup_count = voteup_count
-        self.comment_count = comment_count
-        self.question = Question()
 
     def __init__(self):
+        self.id = 0,
         self.author = ""
         self.create_time = 0
         self.update_time = 0
@@ -61,6 +81,7 @@ class Answer:
         self.question = Question()
 
     def setValue(self, answer):
+        self.id = answer.id,
         self.author = answer.author.name
         self.content = answer.content
         self.excerpt = answer.excerpt
@@ -71,16 +92,9 @@ class Answer:
 
 
 class Article:
-    def __init__(self, title, author, excerpt, content, update_time, image_url, column_name):
-        self.title = title
-        self.author = author
-        self.update_time = update_time
-        self.excerpt = excerpt
-        self.content = content
-        self.image_url = image_url
-        self.column_name = column_name
 
     def __init__(self):
+        self.id = 0,
         self.title = ""
         self.author = ""
         self.update_time = 0
@@ -90,6 +104,7 @@ class Article:
         self.column_name = ""
 
     def setValue(self, article):
+        self.id = article.id,
         self.title = article.title
         self.author = article.author.name
         self.content = article.content
@@ -101,16 +116,21 @@ class Article:
         else:
             self.column_name = ""
 
+class Activity:
+    def __init__(self,type, action_text, create_time):
+        self.id = ""
+        self.type = type
+        self.action_text = action_text
+        self.create_time = create_time
+        if type == ActType.CREATE_ANSWER or type == ActType.VOTEUP_ANSWER:
+            self.answer = Answer()
+        if type == ActType.CREATE_QUESTION or type == ActType.FOLLOW_QUESTION:
+            self.question = Question()
+        if type == ActType.CREATE_ARTICLE or type == ActType.VOTEUP_ARTICLE:
+            self.article = Article()
+
+
 class User:
-    def __init__(self, uid, name, email, phone_no, answer_count, gender, thanked_count,voteup_count):
-        self.uid = uid
-        self.name = name
-        self.email = email
-        self.phone = phone_no
-        self.answer_count = answer_count
-        self.gender = gender
-        self.thanked_count = thanked_count
-        self.voteup_count = voteup_count
     def __init__(self):
         self.uid = ""
         self.name = ""
@@ -130,18 +150,6 @@ class User:
         self.answer_count = me.answer_count
         self.thanked_count = me.thanked_count
         self.voteup_count = me.voteup_count
-
-class Activity:
-    def __init__(self, type, action_text, create_time):
-        self.type = type
-        self.action_text = action_text
-        self.create_time = create_time
-        if type == ActType.CREATE_ANSWER or type == ActType.VOTEUP_ANSWER:
-            self.answer = Answer()
-        if type == ActType.CREATE_QUESTION or type == ActType.FOLLOW_QUESTION:
-            self.question = Question()
-        if type == ActType.CREATE_ARTICLE or type == ActType.VOTEUP_ARTICLE:
-            self.article = Article()
 
 
 class ZhihuService(zhihu_pb2_grpc.ZhihuServiceServicer):
@@ -194,12 +202,24 @@ class ZhihuService(zhihu_pb2_grpc.ZhihuServiceServicer):
 
     def GetActivityDict(self, me):
         result = []
-        for act in me.activities:
-            activity = Activity(act.type, act.action_text, act.created_time)
+        filter_types = {
+            ActType.VOTEUP_ANSWER,
+            ActType.VOTEUP_ARTICLE,
+            ActType.FOLLOW_QUESTION,
+            ActType.CREATE_QUESTION,
+            ActType.CREATE_ANSWER,
+            ActType.CREATE_ARTICLE,
+        }
 
+        for act in me.activities.filter(filter_types):
+            # print(act.type,flush=True)
+            activity = Activity(act.type, act2str(act), act.created_time)
+            # print(act.target.id, ",", act.type, ",", type(act.target.id))
+            print(ts2str(act.created_time),act2str(act))
+            activity.id = str(act.created_time) + str((hash(act.action_text) % small_prime))
+            # print(activity.id)
             if activity.type == ActType.CREATE_ANSWER or activity.type == ActType.VOTEUP_ANSWER:
                 activity.answer.setValue(act.target)
-                print(activity.answer.content)
                 # activity.answer.author = act.target.author.name
                 # activity.answer.content = act.target.content
                 # activity.answer.excerpt = act.target.excerpt
@@ -224,7 +244,7 @@ class ZhihuService(zhihu_pb2_grpc.ZhihuServiceServicer):
                 # activity.question.create_time = act.question.created_time
                 # activity.question.udpate_time = act.question.updated_time
                 # activity.question.answer_count = act.target.answer_count
-                counter = 10
+                counter = 10 # only load first 10 answers into database
                 for answer in act.target.answers:
                     ans = Answer()
                     ans.setValue(answer)
@@ -235,7 +255,7 @@ class ZhihuService(zhihu_pb2_grpc.ZhihuServiceServicer):
             if activity.type == ActType.CREATE_ARTICLE or activity.type == ActType.VOTEUP_ARTICLE:
                 activity.article.setValue(act.target)
             result.append(activity)
-            if len(result) > 50:
+            if len(result) > 30:
                 break
         return result
 
@@ -285,5 +305,7 @@ def serve():
 
 
 if __name__ == '__main__':
+
+    zhihu_oauth.zhcls.activity.Activity._get_target = my_get_target ## reload buggy function
     print("server running. at port 4001\n")
     serve()
