@@ -123,3 +123,14 @@ services:
 
 [菜鸟](https://www.runoob.com/docker/docker-compose.html)
 
+**Docker其他指令**
+
+```zsh
+删除全部 <none> 镜像
+$ docker rmi $(docker images | grep "none" | awk '{print $3}')
+移除全部 <Exited>容器
+$ docker rm $(docker ps -a | grep "Exited" | awk '{print $1 }')
+停止全部容器
+$ docker stop $(docker ps -aq)
+```
+
