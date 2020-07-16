@@ -3,12 +3,12 @@ package com.ilife.weiboservice.dao;
 import com.ilife.weiboservice.entity.User;
 
 
-public interface UserDao {
-    User findAllById(Long id);
+public interface UserDao{
+    User findAllById(Integer id);
 
     User findByNickname(String nickname);
 
-    void deleteById(Long id);
+    void deleteById(Integer id);
 
     User save(User user);
 

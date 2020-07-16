@@ -3,14 +3,17 @@ package com.ilife.zhihu.service.serviceimpl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.ilife.zhihu.dao.*;
 import com.ilife.zhihu.entity.*;
 import com.ilife.zhihu.service.ZhihuService;
+import io.grpc.netty.shaded.io.netty.handler.codec.json.JsonObjectDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 public class ZhihuServiceImpl implements ZhihuService {
@@ -27,19 +30,32 @@ public class ZhihuServiceImpl implements ZhihuService {
     UserDao userDao;
 
     @Override
-    public Question addQuestion(Question question) {
-        return null;
+    public Question getQuestionById(Integer id) {
+        return questionDao.findQuestionById(id);
     }
 
     @Override
-    public Activity getUserActivity(String zhihuId) {
-        return null;
+    public Article getArticleById(Integer id) {
+        return articleDao.findArticleById(id);
     }
 
-    private Timestamp convertEpochToTimestamp(Long epoch){
+    @Override
+    public Answer getAnswerById(Integer id) {
+        return answerDao.findAnswerById(id);
+    }
+
+    @Override
+    @Transactional
+    public List<Activity> getUserActivity(String email) {
+        User user = userDao.findByEmail(email);
+        return user.getActivities();
+    }
+
+    private Timestamp convertEpochToTimestamp(Long epoch) {
         return new Timestamp(epoch * 1000);
     }
-    private Activity makeActivityFromJsonObject(JSONObject activityObject){
+
+    private Activity makeActivityFromJsonObject(JSONObject activityObject) {
         Activity activity = new Activity();
         activity.setAction_text(activityObject.getString("action_text"));
         activity.setCreated_time(
@@ -47,7 +63,8 @@ public class ZhihuServiceImpl implements ZhihuService {
         activity.setType(activityObject.getString("type"));
         return activity;
     }
-    private Question makeQuestionFromJsonObject(JSONObject questionObject){
+
+    private Question makeQuestionFromJsonObject(JSONObject questionObject) {
         Question question = new Question();
         question.setTitle(questionObject.getString("title"));
         question.setContent(questionObject.getString("content"));
@@ -59,7 +76,8 @@ public class ZhihuServiceImpl implements ZhihuService {
                 convertEpochToTimestamp(questionObject.getLong("update_time")));
         return question;
     }
-    private Answer makeAnswerFromJsonObject(JSONObject answerObject){
+
+    private Answer makeAnswerFromJsonObject(JSONObject answerObject) {
         Answer answer = new Answer();
         answer.setAuthor(answerObject.getString("author"));
         answer.setComment_count(answerObject.getInteger("comment_count"));
@@ -70,7 +88,8 @@ public class ZhihuServiceImpl implements ZhihuService {
         answer.setVoteup_count(answerObject.getInteger("voteup_count"));
         return answer;
     }
-    private Article makeArticleFromJsonObject(JSONObject articleObject){
+
+    private Article makeArticleFromJsonObject(JSONObject articleObject) {
         Article article = new Article();
         article.setAuthor(articleObject.getString("author"));
         article.setContent(articleObject.getString("content"));
@@ -81,17 +100,32 @@ public class ZhihuServiceImpl implements ZhihuService {
         article.setUpdate_time(convertEpochToTimestamp(articleObject.getLong("update_time")));
         return article;
     }
+
+    private User makeUserFromJsonObject(JSONObject userObject) {
+        User user = new User();
+        user.setUid(userObject.getString("uid"));
+        user.setName(userObject.getString("name"));
+        user.setEmail(userObject.getString("email"));
+        user.setPhone(userObject.getString("phone"));
+        user.setGender(userObject.getInteger("gender"));
+        user.setThankedCount(userObject.getInteger("thanked_count"));
+        user.setAnswerCount(userObject.getInteger("answer_count"));
+        user.setVoteupCount(userObject.getInteger("voteup_count"));
+
+        return user;
+    }
+
     @Override
     @Transactional
-    public void saveActivitiesFromJsonString(User user ,String json) {
+    public void saveActivitiesFromJsonString(User user, String json) {
         JSONArray jsonArray = JSON.parseArray(json);
-        for (Object object : jsonArray){
+        for (Object object : jsonArray) {
             JSONObject activityObject = (JSONObject) object;
             System.out.println(activityObject.toJSONString());
             Activity activity = makeActivityFromJsonObject(activityObject);
             System.out.println(activity.getCreated_time().toString());
             activity.setUser(user);
-            switch(activity.getType()){
+            switch (activity.getType()) {
                 case "CREATE_QUESTION":
                 case "FOLLOW_QUESTION": {
                     JSONObject questionObject = activityObject.getJSONObject("question");
@@ -121,7 +155,7 @@ public class ZhihuServiceImpl implements ZhihuService {
                     break;
                 }
                 case "CREATE_ARTICLE":
-                case "VOTEUP_ARTICLE":{
+                case "VOTEUP_ARTICLE": {
                     JSONObject articleObject = (JSONObject) activityObject.get("article");
                     Article article = makeArticleFromJsonObject(articleObject);
                     articleDao.save(article);
@@ -139,17 +173,21 @@ public class ZhihuServiceImpl implements ZhihuService {
     }
 
     @Override
-    public User saveUserFromJsonString(String json) {
-        return JSON.parseObject(json,User.class);
+    public User saveUserFromJsonString(String email, String json) {
+//        JSONObject userObject = JSON.parseObject(json);
+//        User user = makeUserFromJsonObject(userObject);
+        User user = JSON.parseObject(json,User.class);
+        user.setEmail(email);
+        System.out.println(JSON.toJSONString(user));
+        return userDao.save(user);
     }
+
+
 
     @Override
     public User getUserWithEmail(String email) {
         return userDao.findByEmail(email);
     }
 
-    @Override
-    public User getUserWithName(String name) {
-        return userDao.findByName(name);
-    }
+
 }

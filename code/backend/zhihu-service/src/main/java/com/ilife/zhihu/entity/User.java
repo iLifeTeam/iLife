@@ -1,6 +1,7 @@
 package com.ilife.zhihu.entity;
 
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ public class User {
 
     @Id
     @Column(name = "uid")
-    Integer uid;
+    String uid;
 
     @Column(name = "name")
     String name;
@@ -33,7 +34,7 @@ public class User {
     Integer answerCount;
 
     @Column(name = "voteup_count")
-    Timestamp voteupCount;
+    Integer voteupCount;
 
     @Column(name = "thanked_count")
     Integer thankedCount;
@@ -41,6 +42,7 @@ public class User {
     @Column(name = "gender")
     Integer gender;
 
+    @JSONField(serialize=false,deserialize = false)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Activity> activities;
 }

@@ -14,23 +14,23 @@ public class WeiboDaoImpl implements WeiboDao {
     @Autowired
     private WeiboRepository weiboRepository;
 
-    public Weibo findById(String id) {
+    public Weibo findById(String id){
         return weiboRepository.findById(id);
     }
 
-    public List<Weibo> findAllByUid(Integer uid) {
+    public List<Weibo> findAllByUid(Integer uid){
         return weiboRepository.findAllByUid(uid);
     }
 
-    public void deleteByUid(Integer uid) {
+    public void deleteByUid(Integer uid){
         weiboRepository.deleteByUid(uid);
     }
 
-    public void deleteById(Integer id) {
+    public void deleteById(Integer id){
         weiboRepository.deleteById(id);
     }
 
-    public Weibo save(Weibo weibo) {
+    public Weibo save(Weibo weibo){
         weiboRepository.save(weibo);
         return weibo;
     }
