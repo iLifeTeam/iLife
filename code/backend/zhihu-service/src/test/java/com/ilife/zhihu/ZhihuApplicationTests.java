@@ -36,7 +36,7 @@ class ZhihuApplicationTests {
         answer.setQuestion(saved);
         answerDao.save(answer);
         Answer answer1 = new Answer();
-        answer.setId("answer1");
+        answer1.setId("answer1");
         answer1.setAuthor("akdsfadsf");
         answer1.setQuestion(saved);
         answerDao.save(answer1);
