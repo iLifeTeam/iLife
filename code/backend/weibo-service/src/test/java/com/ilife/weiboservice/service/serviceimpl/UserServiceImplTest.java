@@ -11,8 +11,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -31,8 +29,6 @@ public class UserServiceImplTest {
     public void contextLoads() {
     }
 
-    private MockMvc mockMvc;
-
     @Autowired
     private WebApplicationContext context;
 
@@ -41,7 +37,6 @@ public class UserServiceImplTest {
 
     @Before
     public void before() throws Exception {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
         User user = new User(123L, "david", 100, 200, 300, "", "man", "home", "patient", "kinderGarden", "home");
         try {
             userDao.save(user);
