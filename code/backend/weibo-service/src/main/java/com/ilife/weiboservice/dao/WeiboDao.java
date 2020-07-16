@@ -1,7 +1,6 @@
 package com.ilife.weiboservice.dao;
 
 import com.ilife.weiboservice.entity.Weibo;
-
 import java.util.List;
 
 public interface WeiboDao {
