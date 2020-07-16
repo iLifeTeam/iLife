@@ -21,8 +21,8 @@ import java.util.List;
 @RestController
 @Api(value = "ZhihuServiceController")
 public class ZhihuController {
-    private final String CRAWLER_HOSTNAME  = "localhost";
-//    private final String CRAWLER_HOSTNAME  = "zhihu-crawller";
+//    private final String CRAWLER_HOSTNAME  = "localhost";
+    private final String CRAWLER_HOSTNAME  = "zhihu-crawller";
     private final int CRAWLLER_PORT = 4001;
     ZhihuCrawlerServiceClient crawlerServiceClient ;
 
