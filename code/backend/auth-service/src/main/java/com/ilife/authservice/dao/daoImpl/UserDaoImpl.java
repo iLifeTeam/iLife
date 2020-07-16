@@ -15,7 +15,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Users findById(Long id) {
-        return userRepository.findById(id);
+        return userRepository.findAllById(id);
     }
 
     @Override
@@ -45,6 +45,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void updateWbId(Long id, Long wbId){
+        System.out.println(wbId);
+        System.out.println(id);
         userRepository.updateWbId(id, wbId);
     }
 

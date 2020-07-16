@@ -30,6 +30,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<?> deleteById(Long id) {
+        if(userDao.findById(id)==null)
+            return ResponseEntity.status(501).body("User not exists");
         userDao.deleteById(id);
         return ResponseEntity.ok().body("successfully delete user " + id);
     }
@@ -65,9 +67,9 @@ public class UserServiceImpl implements UserService {
     public  ResponseEntity<?> auth(String account, String password){
         Users user;
         if((user=findByAccount(account))==null)
-            return(ResponseEntity.status(500).body("Account not exists"));
+            return(ResponseEntity.status(501).body("Account not exists"));
         else if(!user.getPassword().equals(password))
-            return(ResponseEntity.status(501).body("Account and password not match"));
+            return(ResponseEntity.status(502).body("Account and password not match"));
         return ResponseEntity.ok().body("successfully auth");
     }
 

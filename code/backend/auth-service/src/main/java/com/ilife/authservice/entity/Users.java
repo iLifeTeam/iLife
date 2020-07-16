@@ -23,7 +23,7 @@ public class Users {
   private long wyyid;
   @Column(name = "WEIBID")
   private long weibid;
-  @Column(name = "SHID")
+  @Column(name = "ZHID")
   private String zhid;
   @Column(name = "NICKNAME")
   private String nickname;

@@ -44,7 +44,9 @@ public class UserServiceController {
         System.out.println("********** getUserByNickname **********");
         return userService.findByNickname(nickname);
     }
-
+    @ApiResponses({
+            @ApiResponse(code = 501, message = "account or nickname already exists"),
+    })
     @ApiImplicitParams({
             @ApiImplicitParam(name = "nickname", value = "the nickname of the iLife user"),
     }
@@ -81,8 +83,8 @@ public class UserServiceController {
 
     @ApiOperation(notes = "Auth one iLife user by giving account.password", value = "User log in", httpMethod = "POST")
     @ApiResponses({
-            @ApiResponse(code = 500, message = "user not exists"),
-            @ApiResponse(code = 501, message = "account and password not match"),
+            @ApiResponse(code = 501, message = "user not exists"),
+            @ApiResponse(code = 502, message = "account and password not match"),
     })
     @ApiImplicitParams({
             @ApiImplicitParam(name = "account", value = "the account of the iLife user"),

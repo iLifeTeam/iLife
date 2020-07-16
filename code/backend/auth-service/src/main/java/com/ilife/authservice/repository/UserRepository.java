@@ -1,15 +1,17 @@
 package com.ilife.authservice.repository;
 
 import com.ilife.authservice.entity.Users;
+import org.apache.catalina.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;
 
-public interface UserRepository extends CrudRepository<Users, Integer> {
+public interface UserRepository extends CrudRepository<Users, Long> {
 
-    Users findById(Long id);
+
+    Users findAllById(Long id);
 
     Users findByNickname(String nickname);
 
@@ -33,6 +35,8 @@ public interface UserRepository extends CrudRepository<Users, Integer> {
     @Modifying
     @Query(value = "update Users set zhid=?2 where id =?1")
     void updateZhId(Long id, String zhId);
+
+
 
 
 }
