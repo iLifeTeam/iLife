@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import MenuItem from '../components/MenuItem'
+import MenuItem from './components/MenuItem'
 
 import {
   Link

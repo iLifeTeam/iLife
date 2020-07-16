@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import ZhihuActivity from '../components/zhihu/ZhihuActivity';
+import ZhihuActivity from '../../zhihu/ZhihuActivity';
 export default class zhihuBodyContent extends Component {
   constructor(props) {
     super(props);
