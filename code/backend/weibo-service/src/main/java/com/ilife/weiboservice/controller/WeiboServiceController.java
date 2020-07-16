@@ -7,14 +7,10 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@CrossOrigin(origins = "*")
 @RestController
 public class WeiboServiceController {
 
@@ -35,11 +31,12 @@ public class WeiboServiceController {
         return weiboService.findById(id);
     }
 
-    @ApiOperation(notes = "Crawl Weibos of one user specified by userID,should be called when user ask to update the databse", value = "crawl Weibo ", httpMethod = "GET")
-    @RequestMapping(path = "/weibo/crawlWeibo")
-    public void crawlWeibo(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid) {
-        System.out.println("********** crawlWeibo **********");
-        weiboService.crawlWeibo(uid);
+    @RequestMapping(path="/weibo/dc")
+    public String dc(){
+//        String services = "Services: " + discoveryClient.getServices();
+//        System.out.println(services);
+//        return services;
+        return  null;
     }
 
     @ApiResponses({

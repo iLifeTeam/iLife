@@ -1,5 +1,6 @@
 package com.ilife.zhihu.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,8 +21,11 @@ public class Activity {
     @Column(name = "activity_id")
     Integer id;
 
-    @Column(name = "zhihu_user_id") // this zhihu id is actually username
-    String zhihuId;
+
+    @JSONField(serialize=false)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
+    @JoinColumn(name="zhihu_uid",referencedColumnName = "uid")
+    User user;
 
     @Column(name = "type")
     String type;
