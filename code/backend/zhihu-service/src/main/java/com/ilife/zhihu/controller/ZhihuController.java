@@ -114,7 +114,7 @@ public class ZhihuController {
         return zhihuService.getAnswerById(id);
     }
 
-    private void saveImage(String image, String filename) {
+    public void saveImage(String image, String filename) {
         try {
             File file = new File("./captcha"+ "/" + filename);
             if(!file.getParentFile().exists()) {
