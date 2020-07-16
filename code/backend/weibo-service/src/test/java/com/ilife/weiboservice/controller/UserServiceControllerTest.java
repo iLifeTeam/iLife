@@ -71,7 +71,7 @@ public class UserServiceControllerTest {
                 .andReturn();
         JSONObject jsonObject = new JSONObject(authResult.getResponse().getContentAsString());
         String nickname = jsonObject.get("nickname").toString();
-        Assert.assertEquals(nickname,"david");
+        Assert.assertEquals(nickname, "david");
         Assert.assertNotNull(jsonObject.get("location"));
         //user not exists
         authResult = mockMvc.perform(get("/user/getById")//使用get方式来调用接口。

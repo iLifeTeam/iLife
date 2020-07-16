@@ -4,6 +4,8 @@ import com.ilife.weiboservice.entity.Weibo;
 import com.ilife.weiboservice.service.WeiboService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,13 +42,18 @@ public class WeiboServiceController {
         weiboService.crawlWeibo(uid);
     }
 
+    @ApiResponses({
+            @ApiResponse(code = 501, message = "userId not exists"),
+    })
     @ApiOperation(notes = "Delete all Weibos from database of one user specified by userID,success if the response.status = 200 ", value = "delete one user's Weibos", httpMethod = "GET")
     @RequestMapping(path = "/weibo/deleteWeibos")
     public ResponseEntity<?> deleteWeibos(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid) {
         System.out.println("********** deleteWeibos **********");
         return weiboService.deleteByUid(uid);
     }
-
+    @ApiResponses({
+            @ApiResponse(code = 501, message = "weiboId not exists"),
+    })
     @ApiOperation(notes = "Delete one Weibos from database specified by Weibo ID,success if the response.status = 200 ", value = "delete one Weibo", httpMethod = "GET")
     @RequestMapping(path = "/weibo/deleteWeibo")
     public ResponseEntity<?> deleteWeibo(@ApiParam(name = "Id", value = "The ID of a WeiBo,should be a String") @RequestParam("Id") String id) {

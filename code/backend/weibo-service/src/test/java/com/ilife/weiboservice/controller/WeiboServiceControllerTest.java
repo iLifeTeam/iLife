@@ -1,7 +1,8 @@
 package com.ilife.weiboservice.controller;
 
-import com.alibaba.fastjson.JSON;
+import com.ilife.weiboservice.dao.UserDao;
 import com.ilife.weiboservice.dao.WeiboDao;
+import com.ilife.weiboservice.entity.User;
 import com.ilife.weiboservice.entity.Weibo;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,11 +20,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
-import com.alibaba.fastjson.TypeReference;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -50,15 +48,20 @@ public class WeiboServiceControllerTest {
     @Autowired
     private WeiboDao weiboDao;
 
+    @Autowired
+    private UserDao userDao;
+
     private MockMvc mockMvc;
 
     @Before
     public void before() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
         for (int i = 0; i < 10; ++i) {
-            Weibo weibo = new Weibo("sE2Rhe7epn" + i, 123, "today is a good day", "home", 100 * i, 200 * i, 300 * i, new Date());
+            Weibo weibo = new Weibo("sE2Rhe7epn" + i, 123L, "today is a good day", "home", 100 * i, 200 * i, 300 * i, new Date());
             weiboDao.save(weibo);
         }
+        User user = new User(123L, "david", 100, 200, 300, "", "man", "home", "patient", "kinderGarden", "home");
+        userDao.save(user);
     }
 
     @After
@@ -119,11 +122,10 @@ public class WeiboServiceControllerTest {
      */
     @Test
     public void testCrawlWeibo() throws Exception {
-        mockMvc.perform(get("/weibo/crawlWeibo")//使用get方式来调用接口。
-                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
-                .param("userId", "")//请求的参数（可多个）
-        ).andExpect(status().isOk());
-//TODO: Test goes here... 
+//        mockMvc.perform(get("/weibo/crawlWeibo")//使用get方式来调用接口。
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+//                .param("userId", "")//请求的参数（可多个）
+//        ).andExpect(status().isOk());
     }
 
     /**
@@ -131,13 +133,17 @@ public class WeiboServiceControllerTest {
      */
     @Test
     public void testDeleteWeibos() throws Exception {
+        //invalid userId
         MvcResult authResult;
+        mockMvc.perform(get("/weibo/deleteWeibos")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .param("userId", "09090909")//请求的参数（可多个）
+        ).andExpect(status().is(501));
+        //successfully delete
         mockMvc.perform(get("/weibo/deleteWeibos")//使用get方式来调用接口。
                 .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
                 .param("userId", "123")//请求的参数（可多个）
         ).andExpect(status().isOk());
-
-//TODO: Test goes here... 
     }
 
     /**
@@ -145,7 +151,17 @@ public class WeiboServiceControllerTest {
      */
     @Test
     public void testDeleteWeibo() throws Exception {
-//TODO: Test goes here... 
+        //invalid userId
+        MvcResult authResult;
+        mockMvc.perform(get("/weibo/deleteWeibo")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .param("Id", "09090909")//请求的参数（可多个）
+        ).andExpect(status().is(501));
+        //successfully delete
+        mockMvc.perform(get("/weibo/deleteWeibo")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .param("Id", "sE2Rhe7epn2")//请求的参数（可多个）
+        ).andExpect(status().isOk());
     }
 
 
