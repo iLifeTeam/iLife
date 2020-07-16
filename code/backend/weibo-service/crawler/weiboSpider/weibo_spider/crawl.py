@@ -9,15 +9,15 @@ class Crawl:
 
     def crawl(self):
         # TODO:部署在服务器上时，应该将绝对地址改为服务器上的绝对地址
-        os.chdir('F:\\Documentation\\Courseware\\ilfe 2020\\iLife\\code\\backend\\weibo-service\\crawler\\weiboSpider')
+        os.chdir('.\\crawler\\weiboSpider')
         os.system('python -m weibo_spider')
 
     def read_json(self):
-        with open('F:\\Documentation\\Courseware\\ilfe 2020\\iLife\\code\\backend\\weibo-service\\crawler\\weiboSpider\\config.json', 'r', encoding='utf8')as fp:
+        with open('.\\crawler\\weiboSpider\\config.json', 'r', encoding='utf8')as fp:
             json_data = json.load(fp)
             array = [str(self.id)]
             json_data["user_id_list"] = array
-        with open('F:\\Documentation\\Courseware\\ilfe 2020\\iLife\\code\\backend\\weibo-service\\crawler\\weiboSpider\\config.json', 'w', encoding='utf8')as fp:
+        with open('.\\crawler\\weiboSpider\\config.json', 'w', encoding='utf8')as fp:
             fp.write(json.dumps(json_data))
 
 

@@ -6,11 +6,11 @@ import java.util.List;
 public interface WeiboDao {
     Weibo findById(String id);
 
-    List<Weibo> findAllByUid(Integer uid);
+    List<Weibo> findAllByUid(Long uid);
 
-    void deleteByUid(Integer uid);
+    void deleteByUid(Long uid);
 
-    void deleteById(Integer id);
+    void deleteById(String id);
 
     Weibo save(Weibo weibo);
 }

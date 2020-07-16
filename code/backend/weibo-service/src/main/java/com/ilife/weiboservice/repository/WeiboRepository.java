@@ -8,20 +8,20 @@ import org.springframework.data.repository.CrudRepository;
 import javax.transaction.Transactional;
 import java.util.List;
 
-public interface WeiboRepository extends CrudRepository<Weibo,Integer> {
+public interface WeiboRepository extends CrudRepository<Weibo, String> {
 
 
-    Weibo findById(String id);
+    Weibo findAllById(String id);
 
-    List<Weibo> findAllByUid(Integer uid);
-
-    @Transactional
-    @Modifying
-    void deleteByUid(Integer uid);
+    List<Weibo> findAllByUid(Long uid);
 
     @Transactional
     @Modifying
-    void deleteById(Integer id);
+    void deleteByUid(Long uid);
+
+    @Transactional
+    @Modifying
+    void deleteById(String id);
 
 
 }

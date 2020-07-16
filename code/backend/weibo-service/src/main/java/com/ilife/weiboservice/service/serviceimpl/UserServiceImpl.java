@@ -25,7 +25,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<?> deleteById(Long uid) {
-        userDao.deleteById(uid);
-        return ResponseEntity.ok().body("successful delete user " + uid.toString());
+        if(userDao.findAllById(uid)!=null)
+        {
+            userDao.deleteById(uid);
+            return ResponseEntity.ok().body("successful delete user " + uid.toString());
+        }else{
+            return ResponseEntity.status(501).body("user "+uid.toString()+" not exist");
+        }
     }
 }
