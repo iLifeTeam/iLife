@@ -6,6 +6,8 @@ import com.ilife.musicservice.entity.wyyuser;
 import com.ilife.musicservice.repository.WyyhistoryRepository;
 import com.ilife.musicservice.service.WyyhistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,5 +24,8 @@ public class WyyhistoryServiceImpl implements WyyhistoryService {
     }
     public void crawlWyy(String ph,String pw){
         netEaseCrawler.test(ph,pw);
+    }
+    public Page<wyyuser> findAllbyid(Long id, Pageable pageable){
+        return wyyhistoryDao.findAllbyid(id,pageable);
     }
 }
