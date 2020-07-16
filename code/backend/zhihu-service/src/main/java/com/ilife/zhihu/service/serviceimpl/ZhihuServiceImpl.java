@@ -3,8 +3,14 @@ package com.ilife.zhihu.service.serviceimpl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.ilife.zhihu.dao.*;
-import com.ilife.zhihu.entity.*;
+import com.ilife.zhihu.dao.ActivityDao;
+import com.ilife.zhihu.dao.AnswerDao;
+import com.ilife.zhihu.dao.ArticleDao;
+import com.ilife.zhihu.dao.QuestionDao;
+import com.ilife.zhihu.entity.Activity;
+import com.ilife.zhihu.entity.Answer;
+import com.ilife.zhihu.entity.Article;
+import com.ilife.zhihu.entity.Question;
 import com.ilife.zhihu.service.ZhihuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +29,6 @@ public class ZhihuServiceImpl implements ZhihuService {
     AnswerDao answerDao;
     @Autowired
     ArticleDao articleDao;
-    @Autowired
-    UserDao userDao;
 
     @Override
     public Question addQuestion(Question question) {
@@ -83,14 +87,14 @@ public class ZhihuServiceImpl implements ZhihuService {
     }
     @Override
     @Transactional
-    public void saveActivitiesFromJsonString(User user ,String json) {
+    public Integer saveActivitiesFromJsonString(String username ,String json) {
         JSONArray jsonArray = JSON.parseArray(json);
         for (Object object : jsonArray){
             JSONObject activityObject = (JSONObject) object;
             System.out.println(activityObject.toJSONString());
             Activity activity = makeActivityFromJsonObject(activityObject);
             System.out.println(activity.getCreated_time().toString());
-            activity.setUser(user);
+            activity.setZhihuId(username);
             switch(activity.getType()){
                 case "CREATE_QUESTION":
                 case "FOLLOW_QUESTION": {
@@ -131,25 +135,6 @@ public class ZhihuServiceImpl implements ZhihuService {
             }
             activityDao.save(activity);
         }
-    }
-
-    @Override
-    public User saveUser(User user) {
-        return userDao.save(user);
-    }
-
-    @Override
-    public User saveUserFromJsonString(String json) {
-        return JSON.parseObject(json,User.class);
-    }
-
-    @Override
-    public User getUserWithEmail(String email) {
-        return userDao.findByEmail(email);
-    }
-
-    @Override
-    public User getUserWithName(String name) {
-        return userDao.findByName(name);
+        return 0;
     }
 }

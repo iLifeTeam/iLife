@@ -11,6 +11,3 @@
   - 利用Zhihu_OAuth库创建一个爬虫service
   - 使用grpc框架连接爬虫server和zhihu-service后端，并开放 /login, /updateAcitivities接口
   - 成功将用户数据存储在数据库中
-- 7.10 
-  - 使用github action 实现 zhihu-service和zhihu-python-crawller的CICD。在分支push的时候自动部署到云服务器上
-  - 使用docker 打包zhihu-service和zhihu-python-crawller

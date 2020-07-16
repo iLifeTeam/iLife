@@ -16,6 +16,15 @@ public class ActivityDaoImpl implements ActivityDao {
 
 
     @Override
+    public List<Activity> findAllActivityByZhihuId(String zhihuId) {
+        return activityRepository.findAllByZhihuId(zhihuId);
+    }
+    @Override
+    public List<Activity> findAllActivityByZhihuIdAndType(String zhihuId, String type) {
+        return activityRepository.findAllByZhihuIdAndType(zhihuId,type);
+    }
+
+    @Override
     public Activity findById(Integer id) {
         return activityRepository.findById(id).orElse(null);
     }
@@ -25,6 +34,10 @@ public class ActivityDaoImpl implements ActivityDao {
         return activityRepository.save(activity);
     }
 
+    @Override
+    public void deleteByZhihuId(String zhihuId) {
+        activityRepository.deleteByZhihuId(zhihuId);
+    }
 
     @Override
     public void deleteById(Integer id) {

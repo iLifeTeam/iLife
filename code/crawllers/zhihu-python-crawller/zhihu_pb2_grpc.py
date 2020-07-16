@@ -24,11 +24,6 @@ class ZhihuServiceStub(object):
                 request_serializer=zhihu__pb2.ActivitiyRequest.SerializeToString,
                 response_deserializer=zhihu__pb2.ActivityResponse.FromString,
                 )
-        self.GetUserInfo = channel.unary_unary(
-                '/ZhihuService/GetUserInfo',
-                request_serializer=zhihu__pb2.UserInfoRequest.SerializeToString,
-                response_deserializer=zhihu__pb2.UserinfoResponse.FromString,
-                )
 
 
 class ZhihuServiceServicer(object):
@@ -46,12 +41,6 @@ class ZhihuServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetUserInfo(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
 
 def add_ZhihuServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -64,11 +53,6 @@ def add_ZhihuServiceServicer_to_server(servicer, server):
                     servicer.GetActivity,
                     request_deserializer=zhihu__pb2.ActivitiyRequest.FromString,
                     response_serializer=zhihu__pb2.ActivityResponse.SerializeToString,
-            ),
-            'GetUserInfo': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetUserInfo,
-                    request_deserializer=zhihu__pb2.UserInfoRequest.FromString,
-                    response_serializer=zhihu__pb2.UserinfoResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -109,21 +93,5 @@ class ZhihuService(object):
         return grpc.experimental.unary_unary(request, target, '/ZhihuService/GetActivity',
             zhihu__pb2.ActivitiyRequest.SerializeToString,
             zhihu__pb2.ActivityResponse.FromString,
-            options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
-    def GetUserInfo(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ZhihuService/GetUserInfo',
-            zhihu__pb2.UserInfoRequest.SerializeToString,
-            zhihu__pb2.UserinfoResponse.FromString,
             options, channel_credentials,
             call_credentials, compression, wait_for_ready, timeout, metadata)
