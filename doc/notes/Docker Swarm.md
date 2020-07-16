@@ -23,7 +23,7 @@
 
 **[Services and tasks](https://docs.docker.com/engine/swarm/key-concepts/#services-and-tasks)**
 
-- Service（服务）是Node上运行的东西，是Swarm的核心，也是整个设计最终的目的。
+- [Service](https://docs.docker.com/engine/swarm/how-swarm-mode-works/services/)（服务）是Node上运行的东西，是Swarm的核心，也是整个设计最终的目的。
 - 一个服务就是一个Container Image和对应运行的Command
 - **replicated mode**（副本模式）下，manager会将特定的task复制多份。
 - **global mode**（全局模式）下，所有的Node上都会跑这个task
@@ -50,11 +50,40 @@
 
 - [ ] Deploy Service to a Swarmhttps://docs.docker.com/engine/swarm/services/
 
+- 初始化一个Docker Swarm
 
+  ```zsh
+  $ docker swarm init
+  Swarm initialized: current node (0jfhggl4q79wdtn0hq3qyjgtc) is now a manager.
+  To add a worker to this swarm, run the following command:
+      docker swarm join --token a-lengthy-token 192.168.65.3:2377
+  To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+  $ docker swarm join-token [manager/worker]
+  查看token
+  ```
 
+- 往swarm上部署一个service
 
+  ```zsh
+  $ docker service create --name alipay-service --replica 2 --publish 8090:8090 ilife2020/alipay-service:latest
+  ```
 
+- 往swarm上部署一个compose file
 
+  ```shell
+  $ docker-compose up -d
+  WARNING: The Docker Engine you're using is running in swarm mode.
+  
+  Compose does not use swarm mode to deploy services to multiple nodes in a swarm. All containers will be scheduled on the current node.
+  
+  To deploy your application across the swarm, use `docker stack deploy`.
+  直接up会有提示，请用docker stack deploy
+  $ docker-compose down
+  $ docker stack deploy --compose-file docker-compose.yml ilife
+  Creating network ilife_stack_default
+  Creating service ilife_stack_python-crawller
+  Creating service ilife_stack_zhihu-service
+  ```
 
 ---
 
@@ -178,3 +207,29 @@
 - 在Swarm上运行
   - [ ] [Use Compose with Swarm](https://docs.docker.com/compose/swarm/)
 
+#### [Networking in compose](https://docs.docker.com/compose/networking/)
+
+- compose会按照project name默认设置一个bridge network，并且每个服务以service的名字在里面注册DNS
+
+  比如如下的docker-compose.yml, 运行`	docker-compose up`时，会启动`myapp_default`网络, 两个container的hostname分别为`web`, `db`.
+
+  ```yml
+  version: "3"
+  services:
+    web:
+      build: .
+      ports:
+        - "8000:8000"
+    db:
+      image: postgres
+      ports:
+        - "8001:5432"
+  ```
+
+- 使用Swarm来运行compose时，会自动启动一个overlay network.在集群的上方提供统一的网络抽象。
+
+----
+
+### Docker Stack
+
+用于将docker-compose部署到Swarm上，每一个节点的同一个port都能访问到这个服务。
