@@ -28,8 +28,6 @@ public class ZhihuCrawlerServiceClient {
         channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
     }
     public String login(String username, String password){
-//        ConnectivityState state = channel.getState(true);
-//        System.out.println( state.toString());
         Zhihu.LoginRequest request = Zhihu.LoginRequest.newBuilder()
                 .setUsername(username)
                 .setPassword(password)
@@ -45,6 +43,13 @@ public class ZhihuCrawlerServiceClient {
                 .build();
         Zhihu.LoginResponse response =  blockingStub.login(request);
         return response.getResponse();
+    }
+    public String getUserInfo(String username){
+        Zhihu.UserInfoRequest request = Zhihu.UserInfoRequest.newBuilder()
+                .setUsername(username)
+                .build();
+        Zhihu.UserinfoResponse response = blockingStub.getUserInfo(request);
+        return response.getResponseJson();
     }
     /* can only be called after successful login*/
     public String getActivities(String username){

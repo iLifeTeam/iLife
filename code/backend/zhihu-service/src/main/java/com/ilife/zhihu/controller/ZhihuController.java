@@ -1,8 +1,14 @@
 package com.ilife.zhihu.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.ilife.zhihu.crawller.ZhihuCrawlerServiceClient;
+import com.ilife.zhihu.entity.User;
 import com.ilife.zhihu.service.ZhihuService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,8 +16,11 @@ import java.io.*;
 import java.util.Base64;
 
 
+@CrossOrigin(origins = "*")
 @RestController
+@Api(value = "ZhihuServiceController")
 public class ZhihuController {
+
     private final String CRAWLER_HOSTNAME  = "python-crawller";
     private final int CRAWLLER_PORT = 4001;
     ZhihuCrawlerServiceClient crawlerServiceClient = new ZhihuCrawlerServiceClient(CRAWLER_HOSTNAME, CRAWLLER_PORT);
@@ -38,6 +47,9 @@ public class ZhihuController {
             e.printStackTrace();
         }
     }
+
+
+    @ApiOperation(notes = "login with username, password, and optional captcha", value = "",httpMethod = "POST")
     @PostMapping(value = "/login", produces = "application/json")
     String loginIntoZhihu(@RequestParam("username") String username,
                           @RequestParam("password") String password,
@@ -47,19 +59,40 @@ public class ZhihuController {
                                           : crawlerServiceClient.login(username,password,captcha);
         if (!response.equals( "success")){
            saveImageString(response,  username + ".gif");
+        }else {
+            String userInfoJson = crawlerServiceClient.getUserInfo(username);
+            zhihuService.saveUserFromJsonString(userInfoJson);
         }
         System.out.println(response);
         return response;
     }
+
+
+    @ApiOperation(notes = "update user activities", value = "",httpMethod = "POST")
     @PostMapping(value = "/updateActivities",produces = "application/json")
     String updateUserActivities(
-            @RequestParam("username") String username){
+            @RequestParam("username") String username
+    ){
         String response = crawlerServiceClient.getActivities(username);
 //        System.out.println(response);
         if(response.equals("not login"))
             return response;
-        Integer updated = zhihuService.saveActivitiesFromJsonString(username, response);
+        User user = zhihuService.getUserWithEmail(username);
+        zhihuService.saveActivitiesFromJsonString(user, response);
         return "";
     }
+
+
+    @ApiOperation(notes = "GET user information", value = "",httpMethod = "GET")
+    @GetMapping(value = "/user",produces = "application/json")
+    String getUser(
+            @RequestParam("username") String username){
+        String response = crawlerServiceClient.getUserInfo(username);
+        if(response.equals("not login"))
+            return response;
+        return JSON.toJSONString(zhihuService.saveUserFromJsonString(response)) ;
+    }
+
+
 
 }
