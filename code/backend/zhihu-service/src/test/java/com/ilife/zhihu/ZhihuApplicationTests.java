@@ -1,6 +1,5 @@
 package com.ilife.zhihu;
 
-import com.alibaba.fastjson.JSON;
 import com.ilife.zhihu.dao.AnswerDao;
 import com.ilife.zhihu.dao.QuestionDao;
 import com.ilife.zhihu.entity.Answer;
@@ -14,14 +13,14 @@ import javax.transaction.Transactional;
 @SpringBootTest
 class ZhihuApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
-
     @Autowired
     QuestionDao questionDao;
     @Autowired
     AnswerDao answerDao;
+
+    @Test
+    void contextLoads() {
+    }
 
     @Test
     void AnswerDaoWriteTest() {
@@ -48,12 +47,12 @@ class ZhihuApplicationTests {
 
     @Test
     @Transactional
-    void AnswerDaoReadTest(){
+    void AnswerDaoReadTest() {
         Question question = questionDao.findById("123");
-        if(question == null){
+        if (question == null) {
             return;
         }
-        for (Answer answer : question.getAnswerList()){
+        for (Answer answer : question.getAnswerList()) {
             System.out.println(answer.getExcerpt());
         }
     }
