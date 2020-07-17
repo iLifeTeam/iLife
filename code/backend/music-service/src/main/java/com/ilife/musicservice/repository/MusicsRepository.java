@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 public interface MusicsRepository extends JpaRepository<musics,Long> {
     @Transactional
     @Modifying
-    @Query(value = "insert into musics(m_id,mname) values(?1, ?2)",nativeQuery = true)
+    @Query(value = "insert into musics(m_id,mname) select ?1, ?2 from dual where not exists (select m_id from musics where m_id = ?1)",nativeQuery = true)
     void addmusic(Long id, String name);
+
+
 
 }

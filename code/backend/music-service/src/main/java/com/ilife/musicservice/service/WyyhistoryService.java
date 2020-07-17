@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface WyyhistoryService {
     List<wyyuser> findAllbyid(Long id);
-    void crawlWyy(String ph,String pw);
     Page<wyyuser> findAllbyid(Long id, Pageable pageable);
+//    void deletebyid(Long id);
 }
