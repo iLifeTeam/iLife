@@ -8,3 +8,5 @@
 */bin/
 *.DS_Store
 ignore/
+*.jar
+code/backend/weibo-service/log/crawler_log/2020-07-17-09-11-24.log
