@@ -77,3 +77,5 @@ https://editor.csdn.net/md/?articleId=107299196
 * 尝试解决微博后端部署依赖缺失的问题，决定将后端CRUD与爬虫分离
 * 更新docker博客，增加exec,logs,status等指令的使用：
 https://blog.csdn.net/weixin_44602409/article/details/107358001
+### 爬虫学习
+* 看了正则表达式相关的文章
