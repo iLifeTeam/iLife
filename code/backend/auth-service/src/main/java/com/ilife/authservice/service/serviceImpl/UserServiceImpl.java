@@ -40,6 +40,8 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<?> save(String nickname, String account, String password, String email) {
         if(findByAccount(account)!=null)
             return(ResponseEntity.status(500).body("Account already exists"));
+        if(findByNickname(nickname)!=null)
+            return(ResponseEntity.status(501).body("Nickname already exists"));
         Users user = new Users(nickname, account, password, email);
         userDao.save(user);
         return ResponseEntity.ok().body("successfully save user");
@@ -47,20 +49,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<?> updateWyyId(Long id, Long wyyId) {
-        userDao.updateWyyId(id, wyyId);
-        return ResponseEntity.ok().body("successfully update user " + id + "'s wyyid to " + wyyId);
+        int num=userDao.updateWyyId(id, wyyId);
+        return ResponseEntity.ok().body(num);
     }
 
     @Override
     public ResponseEntity<?> updateWbId(Long id, Long wbId) {
-        userDao.updateWbId(id, wbId);
-        return ResponseEntity.ok().body("successfully update user " + id + "'s wbid to " + wbId);
+        int num=userDao.updateWbId(id, wbId);
+        return ResponseEntity.ok().body(num);
     }
 
     @Override
     public ResponseEntity<?> updateZhId(Long id, String zhId) {
-        userDao.updateZhId(id, zhId);
-        return ResponseEntity.ok().body("successfully update user " + id + "'s zhid to " + zhId);
+        int num= userDao.updateZhId(id, zhId);
+        return ResponseEntity.ok().body(num);
     }
 
     @Override

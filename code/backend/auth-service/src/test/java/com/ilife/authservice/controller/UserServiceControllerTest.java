@@ -11,18 +11,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
-import springfox.documentation.spring.web.json.Json;
 
-import java.util.Map;
 
-import static java.lang.Long.parseLong;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -50,6 +46,7 @@ public class UserServiceControllerTest {
 
     @Test
     public void contextLoads() {
+
     }
 
     @Before
@@ -57,7 +54,7 @@ public class UserServiceControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
         Users user = new Users("zhihuKing", "zhihugood", "123456", "git@sjtu.edu.cn");
         userDao.save(user);
-        userDao.updateWbId(2L,12345L);
+        userDao.updateWbId(2L, 12345L);
         id = userDao.findByAccount("zhihugood").getId();
     }
 
@@ -166,7 +163,41 @@ public class UserServiceControllerTest {
      */
     @Test
     public void testRegister() throws Exception {
-//TODO: Test goes here... 
+        JSONObject Account = new JSONObject();
+        Account.put("nickname","mustBeUnique");
+        Account.put("password","123456");
+        Account.put("email","shouldICheckEmailDuplicity");
+        Account.put("account","zhihugood");
+        mockMvc.perform(post("/auth/register")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .content(Account.toString())//请求的参数（可多个）
+        ).andExpect(status().is(500));
+        JSONObject Account2 = new JSONObject();
+        Account2.put("nickname","zhihuKing");
+        Account2.put("password","123456");
+        Account2.put("email","shouldICheckEmailDuplicity");
+        Account2.put("account","zhihunotgood");
+        mockMvc.perform(post("/auth/register")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .content(Account2.toString())//请求的参数（可多个）
+        ).andExpect(status().is(501));
+        JSONObject Account3 = new JSONObject();
+        Account3.put("nickname","zhihunotKing");
+        Account3.put("password","123456");
+        Account3.put("email","shouldICheckEmailDuplicity");
+        Account3.put("account","zhihunotgood");
+        mockMvc.perform(post("/auth/register")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .content(Account3.toString())//请求的参数（可多个）
+        ).andExpect(status().isOk());
+        MvcResult authResult;
+        authResult = mockMvc.perform(post("/auth/getByNickname")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .param("nickname","zhihunotKing")//请求的参数（可多个）
+        ).andExpect(status().isOk()).andReturn();
+        JSONObject jsonObject = new JSONObject(authResult.getResponse().getContentAsString());
+        String email = jsonObject.get("email").toString();
+        Assert.assertEquals(email,"shouldICheckEmailDuplicity");
     }
 
     /**
@@ -174,7 +205,27 @@ public class UserServiceControllerTest {
      */
     @Test
     public void testAuth() throws Exception {
-//TODO: Test goes here... 
+        JSONObject falseUser = new JSONObject();
+        falseUser.put("account", "zhihunotgood");
+        falseUser.put("password", 123456789L);
+        mockMvc.perform(post("/auth/auth")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .content(falseUser.toString())//请求的参数（可多个）
+        ).andExpect(status().is(501));
+        JSONObject falseComb = new JSONObject();
+        falseComb.put("account", "zhihugood");
+        falseComb.put("password", "anywayfalsepassword");
+        mockMvc.perform(post("/auth/auth")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .content(falseComb.toString())//请求的参数（可多个）
+        ).andExpect(status().is(502));
+        JSONObject trueComb = new JSONObject();
+        trueComb.put("account", "zhihugood");
+        trueComb.put("password", "123456");
+        mockMvc.perform(post("/auth/auth")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .content(trueComb.toString())//请求的参数（可多个）
+        ).andExpect(status().isOk());
     }
 
     /**
@@ -182,7 +233,15 @@ public class UserServiceControllerTest {
      */
     @Test
     public void testUpdateWyy() throws Exception {
-//TODO: Test goes here... 
+        MvcResult authResult;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("userId", id);
+        jsonObject.put("wyyId", 123456789L);
+        authResult = mockMvc.perform(post("/auth/updateWyyId")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .content(jsonObject.toString())//请求的参数（可多个）
+        ).andExpect(status().isOk()).andReturn();
+        Assert.assertEquals(authResult.getResponse().getContentAsString(), "1");
     }
 
     /**
@@ -190,23 +249,15 @@ public class UserServiceControllerTest {
      */
     @Test
     public void testUpdateWb() throws Exception {
+        MvcResult authResult;
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("userId", id);
         jsonObject.put("wbId", 123456789L);
-        mockMvc.perform(post("/auth/updateWbId")//使用get方式来调用接口。
+        authResult = mockMvc.perform(post("/auth/updateWbId")//使用get方式来调用接口。
                 .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
                 .content(jsonObject.toString())//请求的参数（可多个）
-        ).andExpect(status().isOk());
-        MvcResult authResult;
-        authResult = mockMvc.perform(get("/auth/getById")//使用get方式来调用接口。
-                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
-                .param("userId", id.toString())//请求的参数（可多个）
-        ).andExpect(status().isOk())
-                .andReturn();
-        JSONObject jsonObject2 = new JSONObject(authResult.getResponse().getContentAsString());
-        System.out.println(jsonObject2.toString());
-        long wbId = parseLong(jsonObject2.get("weibid").toString());
-        Assert.assertEquals(wbId,123456789L);
+        ).andExpect(status().isOk()).andReturn();
+        Assert.assertEquals(authResult.getResponse().getContentAsString(), "1");
     }
 
     /**
@@ -214,23 +265,15 @@ public class UserServiceControllerTest {
      */
     @Test
     public void testUpdateZh() throws Exception {
+        MvcResult authResult;
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("userId", id);
         jsonObject.put("zhId", 123456789L);
-        mockMvc.perform(post("/auth/updateZhId")//使用get方式来调用接口。
+        authResult = mockMvc.perform(post("/auth/updateZhId")//使用get方式来调用接口。
                 .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
                 .content(jsonObject.toString())//请求的参数（可多个）
-        ).andExpect(status().isOk())
-                .andReturn();
-        MvcResult authResult;
-        authResult = mockMvc.perform(get("/auth/getById")//使用get方式来调用接口。
-                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
-                .param("userId", id.toString())//请求的参数（可多个）
-        ).andExpect(status().isOk())
-                .andReturn();
-        JSONObject jsonObject2 = new JSONObject(authResult.getResponse().getContentAsString());
-        String zhid = jsonObject2.get("zhid").toString();
-        Assert.assertEquals(zhid,"123456");
+        ).andExpect(status().isOk()).andReturn();
+        Assert.assertEquals(authResult.getResponse().getContentAsString(), "1");
     }
 
 
