@@ -20,7 +20,7 @@ public class UserDaoImpl implements UserDao {
         return userRepository.findByNickname(nickname);
     }
 
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
 

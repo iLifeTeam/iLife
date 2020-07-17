@@ -21,7 +21,7 @@ public class Weibo {
     @Column(name = "ID")
     private String id;
     @Column(name = "USER_ID")
-    private Integer uid;
+    private Long uid;
     @Column(name = "CONTENT")
     private String content;
     @Column(name = "PUBLISH_PLACE")
