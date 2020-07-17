@@ -58,6 +58,9 @@ https://editor.csdn.net/md/?articleId=107299196
 ### docker
 * 在windows上安装docker,踩了很多坑并写成了文档
 https://blog.csdn.net/weixin_44602409/article/details/107358001
+### 接口更新
+* 在dao层，update将返回影响行数，delete将返回void
+* 在service层,update和delete都返回Responsentity
 # 7.15
 ### 单元测试
 引入了junit，完成了对weibo的controller层的单元测试
