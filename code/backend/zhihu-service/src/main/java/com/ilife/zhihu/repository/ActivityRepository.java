@@ -10,6 +10,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public interface ActivityRepository extends CrudRepository<Activity, Integer> {
+public interface ActivityRepository extends CrudRepository<Activity, String> {
     
 }

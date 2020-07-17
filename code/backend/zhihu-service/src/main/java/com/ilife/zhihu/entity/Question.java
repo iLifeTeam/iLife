@@ -17,9 +17,8 @@ import java.util.List;
 public class Question {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
-    @Column(name = "question_id")
-    Integer id;
+    @Column(name = "id")
+    String id;
 
     @Column(name = "title")
     String title;

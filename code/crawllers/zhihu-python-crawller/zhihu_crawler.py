@@ -3,7 +3,7 @@ from zhihu_oauth.exception import NeedCaptchaException
 import time
 
 client = ZhihuClient()
-client.load_token('token.pkl')
+client.load_token('tokens/zxy771906409@163.com.pkl')
 me = client.me()
 
 print('name', me.name)

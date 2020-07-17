@@ -16,9 +16,8 @@ import java.sql.Timestamp;
 public class Article {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
-    @Column(name = "article_id")
-    Integer id;
+    @Column(name = "id")
+    String id;
 
     @Column(name = "title")
     String title;
