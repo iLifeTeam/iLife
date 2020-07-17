@@ -1,12 +1,16 @@
 package com.ilife.authservice.service.serviceImpl;
 
 import com.ilife.authservice.dao.UserDao;
+import com.ilife.authservice.entity.Users;
+import com.ilife.authservice.service.UserService;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -29,6 +33,9 @@ public class UserServiceImplTest {
     private WebApplicationContext context;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private UserDao userDao;
 
     private MockMvc mockMvc;
@@ -43,6 +50,10 @@ public class UserServiceImplTest {
     @Before
     public void before() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+        Users user = new Users("zhihuKing", "zhihugood", "123456", "git@sjtu.edu.cn");
+        userDao.save(user);
+        userDao.updateWbId(2L, 12345L);
+        id = userDao.findByAccount("zhihugood").getId();
     }
 
     @After
@@ -54,7 +65,9 @@ public class UserServiceImplTest {
      */
     @Test
     public void testFindById() throws Exception {
-//TODO: Test goes here... 
+        Users user=userService.findById(id);
+        Assert.assertNotNull(user);
+        Assert.assertEquals(user.getAccount(),"zhihugood");
     }
 
     /**
@@ -62,7 +75,9 @@ public class UserServiceImplTest {
      */
     @Test
     public void testFindByNickname() throws Exception {
-//TODO: Test goes here... 
+        Users user=userService.findByNickname("zhihuKing");
+        Assert.assertNotNull(user);
+        Assert.assertEquals(user.getAccount(),"zhihugood");
     }
 
     /**
@@ -70,7 +85,9 @@ public class UserServiceImplTest {
      */
     @Test
     public void testFindByAccount() throws Exception {
-//TODO: Test goes here... 
+        Users user=userService.findByAccount("zhihugood");
+        Assert.assertNotNull(user);
+        Assert.assertEquals(user.getNickname(),"zhihuKing");
     }
 
     /**
@@ -78,7 +95,9 @@ public class UserServiceImplTest {
      */
     @Test
     public void testDeleteById() throws Exception {
-//TODO: Test goes here... 
+        userService.deleteById(id);
+        Users user=userDao.findByAccount("zhihugood");
+        Assert.assertNull(user);
     }
 
     /**
@@ -86,7 +105,8 @@ public class UserServiceImplTest {
      */
     @Test
     public void testSave() throws Exception {
-//TODO: Test goes here... 
+        userService.save("zhihuKing1", "zhihugood1", "123456", "git@sjtu.edu.cn");
+        Assert.assertNotNull(userDao.findByAccount("zhihugood1"));
     }
 
     /**
@@ -94,7 +114,9 @@ public class UserServiceImplTest {
      */
     @Test
     public void testUpdateWyyId() throws Exception {
-//TODO: Test goes here... 
+        ResponseEntity<?> response=userService.updateWyyId(id,123L);
+        Users user=userDao.findById(id);
+        Assert.assertEquals(response.getBody(),1);
     }
 
     /**
@@ -102,7 +124,9 @@ public class UserServiceImplTest {
      */
     @Test
     public void testUpdateWbId() throws Exception {
-//TODO: Test goes here... 
+        ResponseEntity<?> response=userService.updateWbId(id,123L);
+        Users user=userDao.findById(id);
+        Assert.assertEquals(response.getBody(),1);
     }
 
     /**
@@ -110,7 +134,9 @@ public class UserServiceImplTest {
      */
     @Test
     public void testUpdateZhId() throws Exception {
-//TODO: Test goes here... 
+        ResponseEntity<?> response=userService.updateZhId(id,"asdfg");
+        Users user=userDao.findById(id);
+        Assert.assertEquals(response.getBody(),1);
     }
 
     /**
@@ -118,7 +144,12 @@ public class UserServiceImplTest {
      */
     @Test
     public void testAuth() throws Exception {
-//TODO: Test goes here... 
+        ResponseEntity<?> response=userService.auth("zhihugood","123456");
+        Assert.assertEquals(response.getStatusCodeValue(),200);
+        response=userService.auth("zhihugood1","123456");
+        Assert.assertEquals(response.getStatusCodeValue(),501);
+        response=userService.auth("zhihugood","1234561");
+        Assert.assertEquals(response.getStatusCodeValue(),502);
     }
 
 
