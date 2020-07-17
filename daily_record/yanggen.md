@@ -55,6 +55,25 @@ https://editor.csdn.net/md/?articleId=107299196
 ### swagger
 * 解决了swagger对POST方法文档描述不清的问题，更新了博客。
 # 7.14
+### docker
+* 在windows上安装docker,踩了很多坑并写成了文档
+https://blog.csdn.net/weixin_44602409/article/details/107358001
 # 7.15
+### 单元测试
+引入了junit，完成了对weibo的controller层的单元测试
+### 爬虫学习
+继续学习拉钩教育的爬虫网课，更新了requests库的使用
+https://editor.csdn.net/md/?articleId=107299196
 # 7.16
+### 单元测试
+* 完成了weibo service层与auth controller层的单元测试
+* 系统学习了mockMvc的使用
+### docker
+* 部署了微博后端在服务器上，部分接口仍存在问题
 # 7.17
+### 单元测试
+* 完成了auth service层的单元测试，并修改了weibo service层单元测试中的问题
+### docker
+* 尝试解决微博后端部署依赖缺失的问题，决定将后端CRUD与爬虫分离
+* 更新docker博客，增加exec,logs,status等指令的使用：
+https://blog.csdn.net/weixin_44602409/article/details/107358001
