@@ -1,5 +1,4 @@
-package com.ilife.musicservice;
-
+package com.ilife.musicservice.config;
 
 import io.swagger.annotations.Api;
 import org.springframework.context.annotation.Bean;
@@ -28,11 +27,8 @@ public class Swagger2Configuration {
     //基本信息的配置，信息会在api文档上显示
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title("zg测试的接口文档")
-                .description("xx相关接口的文档")
-                .termsOfServiceUrl("http://localhost:8888/hello")
+                .title("wyy的接口文档")
                 .version("1.0")
                 .build();
     }
-
 }
