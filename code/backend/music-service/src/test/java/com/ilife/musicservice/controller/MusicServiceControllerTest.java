@@ -1,26 +1,65 @@
 package com.ilife.musicservice.controller;
 
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
+@AutoConfigureMockMvc
+@RunWith(SpringRunner.class)
 @SpringBootTest
 class MusicServiceControllerTest {
 
     @Autowired
-    private MusicServiceController musicServiceController;
+    private WebApplicationContext wac;
+
+    @Autowired
     private MockMvc mockMvc;
+
+    @Before
+    public void setUp() {
+        mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    }
+
+
+
+
+
     @Test
-    void gethistorybypage() {
-//        String result = mockMvc.perform(post("/")
-//                .param("a", "10")
-//                .param("b", "11")
-//                .contentType(MediaType.APPLICATION_JSON_UTF8))
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andReturn().getResponse().getContentAsString();
+    public void updatehistory() throws Exception {
+        MvcResult result = mockMvc.perform(post("/music/updatehistory")
+                .param("ph", "18679480337")
+                .param("pw", "Xiong0608")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+    }
+    @Test
+    public void gethistory() throws Exception {
+        MvcResult result = mockMvc.perform(post("/music/gethistorybypage")
+                .param("ph", "18679480337")
+                .param("pw", "Xiong0608")
+                .param("size", "10")
+                .param("page", "3")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
     }
 }
