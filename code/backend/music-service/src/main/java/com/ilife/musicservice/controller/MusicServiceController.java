@@ -6,6 +6,7 @@ import com.ilife.musicservice.entity.wyyuser;
 import com.ilife.musicservice.service.MusicsService;
 import com.ilife.musicservice.service.SingService;
 import com.ilife.musicservice.service.WyyhistoryService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import java.util.List;
 
 
 @RestController
+@Api
 public class MusicServiceController {
 
 
