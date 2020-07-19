@@ -1,0 +1,351 @@
+
+[[_paths]]
+== Paths
+
+[[_deluserbyuseridusingget_7]]
+=== delete one user
+....
+GET /user/delById
+....
+
+
+==== Description
+Delete one user info specified by userId
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**userId** +
+__optional__|The user ID of a WeiBo user,should be a Long Integer|integer(int64)
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|object
+|**204**|No Content|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|===
+
+
+==== Produces
+
+* `*/*`
+
+
+==== Tags
+
+* user-service-controller
+
+
+[[_getuserbyidusingget_7]]
+=== get user info
+....
+GET /user/getById
+....
+
+
+==== Description
+Get user info by userID
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**userId** +
+__optional__|The user ID of a WeiBo user,should be a Long Integer|integer(int64)
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_user,User>>
+|**204**|No Content|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|===
+
+
+==== Produces
+
+* `*/*`
+
+
+==== Tags
+
+* user-service-controller
+
+
+[[_getuserbynicknameusingget_7]]
+=== get user info
+....
+GET /user/getByName
+....
+
+
+==== Description
+Get user info by nickname
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**nickname** +
+__optional__|The nickname of a WeiBo user,should be a String|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_user,User>>
+|**204**|No Content|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|===
+
+
+==== Produces
+
+* `*/*`
+
+
+==== Tags
+
+* user-service-controller
+
+
+[[_crawlweibousingget_7]]
+=== crawl Weibo 
+....
+GET /weibo/crawlWeibo
+....
+
+
+==== Description
+Crawl Weibos of one user specified by userID,should be called when user ask to update the databse
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**userId** +
+__optional__|The user ID of a WeiBo user,should be a Long Integer|integer(int64)
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|No Content
+|**204**|No Content|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|===
+
+
+==== Produces
+
+* `*/*`
+
+
+==== Tags
+
+* weibo-service-controller
+
+
+[[_deleteweibousingget_7]]
+=== delete one Weibo
+....
+GET /weibo/deleteWeibo
+....
+
+
+==== Description
+Delete one Weibos from database specified by Weibo ID,success if the response.status = 200
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**Id** +
+__optional__|The ID of a WeiBo,should be a String|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|object
+|**204**|No Content|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**501**|weiboId not exists|No Content
+|===
+
+
+==== Produces
+
+* `*/*`
+
+
+==== Tags
+
+* weibo-service-controller
+
+
+[[_deleteweibosusingget_7]]
+=== delete one user's Weibos
+....
+GET /weibo/deleteWeibos
+....
+
+
+==== Description
+Delete all Weibos from database of one user specified by userID,success if the response.status = 200
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**userId** +
+__optional__|The user ID of a WeiBo user,should be a Long Integer|integer(int64)
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|object
+|**204**|No Content|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**501**|userId not exists|No Content
+|===
+
+
+==== Produces
+
+* `*/*`
+
+
+==== Tags
+
+* weibo-service-controller
+
+
+[[_getweibousingget_7]]
+=== get one Weibo
+....
+GET /weibo/getWeibo
+....
+
+
+==== Description
+Get One Weibo from database specified by Weibo ID
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**Id** +
+__optional__|The ID of a WeiBo,should be a String|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_weibo,Weibo>>
+|**204**|No Content|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|===
+
+
+==== Produces
+
+* `*/*`
+
+
+==== Tags
+
+* weibo-service-controller
+
+
+[[_getweibosusingget_7]]
+=== get one user's Weibos
+....
+GET /weibo/getWeibos
+....
+
+
+==== Description
+Get all Weibos from database of one user specified by userID
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**userId** +
+__optional__|The user ID of a WeiBo user,should be a Long Integer|integer(int64)
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|< <<_weibo,Weibo>> > array
+|**204**|No Content|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|===
+
+
+==== Produces
+
+* `*/*`
+
+
+==== Tags
+
+* weibo-service-controller
+
+
+

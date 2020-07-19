@@ -8,7 +8,7 @@ class Crawl:
         self.id = sys.argv[1]
 
     def crawl(self):
-        # TODO:部署在服务器上时，应该将绝对地址改为服务器上的绝对地址
+        # TODO:部署在服务器上时，应该将绝对地址改为服务器上的地址
         os.chdir('.\\crawler\\weiboSpider')
         os.system('python -m weibo_spider')
 
