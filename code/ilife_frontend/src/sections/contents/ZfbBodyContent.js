@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default class Register extends Component {
+export default class ZfbBodyContent extends Component {
   render() {
     return (
       <div>

@@ -1,20 +1,44 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom"
+import axios from 'axios'
 
 export default class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      username: localStorage.getItem("username"),
+      password: ""
     }
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handlePsdChange = this.handlePsdChange.bind(this);
+
   }
   componentDidMount() {
+
     const script = document.createElement("script");
 
     script.src = "dist/js/login.js";
     script.async = true;
     document.body.appendChild(script);
 
+  }
+
+  handleNameChange(val) {
+    this.setState({
+      username: val.target.value,
+    })
+  }
+
+  handlePsdChange(val) {
+    this.setState({
+      password: val.target.value,
+    })
+  }
+
+  async login() {
+    var config = {
+
+    }
   }
   render() {
     return (
@@ -29,11 +53,11 @@ export default class LoginPage extends Component {
               <p className="login-box-msg">登录</p>
               <form action="../../index2.html" method="post">
                 <div className="form-group has-feedback">
-                  <input type="email" className="form-control" placeholder="Email" />
+                  <input type="email" className="form-control" placeholder="NickName" onChange={(val) => this.handleNameChange(val)} />
                   <span className="glyphicon glyphicon-envelope form-control-feedback" />
                 </div>
                 <div className="form-group has-feedback">
-                  <input type="password" className="form-control" placeholder="Password" />
+                  <input type="password" className="form-control" placeholder="Password" onChange={(val) => this.handlePsdChange(val)} />
                   <span className="glyphicon glyphicon-lock form-control-feedback" />
                 </div>
                 <div className="row">
