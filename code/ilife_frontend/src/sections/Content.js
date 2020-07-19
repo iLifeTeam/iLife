@@ -11,14 +11,11 @@ import DataTable from './components/DataTable'
 export default class Content extends Component {
   render() {
     return (
-      <Router>
-        <Switch>
-          <Route path="/home" component={DataTable} />
-          <Route path="/zhihu" component={zhihuBodyContent} />
-          <Route path="/weibo" component={Oauth} />
-
-        </Switch>
-      </Router>
+      <div>
+        <Route path="/home" exact component={DataTable} />
+        <Route path="/home/zhihu" component={zhihuBodyContent} />
+        <Route path="/home/weibo" component={Oauth} />
+      </div>
     )
   }
 }

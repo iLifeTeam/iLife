@@ -6,7 +6,22 @@ import {
 } from "react-router-dom";
 
 export default class Menu extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: localStorage.getItem("username"),
+    }
+  }
+
   render() {
+    console.log(this.state.username);
+    const User = this.state.username === null ? <div className="pull-left info">
+      <p ><Link to={"/login"}>登录</Link></p>
+    </div> :
+      <div className="pull-left info">
+        <p>{this.state.username}</p>
+        <a><i className="fa fa-circle text-success" /> Online</a>
+      </div>;
     return (
       <div>{/* Left side column. contains the logo and sidebar */}
         <aside className="main-sidebar">
@@ -15,12 +30,9 @@ export default class Menu extends Component {
             {/* Sidebar user panel */}
             <div className="user-panel">
               <div className="pull-left image">
-                <img src="dist/img/user2-160x160.jpg" className="img-circle" alt="User" />
+                <img src="../../dist/img/user2-160x160.jpg" className="img-circle" alt="User" />
               </div>
-              <div className="pull-left info">
-                <p>Alexander Pierce</p>
-                <a><i className="fa fa-circle text-success" /> Online</a>
-              </div>
+              {User}
             </div>
             {/* search form */}
             <form action="#" method="get" className="sidebar-form">
@@ -57,7 +69,7 @@ export default class Menu extends Component {
 
 const menuItems = [
   {
-    itemURL: "/alipay",
+    itemURL: "/home/alipay",
     itemName: "支付宝",
     childItems: [{
       name: "账单信息",
@@ -70,7 +82,7 @@ const menuItems = [
     ]
   },
   {
-    itemURL: "/weibo",
+    itemURL: "/home/weibo",
     itemName: "微博",
     childItems: [{
       name: "浏览信息",
@@ -83,7 +95,7 @@ const menuItems = [
     ]
   },
   {
-    itemURL: "/zhihu",
+    itemURL: "/home/zhihu",
     itemName: "知乎",
     childItems: [{
       name: "动态信息",

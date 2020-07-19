@@ -18,7 +18,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest --coverage --config jestConfig.jest.js --passWithNoTests",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -37,6 +37,9 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/react": "^9.5.0"
+    "babel-jest": "^24.9.0",
+    "enzyme": "^3.11.0",
+    "enzyme-to-json": "^3.5.0",
+    "jest": "^24.9.0"
   }
 }
