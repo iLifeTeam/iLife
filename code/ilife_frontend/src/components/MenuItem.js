@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 export default class MenuItem extends Component {
   constructor(props) {
@@ -26,17 +27,17 @@ export default class MenuItem extends Component {
         childItems: this.props.childItems
       });
   }
-
-  static getDerivedStateFromProps(props, state) {
-    if (props.itemName !== state.itemName) {
-      return {
-        itemURL: props.itemURL,
-        itemName: props.itemName,
-        childItems: props.childItems
-      };
+  /*
+    static getDerivedStateFromProps(props, state) {
+      if (props.itemName !== state.itemName) {
+        return {
+          itemURL: props.itemURL,
+          itemName: props.itemName,
+          childItems: props.childItems
+        };
+      }
     }
-  }
-
+  */
   render() {
     const { childItems } = this.state;
     return (
@@ -50,7 +51,7 @@ export default class MenuItem extends Component {
         {childItems === undefined ? null :
           <ul className="treeview-menu">
             {childItems.map((childItem, index) => (
-              <li key={index}><a href={childItem.url}><i className="fa fa-circle-o" />{childItem.name}</a></li>
+              <li key={index}><Link to={this.state.itemURL}><i className="fa fa-circle-o" />{childItem.name}</ Link></li>
             ))}
             <li className="active"><a href="index2.html"><i className="fa fa-circle-o" /> Dashboard v2</a></li>
           </ul>
