@@ -42,10 +42,26 @@ export default class zhihuBodyContent extends Component {
 
   async login() {
     var data;
-    await axios.post("http://47.97.206.169:8090/login?username=" + this.state.username + "&password=" + this.state.password)
+    var config = {
+      method: 'post',
+      url: 'http://47.97.206.169:8090/login',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data:
+      {
+        password: this.state.password,
+        username: this.state.username,
+      }
+    };
+    await axios(config)
       .then(function (response) {
         console.log(response);
         data = response;
+      })
+      .catch(function (error) {
+        console.log(error.response);
+        data = error.response;
       })
 
     if (data.data === "success") {
@@ -68,7 +84,20 @@ export default class zhihuBodyContent extends Component {
   }
 
   async loginTwice() {
-    await axios.post("http://47.97.206.169:8090/login?username=" + this.state.username + "&password=" + this.state.password + "&captcha=" + this.state.code)
+    var config = {
+      method: 'post',
+      url: 'http://47.97.206.169:8090/login',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data:
+      {
+        password: this.state.password,
+        username: this.state.username,
+        captcha: this.state.code
+      }
+    };
+    await axios(config)
       .then(function (response) {
         console.log(response);
       })
