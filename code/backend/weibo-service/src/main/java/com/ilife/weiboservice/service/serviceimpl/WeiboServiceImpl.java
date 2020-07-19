@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class WeiboServiceImpl implements WeiboService {
@@ -48,6 +49,24 @@ public class WeiboServiceImpl implements WeiboService {
     public void crawlWeibo(Long uid) {
         try {
             // TODO:should go to crawl.py and modify some parameter
+            File file = new File(System.getProperty("user.dir")+"\\crawler\\weiboSpider\\weibo_spider\\crawl.py");
+            if (file.exists()) System.out.println("exist!");
+            else System.out.println("not exist!");
+            File f=new File(System.getProperty("user.dir"));
+            for(File value: Objects.requireNonNull(f.listFiles())){
+                System.out.println(value.getName());
+                if(value.getName().equals("crawler")){
+                    for(File value2: Objects.requireNonNull(value.listFiles())){
+                        for(File value3: Objects.requireNonNull(value2.listFiles())){
+                            if(value3.getName().equals("weibo_spider")){
+                                for(File value4: Objects.requireNonNull(value3.listFiles())){
+                                    System.out.println(value4.getName());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             String[] args = new String[]{"python3", "crawler\\weiboSpider\\weibo_spider\\crawl.py", uid.toString()};
             System.out.println("start crawling");
             Process pr = Runtime.getRuntime().exec(args);
@@ -56,16 +75,6 @@ public class WeiboServiceImpl implements WeiboService {
             String line;
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");//设置日期格式
             String date = df.format(new Date());
-            File file = new File("crawler\\weiboSpider\\setup.py");
-            if (file.exists()) System.out.println("exist!");
-            else System.out.println("not exist!");
-            System.out.println(System.getProperty("user.dir"));
-            File f=new File(System.getProperty("user.dir"));
-            File[] t = f.listFiles();
-            assert t != null;
-            for (File value : t) {
-                System.out.println(value.getName());
-            }
             //BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("log\\crawler_log\\" + date + ".log"), StandardCharsets.UTF_8));
             while ((line = in.readLine()) != null) {
 //                out.write(line);
