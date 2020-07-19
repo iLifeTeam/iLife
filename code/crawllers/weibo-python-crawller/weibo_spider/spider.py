@@ -134,9 +134,9 @@ class Spider:
                     # 制会自动解除)，加入随机等待模拟人的操作，可降低被系统限制的风险。默
                     # 认是每爬取1到5页随机等待6到10秒，如果仍然被限，可适当增加sleep时间
                     if (page - page1) % random_pages == 0 and page < page_num:
-                        sleep(random.randint(6, 10))
+                        sleep(random.randint(2, 3))
                         page1 = page
-                        random_pages = random.randint(1, 5)
+                        random_pages = random.randint(4, 6)
         except Exception as e:
             print('Error: ', e)
             traceback.print_exc()
@@ -211,7 +211,7 @@ class Spider:
                 return
             for user_config in self.user_config_list:
                 self.get_user_info(user_config['user_uri'])
-                print(self.user)
+                # print(self.user)
                 print('*' * 100)
 
                 self.initialize_info(user_config)
@@ -221,10 +221,10 @@ class Spider:
                 for weibos in self.get_weibo_info():
                     self.write_weibo(weibos)
                     self.got_num += len(weibos)
-                if not self.filter:
-                    print(u'共爬取' + str(self.got_num) + u'条微博')
-                else:
-                    print(u'共爬取' + str(self.got_num) + u'条原创微博')
+                # if not self.filter:
+                #     print(u'共爬取' + str(self.got_num) + u'条微博')
+                # else:
+                #     print(u'共爬取' + str(self.got_num) + u'条原创微博')
                 print(u'信息抓取完毕')
                 print('*' * 100)
 
