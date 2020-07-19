@@ -8,10 +8,10 @@ import com.ilife.musicservice.service.SingService;
 import com.ilife.musicservice.service.WyyhistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,13 +29,25 @@ public class MusicServiceController {
     private NetEaseCrawler netEaseCrawler;
 
     @PostMapping("/music/gethistory")
-    public List<wyyuser> buy(@RequestParam String ph, String pw) {
+    public List<wyyuser> gethistory(@RequestParam String ph, String pw) {
         long uid = netEaseCrawler.getuid(ph,pw);
         if (uid == -1) return null;
         List<wyyuser> t = wyyhistoryService.findAllbyid(uid);
         if (t.size()==0){
             netEaseCrawler.test(ph,pw);
             return wyyhistoryService.findAllbyid(uid);
+        }
+        else return t;
+    }
+    @PostMapping("/music/gethistorybypage")
+    public Page<wyyuser> gethistorybypage(@RequestParam("page") Integer page,@RequestParam("size") Integer size, @RequestParam String ph, String pw) {
+        long uid = netEaseCrawler.getuid(ph,pw);
+        if (uid == -1) return null;
+        Pageable pageable = PageRequest.of(page,size);
+        Page<wyyuser> t = wyyhistoryService.findAllbyid(uid,pageable);
+        if (t.isEmpty()==true){
+            if(wyyhistoryService.findAllbyid(uid).size()==0) {netEaseCrawler.test(ph,pw);}
+            return wyyhistoryService.findAllbyid(uid,pageable);
         }
         else return t;
     }

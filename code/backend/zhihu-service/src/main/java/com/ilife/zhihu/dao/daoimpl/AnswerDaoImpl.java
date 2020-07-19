@@ -20,12 +20,12 @@ public class AnswerDaoImpl implements AnswerDao {
 
 
     @Override
-    public Answer findAnswerById(Integer id) {
+    public Answer findById(String id) {
         return answerRepository.findById(id).orElse(null);
     }
 
     @Override
-    public List<Answer> findAnswerByIds(List<Integer> ids) {
+    public List<Answer> findByIds(List<String> ids) {
         List<Answer> answers = new ArrayList<>();
         answerRepository.findAllById(ids).forEach(answers::add);
         return answers;
@@ -37,7 +37,7 @@ public class AnswerDaoImpl implements AnswerDao {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(String id) {
         answerRepository.deleteById(id);
     }
 }
