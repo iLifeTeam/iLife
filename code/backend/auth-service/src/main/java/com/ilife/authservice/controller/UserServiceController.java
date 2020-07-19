@@ -24,21 +24,21 @@ public class UserServiceController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation(notes = "Get user info by userID", value = "get user info", httpMethod = "GET")
+    @ApiOperation(notes = "Get user info by userID", value = "get user info by id", httpMethod = "GET")
     @RequestMapping(path = "/auth/getById")
     public Users getUserById(@ApiParam(name = "userId", value = "The user ID of a iLife user") @RequestParam("userId") Long uid) {
         System.out.println("********** getUserById **********");
         return userService.findById(uid);
     }
 
-    @ApiOperation(notes = "Get user info by account", value = "get user info", httpMethod = "GET")
+    @ApiOperation(notes = "Get user info by account", value = "get user info by account", httpMethod = "GET")
     @RequestMapping(path = "/auth/getByAccount")
     public Users getUserByAccount(@ApiParam(name = "account", value = "The account number of a iLife user") @RequestParam("account") String account) {
         System.out.println("********** getUserByAccount **********");
         return userService.findByAccount(account);
     }
 
-    @ApiOperation(notes = "Get user info by Nickname", value = "get user info", httpMethod = "GET")
+    @ApiOperation(notes = "Get user info by Nickname", value = "get user info by nickname", httpMethod = "GET")
     @RequestMapping(path = "/auth/getByNickname")
     public Users getUserByNickname(@ApiParam(name = "nickname", value = "The user nickname of a iLife user") @RequestParam("nickname") String nickname) {
         System.out.println("********** getUserByNickname **********");
