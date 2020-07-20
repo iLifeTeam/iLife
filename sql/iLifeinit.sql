@@ -93,7 +93,7 @@ create table sing
    singid               bigint not null AUTO_INCREMENT,
    m_id                 bigint not null,
    s_id                 bigint not null,
-   sname                varchar(20),
+   sname                varchar(128),
    primary key (singid),
    foreign key (m_id) references musics (m_id)
 )DEFAULT CHARSET=utf8mb4;
