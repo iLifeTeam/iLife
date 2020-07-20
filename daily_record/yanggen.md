@@ -82,10 +82,10 @@ https://editor.csdn.net/md/?articleId=107299196
 https://blog.csdn.net/weixin_44602409/article/details/107358001
 ### 爬虫学习
 * 看了正则表达式相关的文章
-# 7.18
+# 7.18 Saturday
 ### 
 * 回学校拿显示屏，方便更好工作
-# 7.19
+# 7.19 Sunday
 ### 部署
 * 用docker部署了auth-service
 ### 静态文档
