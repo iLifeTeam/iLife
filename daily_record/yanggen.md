@@ -82,3 +82,22 @@ https://editor.csdn.net/md/?articleId=107299196
 https://blog.csdn.net/weixin_44602409/article/details/107358001
 ### 爬虫学习
 * 看了正则表达式相关的文章
+# 7.18
+### 
+* 回学校拿显示屏，方便更好工作
+# 7.19
+### 部署
+* 用docker部署了auth-service
+### 静态文档
+* 利用IDEA插件生成了接口的静态文档，有.adoc,.md,.html三种格式
+# 7.20
+### 松耦合
+* 将微博后端的CRUD和爬虫分开来
+* 新建了一个branch负责微博爬虫
+### 部署
+* 学会打包python项目，部署了微博爬虫到服务器上
+### Spring Security
+* 学习spring security,写了一些demo
+### docker
+* 整理了后端的container和images
+
