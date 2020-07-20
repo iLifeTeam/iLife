@@ -5,7 +5,7 @@ export default class MenuItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemURL: "/alipay",
+      itemURL: "/home/fake_url",
       itemName: "支付宝",
       childItems: [{
         name: "账单信息",
@@ -42,7 +42,7 @@ export default class MenuItem extends Component {
     const { childItems } = this.state;
     return (
       <li className="treeview">
-        <a href="fake_url">
+        <a >
           <i className="fa fa-dashboard" /> <span>{this.state.itemName}</span>
           <span className="pull-right-container">
             <i className="fa fa-angle-left pull-right" />
@@ -51,9 +51,9 @@ export default class MenuItem extends Component {
         {childItems === undefined ? null :
           <ul className="treeview-menu">
             {childItems.map((childItem, index) => (
-              <li key={index}><Link to={this.state.itemURL}><i className="fa fa-circle-o" />{childItem.name}</ Link></li>
+              <li key={index}><Link to={this.state.itemURL + childItem.url}><i className="fa fa-circle-o" />{childItem.name}</ Link></li>
             ))}
-            <li className="active"><a href="index2.html"><i className="fa fa-circle-o" /> Dashboard v2</a></li>
+            <li className="active"><a ><i className="fa fa-circle-o" /> Dashboard v2</a></li>
           </ul>
         }
       </li>
