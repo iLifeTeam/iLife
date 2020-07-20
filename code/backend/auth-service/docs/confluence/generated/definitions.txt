@@ -1,0 +1,17 @@
+
+h2. 定义 {anchor:definitions}
+
+h3. Users {anchor:users}
+
+||名称||说明||类型||
+|*account*\\ \\ _可选_||*样例* : {noformat}"string"{noformat}||string|
+|*email*\\ \\ _可选_||*样例* : {noformat}"string"{noformat}||string|
+|*id*\\ \\ _可选_||*样例* : {noformat}0{noformat}||integer (int64)|
+|*nickname*\\ \\ _可选_||*样例* : {noformat}"string"{noformat}||string|
+|*password*\\ \\ _可选_||*样例* : {noformat}"string"{noformat}||string|
+|*weibid*\\ \\ _可选_||*样例* : {noformat}0{noformat}||integer (int64)|
+|*wyyid*\\ \\ _可选_||*样例* : {noformat}0{noformat}||integer (int64)|
+|*zhid*\\ \\ _可选_||*样例* : {noformat}"string"{noformat}||string|
+
+
+
