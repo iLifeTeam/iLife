@@ -45,8 +45,8 @@ export default class LoginPage extends Component {
         'Content-Type': 'application/json'
       },
       data: {
-        "nickname": this.state.username,
-        "account.password": this.state.password,
+        "account": this.state.username,
+        "password": this.state.password,
       }
     };
 
@@ -62,9 +62,13 @@ export default class LoginPage extends Component {
       })
       .catch(function (error) {
         console.log(error);
+        return;
       });
 
 
+    localStorage.setItem("username", this.state.username);
+    history.push("/home");
+    window.location.reload();
   }
   render() {
     return (

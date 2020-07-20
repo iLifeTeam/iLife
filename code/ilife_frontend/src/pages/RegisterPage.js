@@ -52,8 +52,8 @@ export default class RegisterPage extends Component {
         'Content-Type': 'application/json'
       },
       data: {
-        "nickname": this.state.username,
-        "account.password": this.state.password,
+        "account": this.state.username,
+        "password": this.state.password,
         "email": this.state.email,
       }
     };
@@ -70,8 +70,14 @@ export default class RegisterPage extends Component {
       })
       .catch(function (error) {
         console.log(error);
+
+        return;
       });
 
+
+    localStorage.setItem("username", this.state.username);
+    history.push("/home");
+    window.location.reload();
   }
 
   render() {
