@@ -11,7 +11,6 @@ export default class Oauth extends Component {
   }
   oauthLink() {
     console.log("isdkugfsd");
-    const _this = this;    //先存一下this，以防使用箭头函数this会指向我们不希望它所指向的对象。
     axios.post('http://49.234.125.131:80/weibo/wiki/Oauth2/authorize',
       {
         client_id: '2181274558',
