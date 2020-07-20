@@ -7,6 +7,7 @@ import com.ilife.musicservice.service.MusicsService;
 import com.ilife.musicservice.service.SingService;
 import com.ilife.musicservice.service.WyyhistoryService;
 import io.swagger.annotations.Api;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.data.domain.Page;
@@ -31,16 +32,21 @@ public class MusicServiceController {
 
     @PostMapping("/music/gethistorybypage")
     public Page<wyyuser> gethistorybypage(@RequestParam("page") Integer page, @RequestParam("size") Integer size, @RequestParam String ph, String pw) {
-        long uid = netEaseCrawler.getuid(ph, pw);
+        long uid = netEaseCrawler.getuid(ph, pw).longValue();
         if (uid == -1) return null;
         Pageable pageable = PageRequest.of(page, size);
         Page<wyyuser> t = wyyhistoryService.findAllbyid(uid, pageable);
         if (t.isEmpty() == true) {
             if (t.getTotalPages() >= (page + 1)) {
-                netEaseCrawler.test(ph, pw);
+                netEaseCrawler.crawlbyid(netEaseCrawler.getuid(ph,pw));
             }
             return wyyhistoryService.findAllbyid(uid, pageable);
         } else return t;
+    }
+
+    @PostMapping("/music/getid")
+    public Integer getid(@RequestParam String ph, String pw) {
+        return netEaseCrawler.getuid(ph, pw);
     }
 
     @PostMapping("/music/updatehistory")
@@ -48,7 +54,28 @@ public class MusicServiceController {
         long uid = netEaseCrawler.getuid(ph, pw);
         if (uid == -1) return false;
 //        wyyhistoryService.deletebyid(uid);
-        netEaseCrawler.test(ph, pw);
+        netEaseCrawler.crawlbyid(netEaseCrawler.getuid(ph,pw));
         return true;
     }
+
+
+    @PostMapping("/music/gethistorybyid")
+    public Page<wyyuser> gethistorybyid(@RequestParam("page") Integer page, @RequestParam("size") Integer size, @RequestParam Integer id) {
+        Long uid = id.longValue();
+        Pageable pageable = PageRequest.of(page, size);
+        Page<wyyuser> t = wyyhistoryService.findAllbyid(uid, pageable);
+        if (t.isEmpty() == true) {
+            if (t.getTotalPages() >= (page + 1)) {
+                netEaseCrawler.crawlbyid(id);
+            }
+            return wyyhistoryService.findAllbyid(uid, pageable);
+        } else return t;
+    }
+
+    @PostMapping("/music/updatehistorybyid")
+    public boolean updatehistorybyid(@RequestParam Integer id) {
+        netEaseCrawler.crawlbyid(id);
+        return true;
+    }
+
 }
