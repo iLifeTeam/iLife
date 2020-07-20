@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 
 
-@app.route('/weibo/crawlWeibo', methods=['POST','GET'])
+@app.route('/weibo/crawlWeibo', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
         if 'user' in request.json:

@@ -9,3 +9,4 @@
 *.DS_Store
 ignore/
 
+code/backend/auth-service/docker/demo-0.0.1-SNAPSHOT.jar
