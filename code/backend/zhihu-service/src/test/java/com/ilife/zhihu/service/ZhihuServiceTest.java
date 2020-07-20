@@ -7,6 +7,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -84,7 +85,14 @@ class ZhihuServiceTest {
     @Test
     void saveActivitiesFromJsonString() {
         User user = new User("uid","name","email","phone",1,2,3,-1,null);
-
+        when(questionRepository.save(Mockito.any(Question.class)))
+                .thenAnswer(i -> i.getArguments()[0]);
+        when(activityRepository.save(Mockito.any(Activity.class)))
+                .thenAnswer(i -> i.getArguments()[0]);
+        when(answerRepository.save(Mockito.any(Answer.class)))
+                .thenAnswer(i -> i.getArguments()[0]);
+        when(articleRepository.save(Mockito.any(Article.class)))
+                .thenAnswer(i -> i.getArguments()[0]);
         System.out.println(activitiesString);
         zhihuService.saveActivitiesFromJsonString(user,activitiesString);
     }
