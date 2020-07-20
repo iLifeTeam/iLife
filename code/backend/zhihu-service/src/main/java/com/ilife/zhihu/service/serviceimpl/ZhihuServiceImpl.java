@@ -155,11 +155,6 @@ public class ZhihuServiceImpl implements ZhihuService {
     }
 
     @Override
-    public User saveUser(User user) {
-        return userDao.save(user);
-    }
-
-    @Override
     public User saveUserFromJsonString(String email, String json) {
 //        JSONObject userObject = JSON.parseObject(json);
 //        User user = makeUserFromJsonObject(userObject);

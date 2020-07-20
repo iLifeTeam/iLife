@@ -19,7 +19,5 @@ public interface ZhihuService {
 
     void saveActivitiesFromJsonString(User user, String json);
 
-    User saveUser(User user);
-
     User saveUserFromJsonString(String email, String json);
 }
