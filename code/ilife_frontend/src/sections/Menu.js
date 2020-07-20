@@ -24,9 +24,9 @@ export default class Menu extends Component {
       </div>;
     return (
       <div>{/* Left side column. contains the logo and sidebar */}
-        <aside className="main-sidebar">
+        <div className="main-sidebar">
           {/* sidebar: style can be found in sidebar.less */}
-          <section className="sidebar">
+          <div className="sidebar">
             {/* Sidebar user panel */}
             <div className="user-panel">
               <div className="pull-left image">
@@ -35,7 +35,7 @@ export default class Menu extends Component {
               {User}
             </div>
             {/* search form */}
-            <form action="#" method="get" className="sidebar-form">
+            <div action="#" method="get" className="sidebar-form">
               <div className="input-group">
                 <input type="text" name="q" className="form-control" placeholder="Search..." />
                 <span className="input-group-btn">
@@ -44,7 +44,7 @@ export default class Menu extends Component {
                   </button>
                 </span>
               </div>
-            </form>
+            </div>
             {/* /.search form */}
             {/* sidebar menu: : style can be found in sidebar.less */}
             <ul className="sidebar-menu" data-widget="tree">
@@ -57,9 +57,9 @@ export default class Menu extends Component {
               <li><a href="fake_url"><i className="fa fa-circle-o text-yellow" /> <span>Warning</span></a></li>
               <li><a href="fake_url"><i className="fa fa-circle-o text-aqua" /> <span>Information</span></a></li>
             </ul>
-          </section>
+          </div>
           {/* /.sidebar */}
-        </aside>
+        </div>
       </div>
 
     )
@@ -99,6 +99,18 @@ const menuItems = [
     itemName: "知乎",
     childItems: [{
       name: "动态信息",
+      url: "/info"
+    },
+    {
+      name: "分析",
+      url: "/analyse"
+    }
+    ]
+  }, {
+    itemURL: "/home/wyy",
+    itemName: "网易云",
+    childItems: [{
+      name: "听歌记录",
       url: "/info"
     },
     {

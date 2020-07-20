@@ -1,7 +1,126 @@
 import React, { Component } from 'react'
-
+import axios from 'axios';
+import ZhihuActivity from '../../zhihu/ZhihuActivity';
 export default class WeiboBodyContent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      password: "",
+      code: "",
+      picBase64: "",
+      needCaptcha: false,
+      activities: []
+    }
+    this.login = this.login.bind(this);
+    this.loginTwice = this.loginTwice.bind(this);
+  }
+  componentDidMount() {
+    const script = document.createElement("script");
+
+    script.src = "dist/js/content.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+  }
+
+  nameOnChange(val) {
+    this.setState({
+      username: val.target.value,
+    })
+  }
+  codeOnChange(val) {
+    this.setState({
+      code: val.target.value,
+    })
+  }
+  psdOnChange(val) {
+    this.setState({
+      password: val.target.value,
+    })
+  }
+
+  async login() {
+    var data;
+    var config = {
+      method: 'post',
+      url: 'http://47.97.206.169:8090/login',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data:
+      {
+        password: this.state.password,
+        username: this.state.username,
+      }
+    };
+    await axios(config)
+      .then(function (response) {
+        console.log(response);
+        data = response;
+      })
+      .catch(function (error) {
+        console.log(error.response);
+        data = error.response;
+      })
+
+    if (data.data === "success") {
+      var activities_data;
+      await axios.get("http://47.97.206.169:8090/activity/all?username=" + this.state.username)
+        .then(function (response) {
+          console.log(response);
+          activities_data = response.data;
+        })
+      this.setState({
+        activities: activities_data
+      })
+    }
+    else
+      this.setState({
+        picBase64: `data:image/png;base64,${data.data}`,
+        needCaptcha: true,
+      });
+
+  }
+
+  async loginTwice() {
+    var config = {
+      method: 'post',
+      url: 'http://47.97.206.169:8090/login',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data:
+      {
+        password: this.state.password,
+        username: this.state.username,
+        captcha: this.state.code
+      }
+    };
+    await axios(config)
+      .then(function (response) {
+        console.log(response);
+      })
+    console.log("done");
+    await axios.post("http://47.97.206.169:8090/updateActivities?username=" + this.state.username)
+      .then(function (response) {
+        console.log(response);
+      })
+    var activities_data;
+    await axios.get("http://47.97.206.169:8090/activity/all?username=" + this.state.username)
+      .then(function (response) {
+        console.log(response);
+        activities_data = response.data;
+      })
+    this.setState({
+      activities: activities_data
+    })
+  }
+
+
+
   render() {
+    const { activities } = this.state;
     return (
       <div className="content-wrapper">
         <section className="content">
