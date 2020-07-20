@@ -1,4 +1,4 @@
-from flask import Flask,  request, render_template
+from flask import Flask, request, render_template
 from weibo_spider import crawl
 from flask_ext import *
 import os
@@ -18,7 +18,8 @@ def login():
         else:
             return 'illegal'
     else:
-        userId=request.args.get('userId')
+        userId = request.args.get('userId')
+        print(userId)
         crawler = crawl.Crawl(userId)
         crawler.read_json()
         crawler.crawl()
@@ -26,4 +27,4 @@ def login():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)

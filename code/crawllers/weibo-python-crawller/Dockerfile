@@ -1,15 +1,11 @@
-FROM python:3.8-slim
+FROM python:3.7-slim-stretch
 
 MAINTAINER Yanggen zhull991122@sjtu.edu.cn
 
 WORKDIR /code
 
-COPY requirements.txt /code
+COPY . /code
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-ADD . /code
-
-CMD ["ls"]
-
-CMD ["python3","/code/restful.py","&"]
+CMD ["python3","restful.py"]
