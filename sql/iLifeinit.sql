@@ -77,7 +77,7 @@ USE wyy;
 create table musics
 (
    m_id                 bigint not null,
-   mname                varchar(128),
+   mname                varchar(1024),
    style                varchar(20),
    times                varchar(20),
    primary key (m_id)
@@ -93,7 +93,7 @@ create table sing
    singid               bigint not null AUTO_INCREMENT,
    m_id                 bigint not null,
    s_id                 bigint not null,
-   sname                varchar(20),
+   sname                varchar(1024),
    primary key (singid),
    foreign key (m_id) references musics (m_id)
 )DEFAULT CHARSET=utf8mb4;
