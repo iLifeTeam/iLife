@@ -26,4 +26,8 @@ public class WyyhistoryDaoImpl implements WyyhistoryDao {
     public Page<wyyuser> findAllbyid(Long id, Pageable pageable){
         return wyyhistoryRepository.findAllByWyyid(id,pageable);
     }
+
+    public int deletebywyyid(Long id) {
+        return wyyhistoryRepository.deleteByWyyid(id);
+    }
 }
