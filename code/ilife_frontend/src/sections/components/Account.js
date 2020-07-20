@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { createBrowserHistory } from 'history'
 
 export default class Account extends Component {
   constructor(props) {
@@ -8,6 +9,14 @@ export default class Account extends Component {
       username: localStorage.getItem("username"),
     }
   }
+
+  logoff() {
+    const history = createBrowserHistory();
+    localStorage.clear();
+    history.push("/login");
+    window.location.reload();
+  }
+
   render() {
     if (this.state.username === null) return (
       <li className="user user-menu">
@@ -35,8 +44,7 @@ export default class Account extends Component {
               <a href="/setting" className="btn btn-default btn-flat">设置</a>
             </div>
             <div className="pull-right">
-              <a href="#
-              " className="btn btn-default btn-flat">注销</a>
+              <p onClick={this.logoff} className="btn btn-default btn-flat">注销</p>
             </div>
           </li>
         </ul>

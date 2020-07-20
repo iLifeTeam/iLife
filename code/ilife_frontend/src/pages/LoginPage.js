@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom"
+import { createBrowserHistory } from 'history'
 import axios from 'axios'
 
 export default class LoginPage extends Component {
@@ -11,7 +12,7 @@ export default class LoginPage extends Component {
     }
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handlePsdChange = this.handlePsdChange.bind(this);
-
+    this.login = this.login.bind(this);
   }
   componentDidMount() {
 
@@ -36,9 +37,34 @@ export default class LoginPage extends Component {
   }
 
   async login() {
+    console.log("111");
     var config = {
+      method: 'post',
+      url: 'http://47.97.206.169:8686/auth/auth',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: {
+        "nickname": this.state.username,
+        "account.password": this.state.password,
+      }
+    };
 
-    }
+    const history = createBrowserHistory();
+
+    await axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        alert("登录成功！");
+        localStorage.setItem("username", this.state.username);
+        history.push("/home");
+        window.location.reload();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+
   }
   render() {
     return (
@@ -46,7 +72,7 @@ export default class LoginPage extends Component {
         <div class="kin-blue sidebar-mini">
           <div className="login-box ">
             <div className="login-logo">
-              <a href="../../index2.html"><b>iLife</b></a>
+              <a><b>iLife</b></a>
             </div>
             {/* /.login-logo */}
             <div className="login-box-body">
@@ -70,7 +96,7 @@ export default class LoginPage extends Component {
                   </div>
                   {/* /.col */}
                   <div className="col-xs-4">
-                    <button type="submit" className="btn btn-primary btn-block btn-flat">登录</button>
+                    <p onClick={this.login} className="btn btn-primary btn-block btn-flat">登录</p>
                   </div>
                   {/* /.col */}
                 </div>
