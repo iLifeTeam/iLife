@@ -172,6 +172,7 @@ create table users
    account              char(20),
    password             char(20),
    email                varchar(50),
+   type                 integer,
    primary key (id)
 )DEFAULT CHARSET=utf8mb4;
 

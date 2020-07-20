@@ -62,4 +62,26 @@ class MusicServiceControllerTest {
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
     }
+
+
+    @Test
+    public void updatehistorybyid() throws Exception {
+        MvcResult result = mockMvc.perform(post("/music/updatehistorybyid")
+                .param("id", "417778610")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+    }
+    @Test
+    public void gethistorybyid() throws Exception {
+        MvcResult result = mockMvc.perform(post("/music/gethistorybyid")
+                .param("id", "417778610")
+                .param("size", "10")
+                .param("page", "3")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+    }
 }
