@@ -168,29 +168,29 @@
                 <!-- Since each execution can only handle one backend, run
                      separate executions for each desired output type -->
                 <executions>
-                    <execution>
-                        <id>output-html</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                        <configuration>
-                            <backend>html5</backend>
-                            <outputDirectory>src/docs/asciidoc/html</outputDirectory>
-                        </configuration>
-                    </execution>
+<!--                    <execution>-->
+<!--                        <id>output-html</id>-->
+<!--                        <phase>generate-resources</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>process-asciidoc</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <backend>html5</backend>-->
+<!--                            <outputDirectory>src/docs/asciidoc/html</outputDirectory>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
 
-                    <execution>
-                        <id>output-pdf</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                        <configuration>
-                            <backend>pdf</backend>
-                            <outputDirectory>src/docs/asciidoc/pdf</outputDirectory>
-                        </configuration>
-                    </execution>
+<!--                    <execution>-->
+<!--                        <id>output-pdf</id>-->
+<!--                        <phase>generate-resources</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>process-asciidoc</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <backend>pdf</backend>-->
+<!--                            <outputDirectory>src/docs/asciidoc/pdf</outputDirectory>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
 
                 </executions>
             </plugin>
