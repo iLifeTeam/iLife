@@ -33,14 +33,17 @@ public class Users {
   private String password;
   @Column(name = "EMAIL")
   private String email;
+  @Column(name = "TYPE")
+  private String type;
 
-  public Users(String _nickname, String _account, String _password, String _email) {
+  public Users(String _nickname, String _account, String _password, String _email,String _type) {
     wyyid = weibid = 0;
     zhid = "0";
     nickname = _nickname;
     account = _account;
     password = _password;
     email = _email;
+    type=_type;
   }
 
 

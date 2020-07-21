@@ -37,12 +37,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<?> save(String nickname, String account, String password, String email) {
+    public ResponseEntity<?> save(String nickname, String account, String password, String email,String type) {
         if(findByAccount(account)!=null)
             return(ResponseEntity.status(500).body("Account already exists"));
         if(findByNickname(nickname)!=null)
             return(ResponseEntity.status(501).body("Nickname already exists"));
-        Users user = new Users(nickname, account, password, email);
+        Users user = new Users(nickname, account, password, email,type);
         userDao.save(user);
         return ResponseEntity.ok().body("successfully save user");
     }
