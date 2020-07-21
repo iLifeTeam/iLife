@@ -28,10 +28,6 @@ const setUp = async (page) => {
   await page.waitFor(1000 + Math.floor(Math.random() * 1000));
 }
 const login = async (page, username, password) => {
-  await page.goto(LOGIN_URI, {
-    waitUntil: 'networkidle2'
-  });
-
   await setUp(page)
 
   // await page.click('#J_Quick2Static');
@@ -83,53 +79,85 @@ const login = async (page, username, password) => {
   return cookies_list
 
 }
-
 const parseItem = async (itemHandle) => {
-  await itemHandle.screenshot({
-    'path': path.join(__dirname, 'screenshots', 'history_item.png')
-  })
+  try {
+    const product = await itemHandle.$eval('td div div:nth-child(2) p a span:nth-child(2)', node => node.innerText)
+    // console.log("product", product)
+    const price = await itemHandle.$eval('td:nth-child(2) > div > p > span:nth-child(2)', node => node.innerText)
+    // console.log("price",price)
+    const number = await itemHandle.$eval('td:nth-child(3) div p', node => node.innerText)
+    // console.log("number", number)
+    const imgHandle = await itemHandle.$('td div div a img')
+    const imgUrl = await (await imgHandle.getProperty("src")).jsonValue()
+    return {
+      product: product,
+      price: price,
+      number: number,
+      imgUrl: imgUrl
+    }
+  }catch (e) {
+     console.log("encounter an error item")
+  }
+}
+const parseOrder = async (orderHandle) => {
+  // await itemHandle.screenshot({
+  //   'path': path.join(__dirname, 'screenshots', 'history_item.png')
+  // })
   const order = {}
-  const product = await itemHandle.$eval('table tbody:nth-child(3) tr td div div:nth-child(2) p a span:nth-child(2)', node => node.innerText)
-  // console.log("product", product)
-  const shop = await itemHandle.$eval('table tbody:nth-child(2) tr td:nth-child(2) span a', node => node.innerText)
-  // console.log("shop", shop)
-  const date = await itemHandle.$eval('table tbody:nth-child(2) tr td label span:nth-child(2)', node => node.innerText)
+  order.items = []
+  try {
+    order.shop = await orderHandle.$eval('table tbody:nth-child(2) tr td:nth-child(2) span a', node => node.innerText)
+  }catch (e) {
+    console.log("the product has no shop")
+    order.shop = ""
+  }
+  order.date = await orderHandle.$eval('table tbody:nth-child(2) tr td label span:nth-child(2)', node => node.innerText)
   // console.log("date", date)
-  const price = await itemHandle.$eval('table tbody:nth-child(3) tr td:nth-child(2) div p:nth-child(2) span:nth-child(2)', node => node.innerText)
-  // console.log("price",price)
-  const number = await  itemHandle.$eval('table tbody:nth-child(3) tr td:nth-child(3) div p', node => node.innerText)
-  // console.log("number", number)
-  const payment = await itemHandle.$eval('table tbody:nth-child(3) tr td:nth-child(5) div div p strong span:nth-child(2)', node => node.innerText)
-  // console.log("payment", payment)
-  const imgHandle = await itemHandle.$('table tbody:nth-child(3) tr td div div a img')
-  const imgUrl = await(await imgHandle.getProperty("src")).jsonValue()
-  // console.log("imgUrl",imgUrl)
-  order.product = product
-  order.shop = shop
-  order.date = date
-  order.price = price
-  order.number = number
-  order.payment = payment
-  order.imgUrl = imgUrl
-  // console.log(order)
+  order.total = await orderHandle.$eval('table tbody:nth-child(3) tr td:nth-child(5) div div p strong span:nth-child(2)', node => node.innerText)
+  // console.log("total", total)
+  order.orderID = await orderHandle.$eval("table tbody:nth-child(2) tr td span span:nth-child(3)",node => node.innerText)
+
+  const itemHandles = await orderHandle.$$('table tbody:nth-child(3) tr')
+  for(const handle of itemHandles){
+    const item = await parseItem(handle)
+    if(item != undefined)
+    order.items.push(item)
+  }
+  console.log(order)
+  return order
 }
 const TraverseHistory = async (page) => {
-  await page.goto(HISTORY_URI,{
-    waitUntil: 'networkidle2',
-  })
   await page.screenshot({
     'path': path.join(__dirname, 'screenshots', 'history.png')
   })
-
-  const itemHandles = await page.$$(".js-order-container")
-  console.log(itemHandles.length)
   const results = []
-  itemHandles.forEach(handle => parseItem(handle).then(orderItem => {
-    console.log(orderItem)
-    results.push(orderItem)
-  }))
-  console.log(results)
-
+  let hasNext = true
+  // let pageNum = await page.$eval("ul.pagination li:nth-last-child(2)", node => node.getAttribute("title"))
+  let pageCount = 0
+  do {
+    pageCount ++
+    console.log("正在处理第" + pageCount + "页")
+    await page.waitForSelector("li.pagination-item.pagination-item-"+pageCount+".pagination-item-active")
+    console.log("确认时第" + pageCount + "页")
+    results.concat(await TraverseHistoryPage(page))
+    const nextBtnHandle = await page.$("div[class*=simple-pagination] button:nth-child(2)")
+    hasNext = ! await (await nextBtnHandle.getProperty("disabled")).jsonValue()
+    console.log("hasNext",hasNext)
+    if(hasNext) {
+        nextBtnHandle.click({
+          delay:20
+        })
+    }
+  } while (hasNext);
+  return results
+}
+const TraverseHistoryPage = async (page) => {
+  const itemHandles = await page.$$(".js-order-container")
+  const results = []
+  for (const handle of itemHandles){
+    results.push(await parseOrder(handle))
+  }
+  return results
 }
 const startServer = async () => {
   try {
@@ -157,30 +185,35 @@ const startServer = async () => {
     });
     const saved_cookies = config.cookies
 
-    if(saved_cookies == null) {
-      console.log(chalk.green('开始登陆'));
-      const cookies = await login(page, username, password)
-      console.log(JSON.stringify(cookies))
-      console.log(chalk.green('登陆成功'))
-      // try{
-      //   let bought_page = await page.$("#J_SiteNavMytaobao .site-nav-menu-bd-panel a:first-child")
-      //   await bought_page.click({
-      //     delay: 25
-      //   })
-      //   console.log("clicked")
-      //   await page.waitFor(0)
-      // }catch(err){
-      //   console.log(chalk.red(err))
-      // }
-    }else {
+    if(saved_cookies != null) {
       let cookie_list = JSON.parse(saved_cookies)
       for (const cookie of cookie_list){
         console.log(cookie)
         await page.setCookie(cookie)
       }
+    }else {
+      console.log(chalk.green('开始登陆'));
+      await page.goto(LOGIN_URI, {
+        waitUntil: 'networkidle2'
+      });
+      const cookies = await login(page, username, password)
+      console.log(JSON.stringify(cookies))
+      console.log(chalk.green('登陆成功'))
     }
+    await page.goto(HISTORY_URI,{
+      waitUntil: 'networkidle2',
+    })
+    if(await page.$("#fm-login-id") != null){
+      const cookies = await login(page, username, password)
+      console.log(JSON.stringify(cookies))
+      console.log(chalk.green('重新登陆成功'))
+      await page.goto(HISTORY_URI,{
+        waitUntil: 'networkidle2',
+      })
+    }
+
     console.log(chalk.green('正在进入已买到的宝贝页面'))
-    await TraverseHistory(page)
+    const orders = await TraverseHistory(page)
 
 
     // browser.close()
