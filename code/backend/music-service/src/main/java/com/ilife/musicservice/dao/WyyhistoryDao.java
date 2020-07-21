@@ -11,5 +11,6 @@ public interface WyyhistoryDao {
     List<wyyuser> findAllbyid(Long id);
     Page<wyyuser> findAllbyid(Long id, Pageable pageable);
     void addhistory(Long wid,Long mid, Integer playcount,Integer score);
+    int deletebywyyid(Long id);
 
 }

@@ -11,11 +11,11 @@ public interface UserDao {
 
     void save(Users user);
 
-    void updateWyyId(Long id, Long wyyId);
+    int updateWyyId(Long id, Long wyyId);
 
-    void updateWbId(Long id, Long wbId);
+    int updateWbId(Long id, Long wbId);
 
-    void updateZhId(Long id, String zhId);
+    int updateZhId(Long id, String zhId);
 
     Users findByAccount(String account);
 }
