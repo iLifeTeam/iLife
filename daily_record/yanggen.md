@@ -54,3 +54,50 @@ https://editor.csdn.net/md/?articleId=107299196
 * 决定购买商用接口或者是采用其他手段获取数据。
 ### swagger
 * 解决了swagger对POST方法文档描述不清的问题，更新了博客。
+# 7.14
+### docker
+* 在windows上安装docker,踩了很多坑并写成了文档
+https://blog.csdn.net/weixin_44602409/article/details/107358001
+### 接口更新
+* 在dao层，update将返回影响行数，delete将返回void
+* 在service层,update和delete都返回Responsentity
+# 7.15
+### 单元测试
+引入了junit，完成了对weibo的controller层的单元测试
+### 爬虫学习
+继续学习拉钩教育的爬虫网课，更新了requests库的使用
+https://editor.csdn.net/md/?articleId=107299196
+# 7.16
+### 单元测试
+* 完成了weibo service层与auth controller层的单元测试
+* 系统学习了mockMvc的使用
+### docker
+* 部署了微博后端在服务器上，部分接口仍存在问题
+# 7.17
+### 单元测试
+* 完成了auth service层的单元测试，并修改了weibo service层单元测试中的问题
+### docker
+* 尝试解决微博后端部署依赖缺失的问题，决定将后端CRUD与爬虫分离
+* 更新docker博客，增加exec,logs,status等指令的使用：
+https://blog.csdn.net/weixin_44602409/article/details/107358001
+### 爬虫学习
+* 看了正则表达式相关的文章
+# 7.18 Saturday
+### 
+* 回学校拿显示屏，方便更好工作
+# 7.19 Sunday
+### 部署
+* 用docker部署了auth-service
+### 静态文档
+* 利用IDEA插件生成了接口的静态文档，有.adoc,.md,.html三种格式
+# 7.20
+### 松耦合
+* 将微博后端的CRUD和爬虫分开来
+* 新建了一个branch负责微博爬虫
+### 部署
+* 学会打包python项目，部署了微博爬虫到服务器上
+### Spring Security
+* 学习spring security,写了一些demo
+### docker
+* 整理了后端的container和images
+

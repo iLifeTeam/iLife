@@ -9,7 +9,4 @@
 *.DS_Store
 ignore/
 *.jar
-code/backend/weibo-service/log/crawler_log/*
-code/crawllers/weibo-python-crawller/weibo_spider/__pycache__/*
-code/crawllers/weibo-python-crawller/weibo_spider/parser/__pycache__/*
-code/crawllers/weibo-python-crawller/weibo_spider/writer/__pycache__/*
+*.pyc

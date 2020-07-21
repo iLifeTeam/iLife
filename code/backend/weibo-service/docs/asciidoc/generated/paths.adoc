@@ -1,0 +1,490 @@
+
+[[_paths]]
+== 资源
+
+[[_user-service-controller_resource]]
+=== User-service-controller
+User Service Controller
+
+
+[[_deluserbyuseridusingget_7]]
+==== delete one user
+....
+GET /user/delById
+....
+
+
+===== 说明
+Delete one user info specified by userId
+
+
+===== 参数
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|类型|名称|说明|类型
+|**Query**|**userId** +
+__可选__|The user ID of a WeiBo user,should be a Long Integer|integer (int64)
+|===
+
+
+===== 响应
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|object
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|===
+
+
+===== 生成
+
+* `\*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/user/delById
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+"object"
+----
+
+
+[[_getuserbyidusingget_7]]
+==== get user info
+....
+GET /user/getById
+....
+
+
+===== 说明
+Get user info by userID
+
+
+===== 参数
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|类型|名称|说明|类型
+|**Query**|**userId** +
+__可选__|The user ID of a WeiBo user,should be a Long Integer|integer (int64)
+|===
+
+
+===== 响应
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|<<_user,User>>
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|===
+
+
+===== 生成
+
+* `\*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/user/getById
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+{
+  "birthday" : "string",
+  "description" : "string",
+  "education" : "string",
+  "followers" : 0,
+  "following" : 0,
+  "gender" : "string",
+  "id" : 0,
+  "location" : "string",
+  "nickname" : "string",
+  "weibo_num" : 0,
+  "work" : "string"
+}
+----
+
+
+[[_getuserbynicknameusingget_7]]
+==== get user info
+....
+GET /user/getByName
+....
+
+
+===== 说明
+Get user info by nickname
+
+
+===== 参数
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|类型|名称|说明|类型
+|**Query**|**nickname** +
+__可选__|The nickname of a WeiBo user,should be a String|string
+|===
+
+
+===== 响应
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|<<_user,User>>
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|===
+
+
+===== 生成
+
+* `\*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/user/getByName
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+{
+  "birthday" : "string",
+  "description" : "string",
+  "education" : "string",
+  "followers" : 0,
+  "following" : 0,
+  "gender" : "string",
+  "id" : 0,
+  "location" : "string",
+  "nickname" : "string",
+  "weibo_num" : 0,
+  "work" : "string"
+}
+----
+
+
+[[_weibo-service-controller_resource]]
+=== Weibo-service-controller
+Weibo Service Controller
+
+
+[[_crawlweibousingget_7]]
+==== crawl Weibo 
+....
+GET /weibo/crawlWeibo
+....
+
+
+===== 说明
+Crawl Weibos of one user specified by userID,should be called when user ask to update the databse
+
+
+===== 参数
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|类型|名称|说明|类型
+|**Query**|**userId** +
+__可选__|The user ID of a WeiBo user,should be a Long Integer|integer (int64)
+|===
+
+
+===== 响应
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|无内容
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|===
+
+
+===== 生成
+
+* `\*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/weibo/crawlWeibo
+----
+
+
+[[_deleteweibousingget_7]]
+==== delete one Weibo
+....
+GET /weibo/deleteWeibo
+....
+
+
+===== 说明
+Delete one Weibos from database specified by Weibo ID,success if the response.status = 200
+
+
+===== 参数
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|类型|名称|说明|类型
+|**Query**|**Id** +
+__可选__|The ID of a WeiBo,should be a String|string
+|===
+
+
+===== 响应
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|object
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|**501**|weiboId not exists|无内容
+|===
+
+
+===== 生成
+
+* `\*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/weibo/deleteWeibo
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+"object"
+----
+
+
+[[_deleteweibosusingget_7]]
+==== delete one user's Weibos
+....
+GET /weibo/deleteWeibos
+....
+
+
+===== 说明
+Delete all Weibos from database of one user specified by userID,success if the response.status = 200
+
+
+===== 参数
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|类型|名称|说明|类型
+|**Query**|**userId** +
+__可选__|The user ID of a WeiBo user,should be a Long Integer|integer (int64)
+|===
+
+
+===== 响应
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|object
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|**501**|userId not exists|无内容
+|===
+
+
+===== 生成
+
+* `\*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/weibo/deleteWeibos
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+"object"
+----
+
+
+[[_getweibousingget_7]]
+==== get one Weibo
+....
+GET /weibo/getWeibo
+....
+
+
+===== 说明
+Get One Weibo from database specified by Weibo ID
+
+
+===== 参数
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|类型|名称|说明|类型
+|**Query**|**Id** +
+__可选__|The ID of a WeiBo,should be a String|string
+|===
+
+
+===== 响应
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|<<_weibo,Weibo>>
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|===
+
+
+===== 生成
+
+* `\*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/weibo/getWeibo
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+{
+  "comment_count" : 0,
+  "content" : "string",
+  "id" : "string",
+  "publish_place" : "string",
+  "publish_time" : "string",
+  "retweet_num" : 0,
+  "uid" : 0,
+  "up_num" : 0
+}
+----
+
+
+[[_getweibosusingget_7]]
+==== get one user's Weibos
+....
+GET /weibo/getWeibos
+....
+
+
+===== 说明
+Get all Weibos from database of one user specified by userID
+
+
+===== 参数
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|类型|名称|说明|类型
+|**Query**|**userId** +
+__可选__|The user ID of a WeiBo user,should be a Long Integer|integer (int64)
+|===
+
+
+===== 响应
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|< <<_weibo,Weibo>> > array
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|===
+
+
+===== 生成
+
+* `\*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/weibo/getWeibos
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+[ {
+  "comment_count" : 0,
+  "content" : "string",
+  "id" : "string",
+  "publish_place" : "string",
+  "publish_time" : "string",
+  "retweet_num" : 0,
+  "uid" : 0,
+  "up_num" : 0
+} ]
+----
+
+
+

@@ -140,7 +140,7 @@ NetEaseCrawler {
     }
 
 
-    public Long getuid(String ph,String pw)
+    public Integer getuid(String ph,String pw)
     {
         String phone = ph;
         String password = pw; // don't push this to remote
@@ -150,46 +150,71 @@ NetEaseCrawler {
         JSONObject object = JSON.parseObject(response);
         Integer code = object.getInteger("code");
         if (code != 200) {
-            return (long)-1;
+            return -1;
         }
         String cookies = (String) object.get("cookie");
         System.out.println("cookie: " + cookies);
 
         Integer uid = ParseUid(response);
-        return uid.longValue();
+        return uid;
     }
+//    @Transactional
+//    public void  test(String ph,String pw)
+//    {
+//
+//
+//        NetEaseCrawler netEaseCrawler = new NetEaseCrawler(null, null);
+//
+//
+//        Integer uid = getuid(ph,pw);
+//
+//
+//
+//        Long wid = (long) uid;
+//        wyyhistoryDao.deletebywyyid(wid);
+//
+//        String playHistoryRaw = netEaseCrawler.getUserPlayHistory(uid,false);
+//        JSONArray jsonArray;
+//        jsonArray = JSONObject.parseObject(playHistoryRaw).getJSONArray("allData");
+//        for(int i=0;i<jsonArray.size();i++) {
+//
+//
+//            Long mid = jsonArray.getJSONObject(i).getJSONObject("song").getLong("id");
+//            String name = jsonArray.getJSONObject(i).getJSONObject("song").getString("name");
+//            Integer playcount = jsonArray.getJSONObject(i).getInteger("playCount");
+//            Integer score = jsonArray.getJSONObject(i).getInteger("score");
+//            jsonArray.getJSONObject(i).getInteger("score");
+//            musicsDao.addmusic(mid,name);
+//            JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONObject("song").getJSONArray("ar");
+//            for(int j=0;j<jsonArray1.size();j++){
+//                String sname = jsonArray1.getJSONObject(j).getString("name");
+//                Long sid = jsonArray1.getJSONObject(j).getLong("id");
+//                singDao.addsing(mid,sid,sname);
+//            }
+//            wyyhistoryDao.addhistory(wid,mid,playcount,score);
+//
+//        }
+//    }
     @Transactional
-    public void  test(String ph,String pw)
+    public void  crawlbyid(Integer uid)
     {
-        String phone = ph;
-        String password = pw; // don't push this to remote
+
 
         NetEaseCrawler netEaseCrawler = new NetEaseCrawler(null, null);
-        String response = netEaseCrawler.loginRequest(phone, password);
-        JSONObject object = JSON.parseObject(response);
-        String cookies = (String) object.get("cookie");
-        System.out.println("cookie: " + cookies);
-
-        Integer uid = ParseUid(response);
 
 
-        String subCountRaw = netEaseCrawler.getUserSubCount();
-        System.out.println("sub count " + subCountRaw);
-
-        String playListRaw = netEaseCrawler.getPlayListRequest(uid);
-        System.out.println("playlist: " + playListRaw);
 
 
+
+        Long wid = (long) uid;
+        wyyhistoryDao.deletebywyyid(wid);
 
         String playHistoryRaw = netEaseCrawler.getUserPlayHistory(uid,false);
         JSONArray jsonArray;
         jsonArray = JSONObject.parseObject(playHistoryRaw).getJSONArray("allData");
         for(int i=0;i<jsonArray.size();i++) {
-//            System.out.println("play history: "+jsonArray.getJSONObject(i).getJSONObject("song").getString("name"));
-//            System.out.println("play history: "+jsonArray.getJSONObject(i).getJSONObject("song").getBigInteger("id"));
-//            System.out.println("play history: "+jsonArray.getJSONObject(i).getInteger("playCount"));
-//            System.out.println("play history: "+jsonArray.getJSONObject(i).getInteger("score"));
-            Long wid = (long) uid;
+
+
             Long mid = jsonArray.getJSONObject(i).getJSONObject("song").getLong("id");
             String name = jsonArray.getJSONObject(i).getJSONObject("song").getString("name");
             Integer playcount = jsonArray.getJSONObject(i).getInteger("playCount");
@@ -205,42 +230,9 @@ NetEaseCrawler {
             wyyhistoryDao.addhistory(wid,mid,playcount,score);
 
         }
-
-
-
-
-//        musicsDao.addmusic((long)6,"其实都没有");
-//        wyyhistoryDao.addhistory((long)41778610,(long)3,5,5);
     }
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
 
-        String phone = "18679480337";
-        String password = "Xiong0608"; // don't push this to remote
-
-        NetEaseCrawler netEaseCrawler = new NetEaseCrawler(null, null);
-        String response = netEaseCrawler.loginRequest(phone, password);
-        JSONObject object = JSON.parseObject(response);
-        String cookies = (String) object.get("cookie");
-        System.out.println("cookie: " + cookies);
-
-        Integer uid = ParseUid(response);
-
-
-        String subCountRaw = netEaseCrawler.getUserSubCount();
-        System.out.println("sub count " + subCountRaw);
-
-        String playListRaw = netEaseCrawler.getPlayListRequest(uid);
-        System.out.println("playlist: " + playListRaw);
-
-
-
-        String playHistoryRaw = netEaseCrawler.getUserPlayHistory(uid,false);
-        JSONArray jsonArray;
-        jsonArray = JSONObject.parseObject(playHistoryRaw).getJSONArray("allData");
-        System.out.println("play history: "+jsonArray.size());
-
-    }
 
 
 }

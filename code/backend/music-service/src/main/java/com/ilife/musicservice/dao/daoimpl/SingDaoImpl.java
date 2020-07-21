@@ -13,4 +13,5 @@ public class SingDaoImpl implements SingDao {
     public void addsing(Long mid,Long sid,String name){
         singReposittory.addsing(mid,sid,name);
     }
+
 }

@@ -23,7 +23,7 @@ public class musics {
     @Column(name = "TIMES")
     private String times;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "M_ID")
     private List<sing> singers;
 }

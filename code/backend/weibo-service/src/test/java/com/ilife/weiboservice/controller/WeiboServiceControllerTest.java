@@ -56,12 +56,12 @@ public class WeiboServiceControllerTest {
     @Before
     public void before() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+        User user = new User(123L, "david", 100, 200, 300, "", "man", "home", "patient", "kinderGarden", "home");
+        userDao.save(user);
         for (int i = 0; i < 10; ++i) {
             Weibo weibo = new Weibo("sE2Rhe7epn" + i, 123L, "today is a good day", "home", 100 * i, 200 * i, 300 * i, new Date());
             weiboDao.save(weibo);
         }
-        User user = new User(123L, "david", 100, 200, 300, "", "man", "home", "patient", "kinderGarden", "home");
-        userDao.save(user);
     }
 
     @After

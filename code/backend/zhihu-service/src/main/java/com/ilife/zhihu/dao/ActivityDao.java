@@ -5,7 +5,7 @@ import com.ilife.zhihu.entity.Activity;
 import java.util.List;
 
 public interface ActivityDao {
-    Activity findById(Integer id);
+    Activity findById(String id);
     Activity save(Activity activity);
-    void deleteById(Integer id);
+    void deleteById(String id);
 }

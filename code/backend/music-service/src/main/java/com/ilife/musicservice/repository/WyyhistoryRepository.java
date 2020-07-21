@@ -19,4 +19,8 @@ public interface WyyhistoryRepository extends JpaRepository<wyyuser,Long> {
     @Modifying
     @Query(value = "insert into wyyuser(wyyid,m_id,playcount,score) values(?1, ?2, ?3,?4)",nativeQuery = true)
     void addhistory(Long wid,Long mid, Integer playcount,Integer score);
+
+    @Transactional
+    @Modifying
+    int deleteByWyyid(Long id);
 }

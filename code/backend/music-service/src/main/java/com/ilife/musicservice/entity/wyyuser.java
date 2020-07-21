@@ -20,7 +20,7 @@ public class wyyuser {
     @Column(name = "WYYID")
     private Long wyyid;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "M_ID",referencedColumnName = "M_ID",insertable = false,updatable = false)
     private musics musics;
 

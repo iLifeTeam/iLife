@@ -20,12 +20,12 @@ public class QuestionDaoImpl implements QuestionDao {
     private QuestionRepository questionRepository;
 
     @Override
-    public Question findQuestionById(Integer id) {
+    public Question findById(String id) {
         return questionRepository.findById(id).orElse(null);
     }
 
     @Override
-    public List<Question> findAllQuestionByIds(List<Integer> ids) {
+    public List<Question> findByIds(List<String> ids) {
         List<Question> questions = new ArrayList<>();
         questionRepository.findAllById(ids).forEach(questions::add);
         return questions;
@@ -37,7 +37,7 @@ public class QuestionDaoImpl implements QuestionDao {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(String id) {
         questionRepository.deleteById(id);
     }
 }

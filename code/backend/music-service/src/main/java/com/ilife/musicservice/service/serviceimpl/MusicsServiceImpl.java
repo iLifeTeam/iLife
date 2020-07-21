@@ -12,11 +12,12 @@ public class MusicsServiceImpl implements MusicsService {
 
     @Autowired
     private MusicsDao musicsDao;
-    public musics findByid(Long id) {
-        return musicsDao.findById(id);
-    }
+
 
     public  void addmusic(Long id,String name){
         musicsDao.addmusic(id, name);
     }
+
+
+
 }

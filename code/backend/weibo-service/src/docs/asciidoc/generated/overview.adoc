@@ -1,0 +1,30 @@
+= Weibo Backend API Documentation
+
+
+[[_overview]]
+== Overview
+
+=== Version information
+[%hardbreaks]
+__Version__ : 1.0.0-SNAPSHOT
+
+
+=== Contact information
+[%hardbreaks]
+__Contact__ : 杨亘@sjtu
+__Contact Email__ : 888888@qq.com
+
+
+=== URI scheme
+[%hardbreaks]
+__Host__ : localhost:8080
+__BasePath__ : /
+
+
+=== Tags
+
+* user-service-controller : User Service Controller
+* weibo-service-controller : Weibo Service Controller
+
+
+
