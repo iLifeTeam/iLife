@@ -17,15 +17,16 @@ public class WyyhistoryServiceImpl implements WyyhistoryService {
     @Autowired
     private WyyhistoryDao wyyhistoryDao;
 
-    private NetEaseCrawler netEaseCrawler = new NetEaseCrawler(null, null);
 
     public List<wyyuser> findAllbyid(Long id){
         return wyyhistoryDao.findAllbyid(id);
     }
-    public void crawlWyy(String ph,String pw){
-        netEaseCrawler.test(ph,pw);
-    }
     public Page<wyyuser> findAllbyid(Long id, Pageable pageable){
         return wyyhistoryDao.findAllbyid(id,pageable);
     }
+
+
+//    public void deletebyid(Long id) {
+//        wyyhistoryDao.deletebywyyid(id);
+//    }
 }

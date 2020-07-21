@@ -24,27 +24,29 @@ public class UserServiceController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation(notes = "Get user info by userID", value = "get user info", httpMethod = "GET")
+    @ApiOperation(notes = "Get user info by userID", value = "get user info by id", httpMethod = "GET")
     @RequestMapping(path = "/auth/getById")
     public Users getUserById(@ApiParam(name = "userId", value = "The user ID of a iLife user") @RequestParam("userId") Long uid) {
         System.out.println("********** getUserById **********");
         return userService.findById(uid);
     }
 
-    @ApiOperation(notes = "Get user info by account", value = "get user info", httpMethod = "GET")
+    @ApiOperation(notes = "Get user info by account", value = "get user info by account", httpMethod = "GET")
     @RequestMapping(path = "/auth/getByAccount")
     public Users getUserByAccount(@ApiParam(name = "account", value = "The account number of a iLife user") @RequestParam("account") String account) {
         System.out.println("********** getUserByAccount **********");
         return userService.findByAccount(account);
     }
 
-    @ApiOperation(notes = "Get user info by Nickname", value = "get user info", httpMethod = "GET")
+    @ApiOperation(notes = "Get user info by Nickname", value = "get user info by nickname", httpMethod = "GET")
     @RequestMapping(path = "/auth/getByNickname")
     public Users getUserByNickname(@ApiParam(name = "nickname", value = "The user nickname of a iLife user") @RequestParam("nickname") String nickname) {
         System.out.println("********** getUserByNickname **********");
         return userService.findByNickname(nickname);
     }
-
+    @ApiResponses({
+            @ApiResponse(code = 501, message = "account or nickname already exists"),
+    })
     @ApiImplicitParams({
             @ApiImplicitParam(name = "nickname", value = "the nickname of the iLife user"),
     }
@@ -59,7 +61,8 @@ public class UserServiceController {
 
     @ApiOperation(notes = "Register one iLife user by giving nickname,account.password and email", value = "User register", httpMethod = "POST")
     @ApiResponses({
-            @ApiResponse(code = 500, message = "account or nickname already exists"),
+            @ApiResponse(code = 500, message = "account already exists"),
+            @ApiResponse(code = 501, message = "nickname already exists")
     })
     @ApiImplicitParams({
             @ApiImplicitParam(name = "nickname", value = "the nickname of the iLife user"),
@@ -81,8 +84,8 @@ public class UserServiceController {
 
     @ApiOperation(notes = "Auth one iLife user by giving account.password", value = "User log in", httpMethod = "POST")
     @ApiResponses({
-            @ApiResponse(code = 500, message = "user not exists"),
-            @ApiResponse(code = 501, message = "account and password not match"),
+            @ApiResponse(code = 501, message = "user not exists"),
+            @ApiResponse(code = 502, message = "account and password not match"),
     })
     @ApiImplicitParams({
             @ApiImplicitParam(name = "account", value = "the account of the iLife user"),
@@ -102,7 +105,7 @@ public class UserServiceController {
             @ApiImplicitParam(name = "userId", value = "the user ID of the iLife user"),
     }
     )
-    @ApiOperation(notes = "update user's WangYiYun ID", value = "update wyy ID", httpMethod = "POST")
+    @ApiOperation(notes = "update user's WangYiYun ID，return the number of affected rows", value = "update wyy ID", httpMethod = "POST")
     @RequestMapping(path = "/auth/updateWyyId")
     public ResponseEntity<?> updateWyy(@ApiIgnore @RequestBody Map<String, String> params) {
         Long id = parseLong(params.get("userId"));
@@ -111,7 +114,7 @@ public class UserServiceController {
         return userService.updateWyyId(id, wyyId);
     }
 
-    @ApiOperation(notes = "update user's Weibo ID", value = "update Weibo ID", httpMethod = "POST")
+    @ApiOperation(notes = "update user's Weibo ID,return the number of affected rows", value = "update Weibo ID", httpMethod = "POST")
     @RequestMapping(path = "/auth/updateWbId")
     public ResponseEntity<?> updateWb(@ApiIgnore @RequestBody Map<String, String> params) {
         Long id = parseLong(params.get("userId"));
@@ -120,7 +123,7 @@ public class UserServiceController {
         return userService.updateWbId(id, wbId);
     }
 
-    @ApiOperation(notes = "update user's Zhihu ID", value = "update Zhihu ID", httpMethod = "POST")
+    @ApiOperation(notes = "update user's Zhihu ID,return the number of affected rows", value = "update Zhihu ID", httpMethod = "POST")
     @RequestMapping(path = "/auth/updateZhId")
     public ResponseEntity<?> updateZh(@ApiIgnore @RequestBody Map<String, String> params) {
         Long id = parseLong(params.get("userId"));

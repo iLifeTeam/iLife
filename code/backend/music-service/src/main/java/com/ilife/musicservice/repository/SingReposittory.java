@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface SingReposittory extends JpaRepository<sing,Long> {
     @Transactional
     @Modifying
-    @Query(value = "insert into sing(m_id,s_id,sname) values(?1, ?2, ?3)",nativeQuery = true)
+    @Query(value = "insert into sing(m_id,s_id,sname) select ?1, ?2, ?3 from dual where not exists (select m_id,s_id from sing where (m_id,s_id) = (?1,?2))",nativeQuery = true)
     void addsing(Long mid,Long sid, String name);
+
 }
