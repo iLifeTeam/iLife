@@ -171,44 +171,6 @@ h3. Weibo-service-controller {anchor:weibo-service-controller_resource}
 Weibo Service Controller
 
 
-h4. crawl Weibo  {anchor:crawlweibousingget_7}
-{noformat}
-GET /weibo/crawlWeibo
-{noformat}
-
-
-h5. 说明
-Crawl Weibos of one user specified by userID,should be called when user ask to update the databse
-
-
-h5. 参数
-
-||类型||名称||说明||类型||
-|*Query*|*userId*\\ \\ _可选_||The user ID of a WeiBo user,should be a Long Integer||integer (int64)|
-
-
-h5. 响应
-
-||HTTP代码||说明||类型||
-|*200*||OK||无内容|
-|*204*||No Content||无内容|
-|*401*||Unauthorized||无内容|
-|*403*||Forbidden||无内容|
-
-
-h5. 生成
-
-* {noformat}\*/*{noformat}
-
-
-h5. HTTP请求示例
-
-h6. 请求 path
-{code}
-/weibo/crawlWeibo
-{code}
-
-
 h4. delete one Weibo {anchor:deleteweibousingget_7}
 {noformat}
 GET /weibo/deleteWeibo

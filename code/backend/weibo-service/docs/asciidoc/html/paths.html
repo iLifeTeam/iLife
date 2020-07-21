@@ -532,11 +532,10 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 <li><a href="#_weibo-service-controller_resource">1.2. Weibo-service-controller</a>
 <ul class="sectlevel3">
-<li><a href="#_crawlweibousingget_7">1.2.1. crawl Weibo</a></li>
-<li><a href="#_deleteweibousingget_7">1.2.2. delete one Weibo</a></li>
-<li><a href="#_deleteweibosusingget_7">1.2.3. delete one user&#8217;s Weibos</a></li>
-<li><a href="#_getweibousingget_7">1.2.4. get one Weibo</a></li>
-<li><a href="#_getweibosusingget_7">1.2.5. get one user&#8217;s Weibos</a></li>
+<li><a href="#_deleteweibousingget_7">1.2.1. delete one Weibo</a></li>
+<li><a href="#_deleteweibosusingget_7">1.2.2. delete one user&#8217;s Weibos</a></li>
+<li><a href="#_getweibousingget_7">1.2.3. get one Weibo</a></li>
+<li><a href="#_getweibosusingget_7">1.2.4. get one user&#8217;s Weibos</a></li>
 </ul>
 </li>
 </ul>
@@ -1019,154 +1018,20 @@ table.CodeRay td.code>pre{padding:0}
 <p>Weibo Service Controller</p>
 </div>
 <div class="sect3">
-<h4 id="_crawlweibousingget_7">1.2.1. crawl Weibo</h4>
-<div class="literalblock">
-<div class="content">
-<pre>GET /weibo/crawlWeibo</pre>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_说明_4">说明</h5>
-<div class="paragraph">
-<p>Crawl Weibos of one user specified by userID,should be called when user ask to update the databse</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_参数_4">参数</h5>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 11.1111%;">
-<col style="width: 16.6666%;">
-<col style="width: 50%;">
-<col style="width: 22.2223%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">类型</th>
-<th class="tableblock halign-left valign-middle">名称</th>
-<th class="tableblock halign-left valign-middle">说明</th>
-<th class="tableblock halign-left valign-middle">类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><div><div class="paragraph">
-<p><strong>Query</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div><div class="paragraph">
-<p><strong>userId</strong><br>
-<em>可选</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div><div class="paragraph">
-<p>The user ID of a WeiBo user,should be a Long Integer</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div><div class="paragraph">
-<p>integer (int64)</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect4">
-<h5 id="_响应_4">响应</h5>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 10%;">
-<col style="width: 70%;">
-<col style="width: 20%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">HTTP代码</th>
-<th class="tableblock halign-left valign-middle">说明</th>
-<th class="tableblock halign-left valign-middle">类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><div><div class="paragraph">
-<p><strong>200</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div><div class="paragraph">
-<p>OK</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div><div class="paragraph">
-<p>无内容</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div><div class="paragraph">
-<p><strong>204</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div><div class="paragraph">
-<p>No Content</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div><div class="paragraph">
-<p>无内容</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div><div class="paragraph">
-<p><strong>401</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div><div class="paragraph">
-<p>Unauthorized</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div><div class="paragraph">
-<p>无内容</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div><div class="paragraph">
-<p><strong>403</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div><div class="paragraph">
-<p>Forbidden</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div><div class="paragraph">
-<p>无内容</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect4">
-<h5 id="_生成_4">生成</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>*/*</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_http请求示例_4">HTTP请求示例</h5>
-<div class="sect5">
-<h6 id="_请求_path_4">请求 path</h6>
-<div class="listingblock">
-<div class="content">
-<pre>/weibo/crawlWeibo</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_deleteweibousingget_7">1.2.2. delete one Weibo</h4>
+<h4 id="_deleteweibousingget_7">1.2.1. delete one Weibo</h4>
 <div class="literalblock">
 <div class="content">
 <pre>GET /weibo/deleteWeibo</pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_说明_5">说明</h5>
+<h5 id="_说明_4">说明</h5>
 <div class="paragraph">
 <p>Delete one Weibos from database specified by Weibo ID,success if the response.status = 200</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_参数_5">参数</h5>
+<h5 id="_参数_4">参数</h5>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 11.1111%;">
@@ -1202,7 +1067,7 @@ table.CodeRay td.code>pre{padding:0}
 </table>
 </div>
 <div class="sect4">
-<h5 id="_响应_5">响应</h5>
+<h5 id="_响应_4">响应</h5>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 10%;">
@@ -1276,7 +1141,7 @@ table.CodeRay td.code>pre{padding:0}
 </table>
 </div>
 <div class="sect4">
-<h5 id="_生成_5">生成</h5>
+<h5 id="_生成_4">生成</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1286,9 +1151,9 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect4">
-<h5 id="_http请求示例_5">HTTP请求示例</h5>
+<h5 id="_http请求示例_4">HTTP请求示例</h5>
 <div class="sect5">
-<h6 id="_请求_path_5">请求 path</h6>
+<h6 id="_请求_path_4">请求 path</h6>
 <div class="listingblock">
 <div class="content">
 <pre>/weibo/deleteWeibo</pre>
@@ -1309,20 +1174,20 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_deleteweibosusingget_7">1.2.3. delete one user&#8217;s Weibos</h4>
+<h4 id="_deleteweibosusingget_7">1.2.2. delete one user&#8217;s Weibos</h4>
 <div class="literalblock">
 <div class="content">
 <pre>GET /weibo/deleteWeibos</pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_说明_6">说明</h5>
+<h5 id="_说明_5">说明</h5>
 <div class="paragraph">
 <p>Delete all Weibos from database of one user specified by userID,success if the response.status = 200</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_参数_6">参数</h5>
+<h5 id="_参数_5">参数</h5>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 11.1111%;">
@@ -1358,7 +1223,7 @@ table.CodeRay td.code>pre{padding:0}
 </table>
 </div>
 <div class="sect4">
-<h5 id="_响应_6">响应</h5>
+<h5 id="_响应_5">响应</h5>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 10%;">
@@ -1432,7 +1297,7 @@ table.CodeRay td.code>pre{padding:0}
 </table>
 </div>
 <div class="sect4">
-<h5 id="_生成_6">生成</h5>
+<h5 id="_生成_5">生成</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1442,9 +1307,9 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect4">
-<h5 id="_http请求示例_6">HTTP请求示例</h5>
+<h5 id="_http请求示例_5">HTTP请求示例</h5>
 <div class="sect5">
-<h6 id="_请求_path_6">请求 path</h6>
+<h6 id="_请求_path_5">请求 path</h6>
 <div class="listingblock">
 <div class="content">
 <pre>/weibo/deleteWeibos</pre>
@@ -1465,20 +1330,20 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_getweibousingget_7">1.2.4. get one Weibo</h4>
+<h4 id="_getweibousingget_7">1.2.3. get one Weibo</h4>
 <div class="literalblock">
 <div class="content">
 <pre>GET /weibo/getWeibo</pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_说明_7">说明</h5>
+<h5 id="_说明_6">说明</h5>
 <div class="paragraph">
 <p>Get One Weibo from database specified by Weibo ID</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_参数_7">参数</h5>
+<h5 id="_参数_6">参数</h5>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 11.1111%;">
@@ -1514,7 +1379,7 @@ table.CodeRay td.code>pre{padding:0}
 </table>
 </div>
 <div class="sect4">
-<h5 id="_响应_7">响应</h5>
+<h5 id="_响应_6">响应</h5>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 10%;">
@@ -1577,7 +1442,7 @@ table.CodeRay td.code>pre{padding:0}
 </table>
 </div>
 <div class="sect4">
-<h5 id="_生成_7">生成</h5>
+<h5 id="_生成_6">生成</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1587,9 +1452,9 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect4">
-<h5 id="_http请求示例_7">HTTP请求示例</h5>
+<h5 id="_http请求示例_6">HTTP请求示例</h5>
 <div class="sect5">
-<h6 id="_请求_path_7">请求 path</h6>
+<h6 id="_请求_path_6">请求 path</h6>
 <div class="listingblock">
 <div class="content">
 <pre>/weibo/getWeibo</pre>
@@ -1619,20 +1484,20 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_getweibosusingget_7">1.2.5. get one user&#8217;s Weibos</h4>
+<h4 id="_getweibosusingget_7">1.2.4. get one user&#8217;s Weibos</h4>
 <div class="literalblock">
 <div class="content">
 <pre>GET /weibo/getWeibos</pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_说明_8">说明</h5>
+<h5 id="_说明_7">说明</h5>
 <div class="paragraph">
 <p>Get all Weibos from database of one user specified by userID</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_参数_8">参数</h5>
+<h5 id="_参数_7">参数</h5>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 11.1111%;">
@@ -1668,7 +1533,7 @@ table.CodeRay td.code>pre{padding:0}
 </table>
 </div>
 <div class="sect4">
-<h5 id="_响应_8">响应</h5>
+<h5 id="_响应_7">响应</h5>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 10%;">
@@ -1731,7 +1596,7 @@ table.CodeRay td.code>pre{padding:0}
 </table>
 </div>
 <div class="sect4">
-<h5 id="_生成_8">生成</h5>
+<h5 id="_生成_7">生成</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1741,9 +1606,9 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect4">
-<h5 id="_http请求示例_8">HTTP请求示例</h5>
+<h5 id="_http请求示例_7">HTTP请求示例</h5>
 <div class="sect5">
-<h6 id="_请求_path_8">请求 path</h6>
+<h6 id="_请求_path_7">请求 path</h6>
 <div class="listingblock">
 <div class="content">
 <pre>/weibo/getWeibos</pre>
@@ -1778,7 +1643,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-07-19 14:00:35 +08:00
+Last updated 2020-07-21 16:07:41 +08:00
 </div>
 </div>
 </body>
