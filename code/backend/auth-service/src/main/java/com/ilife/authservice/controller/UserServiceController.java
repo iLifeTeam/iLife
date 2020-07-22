@@ -6,9 +6,11 @@ import com.ilife.authservice.service.UserService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 import static java.lang.Long.parseLong;
@@ -68,7 +70,8 @@ public class UserServiceController {
             @ApiImplicitParam(name = "nickname", value = "the nickname of the iLife user"),
             @ApiImplicitParam(name = "account", value = "the account of the iLife user"),
             @ApiImplicitParam(name = "password", value = "the password of the iLife user"),
-            @ApiImplicitParam(name = "email", value = "the email of the iLife user")
+            @ApiImplicitParam(name = "email", value = "the email of the iLife user"),
+            @ApiImplicitParam(name = "type", value = "the type of the iLife user")
     }
     )
     @RequestMapping(path = "/auth/register")
@@ -77,8 +80,9 @@ public class UserServiceController {
         String account = params.get("account");
         String password = params.get("password");
         String email = params.get("email");
+        String type = params.get("type");
         System.out.println("********** register **********");
-        return userService.save(nickname, account, password, email);
+        return userService.save(nickname, account, password, email,type);
     }
 
 
@@ -107,6 +111,7 @@ public class UserServiceController {
     )
     @ApiOperation(notes = "update user's WangYiYun ID，return the number of affected rows", value = "update wyy ID", httpMethod = "POST")
     @RequestMapping(path = "/auth/updateWyyId")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> updateWyy(@ApiIgnore @RequestBody Map<String, String> params) {
         Long id = parseLong(params.get("userId"));
         Long wyyId = parseLong(params.get("wyyId"));
@@ -116,6 +121,7 @@ public class UserServiceController {
 
     @ApiOperation(notes = "update user's Weibo ID,return the number of affected rows", value = "update Weibo ID", httpMethod = "POST")
     @RequestMapping(path = "/auth/updateWbId")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> updateWb(@ApiIgnore @RequestBody Map<String, String> params) {
         Long id = parseLong(params.get("userId"));
         Long wbId = parseLong(params.get("wbId"));
@@ -125,10 +131,20 @@ public class UserServiceController {
 
     @ApiOperation(notes = "update user's Zhihu ID,return the number of affected rows", value = "update Zhihu ID", httpMethod = "POST")
     @RequestMapping(path = "/auth/updateZhId")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> updateZh(@ApiIgnore @RequestBody Map<String, String> params) {
         Long id = parseLong(params.get("userId"));
         String zhId = params.get("zhId");
         System.out.println("********** updateZhId **********");
         return userService.updateZhId(id, zhId);
     }
+
+    //when not login
+    @ApiOperation(notes = "update user's Weibo ID,return the number of affected rows", value = "update Weibo ID", httpMethod = "POST")
+    @RequestMapping(path = "/login")
+    public ResponseEntity<?> login(){
+        return ResponseEntity.status(403).body("not login");
+    }
+
+
 }
