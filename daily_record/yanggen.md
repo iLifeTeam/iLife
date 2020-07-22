@@ -100,4 +100,13 @@ https://blog.csdn.net/weixin_44602409/article/details/107358001
 * 学习spring security,写了一些demo
 ### docker
 * 整理了后端的container和images
-
+# 7.21
+### spring security
+* spring security在auth上整合完毕，写了一篇经验博客
+https://blog.csdn.net/weixin_44602409/article/details/107462172
+### 豆瓣
+* 开始搭建豆瓣爬虫
+# 7.22
+### 豆瓣
+* 手写了一个爬取豆瓣个人信息的爬虫，完成了电影部分的爬虫和parsing工作
+* 使用了pymysql,absl库等，爬取后直接存入数据库
