@@ -32,7 +32,7 @@ const login = async (page, username, password) => {
 
   // await page.click('#J_Quick2Static');
 
-  await page.waitFor(Math.floor(Math.random() * 500) * Math.floor(Math.random() * 10));
+  await page.waitFor(1000 +  Math.floor(Math.random() * 2000));
   const opts = {
     delay: 2 + Math.floor(Math.random() * 2), //每个字母之间输入的间隔
   }
@@ -126,11 +126,11 @@ const parseOrder = async (orderHandle) => {
   console.log(order)
   return order
 }
-const TraverseHistory = async (page) => {
+const traverseHistory = async (page) => {
   await page.screenshot({
     'path': path.join(__dirname, 'screenshots', 'history.png')
   })
-  const results = []
+  let results = []
   let hasNext = true
   // let pageNum = await page.$eval("ul.pagination li:nth-last-child(2)", node => node.getAttribute("title"))
   let pageCount = 0
@@ -138,8 +138,9 @@ const TraverseHistory = async (page) => {
     pageCount ++
     console.log("正在处理第" + pageCount + "页")
     await page.waitForSelector("li.pagination-item.pagination-item-"+pageCount+".pagination-item-active")
+    await page.waitFor(Math.floor(Math.random() * 500) * Math.floor(Math.random() * 10))
     console.log("确认时第" + pageCount + "页")
-    results.concat(await TraverseHistoryPage(page))
+    results = results.concat(await traverseHistoryPage(page))
     const nextBtnHandle = await page.$("div[class*=simple-pagination] button:nth-child(2)")
     hasNext = ! await (await nextBtnHandle.getProperty("disabled")).jsonValue()
     console.log("hasNext",hasNext)
@@ -151,13 +152,58 @@ const TraverseHistory = async (page) => {
   } while (hasNext);
   return results
 }
-const TraverseHistoryPage = async (page) => {
+const traverseHistoryPage = async (page) => {
   const itemHandles = await page.$$(".js-order-container")
   const results = []
   for (const handle of itemHandles){
     results.push(await parseOrder(handle))
   }
   return results
+}
+const newBrowser = async (headless) => {
+  const width = 1376;
+  const height = 1376;
+  const browser = await puppeteer.launch({
+    headless: headless,
+    args: [
+      `--window-size=${ width },${ height }`,
+      // '--no-sandbox'
+    ],
+    // executablePath: pathToExtension
+  });
+  await browser.userAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299');
+  return browser
+}
+const newPage = async (browser) =>{
+  const page = await browser.newPage();
+  await page.setViewport({
+    width: 1376,
+    height: 1376
+  });
+  return page
+}
+const gotoLogin = async (page) => {
+  await page.goto(LOGIN_URI, {
+    waitUntil: 'networkidle2',
+    timeout:0
+  });
+}
+const gotoHistory = async (page,cookies) => {
+  if(cookies != null){
+    for (const cookie of cookies){
+      await page.setCookie(cookie)
+    }
+  }
+  await page.goto(HISTORY_URI,{
+    waitUntil: 'networkidle2',
+    timeout:0
+  })
+  console.log("判断是否有滑块")
+  const slider = await page.$('.slidetounlock');
+  if (slider != null ) {
+    await mouseSlide(page)
+  }
+
 }
 const startServer = async () => {
   try {
@@ -213,8 +259,7 @@ const startServer = async () => {
     }
 
     console.log(chalk.green('正在进入已买到的宝贝页面'))
-    const orders = await TraverseHistory(page)
-
+    const orders = await traverseHistory(page)
 
     // browser.close()
   } catch (error) {
@@ -255,4 +300,13 @@ const mouseSlide = async (page) => {
 }
 
 
-startServer()
+// startServer()
+
+module.exports = {
+  traverseHistory: traverseHistory,
+  login: login,
+  gotoLogin: gotoLogin,
+  gotoHistory: gotoHistory,
+  newPage:newPage,
+  newBrowser:newBrowser
+}
