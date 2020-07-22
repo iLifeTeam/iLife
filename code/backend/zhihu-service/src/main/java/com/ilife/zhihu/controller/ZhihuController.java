@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.util.Base64;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @Api(value = "ZhihuServiceController")
 public class ZhihuController {

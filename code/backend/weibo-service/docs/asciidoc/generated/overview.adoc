@@ -1,0 +1,30 @@
+= Weibo Backend API Documentation
+
+
+[[_overview]]
+== 概览
+
+=== 版本信息
+[%hardbreaks]
+__版本__ : 1.0.0-SNAPSHOT
+
+
+=== 联系方式
+[%hardbreaks]
+__名字__ : 杨亘@sjtu
+__邮箱__ : 888888@qq.com
+
+
+=== URI scheme
+[%hardbreaks]
+__域名__ : 127.0.0.1:8080
+__基础路径__ : /
+
+
+=== 标签
+
+* user-service-controller : User Service Controller
+* weibo-service-controller : Weibo Service Controller
+
+
+
