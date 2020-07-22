@@ -94,7 +94,7 @@ def main(_id, _type, movie_page):
         pool = multiprocessing.Pool(processes=4)
         data_list = []
         for i in range(int(movie_page)):
-            data_list.append((MOVIE_URL, "/collect?start=" + str(30+15 * i)))
+            data_list.append((MOVIE_URL, "/collect?start=" + str(15 * i)))
         print(data_list)
         res = pool.starmap(crawler.work, data_list)
         pool.close()
