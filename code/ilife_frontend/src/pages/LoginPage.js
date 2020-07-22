@@ -7,7 +7,7 @@ export default class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: localStorage.getItem("username"),
+      username: "",
       password: ""
     }
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -37,7 +37,7 @@ export default class LoginPage extends Component {
   }
 
   async login() {
-    console.log("111");
+    //console.log("111");
     var config = {
       method: 'post',
       url: 'http://47.97.206.169:8686/auth/auth',
@@ -56,19 +56,17 @@ export default class LoginPage extends Component {
       .then(function (response) {
         console.log(JSON.stringify(response.data));
         alert("登录成功！");
-        localStorage.setItem("username", this.state.username);
+        localStorage.setItem("username", config.data.account);
         history.push("/home");
         window.location.reload();
+        return;
       })
       .catch(function (error) {
         console.log(error);
+        alert("用户名或密码错误！");
         return;
       });
 
-
-    localStorage.setItem("username", this.state.username);
-    history.push("/home");
-    window.location.reload();
   }
   render() {
     return (
@@ -83,7 +81,7 @@ export default class LoginPage extends Component {
               <p className="login-box-msg">登录</p>
               <form action="../../index2.html" method="post">
                 <div className="form-group has-feedback">
-                  <input type="email" className="form-control" placeholder="NickName" onChange={(val) => this.handleNameChange(val)} />
+                  <input type="email" className="form-control" placeholder="Account" onChange={(val) => this.handleNameChange(val)} />
                   <span className="glyphicon glyphicon-envelope form-control-feedback" />
                 </div>
                 <div className="form-group has-feedback">

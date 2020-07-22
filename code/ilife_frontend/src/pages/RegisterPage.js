@@ -7,11 +7,13 @@ export default class RegisterPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
+      nickname: "",
+      account: "",
       password: "",
       email: ""
     }
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleAccountChange = this.handleAccountChange.bind(this);
     this.handlePsdChange = this.handlePsdChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.register = this.register.bind(this);
@@ -26,8 +28,16 @@ export default class RegisterPage extends Component {
   }
 
   handleNameChange(val) {
+    console.log(val.target.value)
     this.setState({
-      username: val.target.value,
+      nickname: val.target.value,
+    })
+  }
+
+  handleAccountChange(val) {
+    console.log(val.target.value)
+    this.setState({
+      account: val.target.value,
     })
   }
 
@@ -44,7 +54,7 @@ export default class RegisterPage extends Component {
   }
 
   async register() {
-    console.log("111");
+    // console.log("111");
     var config = {
       method: 'post',
       url: 'http://47.97.206.169:8686/auth/register',
@@ -52,7 +62,8 @@ export default class RegisterPage extends Component {
         'Content-Type': 'application/json'
       },
       data: {
-        "account": this.state.username,
+        "nickname": this.state.nickname,
+        "account": this.state.account,
         "password": this.state.password,
         "email": this.state.email,
       }
@@ -64,20 +75,16 @@ export default class RegisterPage extends Component {
       .then(function (response) {
         console.log(JSON.stringify(response.data));
         alert("注册成功！");
-        localStorage.setItem("username", this.state.username);
+        localStorage.setItem("username", config.data.account);
         history.push("/home");
         window.location.reload();
       })
       .catch(function (error) {
         console.log(error);
-
+        alert("用户名或密码错误！");
         return;
       });
 
-
-    localStorage.setItem("username", this.state.username);
-    history.push("/home");
-    window.location.reload();
   }
 
   render() {
@@ -92,6 +99,10 @@ export default class RegisterPage extends Component {
             <form >
               <div className="form-group has-feedback">
                 <input type="text" className="form-control" placeholder="NickName" onChange={(val) => this.handleNameChange(val)} />
+                <span className="glyphicon glyphicon-user form-control-feedback" />
+              </div>
+              <div className="form-group has-feedback">
+                <input type="text" className="form-control" placeholder="Account" onChange={(val) => this.handleAccountChange(val)} />
                 <span className="glyphicon glyphicon-user form-control-feedback" />
               </div>
               <div className="form-group has-feedback">

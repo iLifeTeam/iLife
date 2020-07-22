@@ -8,6 +8,8 @@ import zhihuBodyContent from './contents/zhihuBodyContent'
 import Oauth from '../weibo/Oauth'
 import DataTable from './components/DataTable'
 import WeiboBodyContent from './contents/WeiboBodyContent';
+import BilibiliBodyContent from './contents/BilibiliBodyContent';
+import WyyBodyContent from './contents/WyyBodyContent';
 
 export default class Content extends Component {
   render() {
@@ -16,6 +18,8 @@ export default class Content extends Component {
         <Route path="/home" exact component={DataTable} />
         <Route path="/home/zhihu" component={zhihuBodyContent} />
         <Route path="/home/weibo" component={WeiboBodyContent} />
+        <Route path="/home/bilibili" component={BilibiliBodyContent} />
+        <Route path="/home/wyy" component={WyyBodyContent} />
       </div>
     )
   }
