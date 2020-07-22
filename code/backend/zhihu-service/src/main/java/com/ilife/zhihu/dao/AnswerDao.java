@@ -7,7 +7,10 @@ import java.util.List;
 public interface AnswerDao {
 
     Answer findById(String id);
+
     List<Answer> findByIds(List<String> ids);
+
     Answer save(Answer answer);
+
     void deleteById(String id);
 }

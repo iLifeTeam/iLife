@@ -1,11 +1,14 @@
-# This is a basic workflow to help you get started with Actions
+name: staging
+#staging workflow is to perform unit test on the service.
 
-name: zhihu-serive CI/CD
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
   push:
+    paths:
+    - 'code/backend/zhihu-service/*'
+    - 'code/crawllers/zhihu-python-crawller/*'
     branches: 
       - zhihu-crawller 
   pull_request:
@@ -52,18 +55,3 @@ jobs:
         repository: ilife2020/zhihu-service
         tags: latest
         path: ./code/backend/zhihu-service
-    
-    
-    
-    - name: deploy via ssh
-      uses: fifsky/ssh-action@master
-      with:
-        command: |
-          cd iLife 
-          git pull 
-          cd ./code/backend/zhihu-service
-          docker-compose pull
-          docker-compose up -d
-        host: 47.97.206.169
-        user: root
-        key: ${{ secrets.SSH_PRIVATE_KEY}}

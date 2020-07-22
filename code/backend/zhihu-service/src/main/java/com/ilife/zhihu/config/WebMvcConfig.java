@@ -14,8 +14,8 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
     /*
-    * 解决swagger-ui 404的问题
-    * */
+     * 解决swagger-ui 404的问题
+     * */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // 解决静态资源无法访问

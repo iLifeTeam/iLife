@@ -22,10 +22,10 @@ public class CORSConfig {
         config.addAllowedHeader("*");
         //暴露哪些头部信息（因为跨域访问默认不能获取全部头部信息）
         config.addExposedHeader("Content-Type");
-        config.addExposedHeader( "X-Requested-With");
+        config.addExposedHeader("X-Requested-With");
         config.addExposedHeader("accept");
         config.addExposedHeader("Origin");
-        config.addExposedHeader( "Access-Control-Request-Method");
+        config.addExposedHeader("Access-Control-Request-Method");
         config.addExposedHeader("Access-Control-Request-Headers");
 
         //2.添加映射路径

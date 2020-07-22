@@ -1,10 +1,7 @@
 package com.ilife.zhihu.dao.daoimpl;
 
-import com.ilife.zhihu.dao.ActivityDao;
 import com.ilife.zhihu.dao.UserDao;
-import com.ilife.zhihu.entity.Activity;
 import com.ilife.zhihu.entity.User;
-import com.ilife.zhihu.repository.ActivityRepository;
 import com.ilife.zhihu.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
