@@ -18,8 +18,10 @@ class Mysqlwriter:
 
     def write_movie(self, movies):
         for movie in movies:
-            values = ",".join(["'"+movie.id+"'", "'"+movie.name+"'", "'"+movie.type+"'", "'"+movie.language+"'", movie.ranking])
-            keys = ["id", "name", "type", "language", "ranking"]
+            values = ",".join(
+                ["'" + movie.id + "'", "'" + movie.name + "'", "'" + movie.type + "'", "'" + movie.language + "'",
+                 movie.ranking, movie.hot])
+            keys = ["id", "name", "type", "language", "ranking", "hot"]
             sql = """INSERT INTO {table}({keys}) VALUES ({values}) ON
                                     DUPLICATE KEY UPDATE""".format(table="movie",
                                                                    keys=",".join(keys),
@@ -36,7 +38,7 @@ class Mysqlwriter:
         self.conn.close()
 
     def test(self):
-        keys = ["id", "name", "author", "price", "ranking"]
+        keys = ["id", "name", "author", "price", "ranking", "hot"]
         sql = """INSERT INTO {table}({keys}) VALUES ({values}) ON
                                 DUPLICATE KEY UPDATE""".format(table="book",
                                                                keys=",".join(keys),
