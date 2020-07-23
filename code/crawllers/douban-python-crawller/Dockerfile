@@ -8,4 +8,4 @@ COPY . /code
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["python3","restful.py"]
+CMD ["python3","rest_interface.py"]
