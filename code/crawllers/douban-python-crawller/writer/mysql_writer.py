@@ -16,6 +16,28 @@ class Mysqlwriter:
                                     charset=self.charset)
         self.cursor = self.conn.cursor()
 
+    def write_book(self, books):
+        for book in books:
+            values = ",".join(
+                ["'" + book.id + "'", "'" + book.name + "'", "'" + book.author + "'",
+                 "'" + str(book.price).strip() + "'",
+                 book.ranking, book.hot])
+            keys = ["id", "name", "author", "price", "ranking", "hot"]
+            sql = """INSERT INTO {table}({keys}) VALUES ({values}) ON
+                                    DUPLICATE KEY UPDATE""".format(table="book",
+                                                                   keys=",".join(keys),
+                                                                   values=values)
+            update = ",".join([
+                " {key} = values({key})".format(key=key)
+                for key in keys
+            ])
+            sql += update
+            print(sql)
+            self.cursor.execute(sql)
+        self.conn.commit()
+        self.cursor.close()
+        self.conn.close()
+
     def write_movie(self, movies):
         for movie in movies:
             values = ",".join(

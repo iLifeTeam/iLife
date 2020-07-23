@@ -3,8 +3,9 @@ import multiprocessing
 from bs4 import BeautifulSoup, NavigableString, Tag
 from absl import app
 from douban_crawler import config_parser
-from const.const import BASE_URL, MOVIE_URL
+from const.const import BASE_URL, MOVIE_URL, BOOK_URL
 from entity.Movie import Movie
+from entity.Book import Book
 from writer.mysql_writer import Mysqlwriter
 
 
@@ -17,9 +18,21 @@ class Crawler:
         self.id = _id
         self.cookies = config.cookies
         self.headers = {
-            'User-Agent': 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR '
-                          '2.0.50727) ',
-            # 'Cookie': self.cookies
+            'User-Agent': 'PostmanRuntime/7.26.1',
+            'Connection': 'keep-alive',
+            'Cookie': 'bid=ZN1dBm-0o9g; douban-fav-remind=1; __yadk_uid=clm1BwAvEboA5xjReL4Q8gVlnWiKcsfB; '
+                      'll="118201"; _vwo_uuid_v2=D58A7FEF07D6C3A2E2FAB8E378796D6C6|3174d2e6e85c8111e9144960f76088fe; '
+                      'viewed="26284925"; gr_user_id=3c33da18-73de-42a4-8cbf-57af0bfa5aba; '
+                      'trc_cookie_storage=taboola%2520global%253Auser-id%3Da9a4e48b-377b-4b8d-8603-969341741197'
+                      '-tuct59bdd00; _pk_ref.100001.8cb4=%5B%22%22%2C%22%22%2C1595381211%2C%22https%3A%2F%2Fwww'
+                      '.google.com%2F%22%5D; _pk_ses.100001.8cb4=*; '
+                      '__utmz=30149280.1595381455.15.12.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=('
+                      'not%20provided); __utmc=30149280; '
+                      '__utma=30149280.193287346.1588984522.1594909739.1595381455.15; ap_v=0,6.0; push_noty_num=0; '
+                      'push_doumail_num=0; __utmv=30149280.13208; douban-profile-remind=1; __utmt=1; '
+                      'dbcl2="132088467:mcj0gbzrFD0"; ck=y2F9; '
+                      '_pk_id.100001.8cb4=be2879f9b43cfd40.1588984520.12.1595382716.1594912731.; '
+                      '__utmb=30149280.39.10.1595381455 '
         }
 
     def crawl(self, prefix, postfix):
@@ -29,6 +42,44 @@ class Crawler:
                          cookies=self.cookies,
                          headers=self.headers)
         return r.text
+
+    def parse_books(self, text):
+        st_books = []
+        soup = BeautifulSoup(text, 'lxml')
+        book_head = soup.find(class_="interest-list")
+        for book in book_head.children:
+            price = ""
+            hot = ""
+            if not isinstance(book, Tag):
+                continue
+            book_info = book.find(class_="info")
+            book_url = book_info.h2.a['href']
+            book_page = requests.get(book_url, cookies=self.cookies, headers=self.headers)
+            book_soup = BeautifulSoup(book_page.text, 'lxml')
+            content = book_soup.find(id="wrapper")
+            name = str(content.h1.span.string).strip()
+            content = book_soup.find(id="info")
+            author = str(content.a.string).replace('\n', "").strip()
+            for _info in content.children:
+                if not isinstance(_info, Tag):
+                    continue
+                if _info.string == "定价:":
+                    price = str(_info.next_sibling).replace('\n', "").strip()
+            content = book_soup.find(class_="ll rating_num")
+            if str(content.string).strip() == "":
+                ranking = str(0)
+            else:
+                ranking = content.string
+            content = book_soup.find(class_="rating_sum")
+            if str(content.span.string).strip() == "目前无人评价":
+                hot = str(0)
+            else:
+                hot = content.span.a.span.string
+            book = Book(self.id, name, author, price, ranking, hot)
+            st_books.append(book)
+            print(book)
+        mysqlwriter = Mysqlwriter(self.config)
+        mysqlwriter.write_book(st_books)
 
     def parse_movies(self, text):
         st_movies = []
@@ -69,34 +120,61 @@ class Crawler:
                     ranking = content.string
                 content = movie_soup.find(class_=["rating_sum"])
                 # some people will mark not
-                print(content.contents[0].strip())
                 if str(content.contents[0]).strip() == "尚未上映":
                     hot = str(0)
                 else:
                     hot = content.a.span.string
-                print(name,_type,language,ranking,hot)
                 movie = Movie(self.id, name, _type, language, ranking, hot)
                 st_movies.append(movie)
                 print(movie)
         mysqlwriter = Mysqlwriter(self.config)
         mysqlwriter.write_movie(st_movies)
 
-    def work(self, prefix, postfix):
+    def work_movie(self, prefix, postfix):
         text = self.crawl(prefix, postfix)
         self.parse_movies(text)
 
+    def work_book(self, prefix, postfix):
+        text = self.crawl(prefix, postfix)
+        self.parse_books(text)
 
-def main(_id, _type, movie_page):
+    def real_page_movie(self, page):
+        url = MOVIE_URL + str(self.id) + "/collect?start=0"
+        r = requests.get(url,
+                         cookies=self.cookies,
+                         headers=self.headers)
+        soup = BeautifulSoup(r.text, "lxml")
+        content = soup.find(class_="paginator")
+        span = content.find(class_="thispage")
+        total_page = span["data-total-page"]
+        if page > total_page:
+            return total_page
+        else:
+            return page
+
+
+def main(_id, _type, page):
     crawler = Crawler(_id)
     # the real page number is in class_ = paginator
     if _type == "movie":
-        # TODO:add multiprocessing support
         pool = multiprocessing.Pool(processes=4)
         data_list = []
-        for i in range(int(movie_page)):
+        page = crawler.real_page_movie(page)
+        for i in range(int(page)):
             data_list.append((MOVIE_URL, "/collect?start=" + str(15 * i)))
         print(data_list)
-        res = pool.starmap(crawler.work, data_list)
+        res = pool.starmap(crawler.work_movie, data_list)
+        pool.close()
+        pool.join()
+        # print(data_list)
+    if _type == "book":
+        pool = multiprocessing.Pool(processes=4)
+        data_list = []
+        # book_page = crawler.real_page_bookpage
+        for i in range(int(page)):
+            data_list.append((BOOK_URL, "/collect?start=" + str(15 * i)))
+        print(data_list)
+        res = pool.starmap(crawler.work_book, data_list)
         pool.close()
         pool.join()
         # print(data_list)

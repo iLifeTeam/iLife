@@ -8,8 +8,9 @@ app = Flask(__name__)
 def login():
     try:
         userId = request.args.get('userId')
+        _type = request.args.get('type')
         limit = request.args.get('limit')
-        command = "python3 -m douban_crawler " + str(userId) + " movie " + str(limit)
+        command = "python3 -m douban_crawler " + str(userId) + " " + _type + " " + str(limit)
         print(command)
         os.system(command)
         return "0"
