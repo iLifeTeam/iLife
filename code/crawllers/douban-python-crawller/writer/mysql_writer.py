@@ -12,7 +12,8 @@ class Mysqlwriter:
         self.database = config.database
         self.password = config.password
         self.charset = config.charset
-        self.conn = pymysql.connect(host=self.host, user=self.user, password=self.password, database=self.database,
+        self.conn = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.password,
+                                    database=self.database,
                                     charset=self.charset)
         self.cursor = self.conn.cursor()
 
