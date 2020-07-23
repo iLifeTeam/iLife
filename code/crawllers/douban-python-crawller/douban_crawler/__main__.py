@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.INFO,
 if len(sys.argv) <= 3:
     logging.info("Wrong Parameters")
     exit(1)
-if not sys.argv[2] in ['movie', 'book', 'game']:
+if not sys.argv[2] in ['movie', 'book', 'user']:
     logging.info("Wrong Request Type")
     exit(1)
 sys.path.append(os.path.abspath(os.path.dirname(os.getcwd())))

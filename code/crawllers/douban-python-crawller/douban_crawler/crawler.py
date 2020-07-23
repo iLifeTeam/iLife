@@ -6,6 +6,7 @@ from douban_crawler import config_parser
 from const.const import BASE_URL, MOVIE_URL, BOOK_URL
 from entity.Movie import Movie
 from entity.Book import Book
+from entity.User import User
 from writer.mysql_writer import Mysqlwriter
 
 
@@ -42,6 +43,49 @@ class Crawler:
                          cookies=self.cookies,
                          headers=self.headers)
         return r.text
+
+    def parse_user(self, text):
+        soup = BeautifulSoup(text, 'lxml')
+        user_head = soup.find(class_="article")
+        if user_head is None:
+            raise Exception
+        content = user_head.div.find(class_="info")
+        name = str(content.h1.contents[0]).replace("\"", " ").strip()
+        # get movies 注意有些人没有“在看”
+        movie_wish = movie_watched = str(0)
+        book_wish = book_read = str(0)
+        content = user_head.find(id="movie")
+        if not str(content.string).strip() == "":
+            content = content.h2.span
+            for _text in content.contents:
+                if _text.string[-2] == "想":
+                    movie_wish = str(_text.string)[0:len(_text.string) - 3]
+                if _text.string[-2] == "看":
+                    movie_watched = str(_text.string)[0:len(_text.string) - 3]
+        # get books
+        content = user_head.find(id="book")
+        if not str(content.string).strip() == "":
+            content = content.h2.span
+            for _text in content.contents:
+                if _text.string[-2] == "想":
+                    book_wish = str(_text.string)[0:len(_text.string) - 3]
+                if _text.string[-2] == "读":
+                    book_read = str(_text.string)[0:len(_text.string) - 3]
+        content = user_head.find(id="review")
+        comment = str(0)
+        if not str(content.string).strip() == "":
+            comment = content.h2.span.a.string[2:]
+        content = soup.find(id="friend")
+        following = str(0)
+        if not str(content.string).strip() == "":
+            following = content.h2.span.a.string[2:]
+        content = soup.find(class_="rev-link")
+        follower = content.a.string[len(name) + 3:-3]
+        print(follower)
+        user = User(self.id, name, movie_wish, movie_watched, book_wish, book_read, comment, following, follower)
+        print(user)
+        mysqlwriter = Mysqlwriter(self.config)
+        mysqlwriter.write_user(user)
 
     def parse_books(self, text):
         st_books = []
@@ -138,6 +182,10 @@ class Crawler:
         text = self.crawl(prefix, postfix)
         self.parse_books(text)
 
+    def work_user(self, prefix, postfix):
+        text = self.crawl(prefix, postfix)
+        self.parse_user(text)
+
     def real_page_movie(self, page):
         url = MOVIE_URL + str(self.id) + "/collect?start=0"
         r = requests.get(url,
@@ -178,6 +226,8 @@ def main(_id, _type, page):
         pool.close()
         pool.join()
         # print(data_list)
+    if _type == "user":
+        crawler.work_user(BASE_URL, "")
 
 
 if __name__ == '__main__':

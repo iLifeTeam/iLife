@@ -60,12 +60,16 @@ class Mysqlwriter:
         self.cursor.close()
         self.conn.close()
 
-    def test(self):
-        keys = ["id", "name", "author", "price", "ranking", "hot"]
+    def write_user(self, user):
+        values = ",".join(
+            ["'" + user.id + "'", "'" + user.name + "'", user.movie_wish, user.movie_watched,
+             user.book_wish, user.book_read, user.comment, user.following, user.follower])
+        keys = ["id", "name", "movie_wish", "movie_watched", "book_wish", "book_read", "comment", "following",
+                "follower"]
         sql = """INSERT INTO {table}({keys}) VALUES ({values}) ON
-                                DUPLICATE KEY UPDATE""".format(table="book",
+                                DUPLICATE KEY UPDATE""".format(table="user",
                                                                keys=",".join(keys),
-                                                               values="1,2,3,4,5")
+                                                               values=values)
         update = ",".join([
             " {key} = values({key})".format(key=key)
             for key in keys
