@@ -1,8 +1,10 @@
 package com.ilife.taobaoservice.repository;
 
-import com.ilife.taobaoservice.entity.Order;
+import com.ilife.taobaoservice.entity.Item;
 import com.ilife.taobaoservice.entity.User;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends CrudRepository<User, String> {
+@Repository
+public interface ItemRepository extends CrudRepository<Item, Integer> {
 }

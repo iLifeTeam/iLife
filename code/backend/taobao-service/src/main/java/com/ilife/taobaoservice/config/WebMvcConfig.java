@@ -1,4 +1,4 @@
-package com.ilife.zhihu.config;
+package com.ilife.taobaoservice.config;
 
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;

@@ -1,4 +1,8 @@
 package com.ilife.taobaoservice.dao;
 
-public interface OrderDao {
+import com.ilife.taobaoservice.entity.User;
+
+public interface UserDao {
+    User findByUsername(String username);
+    User save(User user);
 }
