@@ -5,10 +5,10 @@ export default class WyyBodyContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: null,
+      id: 3220012996,
       account: "",
       password: "",
-      histories: []
+      histories: null,
     }
     this.updateHistory = this.updateHistory.bind(this);
     this.getHistory = this.getHistory.bind(this);
@@ -17,7 +17,7 @@ export default class WyyBodyContent extends Component {
   componentDidMount() {
     const script = document.createElement("script");
 
-    script.src = "dist/js/content.js";
+    script.src = "../../dist/js/content.js";
     script.async = true;
     document.body.appendChild(script);
 
@@ -65,7 +65,7 @@ export default class WyyBodyContent extends Component {
 
   }
 
-  getHistory() {
+  async getHistory() {
     if (this.state.id === null) {
       alert("您尚未登录，请先登录！");
       return;
@@ -76,18 +76,23 @@ export default class WyyBodyContent extends Component {
       headers: {}
     };
 
-    axios(config)
+    var histories;
+    await axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        histories = response.data.content;
       })
       .catch(function (error) {
         console.log(error);
       });
 
+    this.setState({
+      histories: histories
+    })
   }
 
   async login() {
-    var data = 0;
+    var data;
     var config = {
       method: 'post',
       url: 'http://47.97.206.169:8888/music/getid?ph=' + this.state.account + '&pw=' + this.state.password,
@@ -99,18 +104,27 @@ export default class WyyBodyContent extends Component {
       .then(function (response) {
         console.log(response);
         data = response.data;
-        this.setState({
-          id: data
-        })
       })
       .catch(function (error) {
         console.log(error.response);
         alert(error.response);
       })
+
+    this.setState({
+      id: data
+    })
   }
 
   render() {
     const { histories } = this.state;
+
+    const body = histories ? histories.map((history, index) => (<tr>
+      <td>{history.hisid}</td>
+      <td>{history.musics.mname}</td>
+      <td>{history.musics.singers.sname}</td>
+    </tr>)) : null;
+
+
     return (
       <div className="content-wrapper">
         <section className="content">
@@ -151,7 +165,6 @@ export default class WyyBodyContent extends Component {
                   <div className="box-body">
                     <div className="form-group">
                       <p className="btn btn-primary" onClick={this.updateHistory}>重新获取听歌历史</p>
-
                       <p className="btn btn-primary" onClick={this.getHistory}>查看当前听歌历史</p>
                     </div>
                   </div>
@@ -178,9 +191,7 @@ export default class WyyBodyContent extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {/*histories.map((activity, index) => (
-                      ))*/}
-
+                      {body}
                     </tbody>
                   </table>
                 </div>

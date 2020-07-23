@@ -18,7 +18,7 @@ export default class zhihuBodyContent extends Component {
   componentDidMount() {
     const script = document.createElement("script");
 
-    script.src = "dist/js/content.js";
+    script.src = "../../dist/js/content.js";
     script.async = true;
     document.body.appendChild(script);
 
@@ -192,6 +192,7 @@ export default class zhihuBodyContent extends Component {
                       </tr>
                     </thead>
                     <tbody>
+
                       {activities.map((activity, index) => (
                         <ZhihuActivity
                           key={index}
