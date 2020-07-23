@@ -105,12 +105,17 @@ public class CrawlerServiceImpl implements CrawlerService {
 
     private Integer saveFetchedHistory(String username, String response){
         User user = userDao.findByUsername(username);
+
         JSONArray array = JSON.parseArray(response);
-        Integer count = 0;
+        int count = 0;
+        Date lastDate = new Date(0L);
         for (Object object: array){
             Order order = objectToOrder(object);
             if (orderDao.findById(order.getId()) != null){
                 continue;
+            }
+            if (lastDate.before(order.getDate())){
+                lastDate.setTime(order.getDate().getTime());
             }
             order.setUser(user);
             Order savedOrder = orderDao.save(order);
@@ -122,6 +127,10 @@ public class CrawlerServiceImpl implements CrawlerService {
                 itemDao.save(item);
             }
             count ++;
+        }
+        if (user.getLastUpdateDate().before(lastDate)) {
+            user.setLastUpdateDate(lastDate);
+            userDao.save(user);
         }
         return count;
     }

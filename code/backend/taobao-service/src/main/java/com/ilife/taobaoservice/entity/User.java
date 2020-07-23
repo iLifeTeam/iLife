@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.Date;
 
 @Entity
 @Data
@@ -23,5 +24,8 @@ public class User {
 
     @Column(name = "password")
     String password;
+
+    @Column(name = "last_update_date")
+    Date lastUpdateDate;
 
 }

@@ -37,24 +37,33 @@ public class TaobaoController {
     public ResponseEntity<?> loginIntoTaobao(@RequestBody LoginRequest loginRequest){
         String username = loginRequest.username;
         String password = loginRequest.password;
-        User user = new User(username,password);
+        User user = new User(username,password, new Date(0L));
         taobaoService.saveUser(user);
         String response =  crawlerService.login(username,password);
         return ResponseEntity.ok().body(response);
     }
 
-    @ApiOperation(notes = "update all history order", value = "",httpMethod = "GET")
+    @ApiOperation(notes = "update all history order", value = "",httpMethod = "POST")
     @PostMapping(value = "/order/crawl/all", produces = "application/json")
-    public ResponseEntity<?> updateOrder(@RequestParam String username){
+    public ResponseEntity<?> updateOrderAll(@RequestParam String username){
         Integer response =  crawlerService.fetchHistory(username);
         return ResponseEntity.ok().body(response);
     }
 
-    @ApiOperation(notes = "update history order after date specified", value = "",httpMethod = "GET")
+    @ApiOperation(notes = "update history order after date specified", value = "",httpMethod = "POST")
     @PostMapping(value = "/order/crawl/after", produces = "application/json")
-    public ResponseEntity<?> updateOrder(@RequestParam String username, @RequestParam Date date){
+    public ResponseEntity<?> updateOrderAfter(@RequestParam String username, @RequestParam Date date){
         System.out.println(date.toString());
         Integer response =  crawlerService.fetchHistoryAfter(username,date);
+        return ResponseEntity.ok().body(response);
+    }
+    @ApiOperation(notes = "incremental crawl", value = "",httpMethod = "POST")
+    @PostMapping(value = "/order/crawl/incremental", produces = "application/json")
+    public ResponseEntity<?> updateOrderIncremental(@RequestParam String username){
+        User user = taobaoService.getUserByUsername(username);
+        Date lastDate = user.getLastUpdateDate() == null ? new Date(0L) : user.getLastUpdateDate();
+        Integer response ;
+        response =  crawlerService.fetchHistoryAfter(username,lastDate);
         return ResponseEntity.ok().body(response);
     }
 
