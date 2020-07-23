@@ -29,7 +29,6 @@ const setUp = async (page) => {
 }
 const login = async (page, username, password) => {
   await setUp(page)
-
   // await page.click('#J_Quick2Static');
 
   await page.waitFor(1000 +  Math.floor(Math.random() * 2000));
@@ -127,9 +126,9 @@ const parseOrder = async (orderHandle) => {
   return order
 }
 const traverseHistory = async (page) => {
-  await page.screenshot({
-    'path': path.join(__dirname, 'screenshots', 'history.png')
-  })
+  // await page.screenshot({
+  //   'path': path.join(__dirname, 'screenshots', 'history.png')
+  // })
   let results = []
   let hasNext = true
   // let pageNum = await page.$eval("ul.pagination li:nth-last-child(2)", node => node.getAttribute("title"))
@@ -148,6 +147,39 @@ const traverseHistory = async (page) => {
         nextBtnHandle.click({
           delay:20
         })
+    }
+  } while (hasNext);
+  return results
+}
+
+const traverseHistoryAfterDate = async (page,date) => {
+  let results = []
+  let hasNext = true
+  // let pageNum = await page.$eval("ul.pagination li:nth-last-child(2)", node => node.getAttribute("title"))
+  let pageCount = 0
+  do {
+    pageCount ++
+    console.log("正在处理第" + pageCount + "页")
+    await page.waitForSelector("li.pagination-item.pagination-item-"+pageCount+".pagination-item-active")
+    await page.waitFor(Math.floor(Math.random() * 500) * Math.floor(Math.random() * 10))
+    console.log("确认时第" + pageCount + "页")
+    const pageResults = await traverseHistoryPage(page)
+    for (const order of pageResults){
+      const orderDate = new Date(order.date)
+      if (orderDate < date){
+        hasNext = false
+        break
+      }else {
+        results.push(order)
+      }
+    }
+    const nextBtnHandle = await page.$("div[class*=simple-pagination] button:nth-child(2)")
+    hasNext &= !await (await nextBtnHandle.getProperty("disabled")).jsonValue()
+    console.log("hasNext", hasNext)
+    if(hasNext) {
+      nextBtnHandle.click({
+        delay:20
+      })
     }
   } while (hasNext);
   return results
@@ -205,6 +237,8 @@ const gotoHistory = async (page,cookies) => {
   }
 
 }
+
+/* test */
 const startServer = async () => {
   try {
     const pathToExtension = path.join(__dirname, 'chrome-mac/Chromium.app/Contents/MacOS/Chromium');
@@ -304,6 +338,7 @@ const mouseSlide = async (page) => {
 
 module.exports = {
   traverseHistory: traverseHistory,
+  traverseHistoryAfterDate: traverseHistoryAfterDate,
   login: login,
   gotoLogin: gotoLogin,
   gotoHistory: gotoHistory,
