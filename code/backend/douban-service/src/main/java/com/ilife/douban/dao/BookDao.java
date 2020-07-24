@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface BookDao {
     List<Book> findById(String id);
+
+    void DeleteAllById(String id);
 }

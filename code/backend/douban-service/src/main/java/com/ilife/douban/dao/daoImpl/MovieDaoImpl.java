@@ -3,7 +3,6 @@ package com.ilife.douban.dao.daoImpl;
 import com.ilife.douban.dao.BookDao;
 import com.ilife.douban.dao.MovieDao;
 import com.ilife.douban.entity.Movie;
-import com.ilife.douban.repository.BookRepository;
 import com.ilife.douban.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,5 +21,9 @@ public class MovieDaoImpl implements MovieDao {
         return movieRepository.findAllById(id);
     }
 
+    @Override
+    public void DeleteAllById(String id){
+        movieRepository.deleteAllById(id);
+    }
 
 }

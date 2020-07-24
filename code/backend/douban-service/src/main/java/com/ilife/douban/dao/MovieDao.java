@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface MovieDao {
     List<Movie> findById(String id);
+
+    void DeleteAllById(String id);
 }

@@ -9,5 +9,5 @@ public interface BookRepository extends CrudRepository<Book, String> {
 
     List<Book> findAllById(String id);
 
-
+    void deleteAllById(String id);
 }

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface MovieRepository extends CrudRepository<Movie, String> {
     List<Movie> findAllById(String id);
+
+    void deleteAllById(String id);
 }

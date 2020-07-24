@@ -48,6 +48,24 @@ public class UserServiceImpl implements UserService {
         return movieDao.findById(uid);
     }
 
+    @Override
+    public ResponseEntity<?> deleteBooks(String uid){
+        User user = userDao.findById(uid);
+        if(user == null)
+            return ResponseEntity.status(501).body("user not exists");
+        bookDao.DeleteAllById(uid);
+        return ResponseEntity.ok().body("successfully delete");
+    }
+
+    @Override
+    public ResponseEntity<?> deleteMovies(String uid){
+        User user = userDao.findById(uid);
+        if(user == null)
+            return ResponseEntity.status(501).body("user not exists");
+        movieDao.DeleteAllById(uid);
+        return ResponseEntity.ok().body("successfully delete");
+    }
+
 
 
 

@@ -20,5 +20,9 @@ public class BookDaoImpl implements BookDao {
         return bookRepository.findAllById(id);
     }
 
+    @Override
+    public void DeleteAllById(String id){
+        bookRepository.deleteAllById(id);
+    }
 
 }
