@@ -22,8 +22,8 @@ class VideoRepositoryTest {
     }
     @Test
     void find(){
-        videoRepository.findAllByOidAndType((long)1,"11");
-        System.out.println(historyRepository.findAllByMid((long)1));
+
+        System.out.println(historyRepository.findAllByMid((long)480346309));
     }
     @Test
     void testadd(){
@@ -34,6 +34,7 @@ class VideoRepositoryTest {
     }
     @Test
     void testaddhistory(){
+        historyRepository.addhistory((long)1,(long)1,"11",false);
         historyRepository.addhistory((long)1,(long)1,"11",false);
     }
 

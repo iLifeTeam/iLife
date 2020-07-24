@@ -13,6 +13,6 @@ public interface VideoRepository extends JpaRepository<video, videokey> {
     List<video> findAllByOidAndType(Long oid,String type);
     @Transactional
     @Modifying
-    @Query(value = "insert into video(oid,`type`,auther_name,auther_id,tag_name,title) values(?1, ?2, ?3,?4,?5,?6)",nativeQuery = true)
+    @Query(value = "insert into video(oid,`type`,auther_name,auther_id,tag_name,title) select ?1, ?2, ?3,?4,?5,?6 from dual where not exists (select * from video where (oid,`type`)=(?1,?2))",nativeQuery = true)
     void addvideo(Long oid,String type, String auther_name,Long auther_id,String tag_name,String title);
 }
