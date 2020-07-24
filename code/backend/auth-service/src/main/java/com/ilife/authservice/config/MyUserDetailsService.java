@@ -25,6 +25,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
+
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         // 从数据库中取出用户信息
         Users user = userService.findByAccount(account);
@@ -33,6 +34,7 @@ public class MyUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("用户名不存在");
         }
+        System.out.println(user.getType());
 
         // 添加权限
         authorities.add(new SimpleGrantedAuthority(user.getType()));
