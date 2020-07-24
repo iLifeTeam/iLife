@@ -17,6 +17,10 @@ class Crawler:
         config.get_config()
         self.config = config
         self.id = _id
+        self.proxies = {
+            'http': 'http://191.235.72.244:8080',
+            'https': 'http://191.235.72.244:8080',
+        }
         self.cookies = config.cookies
         self.headers = {
             'User-Agent': 'PostmanRuntime/7.26.1',
@@ -39,7 +43,9 @@ class Crawler:
     def crawl(self, prefix, postfix):
         url = prefix + str(self.id) + postfix
         print(url)
+
         r = requests.get(url,
+                         proxies=self.proxies,
                          cookies=self.cookies,
                          headers=self.headers)
         return r.text
@@ -98,7 +104,7 @@ class Crawler:
                 continue
             book_info = book.find(class_="info")
             book_url = book_info.h2.a['href']
-            book_page = requests.get(book_url, cookies=self.cookies, headers=self.headers)
+            book_page = requests.get(book_url, cookies=self.cookies, headers=self.headers,proxies=self.proxies)
             book_soup = BeautifulSoup(book_page.text, 'lxml')
             content = book_soup.find(id="wrapper")
             name = str(content.h1.span.string).strip()
@@ -141,7 +147,7 @@ class Crawler:
                 # start parsing
                 movie_info = movie.find('ul')
                 movie_url = movie_info.li.a['href']
-                movie_page = requests.get(movie_url, cookies=self.cookies, headers=self.headers)
+                movie_page = requests.get(movie_url, cookies=self.cookies, headers=self.headers,proxies=self.proxies)
                 movie_soup = BeautifulSoup(movie_page.text, 'lxml')
                 content = movie_soup.find(id="content")
                 name = content.h1.span.string
@@ -188,14 +194,14 @@ class Crawler:
 
     def real_page_movie(self, page):
         url = MOVIE_URL + str(self.id) + "/collect?start=0"
-        r = requests.get(url,
+        r = requests.get(url,proxies=self.proxies,
                          cookies=self.cookies,
                          headers=self.headers)
         soup = BeautifulSoup(r.text, "lxml")
         content = soup.find(class_="paginator")
         span = content.find(class_="thispage")
         total_page = span["data-total-page"]
-        if page > total_page:
+        if int(page) > int(total_page):
             return total_page
         else:
             return page
@@ -205,7 +211,7 @@ def main(_id, _type, page):
     crawler = Crawler(_id)
     # the real page number is in class_ = paginator
     if _type == "movie":
-        pool = multiprocessing.Pool(processes=4)
+        pool = multiprocessing.Pool(processes=8)
         data_list = []
         page = crawler.real_page_movie(page)
         for i in range(int(page)):
