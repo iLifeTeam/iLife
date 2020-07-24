@@ -5,21 +5,23 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@IdClass(BookKeys.class)
 @Entity
-@Table(name = "MOVIE")
+@Table(name = "BOOK")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Movie {
+public class Book {
     @Id
     @Column(name = "ID")
     private String id;
+    @Id
     @Column(name = "NAME")
     private String name;
-    @Column(name = "TYPE")
-    private String type;
-    @Column(name = "LANGUAGE")
-    private String language;
+    @Column(name = "AUTHOR")
+    private String author;
+    @Column(name = "PRICE")
+    private String price;
     @Column(name = "RANKING")
     private float ranking;
     @Column(name = "HOT")
