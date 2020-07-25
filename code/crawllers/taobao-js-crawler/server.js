@@ -96,7 +96,7 @@ app.get('/history/after', async function (req, res) {
         }
     )
 })
-const server = app.listen(8101, function () {
+const server = app.listen(8101,"0.0.0.0", function () {
 
     const host = server.address().address
     const port = server.address().port
