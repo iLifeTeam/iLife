@@ -8,6 +8,7 @@ import time
 from urllib.parse import unquote
 from bs4 import BeautifulSoup
 import json
+import math
 
 executor = ThreadPoolExecutor(2)
 qr_path = "./qr"
@@ -62,7 +63,7 @@ def fetchYearOrders(session, year):
     orderListResponse = session.get(orderListUrl.format(year))
 
     soup = BeautifulSoup(orderListResponse.content, "html5lib")
-    # print(soup)
+    print(soup)
     orderWareIds = fetchVariable(soup, "orderWareIds")
     orderWareTypes = fetchVariable(soup, "orderWareTypes")
     orderIds = fetchVariable(soup, "orderIds")
@@ -169,24 +170,22 @@ def login(username):
     createDirIfNotExists(qr_path)
     createDirIfNotExists(session_path)
     jd = Jd()
-    session = recapSession(username)
-    if session is None:
-        qrCode = jd.getQrCode()
-        qrString = base64.b64encode(qrCode.content)
-        saveImg(qrCode.content, qr_path + "/" + username + ".jpg")
-        # showImg(qr_path + "1.jpg")
-        executor.submit(jd.pendingForSession, username)
-        return qrString
-        # info, session = jingdong.pendingForSession(username)
-        # print(info)
-        # print(session.cookies)
-        # saveSession(session, info['username'])
+    qrCode = jd.getQrCode()
+    qrString = base64.b64encode(qrCode.content)
+    saveImg(qrCode.content, qr_path + "/" + username + ".jpg")
+    # showImg(qr_path + "1.jpg")
+    executor.submit(jd.pendingForSession, username)
+    return qrString
+    # info, session = jingdong.pendingForSession(username)
+    # print(info)
+    # print(session.cookies)
+    # saveSession(session, info['username'])
 
 
 def fetch(username, years):
     session = recapSession(username)
     if session is None:
-        return "session expired"
+        return "not login"
     results = []
     for year in years:
         print(year)
@@ -194,6 +193,14 @@ def fetch(username, years):
         results = results + resp
         time.sleep(2)
     return results
+
+
 # if __name__ == '__main__':
 #     resp = fetchYearOrders(session, 2020)
 #     print(json.dumps(resp, indent=2))
+def checkLogin(username):
+    session = recapSession(username)
+    if session is None:
+        return "not login"
+    else:
+        return "login"

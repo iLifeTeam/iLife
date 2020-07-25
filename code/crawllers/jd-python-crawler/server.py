@@ -17,7 +17,15 @@ def login():
         return JingDong.login(request.args["username"])
 
 
-@app.route("/fetch", methods=['GET'])
+@app.route("/login/check", methods=['GET'])
+def loginCheck():
+    if not request.args or 'username' not in request.args:
+        return abort(400)
+    else:
+        return JingDong.checkLogin(request.args["username"])
+
+
+@app.route("/history", methods=['GET'])
 def fetch():
     if not request.args or 'username' not in request.args:
         return abort(400)
@@ -25,9 +33,12 @@ def fetch():
         username = request.args["username"]
         if 'year' not in request.args:
             return jsonify(JingDong.fetch(username, range(2015, 2020)))
-        year = request.args["year"]
-        return jsonify(JingDong.fetch(username, range(year, 2020)))
+        print(request.args["year"])
+        year = max(2015, int(request.args["year"]))
+        years = range(year, 2021)
+        print(years)
+        return jsonify(JingDong.fetch(username, years))
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=7002, debug=True)
+    app.run(host='0.0.0.0', port=8102, debug=True)
