@@ -6,9 +6,11 @@ import com.ilife.authservice.service.UserService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 import static java.lang.Long.parseLong;
@@ -24,27 +26,29 @@ public class UserServiceController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation(notes = "Get user info by userID", value = "get user info", httpMethod = "GET")
+    @ApiOperation(notes = "Get user info by userID", value = "get user info by id", httpMethod = "GET")
     @RequestMapping(path = "/auth/getById")
     public Users getUserById(@ApiParam(name = "userId", value = "The user ID of a iLife user") @RequestParam("userId") Long uid) {
         System.out.println("********** getUserById **********");
         return userService.findById(uid);
     }
 
-    @ApiOperation(notes = "Get user info by account", value = "get user info", httpMethod = "GET")
+    @ApiOperation(notes = "Get user info by account", value = "get user info by account", httpMethod = "GET")
     @RequestMapping(path = "/auth/getByAccount")
     public Users getUserByAccount(@ApiParam(name = "account", value = "The account number of a iLife user") @RequestParam("account") String account) {
         System.out.println("********** getUserByAccount **********");
         return userService.findByAccount(account);
     }
 
-    @ApiOperation(notes = "Get user info by Nickname", value = "get user info", httpMethod = "GET")
+    @ApiOperation(notes = "Get user info by Nickname", value = "get user info by nickname", httpMethod = "GET")
     @RequestMapping(path = "/auth/getByNickname")
     public Users getUserByNickname(@ApiParam(name = "nickname", value = "The user nickname of a iLife user") @RequestParam("nickname") String nickname) {
         System.out.println("********** getUserByNickname **********");
         return userService.findByNickname(nickname);
     }
-
+    @ApiResponses({
+            @ApiResponse(code = 501, message = "account or nickname already exists"),
+    })
     @ApiImplicitParams({
             @ApiImplicitParam(name = "nickname", value = "the nickname of the iLife user"),
     }
@@ -59,13 +63,15 @@ public class UserServiceController {
 
     @ApiOperation(notes = "Register one iLife user by giving nickname,account.password and email", value = "User register", httpMethod = "POST")
     @ApiResponses({
-            @ApiResponse(code = 500, message = "account or nickname already exists"),
+            @ApiResponse(code = 500, message = "account already exists"),
+            @ApiResponse(code = 501, message = "nickname already exists")
     })
     @ApiImplicitParams({
             @ApiImplicitParam(name = "nickname", value = "the nickname of the iLife user"),
             @ApiImplicitParam(name = "account", value = "the account of the iLife user"),
             @ApiImplicitParam(name = "password", value = "the password of the iLife user"),
-            @ApiImplicitParam(name = "email", value = "the email of the iLife user")
+            @ApiImplicitParam(name = "email", value = "the email of the iLife user"),
+            @ApiImplicitParam(name = "type", value = "the type of the iLife user")
     }
     )
     @RequestMapping(path = "/auth/register")
@@ -74,15 +80,16 @@ public class UserServiceController {
         String account = params.get("account");
         String password = params.get("password");
         String email = params.get("email");
+        String type = params.get("type");
         System.out.println("********** register **********");
-        return userService.save(nickname, account, password, email);
+        return userService.save(nickname, account, password, email,type);
     }
 
 
     @ApiOperation(notes = "Auth one iLife user by giving account.password", value = "User log in", httpMethod = "POST")
     @ApiResponses({
-            @ApiResponse(code = 500, message = "user not exists"),
-            @ApiResponse(code = 501, message = "account and password not match"),
+            @ApiResponse(code = 501, message = "user not exists"),
+            @ApiResponse(code = 502, message = "account and password not match"),
     })
     @ApiImplicitParams({
             @ApiImplicitParam(name = "account", value = "the account of the iLife user"),
@@ -102,8 +109,9 @@ public class UserServiceController {
             @ApiImplicitParam(name = "userId", value = "the user ID of the iLife user"),
     }
     )
-    @ApiOperation(notes = "update user's WangYiYun ID", value = "update wyy ID", httpMethod = "POST")
+    @ApiOperation(notes = "update user's WangYiYun ID，return the number of affected rows", value = "update wyy ID", httpMethod = "POST")
     @RequestMapping(path = "/auth/updateWyyId")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> updateWyy(@ApiIgnore @RequestBody Map<String, String> params) {
         Long id = parseLong(params.get("userId"));
         Long wyyId = parseLong(params.get("wyyId"));
@@ -111,8 +119,9 @@ public class UserServiceController {
         return userService.updateWyyId(id, wyyId);
     }
 
-    @ApiOperation(notes = "update user's Weibo ID", value = "update Weibo ID", httpMethod = "POST")
+    @ApiOperation(notes = "update user's Weibo ID,return the number of affected rows", value = "update Weibo ID", httpMethod = "POST")
     @RequestMapping(path = "/auth/updateWbId")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> updateWb(@ApiIgnore @RequestBody Map<String, String> params) {
         Long id = parseLong(params.get("userId"));
         Long wbId = parseLong(params.get("wbId"));
@@ -120,12 +129,22 @@ public class UserServiceController {
         return userService.updateWbId(id, wbId);
     }
 
-    @ApiOperation(notes = "update user's Zhihu ID", value = "update Zhihu ID", httpMethod = "POST")
+    @ApiOperation(notes = "update user's Zhihu ID,return the number of affected rows", value = "update Zhihu ID", httpMethod = "POST")
     @RequestMapping(path = "/auth/updateZhId")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> updateZh(@ApiIgnore @RequestBody Map<String, String> params) {
         Long id = parseLong(params.get("userId"));
         String zhId = params.get("zhId");
         System.out.println("********** updateZhId **********");
         return userService.updateZhId(id, zhId);
     }
+
+    //when not login
+    @ApiOperation(notes = "update user's Weibo ID,return the number of affected rows", value = "update Weibo ID", httpMethod = "POST")
+    @RequestMapping(path = "/login")
+    public ResponseEntity<?> login(){
+        return ResponseEntity.status(403).body("not login");
+    }
+
+
 }

@@ -119,7 +119,7 @@
     // ...
   }
   ```
-  从上面可以看到，如果想获取当前用户的信息，应该去访问api.github.com/user，然后就得到了下面结果。
+  从上面可以看到，如果想获取当前用户的信息，应该去访问`api.github.com/user`，然后就得到了下面结果。
   ```
   {
     "message": "Requires authentication",

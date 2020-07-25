@@ -1,0 +1,378 @@
+
+h2. 资源 {anchor:paths}
+
+h3. User-service-controller {anchor:user-service-controller_resource}
+User Service Controller
+
+
+h4. delete one user {anchor:deluserbyuseridusingget_7}
+{noformat}
+GET /user/delById
+{noformat}
+
+
+h5. 说明
+Delete one user info specified by userId
+
+
+h5. 参数
+
+||类型||名称||说明||类型||
+|*Query*|*userId*\\ \\ _可选_||The user ID of a WeiBo user,should be a Long Integer||integer (int64)|
+
+
+h5. 响应
+
+||HTTP代码||说明||类型||
+|*200*||OK||object|
+|*204*||No Content||无内容|
+|*401*||Unauthorized||无内容|
+|*403*||Forbidden||无内容|
+
+
+h5. 生成
+
+* {noformat}\*/*{noformat}
+
+
+h5. HTTP请求示例
+
+h6. 请求 path
+{code}
+/user/delById
+{code}
+
+
+h5. HTTP响应示例
+
+h6. 响应 200
+{code:language=json}
+"object"
+{code}
+
+
+h4. get user info {anchor:getuserbyidusingget_7}
+{noformat}
+GET /user/getById
+{noformat}
+
+
+h5. 说明
+Get user info by userID
+
+
+h5. 参数
+
+||类型||名称||说明||类型||
+|*Query*|*userId*\\ \\ _可选_||The user ID of a WeiBo user,should be a Long Integer||integer (int64)|
+
+
+h5. 响应
+
+||HTTP代码||说明||类型||
+|*200*||OK||[User|#user]|
+|*204*||No Content||无内容|
+|*401*||Unauthorized||无内容|
+|*403*||Forbidden||无内容|
+
+
+h5. 生成
+
+* {noformat}\*/*{noformat}
+
+
+h5. HTTP请求示例
+
+h6. 请求 path
+{code}
+/user/getById
+{code}
+
+
+h5. HTTP响应示例
+
+h6. 响应 200
+{code:language=json}
+{
+  "birthday" : "string",
+  "description" : "string",
+  "education" : "string",
+  "followers" : 0,
+  "following" : 0,
+  "gender" : "string",
+  "id" : 0,
+  "location" : "string",
+  "nickname" : "string",
+  "weibo_num" : 0,
+  "work" : "string"
+}
+{code}
+
+
+h4. get user info {anchor:getuserbynicknameusingget_7}
+{noformat}
+GET /user/getByName
+{noformat}
+
+
+h5. 说明
+Get user info by nickname
+
+
+h5. 参数
+
+||类型||名称||说明||类型||
+|*Query*|*nickname*\\ \\ _可选_||The nickname of a WeiBo user,should be a String||string|
+
+
+h5. 响应
+
+||HTTP代码||说明||类型||
+|*200*||OK||[User|#user]|
+|*204*||No Content||无内容|
+|*401*||Unauthorized||无内容|
+|*403*||Forbidden||无内容|
+
+
+h5. 生成
+
+* {noformat}\*/*{noformat}
+
+
+h5. HTTP请求示例
+
+h6. 请求 path
+{code}
+/user/getByName
+{code}
+
+
+h5. HTTP响应示例
+
+h6. 响应 200
+{code:language=json}
+{
+  "birthday" : "string",
+  "description" : "string",
+  "education" : "string",
+  "followers" : 0,
+  "following" : 0,
+  "gender" : "string",
+  "id" : 0,
+  "location" : "string",
+  "nickname" : "string",
+  "weibo_num" : 0,
+  "work" : "string"
+}
+{code}
+
+
+h3. Weibo-service-controller {anchor:weibo-service-controller_resource}
+Weibo Service Controller
+
+
+h4. delete one Weibo {anchor:deleteweibousingget_7}
+{noformat}
+GET /weibo/deleteWeibo
+{noformat}
+
+
+h5. 说明
+Delete one Weibos from database specified by Weibo ID,success if the response.status = 200
+
+
+h5. 参数
+
+||类型||名称||说明||类型||
+|*Query*|*Id*\\ \\ _可选_||The ID of a WeiBo,should be a String||string|
+
+
+h5. 响应
+
+||HTTP代码||说明||类型||
+|*200*||OK||object|
+|*204*||No Content||无内容|
+|*401*||Unauthorized||无内容|
+|*403*||Forbidden||无内容|
+|*501*||weiboId not exists||无内容|
+
+
+h5. 生成
+
+* {noformat}\*/*{noformat}
+
+
+h5. HTTP请求示例
+
+h6. 请求 path
+{code}
+/weibo/deleteWeibo
+{code}
+
+
+h5. HTTP响应示例
+
+h6. 响应 200
+{code:language=json}
+"object"
+{code}
+
+
+h4. delete one user's Weibos {anchor:deleteweibosusingget_7}
+{noformat}
+GET /weibo/deleteWeibos
+{noformat}
+
+
+h5. 说明
+Delete all Weibos from database of one user specified by userID,success if the response.status = 200
+
+
+h5. 参数
+
+||类型||名称||说明||类型||
+|*Query*|*userId*\\ \\ _可选_||The user ID of a WeiBo user,should be a Long Integer||integer (int64)|
+
+
+h5. 响应
+
+||HTTP代码||说明||类型||
+|*200*||OK||object|
+|*204*||No Content||无内容|
+|*401*||Unauthorized||无内容|
+|*403*||Forbidden||无内容|
+|*501*||userId not exists||无内容|
+
+
+h5. 生成
+
+* {noformat}\*/*{noformat}
+
+
+h5. HTTP请求示例
+
+h6. 请求 path
+{code}
+/weibo/deleteWeibos
+{code}
+
+
+h5. HTTP响应示例
+
+h6. 响应 200
+{code:language=json}
+"object"
+{code}
+
+
+h4. get one Weibo {anchor:getweibousingget_7}
+{noformat}
+GET /weibo/getWeibo
+{noformat}
+
+
+h5. 说明
+Get One Weibo from database specified by Weibo ID
+
+
+h5. 参数
+
+||类型||名称||说明||类型||
+|*Query*|*Id*\\ \\ _可选_||The ID of a WeiBo,should be a String||string|
+
+
+h5. 响应
+
+||HTTP代码||说明||类型||
+|*200*||OK||[Weibo|#weibo]|
+|*204*||No Content||无内容|
+|*401*||Unauthorized||无内容|
+|*403*||Forbidden||无内容|
+
+
+h5. 生成
+
+* {noformat}\*/*{noformat}
+
+
+h5. HTTP请求示例
+
+h6. 请求 path
+{code}
+/weibo/getWeibo
+{code}
+
+
+h5. HTTP响应示例
+
+h6. 响应 200
+{code:language=json}
+{
+  "comment_count" : 0,
+  "content" : "string",
+  "id" : "string",
+  "publish_place" : "string",
+  "publish_time" : "string",
+  "retweet_num" : 0,
+  "uid" : 0,
+  "up_num" : 0
+}
+{code}
+
+
+h4. get one user's Weibos {anchor:getweibosusingget_7}
+{noformat}
+GET /weibo/getWeibos
+{noformat}
+
+
+h5. 说明
+Get all Weibos from database of one user specified by userID
+
+
+h5. 参数
+
+||类型||名称||说明||类型||
+|*Query*|*userId*\\ \\ _可选_||The user ID of a WeiBo user,should be a Long Integer||integer (int64)|
+
+
+h5. 响应
+
+||HTTP代码||说明||类型||
+|*200*||OK||< [Weibo|#weibo] > array|
+|*204*||No Content||无内容|
+|*401*||Unauthorized||无内容|
+|*403*||Forbidden||无内容|
+
+
+h5. 生成
+
+* {noformat}\*/*{noformat}
+
+
+h5. HTTP请求示例
+
+h6. 请求 path
+{code}
+/weibo/getWeibos
+{code}
+
+
+h5. HTTP响应示例
+
+h6. 响应 200
+{code:language=json}
+[ {
+  "comment_count" : 0,
+  "content" : "string",
+  "id" : "string",
+  "publish_place" : "string",
+  "publish_time" : "string",
+  "retweet_num" : 0,
+  "uid" : 0,
+  "up_num" : 0
+} ]
+{code}
+
+
+

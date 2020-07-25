@@ -17,14 +17,15 @@ import java.sql.Timestamp;
 public class Activity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
-    @Column(name = "activity_id")
-    Integer id;
+    @Column(name = "id")
+    String id;
 
+    @Column(name = "target_id")
+    String target_id;
 
-    @JSONField(serialize=false)
+    @JSONField(serialize = false)
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
-    @JoinColumn(name="zhihu_uid",referencedColumnName = "uid")
+    @JoinColumn(name = "zhihu_uid", referencedColumnName = "uid")
     User user;
 
     @Column(name = "type")
@@ -32,9 +33,6 @@ public class Activity {
 
     @Column(name = "action_text")
     String action_text;
-
-    @Column(name = "target_id")
-    Integer target_id;
 
     @Column(name = "create_time")
     Timestamp created_time;

@@ -6,8 +6,6 @@ import com.ilife.zhihu.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public class ActivityDaoImpl implements ActivityDao {
 
@@ -16,7 +14,7 @@ public class ActivityDaoImpl implements ActivityDao {
 
 
     @Override
-    public Activity findById(Integer id) {
+    public Activity findById(String id) {
         return activityRepository.findById(id).orElse(null);
     }
 
@@ -27,9 +25,8 @@ public class ActivityDaoImpl implements ActivityDao {
 
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(String id) {
         activityRepository.deleteById(id);
-
     }
 
 }

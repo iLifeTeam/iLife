@@ -16,12 +16,11 @@ import java.sql.Timestamp;
 public class Answer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
-    @Column(name = "answer_id")
-    Integer id;
+    @Column(name = "id")
+    String id;
 
-    @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
-    @JoinColumn(name = "question_id")
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
+    @JoinColumn(name = "question_id", referencedColumnName = "id")
     Question question;
 
     @Column(name = "author")

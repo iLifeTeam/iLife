@@ -12,12 +12,13 @@ target/
 .settings
 .springBeans
 .sts4-cache
-
+*.cpython-38.pyc
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+log/*
 
 ### NetBeans ###
 /nbproject/private/

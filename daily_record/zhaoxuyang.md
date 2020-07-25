@@ -27,3 +27,24 @@
   - 完成alipay后端（假设已经通过爬虫获取了用户账单csv文件）
   - docker打包后端服务
   - 学习docker swarm/ docker compose相关技术，整理资料，为后续更好的开发/部署做准备。
+- 7.16 
+  - 实现了简单的word-cloud，根据历史的zhihu浏览数据分析出现的高频词汇。并绘制词云，尚未服务化。
+  - 完善了单元测试
+- 7.17 
+  - fix a bug with zhihu-oauth library, refine zhihu-service to remove duplicate entries.
+  - add more docker swarm/ docker-compose notes.
+  - refine API
+- 7.18～7.19
+  - 完善了zhihu-service，alipay-service的单元测试，提高了覆盖率
+- 7.20
+  - 尝试taobao爬虫，使用puppetter + nodejs使用浏览器进行爬取，初步获取数据
+  - 制定本周计划，初步了解spring security
+- 7.21
+  - 完善taobao爬虫拉取历史订单
+  - 使用express打包成http server
+- 7.22
+  - try jingdong crawler, try to bypass slider verification, but failed. abort Jingdong
+  - basic taobao-service backend
+- 7.23
+  - finish taobao-service backend, support incremental crawling.
+  - try alipay crawling, integrate with alipay-backend.

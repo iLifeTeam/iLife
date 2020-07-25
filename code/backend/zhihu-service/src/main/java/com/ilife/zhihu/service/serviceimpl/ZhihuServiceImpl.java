@@ -3,11 +3,9 @@ package com.ilife.zhihu.service.serviceimpl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.ilife.zhihu.dao.*;
 import com.ilife.zhihu.entity.*;
 import com.ilife.zhihu.service.ZhihuService;
-import io.grpc.netty.shaded.io.netty.handler.codec.json.JsonObjectDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,18 +28,18 @@ public class ZhihuServiceImpl implements ZhihuService {
     UserDao userDao;
 
     @Override
-    public Question getQuestionById(Integer id) {
-        return questionDao.findQuestionById(id);
+    public Question getQuestionById(String id) {
+        return questionDao.findById(id);
     }
 
     @Override
-    public Article getArticleById(Integer id) {
-        return articleDao.findArticleById(id);
+    public Article getArticleById(String id) {
+        return articleDao.findById(id);
     }
 
     @Override
-    public Answer getAnswerById(Integer id) {
-        return answerDao.findAnswerById(id);
+    public Answer getAnswerById(String id) {
+        return answerDao.findById(id);
     }
 
     @Override
@@ -57,6 +55,7 @@ public class ZhihuServiceImpl implements ZhihuService {
 
     private Activity makeActivityFromJsonObject(JSONObject activityObject) {
         Activity activity = new Activity();
+        activity.setId(activityObject.getString("id"));
         activity.setAction_text(activityObject.getString("action_text"));
         activity.setCreated_time(
                 convertEpochToTimestamp(activityObject.getLong("create_time")));
@@ -66,6 +65,7 @@ public class ZhihuServiceImpl implements ZhihuService {
 
     private Question makeQuestionFromJsonObject(JSONObject questionObject) {
         Question question = new Question();
+        question.setId(questionObject.getString("id"));
         question.setTitle(questionObject.getString("title"));
         question.setContent(questionObject.getString("content"));
         question.setExcerpt(questionObject.getString("excerpt"));
@@ -79,9 +79,10 @@ public class ZhihuServiceImpl implements ZhihuService {
 
     private Answer makeAnswerFromJsonObject(JSONObject answerObject) {
         Answer answer = new Answer();
+        answer.setId(answerObject.getString("id"));
         answer.setAuthor(answerObject.getString("author"));
         answer.setComment_count(answerObject.getInteger("comment_count"));
-        answer.setContent(answerObject.getString("cotent"));
+        answer.setContent(answerObject.getString("content"));
         answer.setExcerpt(answerObject.getString("excerpt"));
         answer.setCreated_time(convertEpochToTimestamp(answerObject.getLong("create_time")));
         answer.setUpdate_time(convertEpochToTimestamp(answerObject.getLong("update_time")));
@@ -91,6 +92,7 @@ public class ZhihuServiceImpl implements ZhihuService {
 
     private Article makeArticleFromJsonObject(JSONObject articleObject) {
         Article article = new Article();
+        article.setId(articleObject.getString("id"));
         article.setAuthor(articleObject.getString("author"));
         article.setContent(articleObject.getString("content"));
         article.setExcerpt(articleObject.getString("excerpt"));
@@ -99,20 +101,6 @@ public class ZhihuServiceImpl implements ZhihuService {
         article.setTitle(articleObject.getString("title"));
         article.setUpdate_time(convertEpochToTimestamp(articleObject.getLong("update_time")));
         return article;
-    }
-
-    private User makeUserFromJsonObject(JSONObject userObject) {
-        User user = new User();
-        user.setUid(userObject.getString("uid"));
-        user.setName(userObject.getString("name"));
-        user.setEmail(userObject.getString("email"));
-        user.setPhone(userObject.getString("phone"));
-        user.setGender(userObject.getInteger("gender"));
-        user.setThankedCount(userObject.getInteger("thanked_count"));
-        user.setAnswerCount(userObject.getInteger("answer_count"));
-        user.setVoteupCount(userObject.getInteger("voteup_count"));
-
-        return user;
     }
 
     @Override
@@ -150,7 +138,6 @@ public class ZhihuServiceImpl implements ZhihuService {
                             makeQuestionFromJsonObject(answerObject.getJSONObject("question")));
                     answer.setQuestion(question);
                     answerDao.save(answer);
-
                     activity.setTarget_id(answer.getId());
                     break;
                 }
@@ -168,20 +155,14 @@ public class ZhihuServiceImpl implements ZhihuService {
     }
 
     @Override
-    public User saveUser(User user) {
-        return userDao.save(user);
-    }
-
-    @Override
     public User saveUserFromJsonString(String email, String json) {
 //        JSONObject userObject = JSON.parseObject(json);
 //        User user = makeUserFromJsonObject(userObject);
-        User user = JSON.parseObject(json,User.class);
+        User user = JSON.parseObject(json, User.class);
         user.setEmail(email);
         System.out.println(JSON.toJSONString(user));
         return userDao.save(user);
     }
-
 
 
     @Override

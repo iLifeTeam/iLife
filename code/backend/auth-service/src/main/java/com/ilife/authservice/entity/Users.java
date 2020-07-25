@@ -23,7 +23,7 @@ public class Users {
   private long wyyid;
   @Column(name = "WEIBID")
   private long weibid;
-  @Column(name = "SHID")
+  @Column(name = "ZHID")
   private String zhid;
   @Column(name = "NICKNAME")
   private String nickname;
@@ -33,14 +33,17 @@ public class Users {
   private String password;
   @Column(name = "EMAIL")
   private String email;
+  @Column(name = "TYPE")
+  private String type;
 
-  public Users(String _nickname, String _account, String _password, String _email) {
+  public Users(String _nickname, String _account, String _password, String _email,String _type) {
     wyyid = weibid = 0;
     zhid = "0";
     nickname = _nickname;
     account = _account;
     password = _password;
     email = _email;
+    type=_type;
   }
 
 

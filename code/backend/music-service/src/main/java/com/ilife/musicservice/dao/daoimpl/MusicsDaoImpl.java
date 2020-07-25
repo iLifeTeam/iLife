@@ -17,7 +17,9 @@ public class MusicsDaoImpl implements MusicsDao {
     }
 
 
-    public musics findById(Long id) {
-        return musicsRepository.findById(id).orElse(null);
-    }
+
+
+//    public musics findById(Long id) {
+//        return musicsRepository.findById(id).orElse(null);
+//    }
 }

@@ -4,7 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 
 
@@ -16,9 +19,8 @@ import java.sql.Timestamp;
 public class Article {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
-    @Column(name = "article_id")
-    Integer id;
+    @Column(name = "id")
+    String id;
 
     @Column(name = "title")
     String title;
@@ -40,5 +42,5 @@ public class Article {
 
     @Column(name = "image_url")
     String image_url;
-    
+
 }
