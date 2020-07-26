@@ -21,6 +21,12 @@ public class Users {
   private long id;
   @Column(name = "WYYID")
   private long wyyid;
+  @Column(name = "BILIID")
+  private long biliid;
+  @Column(name = "TBID")
+  private String tbid;
+  @Column(name = "DOUBANID")
+  private String doubanid;
   @Column(name = "WEIBID")
   private long weibid;
   @Column(name = "ZHID")
@@ -37,8 +43,8 @@ public class Users {
   private String type;
 
   public Users(String _nickname, String _account, String _password, String _email,String _type) {
-    wyyid = weibid = 0;
-    zhid = "0";
+    wyyid = weibid=biliid = 0;
+    zhid = tbid= doubanid = "0";
     nickname = _nickname;
     account = _account;
     password = _password;
