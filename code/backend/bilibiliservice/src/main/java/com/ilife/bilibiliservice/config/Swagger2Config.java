@@ -1,4 +1,4 @@
-package com.ilife.musicservice.config;
+package com.ilife.bilibiliservice.config;
 
 import io.swagger.annotations.Api;
 import org.springframework.context.annotation.Bean;
@@ -13,8 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-public class Swagger2Configuration {
-
+public class Swagger2Config {
     @Bean
     public Docket createRestApi(){
         return new Docket(DocumentationType.SWAGGER_2)
@@ -28,7 +27,7 @@ public class Swagger2Configuration {
     //基本信息的配置，信息会在api文档上显示
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title("wyy的接口文档")
+                .title("b站的接口文档")
                 .version("1.0")
                 .build();
     }
