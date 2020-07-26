@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
+@Api(value = "User Service Controller")
 public class UserServiceController {
 
     @Autowired

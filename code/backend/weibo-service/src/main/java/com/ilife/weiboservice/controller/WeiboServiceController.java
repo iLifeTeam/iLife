@@ -2,10 +2,7 @@ package com.ilife.weiboservice.controller;
 
 import com.ilife.weiboservice.entity.Weibo;
 import com.ilife.weiboservice.service.WeiboService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +14,7 @@ import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
+@Api(value = "/pet")
 public class WeiboServiceController {
 
     @Autowired
