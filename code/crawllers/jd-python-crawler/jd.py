@@ -63,7 +63,7 @@ def fetchYearOrders(session, year):
     orderListResponse = session.get(orderListUrl.format(year))
 
     soup = BeautifulSoup(orderListResponse.content, "html5lib")
-    print(soup)
+    # print(soup)
     orderWareIds = fetchVariable(soup, "orderWareIds")
     orderWareTypes = fetchVariable(soup, "orderWareTypes")
     orderIds = fetchVariable(soup, "orderIds")
