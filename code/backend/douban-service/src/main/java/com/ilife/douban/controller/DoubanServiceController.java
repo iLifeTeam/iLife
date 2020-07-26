@@ -7,6 +7,7 @@ import com.ilife.douban.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class DoubanServiceController {
 
     @ApiOperation(notes = "Get user info by userID", value = "get user info by id", httpMethod = "GET")
     @RequestMapping(path = "/douban/getById")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public User getUserById(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
         System.out.println("********** getUserById **********");
         return userService.findById(uid);
@@ -36,6 +38,7 @@ public class DoubanServiceController {
     )
     @ApiOperation(notes = "Delete one douban user By user Id", value = "delete one user", httpMethod = "POST")
     @RequestMapping(path = "/douban/delById")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> deleteById(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestBody Map<String, String> params) {
         String id = params.get("userId");
         System.out.println("********** deleteById **********");
@@ -44,6 +47,7 @@ public class DoubanServiceController {
 
     @ApiOperation(notes = "get douban user's read list By user Id", value = "get user's books", httpMethod = "GET")
     @RequestMapping(path = "/douban/getBooks")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public List<Book> getBooks(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
         System.out.println("********** getBooks **********");
         return userService.getBooksById(uid);
@@ -51,6 +55,7 @@ public class DoubanServiceController {
 
     @ApiOperation(notes = "get douban user's watch list By user Id", value = "get user's movies", httpMethod = "GET")
     @RequestMapping(path = "/douban/getMovies")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public List<Movie> getMovies(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
         System.out.println("********** getMovies **********");
         return userService.getMoviesById(uid);
