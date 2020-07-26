@@ -79,6 +79,7 @@ app.get('/history/after', async function (req, res) {
                 res.send("not login")
             } else {
                 const cookies = JSON.parse(data.toLocaleString())
+                console.log("cookies load",cookies)
                 const page = await crawler.newPage(browser)
                 await crawler.gotoHistory(page, cookies)
                 if(await page.$("#fm-login-id") != null){
