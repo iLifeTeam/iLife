@@ -40,7 +40,7 @@ import java.util.TimeZone;
 public class CrawlerServiceImpl implements CrawlerService {
 
     public static  String HTTP_SCHEME = "http";
-    public static  String HOST_IP = "47.97.206.169:8102";
+    public static  String HOST_IP = "jingdong-crawler:8102";
     CloseableHttpClient httpClient = HttpClientBuilder.create().build();
     @Autowired
     UserDao userDao;
