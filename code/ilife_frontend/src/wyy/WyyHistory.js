@@ -22,8 +22,13 @@ export default class WyyHistory extends Component {
 
   }
   componentDidUpdate(prevProps, prevState) {
-    this.$el = $(this.el);
-    this.$el.DataTable({
+    var table = $('#example0').DataTable()
+    table.clear();
+    //向table中添加数据
+    table.rows.add(this.props.histories ? this.props.histories : null);
+    //重新绘画表格
+    table.draw();
+    /*
       data: this.props.histories ? this.props.histories : null,
       columns: [
         { data: "hisid" },
@@ -31,6 +36,7 @@ export default class WyyHistory extends Component {
         { data: "musics.singers[0].sname" },
       ]
     });
+    */
   }
 
   componentWillUnmount() {
