@@ -62,16 +62,16 @@ const login = async (page, username, password) => {
     delay: 20
   })
 
-  await page.waitFor("#J_SiteNavMytaobao .site-nav-menu-bd-panel a:first-child")
-  try {
-    const error = await page.$eval('.error', node => node.textContent)
-    if (error) {
-      console.log('确保账户安全重新入输入');
-      process.exit(1)
-    }
-  }catch (err) {
-    console.log(err)
-  }
+  // await page.waitFor("#J_SiteNavMytaobao .site-nav-menu-bd-panel a:first-child")
+  // try {
+  //   const error = await page.$eval('.error', node => node.textContent)
+  //   if (error) {
+  //     console.log('确保账户安全重新入输入');
+  //     process.exit(1)
+  //   }
+  // }catch (err) {
+  //   console.log(err)
+  // }
 
   const cookies_list = await page.cookies()
 
@@ -199,7 +199,7 @@ const newBrowser = async (headless) => {
     headless: headless,
     args: [
       `--window-size=${ width },${ height }`,
-      // '--no-sandbox'
+      '--no-sandbox'
     ],
     // executablePath: pathToExtension
   });
@@ -229,6 +229,9 @@ const gotoHistory = async (page,cookies) => {
   await page.goto(HISTORY_URI,{
     waitUntil: 'networkidle2',
     timeout:0
+  })
+  await page.screenshot({
+      'path': path.join(__dirname, 'screenshots', 'history-page.png')
   })
   console.log("判断是否有滑块")
   const slider = await page.$('.slidetounlock');
