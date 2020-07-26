@@ -46,7 +46,7 @@ const login = async (page, username, password) => {
   await page.screenshot({
     'path': path.join(__dirname, 'screenshots', 'login.png')
   })
-
+  
   const slider = await page.$eval('#nocaptcha-password', node => node.style);
   if (slider && Object.keys(slider).length) {
     await page.screenshot({
@@ -61,8 +61,16 @@ const login = async (page, username, password) => {
   await loginBtn.click({
     delay: 20
   })
-
-  // await page.waitFor("#J_SiteNavMytaobao .site-nav-menu-bd-panel a:first-child")
+  try{
+    await page.waitForSelector("#J_SiteNavMytaobao .site-nav-menu-bd-panel a:first-child",{
+      timeout:5000
+    })
+  }catch(e){
+    await page.screenshot({
+      'path': path.join(__dirname, 'screenshots', 'timeout.png')
+    })
+    console.log(e)
+  }
   // try {
   //   const error = await page.$eval('.error', node => node.textContent)
   //   if (error) {
@@ -72,6 +80,8 @@ const login = async (page, username, password) => {
   // }catch (err) {
   //   console.log(err)
   // }
+
+  
 
   const cookies_list = await page.cookies()
 
