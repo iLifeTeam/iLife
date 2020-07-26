@@ -36,7 +36,7 @@ def fetch():
         print(request.args["year"])
         year = max(2015, int(request.args["year"]))
         years = range(year, 2021)
-        print(years)
+        # print(years)
         return jsonify(JingDong.fetch(username, years))
 
 
