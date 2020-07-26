@@ -93,7 +93,7 @@ def fetchYearOrders(session, year):
         if exist:
             continue
         numberList = soup.select("#tb-" + orderId + " > tr.tr-bd > td > div.goods-number")
-        print(numberList)
+        # print(numberList)
         order = {"price": soup.select("#tb-" + orderId + " > tr.tr-bd > td > div.amount > span")[0].text[1:],
                  "orderId": orderId, "shop": "",
                  "date": soup.select("#tb-" + orderId + " > tr > td > span.dealtime")[0].text,
@@ -101,8 +101,8 @@ def fetchYearOrders(session, year):
                  "numberList": list(map(lambda node:node.text.strip().strip('\n')[1:], numberList))}
         orders.append(order)
     productIdList = orderWareIds.split(",")
-    print("product", productIdList)
-    print("order", orderIdList)
+    # print("product", productIdList)
+    # print("order", orderIdList)
     for orderItem in orderInfoJson:
         product = {"img_url": orderItem['imgPath'], "productId": orderItem['productId'], "name": orderItem['name'],
                    "price": 0, "number": 0}
@@ -195,7 +195,7 @@ def fetch(username, years):
     for year in years:
         print(year)
         resp = fetchYearOrders(session, year)
-        print(json.dumps(resp,indent=2))
+        # print(json.dumps(resp,indent=2))
         results = results + resp
         time.sleep(2)
     return results
