@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import WyyHistory from '../../wyy/WyyHistory';
 
 export default class WyyBodyContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: 3220012996,
+      id: null,
       account: "",
       password: "",
       histories: null,
@@ -13,14 +14,6 @@ export default class WyyBodyContent extends Component {
     this.updateHistory = this.updateHistory.bind(this);
     this.getHistory = this.getHistory.bind(this);
     this.login = this.login.bind(this);
-  }
-  componentDidMount() {
-    const script = document.createElement("script");
-
-    script.src = "../../dist/js/content.js";
-    script.async = true;
-    document.body.appendChild(script);
-
   }
 
   accountOnChange(val) {
@@ -72,15 +65,15 @@ export default class WyyBodyContent extends Component {
     }
     var config = {
       method: 'post',
-      url: 'http://47.97.206.169:8888/music/gethistorybyid?page=0&size=10&id=' + this.state.id,
+      url: 'http://47.97.206.169:8888/music/gethistorybyid?page=0&size=100&id=' + this.state.id,
       headers: {}
     };
 
     var histories;
     await axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
-        histories = response.data.content;
+        console.log(response.data.content);
+        histories = (response.data.content);
       })
       .catch(function (error) {
         console.log(error);
@@ -116,14 +109,6 @@ export default class WyyBodyContent extends Component {
   }
 
   render() {
-    const { histories } = this.state;
-
-    const body = histories ? histories.map((history, index) => (<tr>
-      <td>{history.hisid}</td>
-      <td>{history.musics.mname}</td>
-      <td>{history.musics.singers.sname}</td>
-    </tr>)) : null;
-
 
     return (
       <div className="content-wrapper">
@@ -182,18 +167,7 @@ export default class WyyBodyContent extends Component {
                   <h3 className="box-title">听歌历史</h3>
                 </div>
                 <div className="box-body">
-                  <table id="example1" className="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th>序号</th>
-                        <th>歌曲名</th>
-                        <th>歌手</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {body}
-                    </tbody>
-                  </table>
+                  {this.state.histories ? <WyyHistory histories={this.state.histories}></WyyHistory> : null}
                 </div>
               </div>
             </div>
@@ -203,3 +177,4 @@ export default class WyyBodyContent extends Component {
     )
   }
 }
+

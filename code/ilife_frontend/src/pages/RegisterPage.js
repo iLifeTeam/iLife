@@ -57,7 +57,7 @@ export default class RegisterPage extends Component {
     // console.log("111");
     var config = {
       method: 'post',
-      url: 'http://47.97.206.169:8686/auth/register',
+      url: 'http://18.163.114.85:8686/auth/register',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -66,6 +66,7 @@ export default class RegisterPage extends Component {
         "account": this.state.account,
         "password": this.state.password,
         "email": this.state.email,
+        "type": "ROLE_USER"
       }
     };
 

@@ -111,7 +111,33 @@ const menuItems = [
     itemName: "网易云",
     childItems: [{
       name: "听歌记录",
-      url: "/info"
+      url: "/history"
+    },
+    {
+      name: "分析",
+      url: "/analyse"
+    }
+    ]
+  },
+  {
+    itemURL: "/home/bilibili",
+    itemName: "b站",
+    childItems: [{
+      name: "浏览记录",
+      url: "/history"
+    },
+    {
+      name: "分析",
+      url: "/analyse"
+    }
+    ]
+  },
+  {
+    itemURL: "/home/taobao",
+    itemName: "淘宝",
+    childItems: [{
+      name: "浏览记录",
+      url: "/bills"
     },
     {
       name: "分析",

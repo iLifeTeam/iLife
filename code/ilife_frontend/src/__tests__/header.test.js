@@ -4,18 +4,17 @@ import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
 
 import { shallow } from 'enzyme';
-import Menu from '../sections/Menu';
+import Header from '../sections/Header';
 
-describe('Menu component test with Enzyme', () => {
+describe('Header test with Enzyme', () => {
   it('renders without crashing (logoff state)', () => {
-    shallow(<Menu />);
+    shallow(<Header />);
   });
 
   it('renders without crashing (login state)', () => {
-    const menu = shallow(<Menu />);
-    menu.setState({ username: "test" })
-    expect(menu.state().username).toEqual("test");
-
+    const body = shallow(<Header />);
+    body.setState({ username: "test" })
+    expect(body.state().username).toEqual("test");
   })
 
 });
