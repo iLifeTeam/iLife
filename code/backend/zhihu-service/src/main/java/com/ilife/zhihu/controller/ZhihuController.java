@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
@@ -43,6 +44,7 @@ public class ZhihuController {
 
     @ApiOperation(notes = "login with username, password, and optional captcha", value = "", httpMethod = "POST")
     @PostMapping(value = "/login", produces = "application/json")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> loginIntoZhihu(@RequestBody LoginRequest loginRequest) {
         String email = loginRequest.username;
         String password = loginRequest.password;
@@ -65,6 +67,7 @@ public class ZhihuController {
 
     @ApiOperation(notes = "update user activities", value = "", httpMethod = "POST")
     @PostMapping(value = "/updateActivities", produces = "application/json")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> updateUserActivities(
             @RequestParam("username") String username
     ) {
@@ -78,6 +81,7 @@ public class ZhihuController {
 
     @ApiOperation(notes = "GET user information", value = "", httpMethod = "GET")
     @GetMapping(value = "/user", produces = "application/json")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public User getUser(
             @RequestParam("username") String username) {
         return zhihuService.getUserWithEmail(username);
@@ -85,6 +89,7 @@ public class ZhihuController {
 
     @ApiOperation(notes = "GET user activities", value = "", httpMethod = "GET")
     @GetMapping(value = "/activity/all", produces = "application/json")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public List<Activity> getActivity(
             @RequestParam("username") String username) {
         return zhihuService.getUserActivity(username);
@@ -92,6 +97,7 @@ public class ZhihuController {
 
     @ApiOperation(notes = "GET article", value = "", httpMethod = "GET")
     @GetMapping(value = "/article", produces = "application/json")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Article getArticle(
             @RequestParam("id") String id) {
         return zhihuService.getArticleById(id);
@@ -99,6 +105,7 @@ public class ZhihuController {
 
     @ApiOperation(notes = "GET question", value = "", httpMethod = "GET")
     @GetMapping(value = "/question", produces = "application/json")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Question getQuestion(
             @RequestParam("id") String id) {
         return zhihuService.getQuestionById(id);
@@ -106,6 +113,7 @@ public class ZhihuController {
 
     @ApiOperation(notes = "GET answer", value = "", httpMethod = "GET")
     @GetMapping(value = "/answer", produces = "application/json")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Answer getAnswer(
             @RequestParam("id") String id) {
         return zhihuService.getAnswerById(id);
