@@ -37,6 +37,57 @@ create TABLE history
 )DEFAULT CHARSET=utf8mb4;
 
 
+/*douban*/
+drop database if exists douban;
+create database douban;
+use douban;
+create table book
+(
+	id varchar(64) not null,
+	name varchar(64) not null,
+	author varchar(64) null,
+	price varchar(64) null,
+	ranking float null,
+	hot int null,
+	primary key (name, id)
+)
+engine=InnoDB
+;
+
+create table game
+(
+	id varchar(64) null,
+	name varchar(64) null,
+	type varchar(64) null,
+	ranking float null,
+	hot int null
+)
+engine=InnoDB
+;
+
+create table movie
+(
+	id varchar(64) not null,
+	name varchar(64) not null,
+	type varchar(64) null,
+	language varchar(64) null,
+	ranking float null,
+	hot int null,
+	primary key (id, name)
+)
+engine=InnoDB
+;
+
+create table user
+(
+	id varchar(64) not null
+		primary key
+)
+engine=InnoDB
+;
+
+
+
 
 /* zhihu */
 drop database if exists `zhihu`;
@@ -199,7 +250,10 @@ create table users
    id                   bigint not null AUTO_INCREMENT,
    wyyid                bigint,
    weibid               bigint,
+   biliid               bigint,
+   tbid                 varchar(20),
    zhid                 varchar(30),
+   doubanid             VARCHAR(64),
    nickname             varchar(20),
    account              char(20),
    password             char(20),
