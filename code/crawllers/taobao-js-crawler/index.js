@@ -199,7 +199,7 @@ const newBrowser = async (headless) => {
     headless: headless,
     args: [
       `--window-size=${ width },${ height }`,
-      // '--no-sandbox'
+      '--no-sandbox'
     ],
     // executablePath: pathToExtension
   });
