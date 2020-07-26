@@ -29,7 +29,7 @@ public class MusicServiceController {
     @Autowired
     private NetEaseCrawler netEaseCrawler;
 
-
+    @CrossOrigin
     @PostMapping("/music/gethistorybypage")
     public Page<wyyuser> gethistorybypage(@RequestParam("page") Integer page, @RequestParam("size") Integer size, @RequestParam String ph, String pw) {
         long uid = netEaseCrawler.getuid(ph, pw).longValue();
@@ -44,11 +44,13 @@ public class MusicServiceController {
         } else return t;
     }
 
+    @CrossOrigin
     @PostMapping("/music/getid")
-    public Integer getid(@RequestParam String ph, String pw) {
+    public Long getid(@RequestParam String ph, String pw) {
         return netEaseCrawler.getuid(ph, pw);
     }
 
+    @CrossOrigin
     @PostMapping("/music/updatehistory")
     public boolean updatehistory(@RequestParam String ph, String pw) {
         long uid = netEaseCrawler.getuid(ph, pw);
@@ -58,9 +60,9 @@ public class MusicServiceController {
         return true;
     }
 
-
+    @CrossOrigin
     @PostMapping("/music/gethistorybyid")
-    public Page<wyyuser> gethistorybyid(@RequestParam("page") Integer page, @RequestParam("size") Integer size, @RequestParam Integer id) {
+    public Page<wyyuser> gethistorybyid(@RequestParam("page") Integer page, @RequestParam("size") Integer size, @RequestParam Long id) {
         Long uid = id.longValue();
         Pageable pageable = PageRequest.of(page, size);
         Page<wyyuser> t = wyyhistoryService.findAllbyid(uid, pageable);
@@ -72,8 +74,9 @@ public class MusicServiceController {
         } else return t;
     }
 
+    @CrossOrigin
     @PostMapping("/music/updatehistorybyid")
-    public boolean updatehistorybyid(@RequestParam Integer id) {
+    public boolean updatehistorybyid(@RequestParam Long id) {
         netEaseCrawler.crawlbyid(id);
         return true;
     }
