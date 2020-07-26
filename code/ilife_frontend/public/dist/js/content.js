@@ -204,14 +204,7 @@ var dataSet = [
 
 
 $(function () {
-  $('#example1').DataTable({
-    data: dataSet,
-    columns: [
-      { data: "hisid" },
-      { data: "musics.mname" },
-      { data: "musics.singers[0].sname" },
-    ]
-  })
+  $('#example1').DataTable()
   $('#example2').DataTable({
     'paging': true,
     'lengthChange': false,
