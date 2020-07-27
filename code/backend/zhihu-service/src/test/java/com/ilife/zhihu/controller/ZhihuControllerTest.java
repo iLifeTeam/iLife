@@ -32,130 +32,6 @@ import static org.mockito.Mockito.when;
 class ZhihuControllerTest {
 
 
-    @Autowired
-    ZhihuController zhihuController;
-
-    private MockMvc mockMvc;
-
-    @Mock
-    private ZhihuCrawlerServiceClient client;
-
-    @Autowired
-    private WebApplicationContext context;
-
-    @BeforeEach
-    public void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-    }
-
-    @Test
-    void saveImageString() {
-
-    }
-
-    @Test
-    void loginIntoZhihu() throws Exception {
-        when(client.login("test","test")).thenReturn(captchaResponse);
-        when(client.login("test","test","test")).thenReturn("success");
-        User user = new User("id","name","email","phone",5,2,3,4,new ArrayList<>());
-        when(client.getUserInfo("test")).thenReturn(JSON.toJSONString(user));
-        zhihuController.setCrawlerServiceClient(client);
-        ZhihuController.LoginRequest request = new ZhihuController.LoginRequest("test","test",null);
-        MockHttpServletRequestBuilder loginRequest =
-                MockMvcRequestBuilders.post("/login")
-                                      .contentType(MediaType.APPLICATION_JSON)
-                                      .content(JSON.toJSONString(request));
-        String response = mockMvc.perform(loginRequest).andExpect(MockMvcResultMatchers.status().is(401))
-                                     .andReturn().getResponse().getContentAsString();
-        Assertions.assertEquals("\"" + captchaResponse + "\"",response);
-
-        ZhihuController.LoginRequest requestWithCaptcha = new ZhihuController.LoginRequest("test","test","test");
-        MockHttpServletRequestBuilder captchaRequest =
-                MockMvcRequestBuilders.post("/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(JSON.toJSONString(requestWithCaptcha));
-        String successResponse = mockMvc.perform(captchaRequest).andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn().getResponse().getContentAsString();
-        Assertions.assertEquals("\"Login successfully!\"",successResponse);
-
-        ZhihuController.LoginRequest nullRequest = new ZhihuController.LoginRequest(null,null,null);
-        MockHttpServletRequestBuilder nullLoginRequest =
-                MockMvcRequestBuilders.post("/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(JSON.toJSONString(nullRequest));
-        String errorResponse = mockMvc.perform(nullLoginRequest).andExpect(MockMvcResultMatchers.status().is(400))
-                .andReturn().getResponse().getContentAsString();
-        Assertions.assertEquals("\"Need Password!\"",errorResponse);
-
-    }
-
-    @Test
-    void updateUserActivities() throws Exception {
-        when(client.getActivities("test")).thenReturn(updateResponse);
-        zhihuController.setCrawlerServiceClient(client);
-        MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.post("/updateActivities").param("username", "test");
-        String response = mockMvc.perform(getRequest).andExpect(MockMvcResultMatchers.status().isOk())
-                                .andReturn().getResponse().getContentAsString();
-        Assertions.assertEquals("\"Update successfully!\"",response);
-
-        when(client.getActivities("test_not_login")).thenReturn("not login");
-        MockHttpServletRequestBuilder errorRequest = MockMvcRequestBuilders.post("/updateActivities").param("username", "test_not_login");
-        String errorResponse = mockMvc.perform(errorRequest).andExpect(MockMvcResultMatchers.status().is(401))
-                .andReturn().getResponse().getContentAsString();
-        Assertions.assertEquals("\"Not login!\"",errorResponse);
-    }
-
-    @Test
-    void getUser() throws Exception {
-        MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/user").param("username", "test");
-        ResultActions perform = mockMvc.perform(getRequest);
-        perform.andExpect(MockMvcResultMatchers.status().isOk());
-        MvcResult mvcResult = perform.andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        User user = JSON.parseObject(response.getContentAsString(), User.class);
-    }
-
-    @Test
-    void getActivity() throws Exception {
-        MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/activity/all").param("username", "test");
-        ResultActions perform = mockMvc.perform(getRequest);
-        perform.andExpect(MockMvcResultMatchers.status().isOk());
-        MvcResult mvcResult = perform.andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        List<Activity> activityList = JSON.parseArray(response.getContentAsString(), Activity.class);
-    }
-
-    @Test
-    void getArticle() throws Exception {
-        MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/article").param("id", "[101818293]");
-        ResultActions perform = mockMvc.perform(getRequest);
-        perform.andExpect(MockMvcResultMatchers.status().isOk());
-        MvcResult mvcResult = perform.andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        Article article = JSON.parseObject(response.getContentAsString(), Article.class);
-    }
-
-    @Test
-    void getQuestion() throws Exception {
-        MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/question").param("id", "[21486805]");
-        ResultActions perform = mockMvc.perform(getRequest);
-        perform.andExpect(MockMvcResultMatchers.status().isOk());
-        MvcResult mvcResult = perform.andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        Question question = JSON.parseObject(response.getContentAsString(), Question.class);
-    }
-
-    @Test
-    void getAnswer() throws Exception {
-        MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/answer").param("id", "MUMA");
-        ResultActions perform = mockMvc.perform(getRequest);
-        perform.andExpect(MockMvcResultMatchers.status().isOk());
-        MvcResult mvcResult = perform.andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        Answer answer = JSON.parseObject(response.getContentAsString(), Answer.class);
-    }
-
-
     private static String captchaResponse = "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AoBOAGEA6QEIDgRInZrBgACuFQCILXs27dqyBQTIrQAA796+eQcIHkAAgOLGjyM3EGD5AgDOn0OPLn069erWqRtgECAAgQABGDQAMIBBgAAHABwIoF4AgPbu38OP/55BgPoDAODPrx9AhAD+AUIAMJBgQYMFAiScAIBhQ4cPIUaUOJFixYgJAgQ4YED/QACPDQCEFDmSZMmSAVAuALCSZcuVAWBOKACAZk2bNgccCBDAAQCfP4EGFTqUaFGjR4UmCLDUAIAEAaAKADCValWrV68qCLB1AACvX8ECUBCArAEAZ9GmTQshQFsEAODGlTuXbl27d/HmndsgQF8EAAAEELwAQGHDhxEnVgwgQGMGBQBEljxZQADLCwoA0LyZs2YDAUAfADCadGnTp1GnVr2adWkKBALEFgAAgIIAtwcA0L2bd2/fvwE8IBAgwIICAJAnB2CAQQMCAaAPADCdenUACAJkPyAAQHfv38GHFz+efPnuBxYYKACAffsBCg4EkA8BQH0AAfAzALCff3//3wABCBxIsCCAAQESBiAQgEECBwEiBphgIIBFBAAyaswoQEGAjwEUABhJsqTJkyhTqlxZUsGBADBjygzgIAKAmzcRBNhpAIDPn0CDCh0aNEKCAwECHCBAwMECAFABBJhKQAAAAAIiMAjAlesBBADCih1LtqzZs2jTpnWg4IGBCBEKAJhLt67du3jz6t17V0KAv4ADO2gwAIDhw4gTK17MuLHjx5AjS55MGUCAy5gDANjMubPnz6BDix5NurTp06hTq17NurXr17Bjy55Nu7bt27hz697Nu7fv38CDCx/OOyAAOw==";
     private static String updateResponse = "[\n" +
             "    {\n" +
@@ -255,5 +131,124 @@ class ZhihuControllerTest {
             "        \"type\": \"VOTEUP_ARTICLE\"\n" +
             "    }\n" +
             "]";
+    @Autowired
+    ZhihuController zhihuController;
+    private MockMvc mockMvc;
+    @Mock
+    private ZhihuCrawlerServiceClient client;
+    @Autowired
+    private WebApplicationContext context;
+
+    @BeforeEach
+    public void setUp() {
+        mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+    }
+
+    @Test
+    void saveImageString() {
+
+    }
+
+    @Test
+    void loginIntoZhihu() throws Exception {
+        when(client.login("test", "test")).thenReturn(captchaResponse);
+        when(client.login("test", "test", "test")).thenReturn("success");
+        User user = new User("id", "name", "email", "phone", 5, 2, 3, 4, new ArrayList<>());
+        when(client.getUserInfo("test")).thenReturn(JSON.toJSONString(user));
+        zhihuController.setCrawlerServiceClient(client);
+        ZhihuController.LoginRequest request = new ZhihuController.LoginRequest("test", "test", null);
+        MockHttpServletRequestBuilder loginRequest =
+                MockMvcRequestBuilders.post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JSON.toJSONString(request));
+        String response = mockMvc.perform(loginRequest).andExpect(MockMvcResultMatchers.status().is(401))
+                .andReturn().getResponse().getContentAsString();
+        Assertions.assertEquals("\"" + captchaResponse + "\"", response);
+
+        ZhihuController.LoginRequest requestWithCaptcha = new ZhihuController.LoginRequest("test", "test", "test");
+        MockHttpServletRequestBuilder captchaRequest =
+                MockMvcRequestBuilders.post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JSON.toJSONString(requestWithCaptcha));
+        String successResponse = mockMvc.perform(captchaRequest).andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        Assertions.assertEquals("\"Login successfully!\"", successResponse);
+
+        ZhihuController.LoginRequest nullRequest = new ZhihuController.LoginRequest(null, null, null);
+        MockHttpServletRequestBuilder nullLoginRequest =
+                MockMvcRequestBuilders.post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JSON.toJSONString(nullRequest));
+        String errorResponse = mockMvc.perform(nullLoginRequest).andExpect(MockMvcResultMatchers.status().is(400))
+                .andReturn().getResponse().getContentAsString();
+        Assertions.assertEquals("\"Need Password!\"", errorResponse);
+
+    }
+
+    @Test
+    void updateUserActivities() throws Exception {
+        when(client.getActivities("test")).thenReturn(updateResponse);
+        zhihuController.setCrawlerServiceClient(client);
+        MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.post("/updateActivities").param("username", "test");
+        String response = mockMvc.perform(getRequest).andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        Assertions.assertEquals("\"Update successfully!\"", response);
+
+        when(client.getActivities("test_not_login")).thenReturn("not login");
+        MockHttpServletRequestBuilder errorRequest = MockMvcRequestBuilders.post("/updateActivities").param("username", "test_not_login");
+        String errorResponse = mockMvc.perform(errorRequest).andExpect(MockMvcResultMatchers.status().is(401))
+                .andReturn().getResponse().getContentAsString();
+        Assertions.assertEquals("\"Not login!\"", errorResponse);
+    }
+
+    @Test
+    void getUser() throws Exception {
+        MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/user").param("username", "test");
+        ResultActions perform = mockMvc.perform(getRequest);
+        perform.andExpect(MockMvcResultMatchers.status().isOk());
+        MvcResult mvcResult = perform.andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        User user = JSON.parseObject(response.getContentAsString(), User.class);
+    }
+
+    @Test
+    void getActivity() throws Exception {
+        MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/activity/all").param("username", "test");
+        ResultActions perform = mockMvc.perform(getRequest);
+        perform.andExpect(MockMvcResultMatchers.status().isOk());
+        MvcResult mvcResult = perform.andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        List<Activity> activityList = JSON.parseArray(response.getContentAsString(), Activity.class);
+    }
+
+    @Test
+    void getArticle() throws Exception {
+        MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/article").param("id", "[101818293]");
+        ResultActions perform = mockMvc.perform(getRequest);
+        perform.andExpect(MockMvcResultMatchers.status().isOk());
+        MvcResult mvcResult = perform.andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        Article article = JSON.parseObject(response.getContentAsString(), Article.class);
+    }
+
+    @Test
+    void getQuestion() throws Exception {
+        MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/question").param("id", "[21486805]");
+        ResultActions perform = mockMvc.perform(getRequest);
+        perform.andExpect(MockMvcResultMatchers.status().isOk());
+        MvcResult mvcResult = perform.andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        Question question = JSON.parseObject(response.getContentAsString(), Question.class);
+    }
+
+    @Test
+    void getAnswer() throws Exception {
+        MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/answer").param("id", "MUMA");
+        ResultActions perform = mockMvc.perform(getRequest);
+        perform.andExpect(MockMvcResultMatchers.status().isOk());
+        MvcResult mvcResult = perform.andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        Answer answer = JSON.parseObject(response.getContentAsString(), Answer.class);
+    }
 
 }

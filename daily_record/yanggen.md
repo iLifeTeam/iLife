@@ -100,4 +100,27 @@ https://blog.csdn.net/weixin_44602409/article/details/107358001
 * 学习spring security,写了一些demo
 ### docker
 * 整理了后端的container和images
-
+# 7.21
+### spring security
+* spring security在auth上整合完毕，写了一篇经验博客
+https://blog.csdn.net/weixin_44602409/article/details/107462172
+### 豆瓣
+* 开始搭建豆瓣爬虫
+# 7.22
+### 豆瓣
+* 手写了一个爬取豆瓣个人信息的爬虫，完成了电影部分的爬虫和parsing工作
+* 使用了pymysql,absl库等，爬取后直接存入数据库
+# 7.23
+### 豆瓣
+* 完成了豆瓣书籍的爬虫
+* 完成了豆瓣个人信息的爬虫
+# 7.24
+### 后端
+* 搭建了豆瓣后端
+* 完成了豆瓣后端的动态文档，简单测试，
+### 爬虫
+* 改进爬虫，增加反爬机制
+### 安全
+* 学习spring session与spring security的结合
+* 在本机双服务上实现了分布式session
+* 使用redis来储存session
