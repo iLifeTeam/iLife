@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from "react-router-dom"
 import { createBrowserHistory } from 'history'
 import axios from 'axios'
-
+axios.defaults.withCredentials = true;
 export default class LoginPage extends Component {
   constructor(props) {
     super(props);
@@ -43,7 +43,7 @@ export default class LoginPage extends Component {
       method: 'post',
       url: 'http://18.162.168.229:8686/login',
       headers: {
-        'Content-Type': 'application/json'
+        withCredentials: true
       },
       data: {
         "account": this.state.username,
@@ -58,7 +58,7 @@ export default class LoginPage extends Component {
         alert("登录成功！");
         localStorage.setItem("username", config.data.account);
         history.push("/home");
-        window.location.reload();
+        //window.location.reload();
         return;
       })
       .catch(function (error) {

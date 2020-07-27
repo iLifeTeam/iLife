@@ -59,7 +59,8 @@ export default class RegisterPage extends Component {
       method: 'post',
       url: 'http://18.162.168.229:8686/auth/register',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+
       },
       data: {
         "nickname": this.state.nickname,
@@ -78,14 +79,22 @@ export default class RegisterPage extends Component {
         alert("注册成功！");
         localStorage.setItem("username", config.data.account);
         history.push("/home");
-        window.location.reload();
       })
       .catch(function (error) {
         console.log(error);
         alert("用户名或密码错误！");
         return;
       });
+    await axios.get("http://18.162.168.229:8686/auth/getByAccount?account=" + localStorage.getItem("username"),
+      { headers: { withCredentials: true } })
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
+    window.location.reload();
   }
 
   render() {

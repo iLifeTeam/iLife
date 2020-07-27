@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import ZhihuActivity from '../../zhihu/ZhihuActivity';
+import { createBrowserHistory } from 'history'
+
 export default class WeiboBodyContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      weiboId: null,
       username: "",
       password: "",
       code: "",
@@ -16,14 +19,58 @@ export default class WeiboBodyContent extends Component {
     this.loginTwice = this.loginTwice.bind(this);
   }
   componentDidMount() {
+    const username = localStorage.getItem("username");
+
+    if (username === null || username === undefined) {
+      const history = createBrowserHistory();
+      history.push("/login");
+      window.location.reload();
+    }
+
+
     const script = document.createElement("script");
 
     script.src = "../../dist/js/content.js";
     script.async = true;
     document.body.appendChild(script);
+    this.getWeiboId(username);
+    /*
+    var config = {
+      method: 'get',
+      url: 'http://18.162.168.229:8787/weibo/user/getById?userId=7478007793',
+      headers: {
+        withCredentials: true
+      }
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      */
+  }
+  async getWeiboId(username) {
+    var config = {
+      method: 'get',
+      url: 'http://18.162.168.229:8686/auth/getByAccount?account=' + username,
+      headers: {
+        withCredentials: true
+      }
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
 
   }
-
   nameOnChange(val) {
     this.setState({
       username: val.target.value,
