@@ -35,7 +35,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 
 
     public static  String HTTP_SCHEME = "http";
-    public static  String HOST_IP = "0.0.0.0:8101";
+    public static  String HOST_IP = "47.97.206.169:8101";
     CloseableHttpClient httpClient = HttpClientBuilder.create().build();
     @Autowired
     UserDao userDao;
@@ -116,7 +116,12 @@ public class CrawlerServiceImpl implements CrawlerService {
         Date lastDate = new Date(0L);
         for (Object object: array){
             Order order = objectToOrder(object);
-            if (orderDao.findById(order.getId()) != null){
+            Order existed = orderDao.findById(order.getId());
+            if (existed != null){
+                if (! existed.getUser().getUsername().equals(username)){
+                    existed.setUser(user);
+                    orderDao.save(existed);
+                }
                 continue;
             }
             if (lastDate.before(order.getDate())){
