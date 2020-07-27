@@ -18,7 +18,6 @@ import static java.lang.Long.parseLong;
 
 @CrossOrigin(origins = "*")
 @RestController
-
 @Api(tags = {"User Service Controller"}, description = "Everything about auth & CRUD of iLife User")
 public class UserServiceController {
 
