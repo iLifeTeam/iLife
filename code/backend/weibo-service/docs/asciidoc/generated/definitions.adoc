@@ -1,0 +1,61 @@
+
+[[_definitions]]
+== 定义
+
+[[_user]]
+=== User
+
+[options="header", cols=".^3a,.^11a,.^4a"]
+|===
+|名称|说明|类型
+|**birthday** +
+__可选__|**样例** : `"string"`|string
+|**description** +
+__可选__|**样例** : `"string"`|string
+|**education** +
+__可选__|**样例** : `"string"`|string
+|**followers** +
+__可选__|**样例** : `0`|integer (int32)
+|**following** +
+__可选__|**样例** : `0`|integer (int32)
+|**gender** +
+__可选__|**样例** : `"string"`|string
+|**id** +
+__可选__|**样例** : `0`|integer (int64)
+|**location** +
+__可选__|**样例** : `"string"`|string
+|**nickname** +
+__可选__|**样例** : `"string"`|string
+|**weibo_num** +
+__可选__|**样例** : `0`|integer (int32)
+|**work** +
+__可选__|**样例** : `"string"`|string
+|===
+
+
+[[_weibo]]
+=== Weibo
+
+[options="header", cols=".^3a,.^11a,.^4a"]
+|===
+|名称|说明|类型
+|**comment_count** +
+__可选__|**样例** : `0`|integer (int32)
+|**content** +
+__可选__|**样例** : `"string"`|string
+|**id** +
+__可选__|**样例** : `"string"`|string
+|**publish_place** +
+__可选__|**样例** : `"string"`|string
+|**publish_time** +
+__可选__|**样例** : `"string"`|string (date-time)
+|**retweet_num** +
+__可选__|**样例** : `0`|integer (int32)
+|**uid** +
+__可选__|**样例** : `0`|integer (int64)
+|**up_num** +
+__可选__|**样例** : `0`|integer (int32)
+|===
+
+
+

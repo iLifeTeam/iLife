@@ -1,0 +1,16 @@
+---
+swagger: "2.0"
+info:
+  description: "Weibo Service API"
+  version: "v2"
+  title: "Weibo Service"
+  contact:
+    name: "Yang Gen"
+    email: "zhull991122@sjtu.edu.cn"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost"
+basePath: "/"
+schemes:
+- "http"

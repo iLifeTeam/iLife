@@ -1,0 +1,12 @@
+*.rar
+*.zip
+*.tar.gz
+*.class
+
+.idea/
+*/target/
+*/bin/
+*.DS_Store
+ignore/
+*.jar
+*.pyc

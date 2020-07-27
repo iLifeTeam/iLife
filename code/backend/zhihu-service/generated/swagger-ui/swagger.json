@@ -1,0 +1,370 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is a sample for swagger-maven-plugin",
+    "version" : "v1",
+    "title" : "Swagger Maven Plugin Sample",
+    "contact" : {
+      "name" : "ZhaoXuyang",
+      "email" : "771906409@qq.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "localhost",
+  "basePath" : "/zhihu",
+  "tags" : [ {
+    "name" : "ZhihuServiceController"
+  } ],
+  "schemes" : [ "http" ],
+  "paths" : {
+    "/activity/all" : {
+      "get" : {
+        "tags" : [ "ZhihuServiceController" ],
+        "summary" : "",
+        "description" : "GET user activities",
+        "operationId" : "getActivity",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Activity"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/answer" : {
+      "get" : {
+        "tags" : [ "ZhihuServiceController" ],
+        "summary" : "",
+        "description" : "GET answer",
+        "operationId" : "getAnswer",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Answer"
+            }
+          }
+        }
+      }
+    },
+    "/article" : {
+      "get" : {
+        "tags" : [ "ZhihuServiceController" ],
+        "summary" : "",
+        "description" : "GET article",
+        "operationId" : "getArticle",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Article"
+            }
+          }
+        }
+      }
+    },
+    "/login" : {
+      "post" : {
+        "tags" : [ "ZhihuServiceController" ],
+        "summary" : "",
+        "description" : "login with username, password, and optional captcha",
+        "operationId" : "loginIntoZhihu",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/LoginRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/question" : {
+      "get" : {
+        "tags" : [ "ZhihuServiceController" ],
+        "summary" : "",
+        "description" : "GET question",
+        "operationId" : "getQuestion",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Question"
+            }
+          }
+        }
+      }
+    },
+    "/updateActivities" : {
+      "post" : {
+        "tags" : [ "ZhihuServiceController" ],
+        "summary" : "",
+        "description" : "update user activities",
+        "operationId" : "updateUserActivities",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/user" : {
+      "get" : {
+        "tags" : [ "ZhihuServiceController" ],
+        "summary" : "",
+        "description" : "GET user information",
+        "operationId" : "getUser",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Activity" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "target_id" : {
+          "type" : "string"
+        },
+        "user" : {
+          "$ref" : "#/definitions/User"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "action_text" : {
+          "type" : "string"
+        },
+        "created_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    },
+    "Answer" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "question" : {
+          "$ref" : "#/definitions/Question"
+        },
+        "author" : {
+          "type" : "string"
+        },
+        "content" : {
+          "type" : "string"
+        },
+        "excerpt" : {
+          "type" : "string"
+        },
+        "created_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "update_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "voteup_count" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "comment_count" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "Article" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "author" : {
+          "type" : "string"
+        },
+        "content" : {
+          "type" : "string"
+        },
+        "excerpt" : {
+          "type" : "string"
+        },
+        "column_name" : {
+          "type" : "string"
+        },
+        "update_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "image_url" : {
+          "type" : "string"
+        }
+      }
+    },
+    "LoginRequest" : {
+      "type" : "object",
+      "properties" : {
+        "username" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        },
+        "captcha" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Question" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "content" : {
+          "type" : "string"
+        },
+        "excerpt" : {
+          "type" : "string"
+        },
+        "created_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "update_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "answer_count" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "answerList" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Answer"
+          }
+        }
+      }
+    },
+    "User" : {
+      "type" : "object",
+      "properties" : {
+        "uid" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "phone" : {
+          "type" : "string"
+        },
+        "answerCount" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "voteupCount" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "thankedCount" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "gender" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "activities" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Activity"
+          }
+        }
+      }
+    }
+  }
+}
