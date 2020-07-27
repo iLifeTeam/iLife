@@ -5,6 +5,8 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
@@ -12,6 +14,7 @@ import java.util.List;
 
 
 @Configuration
+@EnableWebMvc
 public class WebMvcConfig extends WebMvcConfigurationSupport {
     /*
     * 解决swagger-ui 404的问题
@@ -41,5 +44,17 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         //4、将convert添加到converters中
         converters.add(fastConverter);
     }
+   //
 
+    @Override
+    protected void addCorsMappings(CorsRegistry registry) {
+        super.addCorsMappings(registry);
+        registry.addMapping("/*")
+                .allowCredentials(true)
+                .allowedOrigins("http://49.234.125.131", "http://localhost:3000")
+                .allowedMethods("PUT","GET","POST")
+                .allowedHeaders("*")
+                .exposedHeaders("*")
+                .maxAge(36000L);
+    }
 }

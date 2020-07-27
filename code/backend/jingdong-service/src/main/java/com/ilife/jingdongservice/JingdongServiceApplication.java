@@ -7,7 +7,7 @@ import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @SpringBootApplication
-@CrossOrigin("*")
+//@CrossOrigin(allowCredentials = "true", value = "http://49.234.125.131")
 public class JingdongServiceApplication {
 
     public static void main(String[] args) {
