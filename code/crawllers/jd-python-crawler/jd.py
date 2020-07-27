@@ -201,7 +201,7 @@ def fetch(username, years):
         # print(json.dumps(resp,indent=2))
         results = results + resp
         time.sleep(2)
-    print(results)
+    # print(results)
     return results
 
 
