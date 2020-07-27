@@ -98,7 +98,7 @@ def fetchYearOrders(session, year):
                  "orderId": orderId, "shop": "",
                  "date": soup.select("#tb-" + orderId + " > tr > td > span.dealtime")[0].text,
                  "products": [],
-                 "numberList": list(map(lambda node:node.text.strip().strip('\n')[1:], numberList))}
+                 "numberList": list(map(lambda node: node.text.strip().strip('\n')[1:], numberList))}
         orders.append(order)
     productIdList = orderWareIds.split(",")
     # print("product", productIdList)
@@ -111,7 +111,10 @@ def fetchYearOrders(session, year):
         for idx, order in enumerate(orders):
             if order["orderId"] == orderIdList[index]:
                 ith = len(orders[idx]["products"])
-                product["number"] = order["numberList"][ith]
+                if ith < len(order["numberList"]):
+                    product["number"] = order["numberList"][ith]
+                else:
+                    product["number"] = 1
                 orders[idx]["products"].append(product)
                 break
     # print(orders)
