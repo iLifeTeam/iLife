@@ -53,4 +53,19 @@ public class UserDaoImpl implements UserDao {
         return userRepository.updateZhId(id, zhId);
     }
 
+    @Override
+    public int updateDbId(Long id, String dbId){
+        return userRepository.updateDbId(id, dbId);
+    }
+
+    @Override
+    public int updateBiliId(Long id, String biliId){
+        return userRepository.updateBiliId(id, biliId);
+    }
+
+    @Override
+    public int updateTbId(Long id, String tbId){
+        return userRepository.updateTbId(id, tbId);
+    }
+
 }

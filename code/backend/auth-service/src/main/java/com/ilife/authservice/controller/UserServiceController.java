@@ -26,21 +26,21 @@ public class UserServiceController {
     private UserService userService;
 
     @ApiOperation(notes = "Get user info by userID", value = "get user info by id", httpMethod = "GET")
-    @RequestMapping(path = "/auth/getById")
+    @GetMapping(path = "/auth/getById")
     public Users getUserById(@ApiParam(name = "userId", value = "The user ID of a iLife user") @RequestParam("userId") Long uid) {
         System.out.println("********** getUserById **********");
         return userService.findById(uid);
     }
 
     @ApiOperation(notes = "Get user info by account", value = "get user info by account", httpMethod = "GET")
-    @RequestMapping(path = "/auth/getByAccount")
+    @GetMapping(path = "/auth/getByAccount")
     public Users getUserByAccount(@ApiParam(name = "account", value = "The account number of a iLife user") @RequestParam("account") String account) {
         System.out.println("********** getUserByAccount **********");
         return userService.findByAccount(account);
     }
 
     @ApiOperation(notes = "Get user info by Nickname", value = "get user info by nickname", httpMethod = "GET")
-    @RequestMapping(path = "/auth/getByNickname")
+    @GetMapping(path = "/auth/getByNickname")
     public Users getUserByNickname(@ApiParam(name = "nickname", value = "The user nickname of a iLife user") @RequestParam("nickname") String nickname) {
         System.out.println("********** getUserByNickname **********");
         return userService.findByNickname(nickname);
@@ -53,7 +53,7 @@ public class UserServiceController {
     }
     )
     @ApiOperation(notes = "Delete one ilife user By user Id", value = "delete one user", httpMethod = "POST")
-    @RequestMapping(path = "/auth/delById")
+    @PostMapping(path = "/auth/delById")
     public ResponseEntity<?> deleteById(@ApiParam(name = "userId", value = "The user ID of a iLife user") @RequestBody Map<String, String> params) {
         Long id = parseLong(params.get("userId"));
         System.out.println("********** deleteById **********");
@@ -73,7 +73,7 @@ public class UserServiceController {
             @ApiImplicitParam(name = "type", value = "the type of the iLife user")
     }
     )
-    @RequestMapping(path = "/auth/register")
+    @PostMapping(path = "/auth/register")
     public ResponseEntity<?> register(@ApiIgnore @RequestBody Map<String, String> params) {
         String nickname = params.get("nickname");
         String account = params.get("account");
@@ -95,7 +95,7 @@ public class UserServiceController {
             @ApiImplicitParam(name = "password", value = "the password of the iLife user"),
     }
     )
-    @RequestMapping(path = "/auth/auth")
+    @PostMapping(path = "/auth/auth")
     public ResponseEntity<?> auth(@ApiIgnore @RequestBody Map<String, String> params) {
         String account = params.get("account");
         String password = params.get("password");
@@ -109,7 +109,7 @@ public class UserServiceController {
     }
     )
     @ApiOperation(notes = "update user's WangYiYun ID，return the number of affected rows", value = "update wyy ID", httpMethod = "POST")
-    @RequestMapping(path = "/auth/updateWyyId")
+    @PostMapping(path = "/auth/updateWyyId")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> updateWyy(@ApiIgnore @RequestBody Map<String, String> params) {
         Long id = parseLong(params.get("userId"));
@@ -119,7 +119,7 @@ public class UserServiceController {
     }
 
     @ApiOperation(notes = "update user's Weibo ID,return the number of affected rows", value = "update Weibo ID", httpMethod = "POST")
-    @RequestMapping(path = "/auth/updateWbId")
+    @PostMapping(path = "/auth/updateWbId")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> updateWb(@ApiIgnore @RequestBody Map<String, String> params) {
         Long id = parseLong(params.get("userId"));
@@ -129,13 +129,43 @@ public class UserServiceController {
     }
 
     @ApiOperation(notes = "update user's Zhihu ID,return the number of affected rows", value = "update Zhihu ID", httpMethod = "POST")
-    @RequestMapping(path = "/auth/updateZhId")
+    @PostMapping(path = "/auth/updateZhId")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> updateZh(@ApiIgnore @RequestBody Map<String, String> params) {
         Long id = parseLong(params.get("userId"));
         String zhId = params.get("zhId");
         System.out.println("********** updateZhId **********");
         return userService.updateZhId(id, zhId);
+    }
+
+    @ApiOperation(notes = "update user's Douban ID,return the number of affected rows", value = "update Douban ID", httpMethod = "POST")
+    @PostMapping(path = "/auth/updateDbId")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> updateDb(@ApiIgnore @RequestBody Map<String, String> params) {
+        Long id = parseLong(params.get("userId"));
+        String dbId = params.get("dbId");
+        System.out.println("********** updateDbId **********");
+        return userService.updateDbId(id, dbId);
+    }
+
+    @ApiOperation(notes = "update user's Bilibili ID,return the number of affected rows", value = "update Bilibili ID", httpMethod = "POST")
+    @PostMapping(path = "/auth/updateBiliId")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> updateBili(@ApiIgnore @RequestBody Map<String, String> params) {
+        Long id = parseLong(params.get("userId"));
+        String biliId = params.get("biliId");
+        System.out.println("********** updateBiliId **********");
+        return userService.updateBiliId(id, biliId);
+    }
+
+    @ApiOperation(notes = "update user's Taobao ID,return the number of affected rows", value = "update Taobao ID", httpMethod = "POST")
+    @PostMapping(path = "/auth/updateTbId")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> updateTb(@ApiIgnore @RequestBody Map<String, String> params) {
+        Long id = parseLong(params.get("userId"));
+        String tbId = params.get("TbId");
+        System.out.println("********** updateTaobaoId **********");
+        return userService.updateTbId(id, tbId);
     }
 
     //when not login
