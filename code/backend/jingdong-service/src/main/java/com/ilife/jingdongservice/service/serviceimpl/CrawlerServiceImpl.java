@@ -62,7 +62,7 @@ public class CrawlerServiceImpl implements CrawlerService {
             CloseableHttpResponse response = httpClient.execute(get);
             HttpEntity contentEntity = response.getEntity();
             String resp = EntityUtils.toString(contentEntity);
-            System.out.println("response: " + resp);
+//            System.out.println("response: " + resp);
             return resp;
         }catch (URISyntaxException | IOException e){
             e.printStackTrace();
