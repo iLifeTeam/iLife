@@ -1,5 +1,6 @@
 package com.ilife.weiboservice.service;
 
+import com.ilife.weiboservice.entity.Statistics;
 import com.ilife.weiboservice.entity.Weibo;
 import org.springframework.http.ResponseEntity;
 
@@ -15,4 +16,6 @@ public interface WeiboService {
     ResponseEntity<?> deleteById(String id);
 
     ResponseEntity<?> save(Weibo weibo);
+
+    Statistics getStats(Long uid);
 }

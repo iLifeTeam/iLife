@@ -1,5 +1,6 @@
 package com.ilife.weiboservice.controller;
 
+import com.ilife.weiboservice.entity.Statistics;
 import com.ilife.weiboservice.entity.Weibo;
 import com.ilife.weiboservice.service.WeiboService;
 import io.swagger.annotations.*;
@@ -60,6 +61,13 @@ public class WeiboServiceController {
         System.out.println("********** deleteWeibos **********");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         return weiboService.deleteById(id);
+    }
+
+    @ApiOperation(notes = "Get user's weibo statistics specified by userID", value = "get weibo statistics", httpMethod = "GET")
+    @RequestMapping(path = "/weibo/getStats")
+    public Statistics getStats(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid) {
+        System.out.println("********** getStats **********");
+        return weiboService.getStats(uid);
     }
 
 
