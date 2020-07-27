@@ -144,5 +144,18 @@ const menuItems = [
       url: "/analyse"
     }
     ]
+  },
+  {
+    itemURL: "/home/jingdong",
+    itemName: "京东",
+    childItems: [{
+      name: "消费记录",
+      url: "/bills"
+    },
+      {
+        name: "分析",
+        url: "/analyse"
+      }
+    ]
   }
 ]
