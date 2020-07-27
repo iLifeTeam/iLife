@@ -57,22 +57,6 @@ export default class JingdongBodyContent extends Component {
     },0)
   }
 
-  nameOnChange(val) {
-    this.setState({
-      username: val.target.value,
-    })
-  }
-  codeOnChange(val) {
-    this.setState({
-      code: val.target.value,
-    })
-  }
-  psdOnChange(val) {
-    this.setState({
-      password: val.target.value,
-    })
-  }
-
   server = "http://18.162.168.229"
   port = 8097
   getUid = () => {
