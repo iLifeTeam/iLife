@@ -15,5 +15,264 @@
   },
   "host" : "localhost",
   "basePath" : "/",
-  "schemes" : [ "http" ]
+  "tags" : [ {
+    "name" : "pet"
+  }, {
+    "name" : "User Service Controller"
+  } ],
+  "schemes" : [ "http" ],
+  "paths" : {
+    "/user/delById" : {
+      "get" : {
+        "tags" : [ "User Service Controller" ],
+        "summary" : "delete one user",
+        "description" : "Delete one user info specified by userId",
+        "operationId" : "delUserByUserId",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "query",
+          "description" : "The user ID of a WeiBo user,should be a Long Integer",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/user/getById" : {
+      "get" : {
+        "tags" : [ "User Service Controller" ],
+        "summary" : "get user info",
+        "description" : "Get user info by userID",
+        "operationId" : "getUserById",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "query",
+          "description" : "The user ID of a WeiBo user,should be a Long Integer",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/user/getByName" : {
+      "get" : {
+        "tags" : [ "User Service Controller" ],
+        "summary" : "get user info",
+        "description" : "Get user info by nickname",
+        "operationId" : "getUserByNickname",
+        "parameters" : [ {
+          "name" : "nickname",
+          "in" : "query",
+          "description" : "The nickname of a WeiBo user,should be a String",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/weibo/deleteWeibo" : {
+      "get" : {
+        "tags" : [ "pet" ],
+        "summary" : "delete one Weibo",
+        "description" : "Delete one Weibos from database specified by Weibo ID,success if the response.status = 200 ",
+        "operationId" : "deleteWeibo",
+        "parameters" : [ {
+          "name" : "Id",
+          "in" : "query",
+          "description" : "The ID of a WeiBo,should be a String",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          },
+          "501" : {
+            "description" : "weiboId not exists"
+          }
+        }
+      }
+    },
+    "/weibo/deleteWeibos" : {
+      "get" : {
+        "tags" : [ "pet" ],
+        "summary" : "delete one user's Weibos",
+        "description" : "Delete all Weibos from database of one user specified by userID,success if the response.status = 200 ",
+        "operationId" : "deleteWeibos",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "query",
+          "description" : "The user ID of a WeiBo user,should be a Long Integer",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          },
+          "501" : {
+            "description" : "userId not exists"
+          }
+        }
+      }
+    },
+    "/weibo/getWeibo" : {
+      "get" : {
+        "tags" : [ "pet" ],
+        "summary" : "get one Weibo",
+        "description" : "Get One Weibo from database specified by Weibo ID",
+        "operationId" : "getWeibo",
+        "parameters" : [ {
+          "name" : "Id",
+          "in" : "query",
+          "description" : "The ID of a WeiBo,should be a String",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Weibo"
+            }
+          }
+        }
+      }
+    },
+    "/weibo/getWeibos" : {
+      "get" : {
+        "tags" : [ "pet" ],
+        "summary" : "get one user's Weibos",
+        "description" : "Get all Weibos from database of one user specified by userID",
+        "operationId" : "getWeibos",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "query",
+          "description" : "The user ID of a WeiBo user,should be a Long Integer",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Weibo"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "User" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "nickname" : {
+          "type" : "string"
+        },
+        "followers" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "following" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "weibo_num" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "birthday" : {
+          "type" : "string"
+        },
+        "gender" : {
+          "type" : "string"
+        },
+        "location" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "education" : {
+          "type" : "string"
+        },
+        "work" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Weibo" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "uid" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "content" : {
+          "type" : "string"
+        },
+        "publish_place" : {
+          "type" : "string"
+        },
+        "retweet_num" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "comment_count" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "up_num" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "publish_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    }
+  }
 }

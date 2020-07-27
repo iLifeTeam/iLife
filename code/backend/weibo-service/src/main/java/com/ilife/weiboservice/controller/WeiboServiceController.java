@@ -21,7 +21,7 @@ public class WeiboServiceController {
     private WeiboService weiboService;
 
     @ApiOperation(notes = "Get all Weibos from database of one user specified by userID", value = "get one user's Weibos", httpMethod = "GET")
-    @RequestMapping(path = "/weibo/getWeibos")
+    @GetMapping(path = "/weibo/getWeibos")
     @PreAuthorize("hasRole('ROLE_USER')")
     public List<Weibo> getWeibos(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid) {
         System.out.println("********** getWeibos **********");
@@ -29,7 +29,7 @@ public class WeiboServiceController {
     }
 
     @ApiOperation(notes = "Get One Weibo from database specified by Weibo ID", value = "get one Weibo", httpMethod = "GET")
-    @RequestMapping(path = "/weibo/getWeibo")
+    @GetMapping(path = "/weibo/getWeibo")
     @PreAuthorize("hasRole('ROLE_USER')")
     public Weibo getWeibo(@ApiParam(name = "Id", value = "The ID of a WeiBo,should be a String") @RequestParam("Id") String id) {
         System.out.println("********** getWeibo **********");
@@ -40,7 +40,7 @@ public class WeiboServiceController {
             @ApiResponse(code = 501, message = "userId not exists"),
     })
     @ApiOperation(notes = "Delete all Weibos from database of one user specified by userID,success if the response.status = 200 ", value = "delete one user's Weibos", httpMethod = "GET")
-    @RequestMapping(path = "/weibo/deleteWeibos")
+    @GetMapping(path = "/weibo/deleteWeibos")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> deleteWeibos(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid) {
         System.out.println("********** deleteWeibos **********");
@@ -51,7 +51,7 @@ public class WeiboServiceController {
             @ApiResponse(code = 501, message = "weiboId not exists"),
     })
     @ApiOperation(notes = "Delete one Weibos from database specified by Weibo ID,success if the response.status = 200 ", value = "delete one Weibo", httpMethod = "GET")
-    @RequestMapping(path = "/weibo/deleteWeibo")
+    @GetMapping(path = "/weibo/deleteWeibo")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> deleteWeibo(@ApiParam(name = "Id", value = "The ID of a WeiBo,should be a String") @RequestParam("Id") String id) {
         System.out.println("********** deleteWeibos **********");
