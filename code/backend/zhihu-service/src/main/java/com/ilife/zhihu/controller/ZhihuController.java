@@ -22,9 +22,11 @@ import java.io.OutputStream;
 import java.util.Base64;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+
+
 @RestController
 @Api(value = "ZhihuServiceController")
+@CrossOrigin(origins = "*")
 public class ZhihuController {
     //    private final String CRAWLER_HOSTNAME  = "localhost";
     private final String CRAWLER_HOSTNAME = "zhihu-crawller";

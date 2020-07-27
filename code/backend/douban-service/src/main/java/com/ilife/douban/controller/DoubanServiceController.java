@@ -33,7 +33,7 @@ public class DoubanServiceController {
             @ApiResponse(code = 501, message = "user Id not exists"),
     })
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "nickname", value = "the nickname of the iLife user"),
+            @ApiImplicitParam(name = "nickname", value = "the nickname of the douban user"),
     }
     )
     @ApiOperation(notes = "Delete one douban user By user Id", value = "delete one user", httpMethod = "POST")
@@ -59,5 +59,37 @@ public class DoubanServiceController {
     public List<Movie> getMovies(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
         System.out.println("********** getMovies **********");
         return userService.getMoviesById(uid);
+    }
+
+    @ApiResponses({
+            @ApiResponse(code = 501, message = "user Id not exists"),
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "the ID of the douban user"),
+    }
+    )
+    @ApiOperation(notes = "Delete Books By user Id", value = "delete books", httpMethod = "POST")
+    @RequestMapping(path = "/douban/delBooks")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> deleteBooks(@RequestBody Map<String, String> params) {
+        String id = params.get("userId");
+        System.out.println("********** deleteBooks **********");
+        return userService.deleteBooks(id);
+    }
+
+    @ApiResponses({
+            @ApiResponse(code = 501, message = "user Id not exists"),
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "the ID of the douban user"),
+    }
+    )
+    @ApiOperation(notes = "Delete Books By user Id", value = "delete movies", httpMethod = "POST")
+    @RequestMapping(path = "/douban/delMovies")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> deleteMovies(@RequestBody Map<String, String> params) {
+        String id = params.get("userId");
+        System.out.println("********** deleteMovies **********");
+        return userService.deleteMovies(id);
     }
 }

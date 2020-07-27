@@ -5,6 +5,7 @@ import com.ilife.weiboservice.service.UserService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
+@Api(value = "User Service Controller")
 public class UserServiceController {
 
     @Autowired
@@ -20,6 +22,7 @@ public class UserServiceController {
 
     @ApiOperation(notes = "Get user info by userID", value = "get user info", httpMethod = "GET")
     @RequestMapping(path = "/user/getById")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public User getUserById(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid) {
         System.out.println("********** getUserByUserId **********");
         return userService.findAllById(uid);
@@ -27,6 +30,7 @@ public class UserServiceController {
 
     @ApiOperation(notes = "Get user info by nickname", value = "get user info", httpMethod = "GET")
     @RequestMapping(path = "/user/getByName")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public User getUserByNickname(@ApiParam(name = "nickname", value = "The nickname of a WeiBo user,should be a String") @RequestParam("nickname") String nickname) {
         System.out.println("********** getUserByNickname **********");
         return userService.findByNickname(nickname);
@@ -34,6 +38,7 @@ public class UserServiceController {
 
     @ApiOperation(notes = "Delete one user info specified by userId", value = "delete one user", httpMethod = "GET")
     @RequestMapping(path = "/user/delById")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> delUserByUserId(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid) {
         System.out.println("********** deleteUser **********");
         return userService.deleteById(uid);

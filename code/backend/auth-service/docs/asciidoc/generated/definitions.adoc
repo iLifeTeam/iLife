@@ -10,6 +10,10 @@
 |名称|说明|类型
 |**account** +
 __可选__|**样例** : `"string"`|string
+|**biliid** +
+__可选__|**样例** : `0`|integer (int64)
+|**doubanid** +
+__可选__|**样例** : `"string"`|string
 |**email** +
 __可选__|**样例** : `"string"`|string
 |**id** +
@@ -17,6 +21,10 @@ __可选__|**样例** : `0`|integer (int64)
 |**nickname** +
 __可选__|**样例** : `"string"`|string
 |**password** +
+__可选__|**样例** : `"string"`|string
+|**tbid** +
+__可选__|**样例** : `"string"`|string
+|**type** +
 __可选__|**样例** : `"string"`|string
 |**weibid** +
 __可选__|**样例** : `0`|integer (int64)

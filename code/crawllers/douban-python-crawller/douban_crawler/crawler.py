@@ -1,7 +1,9 @@
 import requests
 import multiprocessing
+import time
 from bs4 import BeautifulSoup, NavigableString, Tag
 from absl import app
+import random
 from douban_crawler import config_parser
 from const.const import BASE_URL, MOVIE_URL, BOOK_URL
 from entity.Movie import Movie
@@ -17,10 +19,10 @@ class Crawler:
         config.get_config()
         self.config = config
         self.id = _id
-        self.proxies = {
-            'http': 'http://191.235.72.244:8080',
-            'https': 'http://191.235.72.244:8080',
-        }
+        # self.proxies = {
+        #     'http': 'http://191.235.72.244:8080',
+        #     'https': 'http://191.235.72.244:8080',
+        # }
         self.cookies = config.cookies
         self.headers = {
             'User-Agent': 'PostmanRuntime/7.26.1',
@@ -45,7 +47,7 @@ class Crawler:
         print(url)
 
         r = requests.get(url,
-                         proxies=self.proxies,
+                         # proxies=self.proxies,
                          cookies=self.cookies,
                          headers=self.headers)
         return r.text
@@ -98,13 +100,19 @@ class Crawler:
         soup = BeautifulSoup(text, 'lxml')
         book_head = soup.find(class_="interest-list")
         for book in book_head.children:
+            # average sleeping time:
+            rad = random.randint(0, 6)
+            if rad == 3 or rad == 4:
+                time.sleep(1)
+            if rad == 5:
+                time.sleep(2)
             price = ""
             hot = ""
             if not isinstance(book, Tag):
                 continue
             book_info = book.find(class_="info")
             book_url = book_info.h2.a['href']
-            book_page = requests.get(book_url, cookies=self.cookies, headers=self.headers,proxies=self.proxies)
+            book_page = requests.get(book_url, cookies=self.cookies, headers=self.headers)
             book_soup = BeautifulSoup(book_page.text, 'lxml')
             content = book_soup.find(id="wrapper")
             name = str(content.h1.span.string).strip()
@@ -138,6 +146,11 @@ class Crawler:
         movie_head = soup.find(class_='grid-view')
         movie_list = movie_head.children
         for movie in movie_list:
+            rad = random.randint(0, 5)
+            if rad == 3 or rad == 4:
+                time.sleep(1)
+            if rad == 5:
+                time.sleep(2)
             if isinstance(movie, NavigableString):
                 continue
             if isinstance(movie, Tag):
@@ -147,7 +160,7 @@ class Crawler:
                 # start parsing
                 movie_info = movie.find('ul')
                 movie_url = movie_info.li.a['href']
-                movie_page = requests.get(movie_url, cookies=self.cookies, headers=self.headers,proxies=self.proxies)
+                movie_page = requests.get(movie_url, cookies=self.cookies, headers=self.headers)
                 movie_soup = BeautifulSoup(movie_page.text, 'lxml')
                 content = movie_soup.find(id="content")
                 name = content.h1.span.string
@@ -180,11 +193,13 @@ class Crawler:
         mysqlwriter = Mysqlwriter(self.config)
         mysqlwriter.write_movie(st_movies)
 
-    def work_movie(self, prefix, postfix):
+    def work_movie(self, prefix, postfix, sleepTime):
+        time.sleep(sleepTime)
         text = self.crawl(prefix, postfix)
         self.parse_movies(text)
 
-    def work_book(self, prefix, postfix):
+    def work_book(self, prefix, postfix,sleepTime):
+        time.sleep(sleepTime)
         text = self.crawl(prefix, postfix)
         self.parse_books(text)
 
@@ -194,7 +209,7 @@ class Crawler:
 
     def real_page_movie(self, page):
         url = MOVIE_URL + str(self.id) + "/collect?start=0"
-        r = requests.get(url,proxies=self.proxies,
+        r = requests.get(url,
                          cookies=self.cookies,
                          headers=self.headers)
         soup = BeautifulSoup(r.text, "lxml")
@@ -211,11 +226,12 @@ def main(_id, _type, page):
     crawler = Crawler(_id)
     # the real page number is in class_ = paginator
     if _type == "movie":
-        pool = multiprocessing.Pool(processes=8)
+        pool = multiprocessing.Pool(processes=4)
         data_list = []
         page = crawler.real_page_movie(page)
         for i in range(int(page)):
-            data_list.append((MOVIE_URL, "/collect?start=" + str(15 * i)))
+            randomInt = random.randint(0, min(int(i), 8))
+            data_list.append((MOVIE_URL, "/collect?start=" + str(15 * i), randomInt))
         print(data_list)
         res = pool.starmap(crawler.work_movie, data_list)
         pool.close()
@@ -226,7 +242,9 @@ def main(_id, _type, page):
         data_list = []
         # book_page = crawler.real_page_bookpage
         for i in range(int(page)):
-            data_list.append((BOOK_URL, "/collect?start=" + str(15 * i)))
+            randomInt = random.randint(0, min(int(page), 8))
+            print(randomInt)
+            data_list.append((BOOK_URL, "/collect?start=" + str(15 * i),randomInt))
         print(data_list)
         res = pool.starmap(crawler.work_book, data_list)
         pool.close()
