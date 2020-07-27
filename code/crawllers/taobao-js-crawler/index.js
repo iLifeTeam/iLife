@@ -27,33 +27,40 @@ const setUp = async (page) => {
   await page.evaluate(js5)
   await page.waitFor(1000 + Math.floor(Math.random() * 1000));
 }
-const login = async (page, username, password) => {
+const getSms = async (page,phone) => {
   await setUp(page)
   // await page.click('#J_Quick2Static');
-
-  await page.waitFor(1000 +  Math.floor(Math.random() * 2000));
+  await page.click('div.login-switch-tab a.sms-login-tab-item')
+  await page.waitFor(800 +  Math.floor(Math.random() * 500));
   const opts = {
     delay: 2 + Math.floor(Math.random() * 2), //每个字母之间输入的间隔
   }
-  await page.tap('#fm-login-id');
-  await page.type('#fm-login-id', username, opts);
+  await page.tap('input[name=fm-sms-login-id]');
+  await page.type('input[name=fm-sms-login-id]', phone, opts);
 
-  await page.waitFor(3000);
+  await page.click('div.send-btn a.send-btn-link')
+  return
+}
+const login = async (page, phone,code) => {
+  await page.waitFor(5000 +  Math.floor(Math.random() * 1000));
+  const opts = {
+    delay: 2 + Math.floor(Math.random() * 2), //每个字母之间输入的间隔
+  }
 
-  await page.tap('#fm-login-password');
-  await page.type('#fm-login-password', password, opts);
+  await page.tap('input[name=fm-smscode]');
+  await page.type('input[name=fm-smscode]', code, opts);
 
   await page.screenshot({
     'path': path.join(__dirname, 'screenshots', 'login.png')
   })
   
-  const slider = await page.$eval('#nocaptcha-password', node => node.style);
-  if (slider && Object.keys(slider).length) {
-    await page.screenshot({
-      'path': path.join(__dirname, 'screenshots', 'login-slide.png')
-    })
-    await mouseSlide(page)
-  }
+  // const slider = await page.$eval('#nocaptcha-password', node => node.style);
+  // if (slider && Object.keys(slider).length) {
+  //   await page.screenshot({
+  //     'path': path.join(__dirname, 'screenshots', 'login-slide.png')
+  //   })
+  //   await mouseSlide(page)
+  // }
 
   await page.waitFor(1000 + Math.floor(Math.random() * 2000));
   // await page.tap('##nc_1_n1z');
@@ -346,13 +353,74 @@ const mouseSlide = async (page) => {
   }
 }
 
+const loginWithPassword = async (page, phone, password) => {
+  await setUp(page)
+  // await page.click('#J_Quick2Static');
+  await page.click('div.login-switch-tab a.sms-login-tab-item')
+  await page.waitFor(1000 +  Math.floor(Math.random() * 2000));
+  const opts = {
+    delay: 2 + Math.floor(Math.random() * 2), //每个字母之间输入的间隔
+  }
+  await page.tap('input[name=fm-sms-login-id]');
+  await page.type('#fm-login-id', username, opts);
 
+  await page.waitFor(3000);
+
+  await page.tap('#fm-login-password');
+  await page.type('#fm-login-password', password, opts);
+
+  await page.screenshot({
+    'path': path.join(__dirname, 'screenshots', 'login.png')
+  })
+
+  const slider = await page.$eval('#nocaptcha-password', node => node.style);
+  if (slider && Object.keys(slider).length) {
+    await page.screenshot({
+      'path': path.join(__dirname, 'screenshots', 'login-slide.png')
+    })
+    await mouseSlide(page)
+  }
+
+  await page.waitFor(1000 + Math.floor(Math.random() * 2000));
+  // await page.tap('##nc_1_n1z');
+  let loginBtn = await page.$('.fm-button')
+  await loginBtn.click({
+    delay: 20
+  })
+  try{
+    await page.waitForSelector("#J_SiteNavMytaobao .site-nav-menu-bd-panel a:first-child",{
+      timeout:5000
+    })
+  }catch(e){
+    await page.screenshot({
+      'path': path.join(__dirname, 'screenshots', 'timeout.png')
+    })
+    console.log(e)
+  }
+  // try {
+  //   const error = await page.$eval('.error', node => node.textContent)
+  //   if (error) {
+  //     console.log('确保账户安全重新入输入');
+  //     process.exit(1)
+  //   }
+  // }catch (err) {
+  //   console.log(err)
+  // }
+
+
+
+  const cookies_list = await page.cookies()
+
+  return cookies_list
+
+}
 // startServer()
 
 module.exports = {
   traverseHistory: traverseHistory,
   traverseHistoryAfterDate: traverseHistoryAfterDate,
   login: login,
+  getSms:getSms,
   gotoLogin: gotoLogin,
   gotoHistory: gotoHistory,
   newPage:newPage,
