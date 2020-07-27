@@ -105,25 +105,46 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.asciidoctor</groupId>
-                <artifactId>asciidoctor-maven-plugin</artifactId>
-                <version>1.5.6</version>
+                <groupId>com.github.kongchen</groupId>
+                <artifactId>swagger-maven-plugin</artifactId>
+                <version>3.1.8</version>
                 <configuration>
-                    <sourceDirectory>./docs/asciidoc/generated</sourceDirectory>
-                    <outputDirectory>./docs/asciidoc/html</outputDirectory>
-                    <headerFooter>true</headerFooter>
-                    <doctype>book</doctype>
-                    <backend>html</backend>
-                    <sourceHighlighter>coderay</sourceHighlighter>
-                    <attributes>
-                        <!--菜单栏在左边-->
-                        <toc>left</toc>
-                        <!--多标题排列-->
-                        <toclevels>3</toclevels>
-                        <!--自动打数字序号-->
-                        <sectnums>true</sectnums>
-                    </attributes>
+                    <apiSources>
+                        <apiSource>
+                            <springmvc>true</springmvc>
+                            <locations>
+                                <location>com.ilife.douban.controller</location>
+                            </locations>
+                            <schemes>http</schemes>
+                            <host>localhost</host>
+                            <basePath>/douban</basePath>
+                            <info>
+                                <title>Douban Service</title>
+                                <version>v1</version>
+                                <description>Douban Service</description>
+                                <contact>
+                                    <email>zhull991122@sjtu.edu.cn</email>
+                                    <name>Yang gen</name>
+                                </contact>
+                                <license>
+                                    <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+                                    <name>Apache 2.0</name>
+                                </license>
+                            </info>
+                            <outputPath>${basedir}/generated/document.html</outputPath>
+                            <outputFormats>json,yaml</outputFormats>
+                            <swaggerDirectory>generated/swagger-ui</swaggerDirectory>
+                        </apiSource>
+                    </apiSources>
                 </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
