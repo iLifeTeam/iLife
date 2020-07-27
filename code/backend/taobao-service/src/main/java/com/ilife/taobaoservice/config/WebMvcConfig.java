@@ -5,6 +5,8 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
@@ -14,8 +16,8 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
     /*
-    * 解决swagger-ui 404的问题
-    * */
+     * 解决swagger-ui 404的问题
+     * */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // 解决静态资源无法访问
@@ -41,5 +43,4 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         //4、将convert添加到converters中
         converters.add(fastConverter);
     }
-
 }

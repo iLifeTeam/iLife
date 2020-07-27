@@ -1,0 +1,195 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is a sample for swagger-maven-plugin",
+    "version" : "v1",
+    "title" : "Swagger Maven Plugin Sample",
+    "contact" : {
+      "name" : "ZhaoXuyang",
+      "email" : "771906409@qq.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "localhost",
+  "basePath" : "/taobao",
+  "tags" : [ {
+    "name" : "AplipayServiceController"
+  } ],
+  "schemes" : [ "http" ],
+  "paths" : {
+    "/login" : {
+      "post" : {
+        "tags" : [ "AplipayServiceController" ],
+        "summary" : "",
+        "description" : "login with username, password",
+        "operationId" : "loginIntoTaobao",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/LoginRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/order/all" : {
+      "get" : {
+        "tags" : [ "AplipayServiceController" ],
+        "summary" : "",
+        "description" : "get user's all order",
+        "operationId" : "getAllOrder",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/order/between" : {
+      "get" : {
+        "tags" : [ "AplipayServiceController" ],
+        "summary" : "",
+        "description" : "get user's order between date",
+        "operationId" : "getOrderBetween",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "low",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "format" : "date-time"
+        }, {
+          "name" : "high",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "format" : "date-time"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/order/crawl/after" : {
+      "post" : {
+        "tags" : [ "AplipayServiceController" ],
+        "summary" : "",
+        "description" : "update history order after date specified",
+        "operationId" : "updateOrderAfter",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "date",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "format" : "date-time"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/order/crawl/all" : {
+      "post" : {
+        "tags" : [ "AplipayServiceController" ],
+        "summary" : "",
+        "description" : "update all history order",
+        "operationId" : "updateOrderAll",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/order/crawl/incremental" : {
+      "post" : {
+        "tags" : [ "AplipayServiceController" ],
+        "summary" : "",
+        "description" : "incremental crawl",
+        "operationId" : "updateOrderIncremental",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "LoginRequest" : {
+      "type" : "object",
+      "properties" : {
+        "username" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}

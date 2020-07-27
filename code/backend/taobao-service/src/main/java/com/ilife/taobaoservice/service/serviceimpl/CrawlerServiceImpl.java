@@ -35,7 +35,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 
 
     public static  String HTTP_SCHEME = "http";
-    public static  String HOST_IP = "localhost:8101";
+    public static  String HOST_IP = "0.0.0.0:8101";
     CloseableHttpClient httpClient = HttpClientBuilder.create().build();
     @Autowired
     UserDao userDao;
@@ -61,11 +61,16 @@ public class CrawlerServiceImpl implements CrawlerService {
         }
         return null;
     }
-    public String loginRequest(String username, String password)  {
+    public String fetchSmsRequest(String phone)  {
         List<NameValuePair> parameters = new ArrayList<>();
-        parameters.add(new BasicNameValuePair("username", username));
-        parameters.add(new BasicNameValuePair("password", password));
-        return getRequest("/login",parameters);
+        parameters.add(new BasicNameValuePair("phone", phone));
+        return getRequest("/login/sms/fetch",parameters);
+    }
+    public String loginWithSmsRequest(String phone, String code)  {
+        List<NameValuePair> parameters = new ArrayList<>();
+        parameters.add(new BasicNameValuePair("phone", phone));
+        parameters.add(new BasicNameValuePair("code", code));
+        return getRequest("/login/sms",parameters);
     }
     public String fetchAllHistoryRequest(String username)  {
         List<NameValuePair> parameters = new ArrayList<>();
@@ -78,11 +83,11 @@ public class CrawlerServiceImpl implements CrawlerService {
         parameters.add(new BasicNameValuePair("date",date.toString()));
         return getRequest("/history/after",parameters);
     }
-    @Override
-    public String login(String username, String password) {
-        String response = loginRequest(username, password);
-        return response;
-    }
+//    @Override
+//    public String login(String username, String password) {
+//        String response = loginRequest(username, password);
+//        return response;
+//    }
 
     private Order objectToOrder(Object object){
         JSONObject orderObject = (JSONObject) object;
@@ -134,6 +139,17 @@ public class CrawlerServiceImpl implements CrawlerService {
         }
         return count;
     }
+
+    @Override
+    public String loginWithSms(String phone, String code) {
+        return loginWithSmsRequest(phone, code);
+    }
+
+    @Override
+    public String fetchSms(String phone) {
+        return fetchSmsRequest(phone);
+    }
+
     @Override
     public Integer fetchHistory(String username) {
         String response  = fetchAllHistoryRequest(username);
