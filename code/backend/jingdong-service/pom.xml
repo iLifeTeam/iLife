@@ -122,11 +122,11 @@
                         <apiSource>
                             <springmvc>true</springmvc>
                             <locations>
-                                <location>com.ilife.zhihu.controller</location>
+                                <location>com.ilife.jingdongservice.controller</location>
                             </locations>
                             <schemes>http</schemes>
                             <host>localhost</host>
-                            <basePath>/zhihu</basePath>
+                            <basePath>/jingdong</basePath>
                             <info>
                                 <title>Swagger Maven Plugin Sample</title>
                                 <version>v1</version>
