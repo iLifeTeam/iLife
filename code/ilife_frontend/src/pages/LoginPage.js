@@ -7,13 +7,15 @@ export default class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: localStorage.getItem("username"),
+      username: "",
       password: ""
     }
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handlePsdChange = this.handlePsdChange.bind(this);
     this.login = this.login.bind(this);
+    this.axiosfunc = this.axiosfunc.bind(this);
   }
+
   componentDidMount() {
 
     const script = document.createElement("script");
@@ -37,12 +39,12 @@ export default class LoginPage extends Component {
   }
 
   async login() {
-    console.log("111");
+    //console.log("111");
     var config = {
       method: 'post',
-      url: 'http://47.97.206.169:8686/auth/auth',
+      url: 'http://18.163.114.85:8686/login',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       data: {
         "account": this.state.username,
@@ -52,28 +54,36 @@ export default class LoginPage extends Component {
 
     const history = createBrowserHistory();
 
+    const data = await this.axiosfunc(config);
+
+    if (data === "iLife login success") {
+      alert("登录成功！");
+      localStorage.setItem("username", config.data.account);
+      history.push("/home");
+      window.location.reload();
+    }
+    else {
+      alert("登录失败！请检查用户名或密码！");
+      return;
+    }
+
+  }
+
+  async axiosfunc(config) {
     await axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        alert("登录成功！");
-        localStorage.setItem("username", this.state.username);
-        history.push("/home");
-        window.location.reload();
+        return response.data;
       })
       .catch(function (error) {
         console.log(error);
-        return;
+        return "";
       });
-
-
-    localStorage.setItem("username", this.state.username);
-    history.push("/home");
-    window.location.reload();
   }
   render() {
     return (
-      <body class="hold-transition login-page">
-        <div class="kin-blue sidebar-mini">
+      <body className="hold-transition login-page">
+        <div className="kin-blue sidebar-mini">
           <div className="login-box ">
             <div className="login-logo">
               <a><b>iLife</b></a>
@@ -83,7 +93,7 @@ export default class LoginPage extends Component {
               <p className="login-box-msg">登录</p>
               <form action="../../index2.html" method="post">
                 <div className="form-group has-feedback">
-                  <input type="email" className="form-control" placeholder="NickName" onChange={(val) => this.handleNameChange(val)} />
+                  <input type="email" className="form-control" placeholder="Account" onChange={(val) => this.handleNameChange(val)} />
                   <span className="glyphicon glyphicon-envelope form-control-feedback" />
                 </div>
                 <div className="form-group has-feedback">
@@ -100,7 +110,7 @@ export default class LoginPage extends Component {
                   </div>
                   {/* /.col */}
                   <div className="col-xs-4">
-                    <p onClick={this.login} className="btn btn-primary btn-block btn-flat">登录</p>
+                    <p onClick={this.login} id="login" className="btn btn-primary btn-block btn-flat">登录</p>
                   </div>
                   {/* /.col */}
                 </div>
@@ -117,12 +127,3 @@ export default class LoginPage extends Component {
     )
   }
 }
-
-/*<div className="social-auth-links text-center">
-                <p>- OR -</p>
-                <a href="#" className="btn btn-block btn-social btn-facebook btn-flat"><i className="fa fa-facebook" /> Sign in using
-        Facebook</a>
-                <a href="#" className="btn btn-block btn-social btn-google btn-flat"><i className="fa fa-google-plus" /> Sign in using
-        Google+</a>
-              </div>
-*/

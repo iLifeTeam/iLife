@@ -18,7 +18,7 @@ export default class WeiboBodyContent extends Component {
   componentDidMount() {
     const script = document.createElement("script");
 
-    script.src = "dist/js/content.js";
+    script.src = "../../dist/js/content.js";
     script.async = true;
     document.body.appendChild(script);
 
