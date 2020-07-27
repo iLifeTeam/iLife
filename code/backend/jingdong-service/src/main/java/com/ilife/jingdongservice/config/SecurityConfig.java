@@ -31,8 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://49.234.125.131", "http://localhost:3000"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setExposedHeaders(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("x-auth-token","content-type","X-Requested-With","XMLHttpRequest"));
+        configuration.setExposedHeaders(Arrays.asList("x-auth-token","content-type","X-Requested-With","XMLHttpRequest"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(36000L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
