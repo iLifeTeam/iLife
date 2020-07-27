@@ -85,7 +85,7 @@ app.get('/login/sms',async function (req, res) {
         res.send("error, get sms first")
         return
     }
-    const cookie = await crawler.login(page,phone,code)
+    const cookies = await crawler.login(page,phone,code)
     browser.close()
     fs.writeFile(filename,JSON.stringify(cookies),err => {if (err) {console.log(err)}})
     res.send("success")
