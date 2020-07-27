@@ -45,7 +45,7 @@ export default class zhihuBodyContent extends Component {
     var data;
     var config = {
       method: 'post',
-      url: 'http://47.97.206.169:8090/login',
+      url: 'http://18.162.168.229:8090/login',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -68,9 +68,9 @@ export default class zhihuBodyContent extends Component {
 
     if (data === undefined) return;
 
-    if (data.data === "success") {
+    if (data.data === "Login successfully!") {
       var activities_data;
-      await axios.get("http://47.97.206.169:8090/activity/all?username=" + this.state.username)
+      await axios.get("http://18.162.168.229:8090/activity/all?username=" + this.state.username)
         .then(function (response) {
           console.log(response);
           activities_data = response.data;
@@ -90,7 +90,7 @@ export default class zhihuBodyContent extends Component {
   async loginTwice() {
     var config = {
       method: 'post',
-      url: 'http://47.97.206.169:8090/login',
+      url: 'http://18.162.168.229:8090/login',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -102,21 +102,21 @@ export default class zhihuBodyContent extends Component {
       }
     };
 
-    /*
+
     await axios(config)
       .then(function (response) {
         console.log(response);
       })
     console.log("done");
-    
-    await axios.post("http://47.97.206.169:8090/updateActivities?username=" + this.state.username)
+    /*
+    await axios.post("http://18.162.168.229:8090/updateActivities?username=" + this.state.username)
       .then(function (response) {
         console.log(response);
       })
     */
 
     var activities_data;
-    await axios.get("http://47.97.206.169:8090/activity/all?username=" + this.state.username)
+    await axios.get("http://18.162.168.229:8090/activity/all?username=" + this.state.username)
       .then(function (response) {
         console.log(response);
         activities_data = response.data;

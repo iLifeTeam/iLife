@@ -57,7 +57,7 @@ export default class RegisterPage extends Component {
     // console.log("111");
     var config = {
       method: 'post',
-      url: 'http://18.163.114.85:8686/auth/register',
+      url: 'http://18.162.168.229:8686/auth/register',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -99,23 +99,23 @@ export default class RegisterPage extends Component {
             <p className="login-box-msg">Register a new membership</p>
             <form >
               <div className="form-group has-feedback">
-                <input type="text" className="form-control" placeholder="NickName" onChange={(val) => this.handleNameChange(val)} />
+                <input type="text" id="nameinput" className="form-control" placeholder="NickName" onChange={(val) => this.handleNameChange(val)} />
                 <span className="glyphicon glyphicon-user form-control-feedback" />
               </div>
               <div className="form-group has-feedback">
-                <input type="text" className="form-control" placeholder="Account" onChange={(val) => this.handleAccountChange(val)} />
+                <input type="text" id="accountinput" className="form-control" placeholder="Account" onChange={(val) => this.handleAccountChange(val)} />
                 <span className="glyphicon glyphicon-user form-control-feedback" />
               </div>
               <div className="form-group has-feedback">
-                <input type="email" className="form-control" placeholder="Email" onChange={(val) => this.handleEmailChange(val)} />
+                <input type="email" id="emailinput" className="form-control" placeholder="Email" onChange={(val) => this.handleEmailChange(val)} />
                 <span className="glyphicon glyphicon-envelope form-control-feedback" />
               </div>
               <div className="form-group has-feedback">
-                <input type="password" className="form-control" placeholder="Password" onChange={(val) => this.handlePsdChange(val)} />
+                <input type="password" id="psdinput" className="form-control" placeholder="Password" onChange={(val) => this.handlePsdChange(val)} />
                 <span className="glyphicon glyphicon-lock form-control-feedback" />
               </div>
               <div className="form-group has-feedback">
-                <input type="password" className="form-control" placeholder="Retype password" />
+                <input type="password" id="psd2input" className="form-control" placeholder="Retype password" />
                 <span className="glyphicon glyphicon-log-in form-control-feedback" />
               </div>
               <div className="row">
@@ -128,7 +128,7 @@ export default class RegisterPage extends Component {
                 </div>
                 {/* /.col */}
                 <div className="col-xs-4">
-                  <p onClick={this.register} className="btn btn-primary">注册</p>
+                  <p id="register" onClick={this.register} className="btn btn-primary">注册</p>
                 </div>
                 {/* /.col */}
               </div>

@@ -42,7 +42,7 @@ export default class ZhihuActivity extends Component {
 
   async getAnswer(id) {
     var answer;
-    await axios.get("http://47.97.206.169:8090/answer?id=" + id)
+    await axios.get("http://18.162.168.229:8090/answer?id=" + id)
       .then(function (response) {
         console.log(response);
         answer = response.data;

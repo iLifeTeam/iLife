@@ -13,7 +13,6 @@ export default class LoginPage extends Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handlePsdChange = this.handlePsdChange.bind(this);
     this.login = this.login.bind(this);
-    this.axiosfunc = this.axiosfunc.bind(this);
   }
 
   componentDidMount() {
@@ -42,43 +41,32 @@ export default class LoginPage extends Component {
     //console.log("111");
     var config = {
       method: 'post',
-      url: 'http://18.163.114.85:8686/login',
+      url: 'http://18.162.168.229:8686/login',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       data: {
         "account": this.state.username,
-        "password": this.state.password,
+        "password": this.state.password
       }
-    };
+    }
 
     const history = createBrowserHistory();
-
-    const data = await this.axiosfunc(config);
-
-    if (data === "iLife login success") {
-      alert("登录成功！");
-      localStorage.setItem("username", config.data.account);
-      history.push("/home");
-      window.location.reload();
-    }
-    else {
-      alert("登录失败！请检查用户名或密码！");
-      return;
-    }
-
-  }
-
-  async axiosfunc(config) {
     await axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        return response.data;
+        alert("登录成功！");
+        localStorage.setItem("username", config.data.account);
+        history.push("/home");
+        window.location.reload();
+        return;
       })
       .catch(function (error) {
         console.log(error);
-        return "";
+        alert("用户名或密码错误！");
+        return;
       });
+
   }
   render() {
     return (
@@ -93,11 +81,11 @@ export default class LoginPage extends Component {
               <p className="login-box-msg">登录</p>
               <form action="../../index2.html" method="post">
                 <div className="form-group has-feedback">
-                  <input type="email" className="form-control" placeholder="Account" onChange={(val) => this.handleNameChange(val)} />
+                  <input id="nameinput" type="email" className="form-control" placeholder="Account" onChange={(val) => this.handleNameChange(val)} />
                   <span className="glyphicon glyphicon-envelope form-control-feedback" />
                 </div>
                 <div className="form-group has-feedback">
-                  <input type="password" className="form-control" placeholder="Password" onChange={(val) => this.handlePsdChange(val)} />
+                  <input id="psdinput" type="password" className="form-control" placeholder="Password" onChange={(val) => this.handlePsdChange(val)} />
                   <span className="glyphicon glyphicon-lock form-control-feedback" />
                 </div>
                 <div className="row">
