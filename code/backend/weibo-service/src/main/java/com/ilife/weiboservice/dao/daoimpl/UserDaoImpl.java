@@ -2,9 +2,13 @@ package com.ilife.weiboservice.dao.daoimpl;
 
 import com.ilife.weiboservice.dao.UserDao;
 import com.ilife.weiboservice.entity.User;
+import com.ilife.weiboservice.entity.Weibo;
 import com.ilife.weiboservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.sql.Timestamp;
+import java.util.List;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -28,5 +32,8 @@ public class UserDaoImpl implements UserDao {
         userRepository.save(user);
         return user;
     }
+
+
+
 
 }

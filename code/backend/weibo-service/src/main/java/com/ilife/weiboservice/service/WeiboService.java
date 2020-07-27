@@ -4,6 +4,7 @@ import com.ilife.weiboservice.entity.Statistics;
 import com.ilife.weiboservice.entity.Weibo;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Date;
 import java.util.List;
 
 public interface WeiboService {
@@ -17,5 +18,5 @@ public interface WeiboService {
 
     ResponseEntity<?> save(Weibo weibo);
 
-    Statistics getStats(Long uid);
+    Statistics getStats(Long uid, Date startDate,Date endDate);
 }

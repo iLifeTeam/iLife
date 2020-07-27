@@ -6,26 +6,31 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Statistics {
-    private Integer avgUp;
+    private Float avgUp;
     private Integer maxUp;
     private Integer allUp;
     private String maxUpWb;
-    private Integer avgRt;
+
+    private Float avgRt;
     private Integer maxRt;
     private Integer allRt;
     private String maxRtWb;
-    private Integer avgCm;
+
+    private Float avgCm;
     private Integer maxCm;
     private Integer allCm;
     private String maxCmWb;
-    private Integer preTime;
+
+    private Float avgWb;
     private Integer maxWb;
-    private Date maxDate;
+    private Integer allWb;
+    private Timestamp maxDate;
 
 }
