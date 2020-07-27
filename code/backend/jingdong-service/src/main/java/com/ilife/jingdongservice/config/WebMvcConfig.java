@@ -44,12 +44,12 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         //4、将convert添加到converters中
         converters.add(fastConverter);
     }
-   //
+   // git commit -m "deploy: disable security and add all permit"
 
     @Override
     protected void addCorsMappings(CorsRegistry registry) {
         super.addCorsMappings(registry);
-        registry.addMapping("/*")
+        registry.addMapping("/**")
                 .allowCredentials(true)
                 .allowedOrigins("http://49.234.125.131", "http://localhost:3000")
                 .allowedMethods("PUT","GET","POST")
