@@ -51,6 +51,7 @@ create table book
 	hot int null,
 	primary key (name, id)
 )
+DEFAULT CHARSET=utf8mb4
 engine=InnoDB
 ;
 
@@ -62,6 +63,7 @@ create table game
 	ranking float null,
 	hot int null
 )
+DEFAULT CHARSET=utf8mb4
 engine=InnoDB
 ;
 
@@ -75,6 +77,7 @@ create table movie
 	hot int null,
 	primary key (id, name)
 )
+DEFAULT CHARSET=utf8mb4
 engine=InnoDB
 ;
 
@@ -83,6 +86,7 @@ create table user
 	id varchar(64) not null
 		primary key
 )
+DEFAULT CHARSET=utf8mb4
 engine=InnoDB
 ;
 

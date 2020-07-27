@@ -109,7 +109,6 @@ public class bilicrawller {
 //        HttpEntity contentEntity = response.getEntity();
 //        System.out.println(EntityUtils.toString(contentEntity));
         List<Cookie> cookies = cookieStore.getCookies();
-        System.out.println(cookies);
         if (httpClient != null) {
             httpClient.close();
         }
@@ -171,7 +170,6 @@ public class bilicrawller {
             videoDao.addvideo(oid,type,auther_name,auther_id,tag_name,title);
             historyDao.addhistory(mid,oid,type,is_fav);
         }
-        System.out.println(jsonArraytotal);
     }
     public biliuser getuserinform(String SessData) throws IOException {
         CloseableHttpResponse response = null;

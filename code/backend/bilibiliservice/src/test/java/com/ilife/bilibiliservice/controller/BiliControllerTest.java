@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.runner.RunWith;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -35,6 +36,7 @@ class BiliControllerTest {
 
 
     @Test
+    @WithMockUser(roles="USER")
     void getloginurl() throws Exception {
         MvcResult result = mockMvc.perform(get("/bili/getloginurl")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -44,6 +46,7 @@ class BiliControllerTest {
     }
 
     @Test
+    @WithMockUser(roles="USER")
     void loginconfirmandgetSESSDATA() throws Exception {
         MvcResult result = mockMvc.perform(post("/bili/loginconfirm")
                 .param("oauthKey", "4d7466abe7563caa216a4c84b6bfd1d1")
@@ -54,6 +57,7 @@ class BiliControllerTest {
     }
 
     @Test
+    @WithMockUser(roles="USER")
     void updatehistory() throws Exception {
         MvcResult result = mockMvc.perform(get("/bili/updatehistory")
                 .param("SESSDATA", "7c38d094%2C1611034097%2Cbddbf*71")
@@ -64,6 +68,7 @@ class BiliControllerTest {
     }
 
     @Test
+    @WithMockUser(roles="USER")
     void gethistory() throws Exception {
         MvcResult result = mockMvc.perform(post("/bili/gethistory")
                 .param("mid", "480346309")
