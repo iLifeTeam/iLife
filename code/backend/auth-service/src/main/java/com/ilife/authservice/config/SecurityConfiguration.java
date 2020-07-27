@@ -11,8 +11,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.session.web.http.CookieSerializer;
+import org.springframework.session.web.http.DefaultCookieSerializer;
 
 
+import javax.servlet.http.Cookie;
 import java.io.PrintWriter;
 
 
@@ -82,6 +85,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     CustomAuthenticationFilter customAuthenticationFilter() throws Exception {
         CustomAuthenticationFilter filter = new CustomAuthenticationFilter();
         filter.setAuthenticationSuccessHandler((req, resp, authentication) -> {
+//            Cookie[] cookies = req.getCookies();
+//            for(int i = 0;i < cookies.length;i++) {
+//                cookies[i].setDomain("");
+//                resp.addCookie(cookies[i]);
+//            }
+            resp.setHeader("Access-Control-Allow-Credentials", "true");
             resp.setContentType("application/json;charset=utf-8");
             PrintWriter out = resp.getWriter();
             out.write(new ObjectMapper().writeValueAsString("iLife login success"));
@@ -97,5 +106,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         });
         filter.setAuthenticationManager(authenticationManagerBean());
         return filter;
+    }
+    @Bean
+    public CookieSerializer httpSessionIdResolver(){
+        DefaultCookieSerializer cookieSerializer = new DefaultCookieSerializer();
+        cookieSerializer.setCookieName("token");
+        cookieSerializer.setUseHttpOnlyCookie(false);
+        cookieSerializer.setSameSite(null);
+        return cookieSerializer;
+
     }
 }

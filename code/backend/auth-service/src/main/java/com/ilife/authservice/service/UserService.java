@@ -23,4 +23,10 @@ public interface UserService {
     Users findByAccount(String account);
 
     ResponseEntity<?> auth(String account, String password);
+
+    ResponseEntity<?> updateDbId(Long id, String dbId);
+
+    ResponseEntity<?> updateBiliId(Long id, String dbId);
+
+    ResponseEntity<?> updateTbId(Long id, String dbId);
 }
