@@ -4,43 +4,99 @@ const express = require('express');
 const crawler = require('./index.js')
 const fs = require("fs")
 
+const browsers = new Map();
 const app = express();
 
-const HEADLESS = true ;
-app.get('/login',async function (req, res) {
+const HEADLESS = false ;
+// app.get('/login',async function (req, res) {
+//     console.log("login with: ", req.query)
+//     const {username, password} = req.query
+//     const filename = "./cookies/" + username + ".cookie"
+//     const browser = await crawler.newBrowser(HEADLESS)
+//     fs.readFile(filename,async(err, data) => {
+//             if (err) {
+//                 console.log(err)
+//                 const cookies = await login(browser,username,password)
+//                 fs.writeFile(filename,JSON.stringify(cookies),err => {if (err) {console.log(err)}})
+//
+//                 await browser.close()
+//                 res.send("success")
+//             } else {
+//                 const cookies = JSON.parse(data.toLocaleString())
+//                 const page = await crawler.newPage(browser)
+//                 await crawler.gotoHistory(page,cookies)
+//                 if(await page.$("#fm-login-id") != null){
+//                     const cookies = await login(browser,username, password)
+//                     fs.writeFile(filename,JSON.stringify(cookies),err => {if (err) {console.log(err)}})
+//                 }
+//                 await browser.close()
+//                 res.send("success")
+//             }
+//         }
+//     )
+// })
+app.get('/login/sms/fetch',async function (req, res) {
     console.log("login with: ", req.query)
-    const {username, password} = req.query
-    const filename = "./cookies/" + username + ".cookie"
-    const browser = await crawler.newBrowser(HEADLESS)
+    const {phone} = req.query
+    const filename = "./cookies/" + phone + ".cookie"
+    let browser = browsers.get(phone)
+    if (browser == null) {
+        browser = await crawler.newBrowser(HEADLESS)
+    }
     fs.readFile(filename,async(err, data) => {
             if (err) {
                 console.log(err)
-                const cookies = await login(browser,username,password)
-                fs.writeFile(filename,JSON.stringify(cookies),err => {if (err) {console.log(err)}})
-
-                await browser.close()
+                const page = await crawler.newPage(browser)
+                await crawler.gotoLogin(page)
+                await crawler.getSms(page,phone)
+                browsers.set(phone,{
+                    browser: browser,
+                    page: page
+                })
+                // fs.writeFile(filename,JSON.stringify(cookies),err => {if (err) {console.log(err)}})
                 res.send("success")
             } else {
                 const cookies = JSON.parse(data.toLocaleString())
                 const page = await crawler.newPage(browser)
                 await crawler.gotoHistory(page,cookies)
                 if(await page.$("#fm-login-id") != null){
-                    const cookies = await login(browser,username, password)
-                    fs.writeFile(filename,JSON.stringify(cookies),err => {if (err) {console.log(err)}})
+                    await crawler.gotoLogin(page)
+                    await getSms(page,phone)
+                    browsers.set(phone,{
+                        browser: browser,
+                        page: page
+                    })
+                    // fs.writeFile(filename,JSON.stringify(cookies),err => {if (err) {console.log(err)}})
+                    res.send(sms)
+                }else {
+                    browser.close()
+                    res.send("already login")
                 }
-                await browser.close()
-                res.send("success")
             }
         }
     )
 })
-const login = async (browser,username, password) => {
-    console.log(chalk.green('开始登陆'))
-    const page = await crawler.newPage(browser)
-    await crawler.gotoLogin(page)
-    const cookies =  (await crawler.login(page, username, password))
-    return cookies
-}
+app.get('/login/sms',async function (req, res) {
+    console.log("login with: ", req.query)
+    const {phone,code} = req.query
+    const filename = "./cookies/" + phone + ".cookie"
+    const {browser,page} = browsers.get(phone)
+    if (browser == null) {
+        res.send("error, get sms first")
+        return
+    }
+    const cookies = await crawler.login(page,phone,code)
+    browser.close()
+    fs.writeFile(filename,JSON.stringify(cookies),err => {if (err) {console.log(err)}})
+    res.send("success")
+})
+// const login = async (browser,username, password) => {
+//     console.log(chalk.green('开始登陆'))
+//     const page = await crawler.newPage(browser)
+//     await crawler.gotoLogin(page)
+//     const cookies =  (await crawler.login(page, username, password))
+//     return cookies
+// }
 app.get('/history/all', async function (req, res) {
     const {username} = req.query
     console.log("history of user " + username)
