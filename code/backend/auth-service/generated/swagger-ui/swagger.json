@@ -20,39 +20,6 @@
   } ],
   "schemes" : [ "http" ],
   "paths" : {
-    "/auth/auth" : {
-      "post" : {
-        "tags" : [ "User Service Controller" ],
-        "summary" : "User log in",
-        "description" : "Auth one iLife user by giving account.password",
-        "operationId" : "auth",
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "type" : "string"
-            }
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "type" : "object"
-            }
-          },
-          "501" : {
-            "description" : "user not exists"
-          },
-          "502" : {
-            "description" : "account and password not match"
-          }
-        }
-      }
-    },
     "/auth/delById" : {
       "post" : {
         "tags" : [ "User Service Controller" ],
@@ -187,6 +154,87 @@
         }
       }
     },
+    "/auth/updateBiliId" : {
+      "post" : {
+        "tags" : [ "User Service Controller" ],
+        "summary" : "update Bilibili ID",
+        "description" : "update user's Bilibili ID,return the number of affected rows",
+        "operationId" : "updateBili",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/auth/updateDbId" : {
+      "post" : {
+        "tags" : [ "User Service Controller" ],
+        "summary" : "update Douban ID",
+        "description" : "update user's Douban ID,return the number of affected rows",
+        "operationId" : "updateDb",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/auth/updateTbId" : {
+      "post" : {
+        "tags" : [ "User Service Controller" ],
+        "summary" : "update Taobao ID",
+        "description" : "update user's Taobao ID,return the number of affected rows",
+        "operationId" : "updateTb",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
     "/auth/updateWbId" : {
       "post" : {
         "tags" : [ "User Service Controller" ],
@@ -258,6 +306,22 @@
             }
           }
         } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/login" : {
+      "post" : {
+        "tags" : [ "User Service Controller" ],
+        "summary" : "update Weibo ID",
+        "description" : "default login url for Spring Security",
+        "operationId" : "login",
         "responses" : {
           "200" : {
             "description" : "successful operation",

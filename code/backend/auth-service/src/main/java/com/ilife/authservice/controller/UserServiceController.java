@@ -85,23 +85,23 @@ public class UserServiceController {
     }
 
 
-    @ApiOperation(notes = "Auth one iLife user by giving account.password", value = "User log in", httpMethod = "POST")
-    @ApiResponses({
-            @ApiResponse(code = 501, message = "user not exists"),
-            @ApiResponse(code = 502, message = "account and password not match"),
-    })
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "account", value = "the account of the iLife user"),
-            @ApiImplicitParam(name = "password", value = "the password of the iLife user"),
-    }
-    )
-    @PostMapping(path = "/auth/auth")
-    public ResponseEntity<?> auth(@ApiIgnore @RequestBody Map<String, String> params) {
-        String account = params.get("account");
-        String password = params.get("password");
-        System.out.println("********** auth **********");
-        return userService.auth(account, password);
-    }
+//    @ApiOperation(notes = "Auth one iLife user by giving account.password", value = "User log in", httpMethod = "POST")
+//    @ApiResponses({
+//            @ApiResponse(code = 501, message = "user not exists"),
+//            @ApiResponse(code = 502, message = "account and password not match"),
+//    })
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "account", value = "the account of the iLife user"),
+//            @ApiImplicitParam(name = "password", value = "the password of the iLife user"),
+//    }
+//    )
+//    @PostMapping(path = "/auth/auth")
+//    public ResponseEntity<?> auth(@ApiIgnore @RequestBody Map<String, String> params) {
+//        String account = params.get("account");
+//        String password = params.get("password");
+//        System.out.println("********** auth **********");
+//        return userService.auth(account, password);
+//    }
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "wyyId", value = "the WangYiYun ID of the iLife user"),
@@ -169,8 +169,8 @@ public class UserServiceController {
     }
 
     //when not login
-    @ApiOperation(notes = "update user's Weibo ID,return the number of affected rows", value = "update Weibo ID", httpMethod = "POST")
-    @RequestMapping(path = "/login")
+    @ApiOperation(notes = "default login url for Spring Security", value = "update Weibo ID", httpMethod = "POST")
+    @PostMapping(path = "/login")
     public ResponseEntity<?> login(){
         return ResponseEntity.status(403).body("not login");
     }
