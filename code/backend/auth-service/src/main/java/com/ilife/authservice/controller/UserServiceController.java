@@ -16,7 +16,6 @@ import java.util.Map;
 import static java.lang.Long.parseLong;
 
 
-@CrossOrigin(origins = "*")
 @RestController
 @Api(tags = {"User Service Controller"}, description = "Everything about auth & CRUD of iLife User")
 public class UserServiceController {
@@ -27,6 +26,7 @@ public class UserServiceController {
 
     @ApiOperation(notes = "Get user info by userID", value = "get user info by id", httpMethod = "GET")
     @GetMapping(path = "/auth/getById")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Users getUserById(@ApiParam(name = "userId", value = "The user ID of a iLife user") @RequestParam("userId") Long uid) {
         System.out.println("********** getUserById **********");
         return userService.findById(uid);
@@ -34,6 +34,7 @@ public class UserServiceController {
 
     @ApiOperation(notes = "Get user info by account", value = "get user info by account", httpMethod = "GET")
     @GetMapping(path = "/auth/getByAccount")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Users getUserByAccount(@ApiParam(name = "account", value = "The account number of a iLife user") @RequestParam("account") String account) {
         System.out.println("********** getUserByAccount **********");
         return userService.findByAccount(account);
@@ -41,6 +42,7 @@ public class UserServiceController {
 
     @ApiOperation(notes = "Get user info by Nickname", value = "get user info by nickname", httpMethod = "GET")
     @GetMapping(path = "/auth/getByNickname")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Users getUserByNickname(@ApiParam(name = "nickname", value = "The user nickname of a iLife user") @RequestParam("nickname") String nickname) {
         System.out.println("********** getUserByNickname **********");
         return userService.findByNickname(nickname);
@@ -54,6 +56,7 @@ public class UserServiceController {
     )
     @ApiOperation(notes = "Delete one ilife user By user Id", value = "delete one user", httpMethod = "POST")
     @PostMapping(path = "/auth/delById")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> deleteById(@ApiParam(name = "userId", value = "The user ID of a iLife user") @RequestBody Map<String, String> params) {
         Long id = parseLong(params.get("userId"));
         System.out.println("********** deleteById **********");
