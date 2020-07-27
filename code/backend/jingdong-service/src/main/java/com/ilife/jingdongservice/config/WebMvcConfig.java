@@ -45,16 +45,16 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         converters.add(fastConverter);
     }
    // git commit -m "deploy: disable security and add all permit"
-
-    @Override
-    protected void addCorsMappings(CorsRegistry registry) {
-        super.addCorsMappings(registry);
-        registry.addMapping("/**")
-                .allowCredentials(true)
-                .allowedOrigins("http://49.234.125.131", "http://localhost:3000")
-                .allowedMethods("PUT","GET","POST")
-                .allowedHeaders("*")
-                .exposedHeaders("*")
-                .maxAge(36000L);
-    }
+//
+//    @Override
+//    protected void addCorsMappings(CorsRegistry registry) {
+////        super.addCorsMappings(registry);
+//        registry.addMapping("/**")
+//                .allowCredentials(true)
+//                .allowedOrigins("http://49.234.125.131", "http://localhost:3000")
+//                .allowedMethods("PUT","GET","POST")
+//                .allowedHeaders("*")
+//                .exposedHeaders("*")
+//                .maxAge(36000L);
+//    }
 }
