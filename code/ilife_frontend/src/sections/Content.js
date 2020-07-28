@@ -5,7 +5,6 @@ import {
   Route,
 } from "react-router-dom";
 import zhihuBodyContent from './contents/zhihuBodyContent'
-import Oauth from '../weibo/Oauth'
 import DataTable from './components/DataTable'
 import WeiboBodyContent from './contents/WeiboBodyContent';
 import BilibiliBodyContent from './contents/BilibiliBodyContent';

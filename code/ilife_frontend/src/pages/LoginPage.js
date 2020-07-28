@@ -57,10 +57,13 @@ export default class LoginPage extends Component {
     await axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        alert("登录成功！");
-        localStorage.setItem("username", config.data.account);
-        history.push("/home");
-        window.location.reload();
+        if (response.data === "iLife login success") {
+          alert("登录成功！");
+          localStorage.setItem("username", config.data.account);
+          history.push("/home");
+          window.location.reload();
+        }
+        else alert("登录失败！")
         return;
       })
       .catch(function (error) {
