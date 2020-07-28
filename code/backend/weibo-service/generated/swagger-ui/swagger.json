@@ -146,6 +146,42 @@
         }
       }
     },
+    "/weibo/getStats" : {
+      "get" : {
+        "tags" : [ "pet" ],
+        "summary" : "get weibo statistics",
+        "description" : "Get user's weibo statistics specified by userID",
+        "operationId" : "getStats",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "query",
+          "description" : "The user ID of a WeiBo user,should be a Long Integer",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "startTime",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "format" : "date-time"
+        }, {
+          "name" : "endTime",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "format" : "date-time"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Statistics"
+            }
+          }
+        }
+      }
+    },
     "/weibo/getWeibo" : {
       "get" : {
         "tags" : [ "pet" ],
@@ -198,6 +234,72 @@
     }
   },
   "definitions" : {
+    "Statistics" : {
+      "type" : "object",
+      "properties" : {
+        "avgUp" : {
+          "type" : "number",
+          "format" : "float"
+        },
+        "maxUp" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "allUp" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "maxUpWb" : {
+          "type" : "string"
+        },
+        "avgRt" : {
+          "type" : "number",
+          "format" : "float"
+        },
+        "maxRt" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "allRt" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "maxRtWb" : {
+          "type" : "string"
+        },
+        "avgCm" : {
+          "type" : "number",
+          "format" : "float"
+        },
+        "maxCm" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "allCm" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "maxCmWb" : {
+          "type" : "string"
+        },
+        "avgWb" : {
+          "type" : "number",
+          "format" : "float"
+        },
+        "maxWb" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "allWb" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "maxDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    },
     "User" : {
       "type" : "object",
       "properties" : {
