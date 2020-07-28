@@ -67,9 +67,10 @@ app.get('/login/sms/fetch',async function (req, res) {
                         page: page
                     })
                     // fs.writeFile(filename,JSON.stringify(cookies),err => {if (err) {console.log(err)}})
-                    res.send(sms)
+                    res.send("success")
                 }else {
                     browser.close()
+                    browsers.delete(phone)
                     res.send("already login")
                 }
             }
@@ -87,6 +88,7 @@ app.get('/login/sms',async function (req, res) {
     }
     const cookies = await crawler.login(page,phone,code)
     browser.close()
+    browsers.delete(phone)
     fs.writeFile(filename,JSON.stringify(cookies),err => {if (err) {console.log(err)}})
     res.send("success")
 })
@@ -113,7 +115,6 @@ app.get('/history/all', async function (req, res) {
                 if(await page.$("#fm-login-id") != null){
                     res.send("login expired")
                     browser.close()
-                    return
                 }else {
                     const orders = await crawler.traverseHistory(page)
                     browser.close()
