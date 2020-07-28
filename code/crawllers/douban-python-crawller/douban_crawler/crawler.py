@@ -27,19 +27,14 @@ class Crawler:
         self.headers = {
             'User-Agent': 'PostmanRuntime/7.26.1',
             'Connection': 'keep-alive',
-            'Cookie': 'bid=ZN1dBm-0o9g; douban-fav-remind=1; __yadk_uid=clm1BwAvEboA5xjReL4Q8gVlnWiKcsfB; '
-                      'll="118201"; _vwo_uuid_v2=D58A7FEF07D6C3A2E2FAB8E378796D6C6|3174d2e6e85c8111e9144960f76088fe; '
-                      'viewed="26284925"; gr_user_id=3c33da18-73de-42a4-8cbf-57af0bfa5aba; '
-                      'trc_cookie_storage=taboola%2520global%253Auser-id%3Da9a4e48b-377b-4b8d-8603-969341741197'
-                      '-tuct59bdd00; _pk_ref.100001.8cb4=%5B%22%22%2C%22%22%2C1595381211%2C%22https%3A%2F%2Fwww'
-                      '.google.com%2F%22%5D; _pk_ses.100001.8cb4=*; '
-                      '__utmz=30149280.1595381455.15.12.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=('
-                      'not%20provided); __utmc=30149280; '
-                      '__utma=30149280.193287346.1588984522.1594909739.1595381455.15; ap_v=0,6.0; push_noty_num=0; '
-                      'push_doumail_num=0; __utmv=30149280.13208; douban-profile-remind=1; __utmt=1; '
-                      'dbcl2="132088467:mcj0gbzrFD0"; ck=y2F9; '
-                      '_pk_id.100001.8cb4=be2879f9b43cfd40.1588984520.12.1595382716.1594912731.; '
-                      '__utmb=30149280.39.10.1595381455 '
+            'Cookie': 'bid=ZN1dBm-0o9g; douban-fav-remind=1; ll="118201"; '
+                      '_vwo_uuid_v2=D58A7FEF07D6C3A2E2FAB8E378796D6C6|3174d2e6e85c8111e9144960f76088fe; '
+                      'viewed="26284925"; gr_user_id=3c33da18-73de-42a4-8cbf-57af0bfa5aba; __utmc=30149280; '
+                      'push_noty_num=0; push_doumail_num=0; __utmv=30149280.13208; douban-profile-remind=1; '
+                      '__utmz=30149280.1595593664.26.16.utmcsr=accounts.douban.com|utmccn=(referral)|ut '
+                      'mcmd=referral|utmcct=/passport/login; '
+                      '__utma=30149280.193287346.1588984522.1595920301.1595925657.32; dbcl2="132088467:jgUxT5YQvoI"; '
+                      'ck=w7o8; __utmt_douban=1; __utmb=30149280.16.10.1595925657 '
         }
 
     def crawl(self, prefix, postfix):
@@ -101,11 +96,15 @@ class Crawler:
         book_head = soup.find(class_="interest-list")
         for book in book_head.children:
             # average sleeping time:
-            rad = random.randint(0, 6)
+            rad = random.randint(0, 7)
             if rad == 3 or rad == 4:
                 time.sleep(1)
-            if rad == 5:
+            if rad == 5 or rad == 6:
                 time.sleep(2)
+            if rad == 7:
+                time.sleep(4)
+            if rad == 8:
+                time.sleep(5)
             price = ""
             hot = ""
             if not isinstance(book, Tag):
@@ -146,11 +145,15 @@ class Crawler:
         movie_head = soup.find(class_='grid-view')
         movie_list = movie_head.children
         for movie in movie_list:
-            rad = random.randint(0, 5)
+            rad = random.randint(0, 8)
             if rad == 3 or rad == 4:
                 time.sleep(1)
-            if rad == 5:
+            if rad == 5 or rad == 6:
                 time.sleep(2)
+            if rad == 7:
+                time.sleep(4)
+            if rad == 8:
+                time.sleep(5)
             if isinstance(movie, NavigableString):
                 continue
             if isinstance(movie, Tag):
@@ -183,7 +186,7 @@ class Crawler:
                     ranking = content.string
                 content = movie_soup.find(class_=["rating_sum"])
                 # some people will mark not
-                if str(content.contents[0]).strip() == "尚未上映":
+                if str(content.contents[0]).strip() == "尚未上映" or str(content.contents[0]).strip() == "暂无评分":
                     hot = str(0)
                 else:
                     hot = content.a.span.string
@@ -198,7 +201,7 @@ class Crawler:
         text = self.crawl(prefix, postfix)
         self.parse_movies(text)
 
-    def work_book(self, prefix, postfix,sleepTime):
+    def work_book(self, prefix, postfix, sleepTime):
         time.sleep(sleepTime)
         text = self.crawl(prefix, postfix)
         self.parse_books(text)
@@ -230,8 +233,8 @@ def main(_id, _type, page):
         data_list = []
         page = crawler.real_page_movie(page)
         for i in range(int(page)):
-            randomInt = random.randint(0, min(int(i), 8))
-            data_list.append((MOVIE_URL, "/collect?start=" + str(15 * i), randomInt))
+            randomInt = random.randint(2, min(int(i) + 2, 10))
+            data_list.append((MOVIE_URL, "/collect?start=" + str(150+15 * i), randomInt))
         print(data_list)
         res = pool.starmap(crawler.work_movie, data_list)
         pool.close()
@@ -244,7 +247,7 @@ def main(_id, _type, page):
         for i in range(int(page)):
             randomInt = random.randint(0, min(int(page), 8))
             print(randomInt)
-            data_list.append((BOOK_URL, "/collect?start=" + str(15 * i),randomInt))
+            data_list.append((BOOK_URL, "/collect?start=" + str(15 * i), randomInt))
         print(data_list)
         res = pool.starmap(crawler.work_book, data_list)
         pool.close()
