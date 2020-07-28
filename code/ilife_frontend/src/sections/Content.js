@@ -11,6 +11,7 @@ import WeiboBodyContent from './contents/WeiboBodyContent';
 import BilibiliBodyContent from './contents/BilibiliBodyContent';
 import WyyBodyContent from './contents/WyyBodyContent';
 import JingdongBodyContent from "./contents/JingdongBodyContent";
+import TaobaoBodyContent from "./contents/TaobaoBodyContent";
 
 export default class Content extends Component {
   render() {
@@ -22,6 +23,7 @@ export default class Content extends Component {
         <Route path="/home/bilibili" component={BilibiliBodyContent} />
         <Route path="/home/wyy" component={WyyBodyContent} />
         <Route path="/home/jingdong" component={JingdongBodyContent} />
+        <Route path="/home/taobao" component={TaobaoBodyContent} />
       </div>
     )
   }
