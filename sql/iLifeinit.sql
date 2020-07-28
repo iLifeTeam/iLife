@@ -53,6 +53,7 @@ create table book
 )
 DEFAULT CHARSET=utf8mb4
 engine=InnoDB
+DEFAULT CHARSET=utf8mb4
 ;
 
 create table game
@@ -65,6 +66,7 @@ create table game
 )
 DEFAULT CHARSET=utf8mb4
 engine=InnoDB
+DEFAULT CHARSET=utf8mb4
 ;
 
 create table movie
@@ -79,6 +81,7 @@ create table movie
 )
 DEFAULT CHARSET=utf8mb4
 engine=InnoDB
+DEFAULT CHARSET=utf8mb4
 ;
 
 create table user
@@ -88,6 +91,7 @@ create table user
 )
 DEFAULT CHARSET=utf8mb4
 engine=InnoDB
+DEFAULT CHARSET=utf8mb4
 ;
 
 
