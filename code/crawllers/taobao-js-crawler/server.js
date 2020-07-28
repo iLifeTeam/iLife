@@ -7,7 +7,7 @@ const fs = require("fs")
 const browsers = new Map();
 const app = express();
 
-const HEADLESS = false ;
+const HEADLESS = true ;
 // app.get('/login',async function (req, res) {
 //     console.log("login with: ", req.query)
 //     const {username, password} = req.query
