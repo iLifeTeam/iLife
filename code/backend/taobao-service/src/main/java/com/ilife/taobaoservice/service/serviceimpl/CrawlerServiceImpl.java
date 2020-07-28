@@ -116,16 +116,16 @@ public class CrawlerServiceImpl implements CrawlerService {
         Date lastDate = new Date(0L);
         for (Object object: array){
             Order order = objectToOrder(object);
+            if (lastDate.before(order.getDate())){
+                lastDate.setTime(order.getDate().getTime());
+            }
             Order existed = orderDao.findById(order.getId());
             if (existed != null){
-                if (! existed.getUser().getUsername().equals(username)){
+                if (!existed.getUser().getUsername().equals(username)){
                     existed.setUser(user);
                     orderDao.save(existed);
                 }
                 continue;
-            }
-            if (lastDate.before(order.getDate())){
-                lastDate.setTime(order.getDate().getTime());
             }
             order.setUser(user);
             Order savedOrder = orderDao.save(order);
