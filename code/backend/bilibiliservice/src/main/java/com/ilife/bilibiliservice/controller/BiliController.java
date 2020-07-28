@@ -27,14 +27,14 @@ public class BiliController {
     @Autowired
     private bilicrawller bilicrawller;
 
-    @CrossOrigin
+
     @GetMapping("/bili/getloginurl")
     @PreAuthorize("hasRole('ROLE_USER')")
     public JSONObject getloginurl() {
         return JSONObject.parseObject(bilicrawller.getloginurl());
     }
 
-    @CrossOrigin
+
     @PostMapping("/bili/loginconfirm")
     @PreAuthorize("hasRole('ROLE_USER')")
     public String loginconfirmandgetSESSDATA(@RequestParam("oauthKey") String oauthKey) throws IOException {
@@ -43,7 +43,7 @@ public class BiliController {
         else return cookies.get(2).getValue();
     }
 
-    @CrossOrigin
+
     @PostMapping("/bili/gethistory")
     @PreAuthorize("hasRole('ROLE_USER')")
     public Page<history> gethistory(@RequestParam("mid") Long mid, @RequestParam("page") Integer page, @RequestParam("size") Integer size)  {
@@ -51,14 +51,14 @@ public class BiliController {
         return historyService.findAllByMid(mid,pageable);
     }
 
-    @CrossOrigin
+
     @GetMapping("/bili/userinform")
     @PreAuthorize("hasRole('ROLE_USER')")
     public biliuser getbiliuserinform(@RequestParam("SESSDATA") String SESSDATA) throws IOException {
         return bilicrawller.getuserinform(SESSDATA);
     }
 
-    @CrossOrigin
+
     @GetMapping("/bili/updatehistory")
     @PreAuthorize("hasRole('ROLE_USER')")
     public void updatehistory(@RequestParam("SESSDATA") String SESSDATA) throws IOException {
