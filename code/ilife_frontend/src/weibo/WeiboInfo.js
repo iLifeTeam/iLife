@@ -26,12 +26,14 @@ export default class WeiboInfo extends Component {
 
   }
   componentDidUpdate(prevProps, prevState) {
-    var table = $('#weiboTable').DataTable()
-    table.clear();
-    //向table中添加数据
-    table.rows.add(this.props.activities ? this.props.activities : null);
-    //重新绘画表格
-    table.draw();
+    if (this.props.activities) {
+      var table = $('#weiboTable').DataTable()
+      table.clear();
+      //向table中添加数据
+      table.rows.add(this.props.activities);
+      //重新绘画表格
+      table.draw();
+    }
   }
 
   componentWillUnmount() {
