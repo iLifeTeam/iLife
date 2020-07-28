@@ -110,7 +110,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public CookieSerializer httpSessionIdResolver(){
         DefaultCookieSerializer cookieSerializer = new DefaultCookieSerializer();
-        cookieSerializer.setCookieName("token");
+//        cookieSerializer.setCookieName("token");
         cookieSerializer.setUseHttpOnlyCookie(false);
         cookieSerializer.setSameSite(null);
         return cookieSerializer;
