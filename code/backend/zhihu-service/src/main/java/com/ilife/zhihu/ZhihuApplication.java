@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin(origins = "*") //TODO: remove later
 public class ZhihuApplication {
 
+    public static void main(String[] args) {
+        SpringApplication.run(ZhihuApplication.class, args);
+    }
+
     @Bean
     public OpenEntityManagerInViewFilter openEntityManagerInViewFilter() {
         return new OpenEntityManagerInViewFilter();
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(ZhihuApplication.class, args);
     }
 
 }

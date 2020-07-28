@@ -190,10 +190,14 @@ Get user info by account
 ```json
 {
   "account" : "string",
+  "biliid" : 0,
+  "doubanid" : "string",
   "email" : "string",
   "id" : 0,
   "nickname" : "string",
   "password" : "string",
+  "tbid" : "string",
+  "type" : "string",
   "weibid" : 0,
   "wyyid" : 0,
   "zhid" : "string"
@@ -248,10 +252,14 @@ Get user info by userID
 ```json
 {
   "account" : "string",
+  "biliid" : 0,
+  "doubanid" : "string",
   "email" : "string",
   "id" : 0,
   "nickname" : "string",
   "password" : "string",
+  "tbid" : "string",
+  "type" : "string",
   "weibid" : 0,
   "wyyid" : 0,
   "zhid" : "string"
@@ -306,10 +314,14 @@ Get user info by Nickname
 ```json
 {
   "account" : "string",
+  "biliid" : 0,
+  "doubanid" : "string",
   "email" : "string",
   "id" : 0,
   "nickname" : "string",
   "password" : "string",
+  "tbid" : "string",
+  "type" : "string",
   "weibid" : 0,
   "wyyid" : 0,
   "zhid" : "string"
@@ -507,6 +519,53 @@ update user's Zhihu ID,return the number of affected rows
 ```
 
 
+<a name="loginusingpost_7"></a>
+#### update Weibo ID
+```
+POST /login
+```
+
+
+##### 说明
+update user's Weibo ID,return the number of affected rows
+
+
+##### 响应
+
+|HTTP代码|说明|类型|
+|---|---|---|
+|**200**|OK|object|
+|**204**|No Content|无内容|
+|**401**|Unauthorized|无内容|
+|**403**|Forbidden|无内容|
+
+
+##### 消耗
+
+* `application/json`
+
+
+##### 生成
+
+* `\*/*`
+
+
+##### HTTP请求示例
+
+###### 请求 path
+```
+/login
+```
+
+
+##### HTTP响应示例
+
+###### 响应 200
+```json
+"object"
+```
+
+
 
 
 <a name="definitions"></a>
@@ -518,10 +577,14 @@ update user's Zhihu ID,return the number of affected rows
 |名称|说明|类型|
 |---|---|---|
 |**account**  <br>*可选*|**样例** : `"string"`|string|
+|**biliid**  <br>*可选*|**样例** : `0`|integer (int64)|
+|**doubanid**  <br>*可选*|**样例** : `"string"`|string|
 |**email**  <br>*可选*|**样例** : `"string"`|string|
 |**id**  <br>*可选*|**样例** : `0`|integer (int64)|
 |**nickname**  <br>*可选*|**样例** : `"string"`|string|
 |**password**  <br>*可选*|**样例** : `"string"`|string|
+|**tbid**  <br>*可选*|**样例** : `"string"`|string|
+|**type**  <br>*可选*|**样例** : `"string"`|string|
 |**weibid**  <br>*可选*|**样例** : `0`|integer (int64)|
 |**wyyid**  <br>*可选*|**样例** : `0`|integer (int64)|
 |**zhid**  <br>*可选*|**样例** : `"string"`|string|

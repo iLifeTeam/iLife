@@ -164,10 +164,14 @@ Get user info by account
 ```json
 {
   "account" : "string",
+  "biliid" : 0,
+  "doubanid" : "string",
   "email" : "string",
   "id" : 0,
   "nickname" : "string",
   "password" : "string",
+  "tbid" : "string",
+  "type" : "string",
   "weibid" : 0,
   "wyyid" : 0,
   "zhid" : "string"
@@ -222,10 +226,14 @@ Get user info by userID
 ```json
 {
   "account" : "string",
+  "biliid" : 0,
+  "doubanid" : "string",
   "email" : "string",
   "id" : 0,
   "nickname" : "string",
   "password" : "string",
+  "tbid" : "string",
+  "type" : "string",
   "weibid" : 0,
   "wyyid" : 0,
   "zhid" : "string"
@@ -280,10 +288,14 @@ Get user info by Nickname
 ```json
 {
   "account" : "string",
+  "biliid" : 0,
+  "doubanid" : "string",
   "email" : "string",
   "id" : 0,
   "nickname" : "string",
   "password" : "string",
+  "tbid" : "string",
+  "type" : "string",
   "weibid" : 0,
   "wyyid" : 0,
   "zhid" : "string"
@@ -470,6 +482,53 @@ update user's Zhihu ID,return the number of affected rows
 ###### 请求 path
 ```
 /auth/updateZhId
+```
+
+
+##### HTTP响应示例
+
+###### 响应 200
+```json
+"object"
+```
+
+
+<a name="loginusingpost_7"></a>
+#### update Weibo ID
+```
+POST /login
+```
+
+
+##### 说明
+update user's Weibo ID,return the number of affected rows
+
+
+##### 响应
+
+|HTTP代码|说明|类型|
+|---|---|---|
+|**200**|OK|object|
+|**204**|No Content|无内容|
+|**401**|Unauthorized|无内容|
+|**403**|Forbidden|无内容|
+
+
+##### 消耗
+
+* `application/json`
+
+
+##### 生成
+
+* `\*/*`
+
+
+##### HTTP请求示例
+
+###### 请求 path
+```
+/login
 ```
 
 

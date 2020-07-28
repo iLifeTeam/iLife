@@ -1,9 +1,7 @@
 package com.ilife.zhihu.dao.daoimpl;
 
-import com.ilife.zhihu.dao.AnswerDao;
 import com.ilife.zhihu.dao.ArticleDao;
 import com.ilife.zhihu.entity.Article;
-import com.ilife.zhihu.repository.AnswerRepository;
 import com.ilife.zhihu.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

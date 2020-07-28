@@ -100,4 +100,45 @@ https://blog.csdn.net/weixin_44602409/article/details/107358001
 * 学习spring security,写了一些demo
 ### docker
 * 整理了后端的container和images
-
+# 7.21
+### spring security
+* spring security在auth上整合完毕，写了一篇经验博客
+https://blog.csdn.net/weixin_44602409/article/details/107462172
+### 豆瓣
+* 开始搭建豆瓣爬虫
+# 7.22
+### 豆瓣
+* 手写了一个爬取豆瓣个人信息的爬虫，完成了电影部分的爬虫和parsing工作
+* 使用了pymysql,absl库等，爬取后直接存入数据库
+# 7.23
+### 豆瓣
+* 完成了豆瓣书籍的爬虫
+* 完成了豆瓣个人信息的爬虫
+# 7.24
+### 后端
+* 搭建了豆瓣后端
+* 完成了豆瓣后端的动态文档，简单测试，
+### 爬虫
+* 改进爬虫，增加反爬机制
+### 安全
+* 学习spring session与spring security的结合
+* 在本机双服务上实现了分布式session
+* 使用redis来储存session
+# 7.25 Saturday
+# 7.26 Sunday
+### 安全
+* 在服务器上实现了分布式session
+* postman测试均通过，但浏览器端不行
+### 文档
+* 利用插件生成注册服务.yaml的静态文档
+* 集成在了swaggerHub上供对接
+# 7.27 
+### 爬虫
+* 改进豆瓣爬虫，在多进程与反爬之间寻找平衡
+* 改进微博爬虫，可以指定爬取日期
+### 文档
+* 生成了微博服务与豆瓣服务的静态文档
+### 微博后端
+* 增加了基本数据分析接口，返回十五项统计数据
+### 安全
+* 仍在尝试修复有关Cookies的一系列问题

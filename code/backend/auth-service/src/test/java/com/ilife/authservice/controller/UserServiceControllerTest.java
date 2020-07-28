@@ -52,7 +52,7 @@ public class UserServiceControllerTest {
     @Before
     public void before() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-        Users user = new Users("zhihuKing", "zhihugood", "123456", "git@sjtu.edu.cn");
+        Users user = new Users("zhihuKing", "zhihugood", "123456", "git@sjtu.edu.cn","ROLE_USER");
         userDao.save(user);
         userDao.updateWbId(2L, 12345L);
         id = userDao.findByAccount("zhihugood").getId();

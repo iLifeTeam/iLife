@@ -23,9 +23,9 @@ public class Activity {
     @Column(name = "target_id")
     String target_id;
 
-    @JSONField(serialize=false)
+    @JSONField(serialize = false)
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
-    @JoinColumn(name="zhihu_uid",referencedColumnName = "uid")
+    @JoinColumn(name = "zhihu_uid", referencedColumnName = "uid")
     User user;
 
     @Column(name = "type")

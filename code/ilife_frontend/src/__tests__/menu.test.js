@@ -7,7 +7,15 @@ import { shallow } from 'enzyme';
 import Menu from '../sections/Menu';
 
 describe('Menu component test with Enzyme', () => {
-  it('renders without crashing', () => {
+  it('renders without crashing (logoff state)', () => {
     shallow(<Menu />);
   });
+
+  it('renders without crashing (login state)', () => {
+    const menu = shallow(<Menu />);
+    menu.setState({ username: "test" })
+    expect(menu.state().username).toEqual("test");
+
+  })
+
 });
