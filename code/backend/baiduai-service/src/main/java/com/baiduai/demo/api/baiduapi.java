@@ -1,6 +1,7 @@
 package com.baiduai.demo.api;
 
 import com.alibaba.fastjson.JSONObject;
+import io.swagger.annotations.Api;
 import org.apache.commons.codec.Charsets;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -24,6 +25,7 @@ import java.util.Map;
  * 获取token类
  */
 @Service
+
 public class baiduapi {
 
     /**
@@ -96,7 +98,7 @@ public class baiduapi {
 
     public int analysis(String token,String txt) throws IOException {
         String uri = "https://aip.baidubce.com/rpc/2.0/nlp/v1/sentiment_classify?charset=UTF-8&access_token=" + token;
-        System.out.println(uri);
+
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost httpPost = new HttpPost(uri);
         httpPost.setHeader("Content-Type", "application/json;charset=UTF-8");
@@ -105,7 +107,6 @@ public class baiduapi {
 
         httpPost.setEntity(se);
         CloseableHttpResponse response2 = null;
-        System.out.println(httpPost);
         response2 = httpClient.execute(httpPost);
         HttpEntity entity2 = null;
         entity2 = response2.getEntity();

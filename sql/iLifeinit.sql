@@ -52,6 +52,7 @@ create table book
 	primary key (name, id)
 )
 engine=InnoDB
+DEFAULT CHARSET=utf8mb4
 ;
 
 create table game
@@ -63,6 +64,7 @@ create table game
 	hot int null
 )
 engine=InnoDB
+DEFAULT CHARSET=utf8mb4
 ;
 
 create table movie
@@ -76,6 +78,7 @@ create table movie
 	primary key (id, name)
 )
 engine=InnoDB
+DEFAULT CHARSET=utf8mb4
 ;
 
 create table user
@@ -84,6 +87,7 @@ create table user
 		primary key
 )
 engine=InnoDB
+DEFAULT CHARSET=utf8mb4
 ;
 
 
