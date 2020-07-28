@@ -140,6 +140,7 @@ public class CrawlerServiceImpl implements CrawlerService {
         }
         if (user.getLastUpdateDate().before(lastDate)) {
             user.setLastUpdateDate(lastDate);
+            System.out.println("change date to " + lastDate);
             userDao.save(user);
         }
         return count;
