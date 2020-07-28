@@ -1,4 +1,4 @@
-package com.ilife.bilibiliservice.config;
+package com.ilife.musicservice.config;
 
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
