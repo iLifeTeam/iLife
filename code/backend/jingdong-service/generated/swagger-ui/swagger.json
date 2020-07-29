@@ -198,6 +198,29 @@
           }
         }
       }
+    },
+    "/user" : {
+      "get" : {
+        "tags" : [ "JingdongServiceController" ],
+        "summary" : "",
+        "description" : "get user's information",
+        "operationId" : "getUser",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
     }
   }
 }
