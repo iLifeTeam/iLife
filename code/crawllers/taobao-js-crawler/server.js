@@ -61,7 +61,7 @@ app.get('/login/sms/fetch',async function (req, res) {
                 await crawler.gotoHistory(page,cookies)
                 if(await page.$("#fm-login-id") != null){
                     await crawler.gotoLogin(page)
-                    await getSms(page,phone)
+                    await crawler.getSms(page,phone)
                     browsers.set(phone,{
                         browser: browser,
                         page: page
