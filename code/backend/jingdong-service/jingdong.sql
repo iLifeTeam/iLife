@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS `jingdong`.`user`;
 
 CREATE TABLE `jingdong`.`user` (
   `uid` VARCHAR(20) NOT NULL,
-  `last_update_date` int null ,
+  `last_update_date` date null ,
   PRIMARY KEY (`uid`))DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `jingdong`.`order` (
