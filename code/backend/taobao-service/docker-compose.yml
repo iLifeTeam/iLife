@@ -1,0 +1,22 @@
+version: '3.2'
+
+services:
+  taobao-service:
+    image: ilife2020/taobao-service
+
+    ports:
+      - "8090:8090"
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - type: bind
+        source: ./prometheus.yml
+        target: /etc/prometheus/prometheus.yml
+        read_only: true
+#
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+

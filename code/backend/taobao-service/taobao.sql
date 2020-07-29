@@ -1,3 +1,4 @@
+CREATE database if not exists `taobao`;
 use `taobao`;
 
 

@@ -2,6 +2,7 @@ package com.ilife.taobaoservice.controller;
 
 
 import com.ilife.taobaoservice.entity.Order;
+import com.ilife.taobaoservice.entity.Stats;
 import com.ilife.taobaoservice.entity.User;
 import com.ilife.taobaoservice.service.CrawlerService;
 import com.ilife.taobaoservice.service.TaobaoService;
@@ -94,6 +95,15 @@ public class TaobaoController {
         User user = taobaoService.getUserByUsername(username);
         List<Order> orders = taobaoService.getOrderByUserAndDate(user, low, high);
         return ResponseEntity.ok().body(orders);
+    }
+
+    @ApiOperation(notes = "get user's statistics", value = "", httpMethod = "GET")
+    @GetMapping(value = "/stats", produces = "application/json")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> getUserStatistics(@RequestParam String username){
+        User user = taobaoService.getUserByUsername(username);
+        Stats stats = taobaoService.getStats(user);
+        return ResponseEntity.ok().body(stats);
     }
 
 }
