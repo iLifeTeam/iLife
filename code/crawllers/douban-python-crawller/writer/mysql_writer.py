@@ -20,7 +20,7 @@ class Mysqlwriter:
     def write_book(self, books):
         for book in books:
             values = ",".join(
-                ["'" + book.id + "'", "'" + book.name.replace("'", "") + "'", "'" + book.autho.replace("'", "") + "'",
+                ["'" + book.id + "'", "'" + book.name.replace("'", "") + "'", "'" + book.author.replace("'", "") + "'",
                  "'" + str(book.price).strip() + "'",
                  book.ranking, book.hot])
             keys = ["id", "name", "author", "price", "ranking", "hot"]
