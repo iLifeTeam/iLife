@@ -11,7 +11,7 @@ CREATE TABLE `taobao`.`user` (
   `uid` VARCHAR(20) NOT NULL,
   `password` VARCHAR(20) NULL,
   `last_update_date` DATE NULL,
-  PRIMARY KEY (`uid`));
+  PRIMARY KEY (`uid`))DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `taobao`.`order` (
   `id` BIGINT(20) NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE `taobao`.`order` (
   `uid` VARCHAR(20) NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`uid`) references `taobao`.`user`(`uid`)
-  );
+  )DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `taobao`.`item` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -35,4 +35,4 @@ CREATE TABLE `taobao`.`item` (
   `cate3`  VARCHAR (30) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`order_id`) references `taobao`.`order`(`id`)
-  );
+  )DEFAULT CHARSET=utf8mb4;
