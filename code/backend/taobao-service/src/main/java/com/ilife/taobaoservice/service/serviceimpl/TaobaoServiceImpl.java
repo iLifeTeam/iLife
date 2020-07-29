@@ -9,7 +9,6 @@ import com.ilife.taobaoservice.entity.Stats;
 import com.ilife.taobaoservice.entity.User;
 import com.ilife.taobaoservice.service.CrawlerService;
 import com.ilife.taobaoservice.service.TaobaoService;
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
