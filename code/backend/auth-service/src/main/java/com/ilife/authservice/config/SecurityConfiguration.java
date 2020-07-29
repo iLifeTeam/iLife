@@ -85,11 +85,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     CustomAuthenticationFilter customAuthenticationFilter() throws Exception {
         CustomAuthenticationFilter filter = new CustomAuthenticationFilter();
         filter.setAuthenticationSuccessHandler((req, resp, authentication) -> {
-//            Cookie[] cookies = req.getCookies();
-//            for(int i = 0;i < cookies.length;i++) {
-//                cookies[i].setDomain("");
-//                resp.addCookie(cookies[i]);
-//            }
+            Cookie[] cookies = req.getCookies();
+            for (Cookie cookie : cookies) {
+                System.out.println(cookie.getValue());
+                System.out.println(cookie.getName());
+                resp.setHeader("Set-Cookie", cookie.getName()+"="+cookie.getValue()+";SameSite=None;Secure");
+                //                cookie.setDomain("");
+                //                resp.addCookie(cookie);
+            }
             resp.setHeader("Access-Control-Allow-Credentials", "true");
             resp.setContentType("application/json;charset=utf-8");
             PrintWriter out = resp.getWriter();
@@ -112,8 +115,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         DefaultCookieSerializer cookieSerializer = new DefaultCookieSerializer();
 //        cookieSerializer.setCookieName("token");
         cookieSerializer.setUseHttpOnlyCookie(false);
-        cookieSerializer.setSameSite(null);
+        cookieSerializer.setSameSite("None");
+        cookieSerializer.setUseSecureCookie(false);
         return cookieSerializer;
-
     }
 }
