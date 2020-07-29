@@ -5,6 +5,7 @@ import com.ilife.taobaoservice.dao.OrderDao;
 import com.ilife.taobaoservice.dao.UserDao;
 import com.ilife.taobaoservice.entity.Item;
 import com.ilife.taobaoservice.entity.Order;
+import com.ilife.taobaoservice.entity.Stats;
 import com.ilife.taobaoservice.entity.User;
 import com.ilife.taobaoservice.service.CrawlerService;
 import com.ilife.taobaoservice.service.TaobaoService;
@@ -36,6 +37,11 @@ public class TaobaoServiceImpl implements TaobaoService {
     @Override
     public List<Order> getOrderByUser(User user) {
         return orderDao.findByUser(user);
+    }
+
+    @Override
+    public Stats getStats(User user) {
+        return null;
     }
 
     @Override

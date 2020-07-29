@@ -16,24 +16,50 @@
   "host" : "localhost",
   "basePath" : "/taobao",
   "tags" : [ {
-    "name" : "AplipayServiceController"
+    "name" : "TaobaoServiceController"
   } ],
   "schemes" : [ "http" ],
   "paths" : {
-    "/login" : {
+    "/login/sms" : {
       "post" : {
-        "tags" : [ "AplipayServiceController" ],
+        "tags" : [ "TaobaoServiceController" ],
         "summary" : "",
-        "description" : "login with username, password",
-        "operationId" : "loginIntoTaobao",
+        "description" : "login with phone",
+        "operationId" : "loginWithSmsCode",
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/LoginRequest"
+          "name" : "phone",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "smsCode",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
           }
+        }
+      }
+    },
+    "/login/sms/fetch" : {
+      "post" : {
+        "tags" : [ "TaobaoServiceController" ],
+        "summary" : "",
+        "description" : "login with phone",
+        "operationId" : "fetchLoginSms",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "phone",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
         } ],
         "responses" : {
           "200" : {
@@ -47,7 +73,7 @@
     },
     "/order/all" : {
       "get" : {
-        "tags" : [ "AplipayServiceController" ],
+        "tags" : [ "TaobaoServiceController" ],
         "summary" : "",
         "description" : "get user's all order",
         "operationId" : "getAllOrder",
@@ -70,7 +96,7 @@
     },
     "/order/between" : {
       "get" : {
-        "tags" : [ "AplipayServiceController" ],
+        "tags" : [ "TaobaoServiceController" ],
         "summary" : "",
         "description" : "get user's order between date",
         "operationId" : "getOrderBetween",
@@ -105,7 +131,7 @@
     },
     "/order/crawl/after" : {
       "post" : {
-        "tags" : [ "AplipayServiceController" ],
+        "tags" : [ "TaobaoServiceController" ],
         "summary" : "",
         "description" : "update history order after date specified",
         "operationId" : "updateOrderAfter",
@@ -134,7 +160,7 @@
     },
     "/order/crawl/all" : {
       "post" : {
-        "tags" : [ "AplipayServiceController" ],
+        "tags" : [ "TaobaoServiceController" ],
         "summary" : "",
         "description" : "update all history order",
         "operationId" : "updateOrderAll",
@@ -157,7 +183,7 @@
     },
     "/order/crawl/incremental" : {
       "post" : {
-        "tags" : [ "AplipayServiceController" ],
+        "tags" : [ "TaobaoServiceController" ],
         "summary" : "",
         "description" : "incremental crawl",
         "operationId" : "updateOrderIncremental",
@@ -175,19 +201,6 @@
               "type" : "object"
             }
           }
-        }
-      }
-    }
-  },
-  "definitions" : {
-    "LoginRequest" : {
-      "type" : "object",
-      "properties" : {
-        "username" : {
-          "type" : "string"
-        },
-        "password" : {
-          "type" : "string"
         }
       }
     }
