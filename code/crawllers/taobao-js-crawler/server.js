@@ -39,9 +39,10 @@ app.get('/login/sms/fetch',async function (req, res) {
     console.log("login with: ", req.query)
     const {phone} = req.query
     const filename = "./cookies/" + phone + ".cookie"
-    let browser = browsers.get(phone)
-    console.log("browser",browser)
-    if (browser == null) {
+    let browser
+    if(browsers.has(phone)){
+        browser = browsers.get(phone)
+    }else {
         browser = await crawler.newBrowser(HEADLESS)
     }
     fs.readFile(filename,async(err, data) => {
