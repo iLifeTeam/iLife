@@ -234,7 +234,7 @@ def main(_id, _type, page):
         page = crawler.real_page_movie(page)
         for i in range(int(page)):
             randomInt = random.randint(2, min(int(i) + 2, 10))
-            data_list.append((MOVIE_URL, "/collect?start=" + str(150+15 * i), randomInt))
+            data_list.append((MOVIE_URL, "/collect?start=" + str(15 * i), randomInt))
         print(data_list)
         res = pool.starmap(crawler.work_movie, data_list)
         pool.close()
