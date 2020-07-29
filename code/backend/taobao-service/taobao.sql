@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS `taobao`.`user`;
 CREATE TABLE `taobao`.`user` (
   `uid` VARCHAR(20) NOT NULL,
   `password` VARCHAR(20) NULL,
-  `last_update` DATE NULL,
+  `last_update_date` DATE NULL,
   PRIMARY KEY (`uid`));
 
 CREATE TABLE `taobao`.`order` (
