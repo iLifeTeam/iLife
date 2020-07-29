@@ -20,7 +20,7 @@ class Mysqlwriter:
     def write_book(self, books):
         for book in books:
             values = ",".join(
-                ["'" + book.id + "'", "'" + book.name.name.replace("'", "") + "'", "'" + book.author.name.replace("'", "") + "'",
+                ["'" + book.id + "'", "'" + book.name.replace("'", "") + "'", "'" + book.autho.replace("'", "") + "'",
                  "'" + str(book.price).strip() + "'",
                  book.ranking, book.hot])
             keys = ["id", "name", "author", "price", "ranking", "hot"]
@@ -42,7 +42,7 @@ class Mysqlwriter:
     def write_movie(self, movies):
         for movie in movies:
             values = ",".join(
-                ["'" + movie.id + "'", "'" + movie.name.replace("'", "") + "'", "'" + movie.type.name.replace("'", "") + "'",
+                ["'" + movie.id + "'", "'" + movie.name.replace("'", "") + "'", "'" + movie.type.replace("'", "") + "'",
                  "'" + movie.language + "'",
                  movie.ranking, movie.hot])
             keys = ["id", "name", "type", "language", "ranking", "hot"]
