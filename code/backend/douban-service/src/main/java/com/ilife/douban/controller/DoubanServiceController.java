@@ -1,5 +1,6 @@
 package com.ilife.douban.controller;
 
+import com.ilife.douban.entity.BookStats;
 import com.ilife.douban.entity.Movie;
 import com.ilife.douban.service.UserService;
 import com.ilife.douban.entity.Book;
@@ -90,5 +91,13 @@ public class DoubanServiceController {
         String id = params.get("userId");
         System.out.println("********** deleteMovies **********");
         return userService.deleteMovies(id);
+    }
+
+    @ApiOperation(notes = "Get book Statistics by userID", value = "get book statistics", httpMethod = "GET")
+    @GetMapping(path = "/douban/getBookStats")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public BookStats getBookStats(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
+        System.out.println("********** getBookStats **********");
+        return userService.getBookStats(uid);
     }
 }

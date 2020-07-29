@@ -2,6 +2,7 @@ package com.ilife.douban.service;
 
 
 import com.ilife.douban.entity.Book;
+import com.ilife.douban.entity.BookStats;
 import com.ilife.douban.entity.Movie;
 import com.ilife.douban.entity.User;
 import org.springframework.http.ResponseEntity;
@@ -21,4 +22,6 @@ public interface UserService {
     ResponseEntity<?> deleteBooks(String uid);
 
     ResponseEntity<?> deleteMovies(String uid);
+
+    BookStats getBookStats(String uid);
 }

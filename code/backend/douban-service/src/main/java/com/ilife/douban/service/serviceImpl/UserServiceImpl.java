@@ -1,6 +1,7 @@
 package com.ilife.douban.service.serviceImpl;
 
 import com.ilife.douban.dao.MovieDao;
+import com.ilife.douban.entity.BookStats;
 import com.ilife.douban.entity.Movie;
 import com.ilife.douban.service.UserService;
 import com.ilife.douban.dao.BookDao;
@@ -64,6 +65,19 @@ public class UserServiceImpl implements UserService {
             return ResponseEntity.status(501).body("user not exists");
         movieDao.DeleteAllById(uid);
         return ResponseEntity.ok().body("successfully delete");
+    }
+
+    @Override
+    public BookStats getBookStats(String uid){
+        List<Book> bookList = bookDao.findById(uid);
+        float avgPrice=0,maxPrice=0,avgRanking=0,maxRanking=0,avgHot=0,maxHot=0,minHot=0;
+        Book maxPriceBook,maxRankingBook,maxHotBook;
+        Integer allBook=0,allPrice=0;
+        String preAuthor;
+        for(Book book:bookList){
+            allPrice+=book.getPrice().replace('元');
+
+        }
     }
 
 
