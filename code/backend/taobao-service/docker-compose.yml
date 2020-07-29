@@ -5,7 +5,7 @@ services:
     image: ilife2020/taobao-service
 
     ports:
-      - "8090:8090"
+      - "8095:8090"
 
   prometheus:
     image: prom/prometheus
