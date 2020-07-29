@@ -1,5 +1,17 @@
 package com.ilife.douban.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
+
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BookStats {
     float avgPrice;
     float maxPrice;
@@ -11,6 +23,7 @@ public class BookStats {
     float maxHot;
     Book maxHotBook;
     float minHot;
+    Book minHotBook;
     Integer allBook;
     String preAuthor;
 }
