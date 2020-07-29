@@ -1,5 +1,6 @@
 package com.ilife.bilibiliservice.config;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -11,7 +12,7 @@ import org.springframework.web.filter.CorsFilter;
 import java.util.Arrays;
 import java.util.List;
 
-@Component
+@Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class AjaxCorsFilter extends CorsFilter {
     public AjaxCorsFilter() {
