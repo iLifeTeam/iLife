@@ -21,7 +21,7 @@ public class SwaggerConfig {
                 //apiInfo指定测试文档基本信息，这部分将在页面展示
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.ilife.zhihu.controller")) //控制哪些接口暴露给swagger，
+                .apis(RequestHandlerSelectors.basePackage("com.ilife.taobao.controller")) //控制哪些接口暴露给swagger，
                 // RequestHandlerSelectors.any() 所有都暴露，会多出一个默认的error-service-controller
                 // RequestHandlerSelectors.basePackage("com.info.*")  指定包位置
                 .apis(RequestHandlerSelectors.any())

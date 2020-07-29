@@ -203,6 +203,29 @@
           }
         }
       }
+    },
+    "/stats" : {
+      "get" : {
+        "tags" : [ "TaobaoServiceController" ],
+        "summary" : "",
+        "description" : "get user's statistics",
+        "operationId" : "getUserStatistics",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
     }
   }
 }
