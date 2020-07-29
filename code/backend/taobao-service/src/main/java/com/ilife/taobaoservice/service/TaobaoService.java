@@ -12,6 +12,7 @@ public interface TaobaoService {
     List<Order> getOrderByUserAndDate(User user, Date low, Date high);
     List<Order> getOrderByUserAndShop(User user, String shop);
     List<Order> getOrderByUser(User user);
+    Order getOrderById(Long id);
     Stats getStats(User user);
     User saveUser(User user);
 }

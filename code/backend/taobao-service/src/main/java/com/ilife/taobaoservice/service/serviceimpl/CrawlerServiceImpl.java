@@ -9,6 +9,7 @@ import com.ilife.taobaoservice.dao.UserDao;
 import com.ilife.taobaoservice.entity.Item;
 import com.ilife.taobaoservice.entity.Order;
 import com.ilife.taobaoservice.entity.User;
+import com.ilife.taobaoservice.service.AnalyzeService;
 import com.ilife.taobaoservice.service.CrawlerService;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -43,6 +44,9 @@ public class CrawlerServiceImpl implements CrawlerService {
     ItemDao itemDao;
     @Autowired
     OrderDao orderDao;
+    @Autowired
+    AnalyzeService analyzeService;
+
     String getRequest(String path, List<NameValuePair> parameters){
         try {
             URI uri = new URIBuilder()
@@ -134,7 +138,9 @@ public class CrawlerServiceImpl implements CrawlerService {
                 JSONObject itemObject = (JSONObject) itemArrayObject;
                 Item item = objectToItem(itemObject);
                 item.setOrder(savedOrder);
-                itemDao.save(item);
+                itemDao.save(
+                        analyzeService.setCategory(item)
+                );
             }
             count ++;
         }

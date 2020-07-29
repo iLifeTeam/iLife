@@ -30,6 +30,9 @@ CREATE TABLE `taobao`.`item` (
   `number` INT(11) NULL DEFAULT NULL,
   `img_url` VARCHAR(200) NULL DEFAULT NULL,
   `order_id` BIGINT(20) NULL DEFAULT NULL,
+  `cate1` VARCHAR (30) NULL DEFAULT NULL,
+  `cate2`  VARCHAR (30) NULL DEFAULT NULL,
+  `cate3`  VARCHAR (30) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`order_id`) references `taobao`.`order`(`id`)
   );
