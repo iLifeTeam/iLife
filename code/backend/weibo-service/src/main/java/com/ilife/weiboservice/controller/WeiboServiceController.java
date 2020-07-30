@@ -24,6 +24,7 @@ public class WeiboServiceController {
 
     @ApiOperation(notes = "Get all Weibos from database of one user specified by userID", value = "get one user's Weibos", httpMethod = "GET")
     @GetMapping(path = "/weibo/getWeibos")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public List<Weibo> getWeibos(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid, HttpServletResponse response) {
         System.out.println("********** getWeibos **********");
         response.setHeader("Access-Control-Allow-Credentials", "true");
@@ -65,6 +66,7 @@ public class WeiboServiceController {
 
     @ApiOperation(notes = "Get user's weibo statistics specified by userID", value = "get weibo statistics", httpMethod = "GET")
     @GetMapping(path = "/weibo/getStats")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Statistics getStats(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid,
                                @RequestParam("startTime") Date startTime,@RequestParam("endTime") Date endTime) {
         //TODO:解决时区问题
