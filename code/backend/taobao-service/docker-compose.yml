@@ -3,7 +3,6 @@ version: '3.2'
 services:
   taobao-service:
     image: ilife2020/taobao-service
-
     ports:
       - "8095:8090"
 
