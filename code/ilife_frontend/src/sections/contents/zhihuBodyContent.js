@@ -56,6 +56,8 @@ export default class zhihuBodyContent extends Component {
       password: val.target.value,
     })
   }
+  server_ip = "http://18.166.111.161:8090"
+  word_cloud_server = "http://18.162.53.235:8103"
   fetchWordCloud = (username) =>{
     let type = ""
     switch (this.state.radioValue) {
@@ -74,7 +76,7 @@ export default class zhihuBodyContent extends Component {
     }
     const config = {
       method: 'get',
-      url: 'http://18.162.53.235:8103/word_cloud',
+      url: this.word_cloud_server + '/word_cloud',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -96,7 +98,7 @@ export default class zhihuBodyContent extends Component {
   fetchUserinfo = (username) => {
     const config = {
       method: 'get',
-      url: 'http://18.162.168.229:8090/user',
+      url: this.server_ip + '/user',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -111,7 +113,7 @@ export default class zhihuBodyContent extends Component {
         })
   }
   updateUserActivities = (username) => {
-    axios.post("http://18.162.168.229:8090/updateActivities?username=" + this.state.username,{
+    axios.post(this.server_ip + "/updateActivities?username=" + this.state.username,{
       withCredentials:true
     }).then(function (response) {
           console.log(response.data);
@@ -121,7 +123,7 @@ export default class zhihuBodyContent extends Component {
     var data;
     var config = {
       method: 'post',
-      url: 'http://18.162.168.229:8090/login',
+      url: this.server_ip + '/login',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -147,7 +149,7 @@ export default class zhihuBodyContent extends Component {
 
     if (data.data === "Login successfully!") {
       var activities_data;
-      await axios.get("http://18.162.168.229:8090/activity/all?username=" + this.state.username,{
+      await axios.get( this.server_ip + "/activity/all?username=" + this.state.username,{
         withCredentials:true
       })
         .then(function (response) {
@@ -169,7 +171,7 @@ export default class zhihuBodyContent extends Component {
   async loginTwice() {
     var config = {
       method: 'post',
-      url: 'http://18.162.168.229:8090/login',
+      url: this.server_ip + '/login',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -195,7 +197,7 @@ export default class zhihuBodyContent extends Component {
       })
     */
     var activities_data;
-    await axios.get("http://18.162.168.229:8090/activity/all?username=" + this.state.username,{
+    await axios.get(this.server_ip + "/activity/all?username=" + this.state.username,{
 
       withCredentials:true
     })
