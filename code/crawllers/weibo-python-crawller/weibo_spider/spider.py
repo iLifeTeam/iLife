@@ -118,13 +118,13 @@ class Spider:
                         self.cookie,
                         self.user_config, page, self.filter).get_one_page(
                             self.weibo_id_list)  # 获取第page页的全部微博
-                    print(u'{}已获取{}({})的第{}页微博{}'.format(
-                        '-' * 30,
-                        self.user.nickname,
-                        self.user.id,
-                        page,
-                        '-' * 30,
-                    ))
+                    # print(u'{}已获取{}({})的第{}页微博{}'.format(
+                    #     '-' * 30,
+                    #     self.user.nickname,
+                    #     self.user.id,
+                    #     page,
+                    #     '-' * 30,
+                    # ))
                     if weibos:
                         yield weibos
                     else:

@@ -4,8 +4,10 @@ import json
 
 
 class Crawl:
-    def __init__(self, userId):
+    def __init__(self, userId, startDate, endDate):
         self.id = userId
+        self.startDate = startDate
+        self.endDate = endDate
 
     def crawl(self):
         # TODO:部署在服务器上时，应该将绝对地址改为服务器上的地址
@@ -17,6 +19,8 @@ class Crawl:
             json_data = json.load(fp)
             array = [str(self.id)]
             json_data["user_id_list"] = array
+            json_data["since_date"] = self.startDate
+            json_data["end_date"] = self.endDate
         with open('config.json', 'w', encoding='utf8')as fp:
             fp.write(json.dumps(json_data))
 
