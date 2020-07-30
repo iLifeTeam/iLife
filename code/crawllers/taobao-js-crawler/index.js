@@ -151,13 +151,14 @@ const traverseHistory = async (page) => {
   // let pageNum = await page.$eval("ul.pagination li:nth-last-child(2)", node => node.getAttribute("title"))
   let pageCount = 0
   do {
-    pageCount ++
-    console.log("正在处理第" + pageCount + "页")
-    await page.waitForSelector("li.pagination-item.pagination-item-"+pageCount+".pagination-item-active")
-    await page.waitFor(Math.floor(Math.random() * 500) * Math.floor(Math.random() * 10))
-    console.log("确认时第" + pageCount + "页")
-    results = results.concat(await traverseHistoryPage(page))
     try {
+      pageCount++
+      console.log("正在处理第" + pageCount + "页")
+      await page.waitForSelector("li.pagination-item.pagination-item-" + pageCount + ".pagination-item-active")
+      await page.waitFor(Math.floor(Math.random() * 500) * Math.floor(Math.random() * 10))
+      console.log("确认时第" + pageCount + "页")
+      results = results.concat(await traverseHistoryPage(page))
+
       const nextBtnHandle = await page.$("div[class*=simple-pagination] button:nth-child(2)")
       hasNext = !await (await nextBtnHandle.getProperty("disabled")).jsonValue()
       console.log("hasNext", hasNext)
@@ -182,28 +183,28 @@ const traverseHistoryAfterDate = async (page,date) => {
   // let pageNum = await page.$eval("ul.pagination li:nth-last-child(2)", node => node.getAttribute("title"))
   let pageCount = 0
   do {
-    pageCount ++
-    console.log("正在处理第" + pageCount + "页")
-    await page.waitForSelector("li.pagination-item.pagination-item-"+pageCount+".pagination-item-active")
-    await page.waitFor(Math.floor(Math.random() * 500) * Math.floor(Math.random() * 10))
-    console.log("确认时第" + pageCount + "页")
-    const pageResults = await traverseHistoryPage(page)
-    for (const order of pageResults){
-      const orderDate = new Date(order.date)
-      if (orderDate < date){
-        hasNext = false
-        break
-      }else {
-        results.push(order)
-      }
-    }
     try {
+      pageCount++
+      console.log("正在处理第" + pageCount + "页")
+      await page.waitForSelector("li.pagination-item.pagination-item-" + pageCount + ".pagination-item-active")
+      await page.waitFor(Math.floor(Math.random() * 500) * Math.floor(Math.random() * 10))
+      console.log("确认时第" + pageCount + "页")
+      const pageResults = await traverseHistoryPage(page)
+      for (const order of pageResults) {
+        const orderDate = new Date(order.date)
+        if (orderDate < date) {
+          hasNext = false
+          break
+        } else {
+          results.push(order)
+        }
+      }
       const nextBtnHandle = await page.$("div[class*=simple-pagination] button:nth-child(2)")
       hasNext &= !await (await nextBtnHandle.getProperty("disabled")).jsonValue()
       console.log("hasNext", hasNext)
-      if(hasNext) {
+      if (hasNext) {
         nextBtnHandle.click({
-          delay:20
+          delay: 20
         })
       }
     }catch (e) {
