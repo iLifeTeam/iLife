@@ -29,8 +29,8 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class ZhihuController {
     //    private final String CRAWLER_HOSTNAME  = "localhost";
-    private final String CRAWLER_HOSTNAME = "zhihu-crawller";
-    private final int CRAWLLER_PORT = 4001;
+    private final String CRAWLER_HOSTNAME = "47.97.206.169";
+    private final int CRAWLLER_PORT = 8103;
     ZhihuCrawlerServiceClient crawlerServiceClient;
 
     @Autowired
