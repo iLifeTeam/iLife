@@ -1,10 +1,7 @@
 package com.ilife.douban.service;
 
 
-import com.ilife.douban.entity.Book;
-import com.ilife.douban.entity.BookStats;
-import com.ilife.douban.entity.Movie;
-import com.ilife.douban.entity.User;
+import com.ilife.douban.entity.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -24,4 +21,6 @@ public interface UserService {
     ResponseEntity<?> deleteMovies(String uid);
 
     BookStats getBookStats(String uid);
+
+    MovieStats getMovieStats(String uid);
 }

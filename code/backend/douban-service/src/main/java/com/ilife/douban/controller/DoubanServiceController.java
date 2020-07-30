@@ -1,10 +1,7 @@
 package com.ilife.douban.controller;
 
-import com.ilife.douban.entity.BookStats;
-import com.ilife.douban.entity.Movie;
+import com.ilife.douban.entity.*;
 import com.ilife.douban.service.UserService;
-import com.ilife.douban.entity.Book;
-import com.ilife.douban.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -99,5 +96,13 @@ public class DoubanServiceController {
     public BookStats getBookStats(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
         System.out.println("********** getBookStats **********");
         return userService.getBookStats(uid);
+    }
+
+    @ApiOperation(notes = "Get movie Statistics by userID", value = "get movie statistics", httpMethod = "GET")
+    @GetMapping(path = "/douban/getMovieStats")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public MovieStats getMovieStats(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
+        System.out.println("********** getBookStats **********");
+        return userService.getMovieStats(uid);
     }
 }
