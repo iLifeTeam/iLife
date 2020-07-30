@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { createBrowserHistory } from 'history'
 import DoubanBooks from '../../douban/DoubanBooks';
+import {Button} from 'antd';
+import 'antd/dist/antd.css';
 
 export default class DbMovieContent extends Component {
   constructor(props) {
@@ -10,7 +12,10 @@ export default class DbMovieContent extends Component {
       doubanId: null,
       username: "",
       password: "",
-      activities: null
+      activities: null,
+      statsLoading: false,
+      statsReady:false,
+      stats:null,
     }
     //this.login = this.login.bind(this);
     this.getMovies = this.getMovies.bind(this);
@@ -150,8 +155,41 @@ export default class DbMovieContent extends Component {
 
   }
 
+  /* start 文案 here <- bad comment style*/
+  doubanServer = "http://18.166.111.161:8080"
+  fetchStats = (userId)=>{
+
+    const config = {
+      method: 'get',
+      url: this.weiboServer + '/douban/getBookStats',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      params:{
+        userId: userId,
+      },
+      withCredentials:true,
+    };
+    this.setState({
+      statsLoading:true
+    })
+    axios(config)
+        .then( response => {
+          console.log(response.data)
+          this.setState({
+            stats: response.data,
+            statsLoading:false,
+            statsReady:true,
+          })
+        })
+  }
+
+
+  /* end 文案 here*/
+
+
   render() {
-    const { activities } = this.state;
+    const { activities,stats,statsReady,statsLoading,userId} = this.state;
     return (
       <div className="content-wrapper">
         <section className="content">{/*
@@ -196,7 +234,39 @@ export default class DbMovieContent extends Component {
               </div>
             </div>
           </div >
-        </section >
+        </section>
+
+        <section>
+          < div className="row" >
+            <div className="col-xs-12">
+              <div className="box">
+                <div className="box-header">
+                  <h3 className="box-title">用户{this.state.weiboId}的豆瓣读书报表</h3>
+                  <Button
+                      loading={statsLoading}
+                      onClick={()=>{
+                        this.fetchStats(userId)
+                      }}
+                  >
+                    生成报表
+                  </Button>
+                </div>
+                {statsReady ?
+                    <div className="box-body">
+                      你是一个爱看书的人，从你踏入豆瓣的小世界以来，你已经阅读了{stats.allBook}本书，书海无涯，知识作舟，要继续保持哦。
+                      在你阅读的书籍中：
+                      平均评分是{stats.avgRanking}，评分最高的是{stats.maxRankingBook.name}，达到了{stats.maxRanking}分，这是一本由{stats.maxRankingBook.author}所著的书，不知道你是否欣喜与它相遇呢？
+                      平均价格是{stats.avgPrice}，价格最高的是{stats.maxPriceBook.name}，需要{stats.maxPrice}大洋，这是一本由{stats.maxPriceBook.author}所著的书，想必它一定有你所中意之处吧？
+                      平均热度是{stats.avgHot}，热度最高的是{stats.maxHotBook.name}，共有{stats.maxHot}看过，这是一本由{stats.maxHotBook.author}所著的书，这样的爆款书目，读起来一定畅快淋漓吧？
+                      热度最低的是{stats.minHotBook.name}，共有{stats.minHot}看过，这是一本由{stats.minHotBook.author}所著的书，愿意读小众书籍的人，运气都不会太差！
+                      你最喜欢的作者是{stats.preAuthor}，读一个人的著作，也是和人心灵沟通的一种方式。
+                    </div> : statsLoading ? <div>  "加载中..."  </div> : null
+                }
+              </div>
+            </div>
+          </div >
+        </section>
+
       </div >
     )
   }
