@@ -3,8 +3,10 @@ import os
 
 from flask import Flask, abort, request, jsonify
 from wordCloud import *
+from flask_cors import CORS
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": ["http://49.234.125.131", "http://localhost:3000"]}})
 
 test_uid = "552399318699515904"
 img_path = "./images"
