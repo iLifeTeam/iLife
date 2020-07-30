@@ -4,7 +4,7 @@ services:
     image: ilife2020/zhihu-service
     ports:
       - "8090:8090"
-  zhihu-crawller:
-    image: ilife2020/zhihu-python-crawller
+  zhihu-crawler:
+    image: ilife2020/zhihu-python-crawler
     expose:
       - "8103"
