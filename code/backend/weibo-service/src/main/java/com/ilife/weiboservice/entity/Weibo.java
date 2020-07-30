@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -33,5 +34,5 @@ public class Weibo {
     @Column(name = "UP_NUM")
     private Integer up_num;
     @Column(name = "PUBLISH_TIME")
-    private Date publish_time;
+    private Timestamp publish_time;
 }

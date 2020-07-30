@@ -66,6 +66,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ResponseEntity<?> updateDbId(Long id, String dbId) {
+        int num= userDao.updateDbId(id, dbId);
+        return ResponseEntity.ok().body(num);
+    }
+
+    @Override
+    public ResponseEntity<?> updateBiliId(Long id, String biliId) {
+        int num= userDao.updateBiliId(id, biliId);
+        return ResponseEntity.ok().body(num);
+    }
+
+    @Override
+    public ResponseEntity<?> updateTbId(Long id, String tbId) {
+        int num= userDao.updateTbId(id, tbId);
+        return ResponseEntity.ok().body(num);
+    }
+
+
+
+    @Override
     public  ResponseEntity<?> auth(String account, String password){
         Users user;
         if((user=findByAccount(account))==null)
