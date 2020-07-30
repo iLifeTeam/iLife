@@ -397,11 +397,7 @@
           "type" : "integer",
           "format" : "int32"
         },
-        "follower" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "comment" : {
+        "book_WISH" : {
           "type" : "integer",
           "format" : "int32"
         },
@@ -413,15 +409,19 @@
           "type" : "integer",
           "format" : "int32"
         },
-        "following" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
         "movie_WATCHED" : {
           "type" : "integer",
           "format" : "int32"
         },
-        "book_WISH" : {
+        "following" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "follower" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "comment" : {
           "type" : "integer",
           "format" : "int32"
         }
