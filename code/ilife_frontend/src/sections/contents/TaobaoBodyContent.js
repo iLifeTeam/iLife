@@ -79,10 +79,14 @@ export default class TaobaoBodyContent extends Component {
     axios(config)
         .then(response => {
           console.log(response.data)
+          const phone = response.data.tbid == "0" ? "" : response.data.tbid
           this.setState({
-            phone:response.data.tbid == "0" ? "" : response.data.tbid,
+            phone: phone,
             uid: response.data.id
           })
+          if (phone != null){
+            this.fetchSmsRequest(phone)
+          }
         })
   }
   setTbId = (phone) => {
@@ -94,7 +98,7 @@ export default class TaobaoBodyContent extends Component {
       },
       data:{
         userId: this.state.uid,
-        tbId: phone
+        TbId: phone
       }
     }
     axios(config)
@@ -166,6 +170,7 @@ export default class TaobaoBodyContent extends Component {
               loading: false,
               loginSuccess: true,
             })
+            this.setTbId(phone)
             this.fetchAfter(phone, "2020-03-01") // todo: change this
           } else {
             console.log("failed", response.data)
@@ -198,6 +203,31 @@ export default class TaobaoBodyContent extends Component {
           console.log(response)
           console.log("更新了" + response.data + "条购物信息")
           this.fetchAfter(phone, "2020-03-01") // todo: alter this
+        })
+  }
+  updateAll = (phone)=>{
+    const config = {
+      method: 'post',
+      url: this.server + ":" + this.port  + '/order/crawl/all',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      params: {
+        username: phone,
+      },
+      withCredentials:true
+    }
+    this.setState({
+      updating: true
+    })
+    axios(config)
+        .then(response => {
+          this.setState({
+            updating: false,
+          })
+          console.log(response)
+          console.log("更新了" + response.data + "条购物信息")
+          this.fetchAfter(phone, "2020-01-01") // todo: alter this
         })
   }
   fetchAfter = (phone,date) =>{
@@ -270,7 +300,7 @@ export default class TaobaoBodyContent extends Component {
     const style = {
       flex:1
     }
-    const { orders,loginSuccess,uid,phone,btnDisabled,loading,loginLoading,smsCode} = this.state;
+    const { orders,loginSuccess,uid,phone,btnDisabled,loading,updating,loginLoading,smsCode} = this.state;
     console.log(this.state)
     return (
       <div className="content-wrapper">
@@ -325,9 +355,16 @@ export default class TaobaoBodyContent extends Component {
                   <Button
                       onClick={()=>this.updateIncremental(phone)}
                       disabled={!loginSuccess}
+                      loading={updating}
                   >
                     更新数据
-                  </Button>
+                  </Button> <Button
+                    onClick={()=>this.updateAll(phone)}
+                    loading={updating}
+                    disabled={!loginSuccess}
+                >
+                  全部重新爬取
+                </Button>
                   {this.state.updating ?   <div>正在增量式爬取...</div> : null}
                   {this.state.fetching ?   <div>正在获取...</div> : null}
                 </div>
