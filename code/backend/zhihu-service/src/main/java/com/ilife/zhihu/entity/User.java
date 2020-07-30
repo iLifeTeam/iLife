@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -42,7 +41,7 @@ public class User {
     @Column(name = "gender")
     Integer gender;
 
-    @JSONField(serialize=false,deserialize = false)
+    @JSONField(serialize = false, deserialize = false)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Activity> activities;
 }

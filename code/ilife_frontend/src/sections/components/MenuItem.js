@@ -27,17 +27,7 @@ export default class MenuItem extends Component {
         childItems: this.props.childItems
       });
   }
-  /*
-    static getDerivedStateFromProps(props, state) {
-      if (props.itemName !== state.itemName) {
-        return {
-          itemURL: props.itemURL,
-          itemName: props.itemName,
-          childItems: props.childItems
-        };
-      }
-    }
-  */
+
   render() {
     const { childItems } = this.state;
     return (
@@ -53,7 +43,6 @@ export default class MenuItem extends Component {
             {childItems.map((childItem, index) => (
               <li key={index}><Link to={this.state.itemURL + childItem.url}><i className="fa fa-circle-o" />{childItem.name}</ Link></li>
             ))}
-            <li className="active"><a ><i className="fa fa-circle-o" /> Dashboard v2</a></li>
           </ul>
         }
       </li>

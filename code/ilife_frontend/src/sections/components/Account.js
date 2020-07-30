@@ -13,6 +13,18 @@ export default class Account extends Component {
   logoff() {
     const history = createBrowserHistory();
     localStorage.clear();
+
+    var config = {
+      method: 'post',
+      url: 'http://18.162.168.229:8686/logout',
+      headers: { withCredentials: true }
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+
     history.push("/login");
     window.location.reload();
   }
@@ -28,15 +40,15 @@ export default class Account extends Component {
       <li className="dropdown user user-menu">
         <a href="fake_url" className="dropdown-toggle" data-toggle="dropdown">
           <img src="../../dist/img/user2-160x160.jpg" className="user-image" alt="User" />
-          <span className="hidden-xs">Alexander Pierce</span>
+          <span className="hidden-xs">{this.state.username}</span>
         </a>
         <ul className="dropdown-menu">
           {/* User image */}
           <li className="user-header">
             <img src="../../dist/img/user2-160x160.jpg" className="img-circle" alt="User" />
             <p>
-              Alexander Pierce - Web Developer
-      <small>Member since Nov. 2012</small>
+              {this.state.username}
+              <small>Member since Nov. 2012</small>
             </p>
           </li>
           <li className="user-footer">

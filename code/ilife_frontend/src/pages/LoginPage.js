@@ -3,17 +3,20 @@ import { Link } from "react-router-dom"
 import { createBrowserHistory } from 'history'
 import axios from 'axios'
 
+
+axios.defaults.withCredentials = true;
 export default class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: localStorage.getItem("username"),
+      username: "",
       password: ""
     }
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handlePsdChange = this.handlePsdChange.bind(this);
     this.login = this.login.bind(this);
   }
+
   componentDidMount() {
 
     const script = document.createElement("script");
@@ -37,43 +40,43 @@ export default class LoginPage extends Component {
   }
 
   async login() {
-    console.log("111");
+    //console.log("111");
     var config = {
       method: 'post',
-      url: 'http://47.97.206.169:8686/auth/auth',
+      url: 'http://18.162.168.229:8686/login',
       headers: {
-        'Content-Type': 'application/json'
+        withCredentials: true
       },
       data: {
         "account": this.state.username,
-        "password": this.state.password,
+        "password": this.state.password
       }
-    };
+    }
 
     const history = createBrowserHistory();
-
     await axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        alert("登录成功！");
-        localStorage.setItem("username", this.state.username);
-        history.push("/home");
-        window.location.reload();
+        if (response.data === "iLife login success") {
+          alert("登录成功！");
+          localStorage.setItem("username", config.data.account);
+          history.push("/home");
+          window.location.reload();
+        }
+        else alert("登录失败！")
+        return;
       })
       .catch(function (error) {
         console.log(error);
+        alert("用户名或密码错误！");
         return;
       });
 
-
-    localStorage.setItem("username", this.state.username);
-    history.push("/home");
-    window.location.reload();
   }
   render() {
     return (
-      <body class="hold-transition login-page">
-        <div class="kin-blue sidebar-mini">
+      <body className="hold-transition login-page">
+        <div className="kin-blue sidebar-mini">
           <div className="login-box ">
             <div className="login-logo">
               <a><b>iLife</b></a>
@@ -83,11 +86,11 @@ export default class LoginPage extends Component {
               <p className="login-box-msg">登录</p>
               <form action="../../index2.html" method="post">
                 <div className="form-group has-feedback">
-                  <input type="email" className="form-control" placeholder="NickName" onChange={(val) => this.handleNameChange(val)} />
+                  <input id="nameinput" type="email" className="form-control" placeholder="Account" onChange={(val) => this.handleNameChange(val)} />
                   <span className="glyphicon glyphicon-envelope form-control-feedback" />
                 </div>
                 <div className="form-group has-feedback">
-                  <input type="password" className="form-control" placeholder="Password" onChange={(val) => this.handlePsdChange(val)} />
+                  <input id="psdinput" type="password" className="form-control" placeholder="Password" onChange={(val) => this.handlePsdChange(val)} />
                   <span className="glyphicon glyphicon-lock form-control-feedback" />
                 </div>
                 <div className="row">
@@ -100,7 +103,7 @@ export default class LoginPage extends Component {
                   </div>
                   {/* /.col */}
                   <div className="col-xs-4">
-                    <p onClick={this.login} className="btn btn-primary btn-block btn-flat">登录</p>
+                    <p onClick={this.login} id="login" className="btn btn-primary btn-block btn-flat">登录</p>
                   </div>
                   {/* /.col */}
                 </div>
@@ -117,12 +120,3 @@ export default class LoginPage extends Component {
     )
   }
 }
-
-/*<div className="social-auth-links text-center">
-                <p>- OR -</p>
-                <a href="#" className="btn btn-block btn-social btn-facebook btn-flat"><i className="fa fa-facebook" /> Sign in using
-        Facebook</a>
-                <a href="#" className="btn btn-block btn-social btn-google btn-flat"><i className="fa fa-google-plus" /> Sign in using
-        Google+</a>
-              </div>
-*/

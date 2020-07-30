@@ -1,0 +1,10 @@
+version: "3"
+services:
+  jingdong:
+    image: ilife2020/jingdong-service
+    ports:
+      - "8096:8096"
+  jingdong-crawler:
+    image: ilife2020/jingdong-crawler
+    expose:
+      - "8102"
