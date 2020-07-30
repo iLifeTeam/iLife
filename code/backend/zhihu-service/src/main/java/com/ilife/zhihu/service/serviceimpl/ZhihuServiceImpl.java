@@ -109,7 +109,7 @@ public class ZhihuServiceImpl implements ZhihuService {
         JSONArray jsonArray = JSON.parseArray(json);
         for (Object object : jsonArray) {
             JSONObject activityObject = (JSONObject) object;
-            System.out.println(activityObject.toJSONString());
+//            System.out.println(activityObject.toJSONString());
             Activity activity = makeActivityFromJsonObject(activityObject);
             System.out.println(activity.getCreated_time().toString());
             activity.setUser(user);
