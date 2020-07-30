@@ -26,7 +26,6 @@ import java.util.List;
 
 @RestController
 @Api(value = "ZhihuServiceController")
-@CrossOrigin(origins = "*")
 public class ZhihuController {
     //    private final String CRAWLER_HOSTNAME  = "localhost";
     private final String CRAWLER_HOSTNAME = "zhihu-crawler";
