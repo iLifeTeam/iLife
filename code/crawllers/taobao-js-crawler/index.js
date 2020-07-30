@@ -192,16 +192,16 @@ const traverseHistoryAfterDate = async (page,date) => {
     }
     try {
       const nextBtnHandle = await page.$("div[class*=simple-pagination] button:nth-child(2)")
+      hasNext &= !await (await nextBtnHandle.getProperty("disabled")).jsonValue()
+      console.log("hasNext", hasNext)
+      if(hasNext) {
+        nextBtnHandle.click({
+          delay:20
+        })
+      }
     }catch (e) {
       await page.screenshot({
         'path': path.join(__dirname, 'screenshots', 'netBtnTimeout.png')
-      })
-    }
-    hasNext &= !await (await nextBtnHandle.getProperty("disabled")).jsonValue()
-    console.log("hasNext", hasNext)
-    if(hasNext) {
-      nextBtnHandle.click({
-        delay:20
       })
     }
   } while (hasNext);
