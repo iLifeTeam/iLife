@@ -33,7 +33,7 @@ public class TaobaoController {
     @Autowired
     AnalyzeService analyzeService;
 
-    private static ScheduledExecutorService executor = Executors.newScheduledThreadPool(5);
+//    private static ScheduledExecutorService executor = Executors.newScheduledThreadPool(5);
 
     @ApiOperation(notes = "login with phone", value = "",httpMethod = "POST")
     @PostMapping(value = "/login/sms/fetch", produces = "application/json")
@@ -128,9 +128,9 @@ public class TaobaoController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> updateUserCategory(@RequestParam String username){
         User user = taobaoService.getUserByUsername(username);
-        executor.execute(new UpdateCate(user));
-//        analyzeService.updateCategory(user);
-        return ResponseEntity.ok().body();
+//        executor.execute(new UpdateCate(user));
+        analyzeService.updateCategory(user);
+        return ResponseEntity.ok().body(0);
     }
 
 }
