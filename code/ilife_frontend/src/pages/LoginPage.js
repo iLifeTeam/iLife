@@ -60,7 +60,7 @@ export default class LoginPage extends Component {
         if (response.data === "iLife login success") {
           alert("登录成功！");
           localStorage.setItem("username", config.data.account);
-          history.push("/home");
+          history.push("/home/weibo");
           window.location.reload();
         }
         else alert("登录失败！")
