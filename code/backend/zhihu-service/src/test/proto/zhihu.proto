@@ -18,6 +18,6 @@ message ActivityResponse {
   string responseJson = 1;
 }
 service ZhihuService {
-   rpc Login(LoginRequest) returns (LoginResponse) {}
-   rpc GetActivity(ActivitiyRequest) returns (ActivityResponse)  {}
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+  rpc GetActivity(ActivitiyRequest) returns (ActivityResponse)  {}
 }

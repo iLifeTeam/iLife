@@ -37,6 +37,18 @@ public interface UserRepository extends CrudRepository<Users, Long> {
     int updateZhId(Long id, String zhId);
 
 
+    @Transactional
+    @Modifying
+    @Query(value = "update Users set tbid=?2 where id =?1")
+    int updateTbId(Long id, String tbId);
 
+    @Transactional
+    @Modifying
+    @Query(value = "update Users set biliid=?2 where id =?1")
+    int updateBiliId(Long id, String biliId);
 
+    @Transactional
+    @Modifying
+    @Query(value = "update Users set doubanid=?2 where id =?1")
+    int updateDbId(Long id, String dbId);
 }

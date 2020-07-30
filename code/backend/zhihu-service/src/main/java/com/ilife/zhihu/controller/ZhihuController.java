@@ -12,20 +12,25 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Base64;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+
+
 @RestController
 @Api(value = "ZhihuServiceController")
 public class ZhihuController {
-//    private final String CRAWLER_HOSTNAME  = "localhost";
-    private final String CRAWLER_HOSTNAME  = "zhihu-crawller";
-    private final int CRAWLLER_PORT = 4001;
-    ZhihuCrawlerServiceClient crawlerServiceClient ;
+    //    private final String CRAWLER_HOSTNAME  = "localhost";
+    private final String CRAWLER_HOSTNAME = "zhihu-crawler";
+    private final int CRAWLLER_PORT = 8103;
+    ZhihuCrawlerServiceClient crawlerServiceClient;
 
     @Autowired
     ZhihuService zhihuService;
@@ -38,27 +43,22 @@ public class ZhihuController {
         this.crawlerServiceClient = crawlerServiceClient;
     }
 
-    @Data @AllArgsConstructor @NoArgsConstructor
-    public static class LoginRequest{
-        String username; /* its actually email */
-        String password;
-        String captcha;
-    }
-    @ApiOperation(notes = "login with username, password, and optional captcha", value = "",httpMethod = "POST")
+    @ApiOperation(notes = "login with username, password, and optional captcha", value = "", httpMethod = "POST")
     @PostMapping(value = "/login", produces = "application/json")
-    public  ResponseEntity<?> loginIntoZhihu(@RequestBody LoginRequest loginRequest){
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> loginIntoZhihu(@RequestBody LoginRequest loginRequest) {
         String email = loginRequest.username;
         String password = loginRequest.password;
-        if (password == null || email == null){
+        if (password == null || email == null) {
             return ResponseEntity.badRequest().body("Need Password!");
         }
         String captcha = loginRequest.captcha;
-        String response = login(email,password,captcha);
+        String response = login(email, password, captcha);
         System.out.println("login response: " + response);
-        if (!response.equals( "success")){
-            saveImage(response,  email + ".gif");
+        if (!response.equals("success")) {
+            saveImage(response, email + ".gif");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-        }else {
+        } else {
             String userInfoJson = crawlerServiceClient.getUserInfo(email);
             System.out.println("user info json \n " + userInfoJson);
             User user = zhihuService.saveUserFromJsonString(email, userInfoJson);
@@ -66,62 +66,67 @@ public class ZhihuController {
         }
     }
 
-
-    @ApiOperation(notes = "update user activities", value = "",httpMethod = "POST")
-    @PostMapping(value = "/updateActivities",produces = "application/json")
+    @ApiOperation(notes = "update user activities", value = "", httpMethod = "POST")
+    @PostMapping(value = "/updateActivities", produces = "application/json")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> updateUserActivities(
             @RequestParam("username") String username
-    ){
+    ) {
         String response = crawlerServiceClient.getActivities(username);
-        if(response.equals("not login"))
+        if (response.equals("not login"))
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not login!");
         User user = zhihuService.getUserWithEmail(username);
         zhihuService.saveActivitiesFromJsonString(user, response);
         return ResponseEntity.ok().body("Update successfully!");
     }
 
-    @ApiOperation(notes = "GET user information", value = "",httpMethod = "GET")
+    @ApiOperation(notes = "GET user information", value = "", httpMethod = "GET")
     @GetMapping(value = "/user", produces = "application/json")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public User getUser(
-            @RequestParam("username") String username){
+            @RequestParam("username") String username) {
         return zhihuService.getUserWithEmail(username);
     }
 
-    @ApiOperation(notes = "GET user activities", value = "",httpMethod = "GET")
-    @GetMapping(value = "/activity/all",produces = "application/json")
+    @ApiOperation(notes = "GET user activities", value = "", httpMethod = "GET")
+    @GetMapping(value = "/activity/all", produces = "application/json")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public List<Activity> getActivity(
-            @RequestParam("username") String username){
-        return  zhihuService.getUserActivity(username);
+            @RequestParam("username") String username) {
+        return zhihuService.getUserActivity(username);
     }
 
-    @ApiOperation(notes = "GET article", value = "",httpMethod = "GET")
-    @GetMapping(value = "/article",produces = "application/json")
+    @ApiOperation(notes = "GET article", value = "", httpMethod = "GET")
+    @GetMapping(value = "/article", produces = "application/json")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Article getArticle(
-            @RequestParam("id") String id){
+            @RequestParam("id") String id) {
         return zhihuService.getArticleById(id);
     }
 
-    @ApiOperation(notes = "GET question", value = "",httpMethod = "GET")
-    @GetMapping(value = "/question",produces = "application/json")
+    @ApiOperation(notes = "GET question", value = "", httpMethod = "GET")
+    @GetMapping(value = "/question", produces = "application/json")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Question getQuestion(
-            @RequestParam("id") String id){
+            @RequestParam("id") String id) {
         return zhihuService.getQuestionById(id);
     }
 
-    @ApiOperation(notes = "GET answer", value = "",httpMethod = "GET")
-    @GetMapping(value = "/answer",produces = "application/json")
+    @ApiOperation(notes = "GET answer", value = "", httpMethod = "GET")
+    @GetMapping(value = "/answer", produces = "application/json")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Answer getAnswer(
-            @RequestParam("id") String id){
+            @RequestParam("id") String id) {
         return zhihuService.getAnswerById(id);
     }
 
     public void saveImage(String image, String filename) {
         try {
-            File file = new File("./captcha"+ "/" + filename);
-            if(!file.getParentFile().exists()) {
+            File file = new File("./captcha" + "/" + filename);
+            if (!file.getParentFile().exists()) {
                 file.getParentFile().mkdirs();
             }
-            if(!file.exists()) {
+            if (!file.exists()) {
                 file.createNewFile();
             }
             OutputStream out = new FileOutputStream(file);
@@ -129,14 +134,23 @@ public class ZhihuController {
             out.write(bytes);
             out.flush();
             out.close();
-        }catch (IOException | IllegalArgumentException e){
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
 
-    private String login(String email, String password, String captcha){
-        return  captcha == null ?
-                  crawlerServiceClient.login(email,password)
-                : crawlerServiceClient.login(email,password,captcha);
+    private String login(String email, String password, String captcha) {
+        return captcha == null ?
+                crawlerServiceClient.login(email, password)
+                : crawlerServiceClient.login(email, password, captcha);
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class LoginRequest {
+        String username; /* its actually email */
+        String password;
+        String captcha;
     }
 }

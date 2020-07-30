@@ -287,7 +287,7 @@ class ZhihuService(zhihu_pb2_grpc.ZhihuServiceServicer):
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 ip = "0.0.0.0"
-port = "4001"
+port = "8103"
 serverString = ip + ":" + port
 
 def serve():
@@ -307,5 +307,5 @@ def serve():
 if __name__ == '__main__':
 
     zhihu_oauth.zhcls.activity.Activity._get_target = my_get_target ## reload buggy function
-    print("server running. at port 4001\n")
+    print("server running. at port 8103\n")
     serve()
