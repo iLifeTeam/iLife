@@ -24,7 +24,7 @@ public class AjaxCorsFilter extends CorsFilter {
         List<String> allowedHeaders = Arrays.asList("*");
         List<String> exposedHeaders = Arrays.asList(HttpHeaders.ACCEPT,HttpHeaders.AUTHORIZATION,HttpHeaders.COOKIE,HttpHeaders.ORIGIN,HttpHeaders.HOST);
         List<String> allowedMethods = Arrays.asList("POST", "GET", "DELETE", "PUT", "OPTIONS");
-        List<String> allowedOrigins = Arrays.asList("http://49.234.125.131","http://localhost:3000");
+        List<String> allowedOrigins = Arrays.asList("http://49.234.125.131","http://localhost:3000","http://18.166.111.161");
         corsConfig.setAllowedHeaders(allowedHeaders);
         corsConfig.setAllowedMethods(allowedMethods);
         corsConfig.setAllowedOrigins(allowedOrigins);

@@ -294,24 +294,24 @@ definitions:
       name:
         type: "integer"
         format: "int32"
+      movie_WATCHED:
+        type: "integer"
+        format: "int32"
+      movie_WISH:
+        type: "integer"
+        format: "int32"
+      follower:
+        type: "integer"
+        format: "int32"
       book_WISH:
         type: "integer"
         format: "int32"
       book_READ:
         type: "integer"
         format: "int32"
-      movie_WISH:
-        type: "integer"
-        format: "int32"
-      movie_WATCHED:
+      comment:
         type: "integer"
         format: "int32"
       following:
-        type: "integer"
-        format: "int32"
-      follower:
-        type: "integer"
-        format: "int32"
-      comment:
         type: "integer"
         format: "int32"
