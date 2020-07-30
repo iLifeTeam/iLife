@@ -39,7 +39,7 @@ def generateWordCloud(uid, activity_type):
 
     text = re.sub(exclude_char, '', text)
     word_list = jieba.cut(text)
-    print(text)
+    # print(text)
     wl = " ".join(word_list)
 
     wc = WordCloud(background_color="white",  # 设置背景颜色
