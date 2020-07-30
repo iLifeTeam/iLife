@@ -16,12 +16,9 @@ mock.onPost("http://18.162.168.229:8686/login").reply((config) => {
   })
 })
 describe('LoginPage test with Enzyme', () => {
-  it('renders without crashing (logoff state)', () => {
-    shallow(<LoginPage />);
-  });
+  const body = shallow(<LoginPage />);
 
   it('renders without crashing (login state)', () => {
-    const body = shallow(<LoginPage />);
     body.setState({ username: "test" })
     expect(body.state().username).toEqual("test");
   })
