@@ -1,9 +1,0 @@
-.vscode 
-*.pyc
-__pycache__
-
-build/
-dist/
-*.egg-info
-
-weibo/
