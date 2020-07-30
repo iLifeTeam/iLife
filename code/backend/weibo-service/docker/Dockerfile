@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk14:alpine
+FROM adoptopenjdk/openjdk8:alpine
 
 MAINTAINER zhull991122@sjtu.edu.cn
 
