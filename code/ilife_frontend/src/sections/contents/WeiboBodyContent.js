@@ -1,27 +1,83 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import ZhihuActivity from '../../zhihu/ZhihuActivity';
+import { createBrowserHistory } from 'history'
+import WeiboInfo from '../../weibo/WeiboInfo';
+
 export default class WeiboBodyContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      weiboId: null,
       username: "",
       password: "",
-      code: "",
-      picBase64: "",
-      needCaptcha: false,
-      activities: []
+      activities: null
     }
     this.login = this.login.bind(this);
-    this.loginTwice = this.loginTwice.bind(this);
+    this.getWeiboId = this.getWeiboId.bind(this);
   }
   componentDidMount() {
+    const username = localStorage.getItem("username");
+
+    if (username === null || username === undefined) {
+      const history = createBrowserHistory();
+      history.push("/login");
+      window.location.reload();
+    }
+
+
     const script = document.createElement("script");
 
     script.src = "../../dist/js/content.js";
     script.async = true;
     document.body.appendChild(script);
+    this.getWeiboId(username);
+  }
 
+  async getWeiboId(username) {
+    var config = {
+      method: 'get',
+      url: 'http://18.162.168.229:8686/auth/getByAccount?account=' + username,
+      headers: {
+        withCredentials: true
+      }
+    };
+
+    const weiboId = await axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        return response.data.weibid;
+      })
+      .catch(function (error) {
+        console.log(error);
+        return null;
+      });
+
+    console.log(weiboId);
+    var config = {
+      method: 'get',
+      url: 'http://18.162.168.229:8787/weibo/getWeibos?userId=' + weiboId,
+      headers: {
+        withCredentials: true
+      }
+    };
+
+    const activities = await axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        return response.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+        return null;
+      });
+
+    if (activities) {
+      this.setState({
+        activities,
+        weiboId
+      })
+    }
   }
 
   nameOnChange(val) {
@@ -29,11 +85,7 @@ export default class WeiboBodyContent extends Component {
       username: val.target.value,
     })
   }
-  codeOnChange(val) {
-    this.setState({
-      code: val.target.value,
-    })
-  }
+
   psdOnChange(val) {
     this.setState({
       password: val.target.value,
@@ -44,7 +96,7 @@ export default class WeiboBodyContent extends Component {
     var data;
     var config = {
       method: 'post',
-      url: 'http://47.97.206.169:8090/login',
+      url: 'http://18.162.168.229:8090/login',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -66,7 +118,7 @@ export default class WeiboBodyContent extends Component {
 
     if (data.data === "success") {
       var activities_data;
-      await axios.get("http://47.97.206.169:8090/activity/all?username=" + this.state.username)
+      await axios.get("http://18.162.168.229:8090/activity/all?username=" + this.state.username)
         .then(function (response) {
           console.log(response);
           activities_data = response.data;
@@ -82,42 +134,6 @@ export default class WeiboBodyContent extends Component {
       });
 
   }
-
-  async loginTwice() {
-    var config = {
-      method: 'post',
-      url: 'http://47.97.206.169:8090/login',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data:
-      {
-        password: this.state.password,
-        username: this.state.username,
-        captcha: this.state.code
-      }
-    };
-    await axios(config)
-      .then(function (response) {
-        console.log(response);
-      })
-    console.log("done");
-    await axios.post("http://47.97.206.169:8090/updateActivities?username=" + this.state.username)
-      .then(function (response) {
-        console.log(response);
-      })
-    var activities_data;
-    await axios.get("http://47.97.206.169:8090/activity/all?username=" + this.state.username)
-      .then(function (response) {
-        console.log(response);
-        activities_data = response.data;
-      })
-    this.setState({
-      activities: activities_data
-    })
-  }
-
-
 
   render() {
     const { activities } = this.state;
@@ -151,69 +167,15 @@ export default class WeiboBodyContent extends Component {
                 </div>
               </div>
             </div>
-            {this.state.needCaptcha ?
-              <div className="col-md-3" >
-                <div className="box box-primary">
-                  <div className="box-header with-border">
-                    <h3 className="box-title">验证码</h3>
-                  </div>
-                  <img src={this.state.picBase64} className="img-square" alt="验证码" />
-                  <form role="form">
-                    <div className="box-body">
-                      <div className="form-group">
-                        <label htmlFor="exampleInputCode1">验证码</label>
-                        <input className="form-control" id="exampleInputCode1"
-                          onChange={(val) => this.codeOnChange(val)} />
-                      </div>
-                    </div>
-                  </form>
-                  <div className="box-footer">
-                    <button className="btn btn-primary" onClick={this.loginTwice}>Submit2</button>
-                  </div>
-                </div>
-              </div>
-              : null}
           </div>
           <div className="row">
             <div className="col-xs-12">
               <div className="box">
                 <div className="box-header">
-                  <h3 className="box-title">Data Table With Full Features</h3>
+                  <h3 className="box-title">用户{this.state.weiboId}的微博数据</h3>
                 </div>
                 <div className="box-body">
-                  <table id="example1" className="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th>action_text</th>
-                        <th>question</th>
-                        <th>answer</th>
-                        <th>target_id</th>
-                        <th>created_time</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {activities.map((activity, index) => (
-                        <ZhihuActivity
-                          key={index}
-                          action_text={activity.action_text}
-                          created_time={activity.created_time}
-                          id={activity.id}
-                          target_id={activity.target_id}
-                          type={activity.type}
-                        ></ZhihuActivity>
-                      ))}
-
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>action_text</th>
-                        <th>question</th>
-                        <th>answer</th>
-                        <th>target_id</th>
-                        <th>created_time</th>
-                      </tr>
-                    </tfoot>
-                  </table>
+                  {<WeiboInfo activities={activities} />}
                 </div>
               </div>
             </div>

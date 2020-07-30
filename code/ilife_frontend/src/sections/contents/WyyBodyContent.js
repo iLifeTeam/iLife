@@ -37,7 +37,7 @@ export default class WyyBodyContent extends Component {
     var config = {
       method: 'post',
       url: 'http://18.162.168.229:8888/music/updatehistorybyid?id=' + this.state.id,
-      headers: {}
+      headers: { withCredentials: true }
     };
 
     axios(config)
@@ -66,7 +66,7 @@ export default class WyyBodyContent extends Component {
     var config = {
       method: 'post',
       url: 'http://18.162.168.229:8888/music/gethistorybyid?page=0&size=100&id=' + this.state.id,
-      headers: {}
+      headers: { withCredentials: true }
     };
 
     var histories;
@@ -89,9 +89,7 @@ export default class WyyBodyContent extends Component {
     var config = {
       method: 'post',
       url: 'http://18.162.168.229:8888/music/getid?ph=' + this.state.account + '&pw=' + this.state.password,
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { withCredentials: true }
     };
     await axios(config)
       .then(function (response) {
