@@ -1,20 +1,20 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import ZhihuActivity from '../../zhihu/ZhihuActivity';
 import { createBrowserHistory } from 'history'
-import WeiboInfo from '../../weibo/WeiboInfo';
+import DoubanBooks from '../../douban/DoubanBooks';
 
-export default class WeiboBodyContent extends Component {
+export default class DbMovieContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      weiboId: null,
+      doubanId: null,
       username: "",
       password: "",
       activities: null
     }
     //this.login = this.login.bind(this);
-    this.getWeiboId = this.getWeiboId.bind(this);
+    this.getMovies = this.getMovies.bind(this);
+    this.crawl = this.crawl.bind(this);
   }
   componentDidMount() {
     const username = localStorage.getItem("username");
@@ -31,10 +31,10 @@ export default class WeiboBodyContent extends Component {
     script.src = "../../dist/js/content.js";
     script.async = true;
     document.body.appendChild(script);
-    this.getWeiboId(username);
+    this.getMovies(username);
   }
 
-  async getWeiboId(username) {
+  async getMovies(username) {
     var config = {
       method: 'get',
       url: 'http://18.162.168.229:8686/auth/getByAccount?account=' + username,
@@ -43,22 +43,23 @@ export default class WeiboBodyContent extends Component {
       }
     };
 
-    const weiboId = await axios(config)
+    const doubanId = await axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        return response.data.weibid;
+        return response.data.doubanid;
       })
       .catch(function (error) {
         console.log(error);
         return null;
       });
 
-    console.log(weiboId);
+    this.setState({ doubanId })
+    console.log(doubanId);
     var config = {
       method: 'get',
-      url: 'http://18.162.168.229:8787/weibo/getWeibos?userId=' + weiboId,
+      url: 'http://18.162.168.229:8383/douban/getBooks?userId=' + doubanId,
       headers: {
-        withCredentials: true
+        withCredentials: true,
       }
     };
 
@@ -69,15 +70,8 @@ export default class WeiboBodyContent extends Component {
       })
       .catch(function (error) {
         console.log(error);
-        return null;
       });
-
-    if (activities) {
-      this.setState({
-        activities,
-        weiboId
-      })
-    }
+    this.setState({ activities: activities });
   }
 
   nameOnChange(val) {
@@ -135,6 +129,27 @@ export default class WeiboBodyContent extends Component {
   
     }
   */
+
+  crawl() {
+    var config = {
+      method: 'get',
+      url: 'http://18.162.168.229:8484/douban/crawlMovie?userId=' + this.state.doubanId + '&limit=2&type=book',
+      headers: {
+        withCredentials: true,
+      }
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        alert("更新成功！")
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }
+
   render() {
     const { activities } = this.state;
     return (
@@ -172,10 +187,11 @@ export default class WeiboBodyContent extends Component {
             <div className="col-xs-12">
               <div className="box">
                 <div className="box-header">
-                  <h3 className="box-title">用户{this.state.weiboId}的微博数据</h3>
+                  <h3 className="box-title">用户{this.state.doubanId}的微博图书数据</h3>
+                  <p className="btn btn-primary" onClick={this.crawl}>更新数据</p>
                 </div>
                 <div className="box-body">
-                  {<WeiboInfo activities={activities} />}
+                  {<DoubanBooks activities={activities} />}
                 </div>
               </div>
             </div>
