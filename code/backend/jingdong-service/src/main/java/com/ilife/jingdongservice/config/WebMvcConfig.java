@@ -40,7 +40,12 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
         //3、在convert中添加配置信息
         fastConverter.setFastJsonConfig(fastJsonConfig);
-        //4、将convert添加到converters中
+        // 4、将convert添加到converters中
+        StringHttpMessageConverter stringConverter = new StringHttpMessageConverter();
+        stringConverter.setWriteAcceptCharset(false);
+        // 增加两个优先处理的转换类型.
+        converters.add(new ByteArrayHttpMessageConverter());
+        converters.add(stringConverter);
         converters.add(fastConverter);
     }
 }
