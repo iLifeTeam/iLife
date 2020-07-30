@@ -16,8 +16,8 @@ export default class DoubanMovies extends Component {
       data: this.props.activities ? this.props.activities : null,
       columns: [
         { data: "name" },
-        { data: "type" },
-        { data: "language" },
+        { data: "author" },
+        { data: "price" },
         { data: "ranking" },
         { data: "hot" },
 
@@ -27,7 +27,7 @@ export default class DoubanMovies extends Component {
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.props.activities) {
-      var table = $('#MovieTable').DataTable()
+      var table = $('#BookTable').DataTable()
       table.clear();
       //向table中添加数据
       table.rows.add(this.props.activities);
@@ -42,12 +42,12 @@ export default class DoubanMovies extends Component {
 
   render() {
     return (
-      <table id="MovieTable" ref={el => this.el = el} className="table table-bordered table-striped" >
+      <table id="BookTable" ref={el => this.el = el} className="table table-bordered table-striped" >
         <thead>
           <tr>
-            <th>电影名</th>
-            <th>标签</th>
-            <th>语言</th>
+            <th>书籍名</th>
+            <th>作者</th>
+            <th>单价</th>
             <th>评分</th>
             <th>热度</th>
           </tr>
