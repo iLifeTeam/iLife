@@ -1,0 +1,52 @@
+# 数据库结构
+## week1day2
+### 实现用户与网易云音乐结构化
+1. 用户：  
+   * id
+   * wyyid
+   * account
+   * password
+   * email
+   * nickname  
+2. 网易云音乐：
+   1. 音乐：  
+   * m_id
+   * mname
+   * style
+   * times(年代)
+   1. singers:
+   * s_id
+   * sname
+   1. sing:
+   * m_id
+   * s_id
+   1. wyyuser(相当于个人听歌历史,wyyid与m_id共同构成主键)
+   * wyyid
+   * m_id
+   * playcount
+   * score
+-------
+## week1day3
+### 更新：  
+1. 实现各个软件数据分库管理  
+2. 新增微博数据库：  
+  * weibo
+  * user
+  * comments  
+3. iLife中user新增weibid
+-------
+
+## week1day4
+### 更新：
+1. 新增大麦网数据库，存储爬取数据，用于后续分析（共两百条）  
+   * 表的结构：
+     * projectid作为pk
+     * name：演唱会名称
+     * actors：记录演员主要信息（部份演唱会不包含）
+     * price_str：票价信息
+     * showtime：演出时间
+     * venue与venuecity：记录演出地点与城市
+     * showstatus：演出时间
+2. 部份int属性改成bigint
+3. 修改数据库编码，解决了表情无法插入的问题
+4. 对微博数据库进行了小的修改，解决了时间格式的冲突

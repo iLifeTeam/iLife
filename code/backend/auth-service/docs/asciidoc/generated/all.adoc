@@ -1,0 +1,655 @@
+= Auth Backend API Documentation
+
+
+[[_overview]]
+== 概览
+
+=== 版本信息
+[%hardbreaks]
+__版本__ : 1.0.0-SNAPSHOT
+
+
+=== 联系方式
+[%hardbreaks]
+__名字__ : 杨亘@sjtu
+__邮箱__ : zhull991122@sjtu.edu.cn
+
+
+=== URI scheme
+[%hardbreaks]
+__域名__ : localhost:8080
+__基础路径__ : /
+
+
+=== 标签
+
+* User Service Controller : Everything about auth & CRUD of iLife User
+
+
+
+
+[[_paths]]
+== 资源
+
+[[_user_service_controller_resource]]
+=== User Service Controller
+Everything about auth & CRUD of iLife User
+
+
+[[_authusingpost_7]]
+==== User log in
+....
+POST /auth/auth
+....
+
+
+===== 说明
+Auth one iLife user by giving account.password
+
+
+===== 响应
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|object
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|**501**|user not exists|无内容
+|**502**|account and password not match|无内容
+|===
+
+
+===== 消耗
+
+* `application/json`
+
+
+===== 生成
+
+* `\*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/auth/auth
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+"object"
+----
+
+
+[[_deletebyidusingpost_7]]
+==== delete one user
+....
+POST /auth/delById
+....
+
+
+===== 说明
+Delete one ilife user By user Id
+
+
+===== 参数
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|类型|名称|说明|类型
+|**Body**|**userId** +
+__可选__|The user ID of a iLife user|< string, string > map
+|===
+
+
+===== 响应
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|object
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|**501**|account or nickname already exists|无内容
+|===
+
+
+===== 消耗
+
+* `application/json`
+
+
+===== 生成
+
+* `\*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/auth/delById
+----
+
+
+====== 请求 body
+[source,json]
+----
+{ }
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+"object"
+----
+
+
+[[_getuserbyaccountusingget_7]]
+==== get user info by account
+....
+GET /auth/getByAccount
+....
+
+
+===== 说明
+Get user info by account
+
+
+===== 参数
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|类型|名称|说明|类型
+|**Query**|**account** +
+__可选__|The account number of a iLife user|string
+|===
+
+
+===== 响应
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|<<_users,Users>>
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|===
+
+
+===== 生成
+
+* `\*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/auth/getByAccount
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+{
+  "account" : "string",
+  "biliid" : 0,
+  "doubanid" : "string",
+  "email" : "string",
+  "id" : 0,
+  "nickname" : "string",
+  "password" : "string",
+  "tbid" : "string",
+  "type" : "string",
+  "weibid" : 0,
+  "wyyid" : 0,
+  "zhid" : "string"
+}
+----
+
+
+[[_getuserbyidusingget_7]]
+==== get user info by id
+....
+GET /auth/getById
+....
+
+
+===== 说明
+Get user info by userID
+
+
+===== 参数
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|类型|名称|说明|类型
+|**Query**|**userId** +
+__可选__|The user ID of a iLife user|integer (int64)
+|===
+
+
+===== 响应
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|<<_users,Users>>
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|===
+
+
+===== 生成
+
+* `\*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/auth/getById
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+{
+  "account" : "string",
+  "biliid" : 0,
+  "doubanid" : "string",
+  "email" : "string",
+  "id" : 0,
+  "nickname" : "string",
+  "password" : "string",
+  "tbid" : "string",
+  "type" : "string",
+  "weibid" : 0,
+  "wyyid" : 0,
+  "zhid" : "string"
+}
+----
+
+
+[[_getuserbynicknameusingget_7]]
+==== get user info by nickname
+....
+GET /auth/getByNickname
+....
+
+
+===== 说明
+Get user info by Nickname
+
+
+===== 参数
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|类型|名称|说明|类型
+|**Query**|**nickname** +
+__可选__|The user nickname of a iLife user|string
+|===
+
+
+===== 响应
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|<<_users,Users>>
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|===
+
+
+===== 生成
+
+* `\*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/auth/getByNickname
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+{
+  "account" : "string",
+  "biliid" : 0,
+  "doubanid" : "string",
+  "email" : "string",
+  "id" : 0,
+  "nickname" : "string",
+  "password" : "string",
+  "tbid" : "string",
+  "type" : "string",
+  "weibid" : 0,
+  "wyyid" : 0,
+  "zhid" : "string"
+}
+----
+
+
+[[_registerusingpost_7]]
+==== User register
+....
+POST /auth/register
+....
+
+
+===== 说明
+Register one iLife user by giving nickname,account.password and email
+
+
+===== 响应
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|object
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|**500**|account already exists|无内容
+|**501**|nickname already exists|无内容
+|===
+
+
+===== 消耗
+
+* `application/json`
+
+
+===== 生成
+
+* `\*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/auth/register
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+"object"
+----
+
+
+[[_updatewbusingpost_7]]
+==== update Weibo ID
+....
+POST /auth/updateWbId
+....
+
+
+===== 说明
+update user's Weibo ID,return the number of affected rows
+
+
+===== 响应
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|object
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|===
+
+
+===== 消耗
+
+* `application/json`
+
+
+===== 生成
+
+* `\*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/auth/updateWbId
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+"object"
+----
+
+
+[[_updatewyyusingpost_7]]
+==== update wyy ID
+....
+POST /auth/updateWyyId
+....
+
+
+===== 说明
+update user's WangYiYun ID，return the number of affected rows
+
+
+===== 响应
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|object
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|===
+
+
+===== 消耗
+
+* `application/json`
+
+
+===== 生成
+
+* `\*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/auth/updateWyyId
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+"object"
+----
+
+
+[[_updatezhusingpost_7]]
+==== update Zhihu ID
+....
+POST /auth/updateZhId
+....
+
+
+===== 说明
+update user's Zhihu ID,return the number of affected rows
+
+
+===== 响应
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|object
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|===
+
+
+===== 消耗
+
+* `application/json`
+
+
+===== 生成
+
+* `\*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/auth/updateZhId
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+"object"
+----
+
+
+[[_loginusingpost_7]]
+==== update Weibo ID
+....
+POST /login
+....
+
+
+===== 说明
+update user's Weibo ID,return the number of affected rows
+
+
+===== 响应
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|object
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|===
+
+
+===== 消耗
+
+* `application/json`
+
+
+===== 生成
+
+* `\*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/login
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+"object"
+----
+
+
+
+
+[[_definitions]]
+== 定义
+
+[[_users]]
+=== Users
+
+[options="header", cols=".^3a,.^11a,.^4a"]
+|===
+|名称|说明|类型
+|**account** +
+__可选__|**样例** : `"string"`|string
+|**biliid** +
+__可选__|**样例** : `0`|integer (int64)
+|**doubanid** +
+__可选__|**样例** : `"string"`|string
+|**email** +
+__可选__|**样例** : `"string"`|string
+|**id** +
+__可选__|**样例** : `0`|integer (int64)
+|**nickname** +
+__可选__|**样例** : `"string"`|string
+|**password** +
+__可选__|**样例** : `"string"`|string
+|**tbid** +
+__可选__|**样例** : `"string"`|string
+|**type** +
+__可选__|**样例** : `"string"`|string
+|**weibid** +
+__可选__|**样例** : `0`|integer (int64)
+|**wyyid** +
+__可选__|**样例** : `0`|integer (int64)
+|**zhid** +
+__可选__|**样例** : `"string"`|string
+|===
+
+
+
+
+

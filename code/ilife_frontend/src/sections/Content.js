@@ -11,6 +11,8 @@ import BilibiliBodyContent from './contents/BilibiliBodyContent';
 import WyyBodyContent from './contents/WyyBodyContent';
 import DbMovieContent from './contents/DbMovieContent';
 import DbBookContent from './contents/DbBookContent';
+import JingdongBodyContent from "./contents/JingdongBodyContent";
+import TaobaoBodyContent from "./contents/TaobaoBodyContent";
 
 export default class Content extends Component {
   render() {
@@ -23,6 +25,8 @@ export default class Content extends Component {
         <Route path="/home/wyy" component={WyyBodyContent} />
         <Route path="/home/movie" component={DbMovieContent} />
         <Route path="/home/book" component={DbBookContent} />
+        <Route path="/home/jingdong" component={JingdongBodyContent} />
+        <Route path="/home/taobao" component={TaobaoBodyContent} />
       </div>
     )
   }
