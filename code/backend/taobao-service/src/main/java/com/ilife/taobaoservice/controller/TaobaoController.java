@@ -4,6 +4,7 @@ package com.ilife.taobaoservice.controller;
 import com.ilife.taobaoservice.entity.Order;
 import com.ilife.taobaoservice.entity.Stats;
 import com.ilife.taobaoservice.entity.User;
+import com.ilife.taobaoservice.service.AnalyzeService;
 import com.ilife.taobaoservice.service.CrawlerService;
 import com.ilife.taobaoservice.service.TaobaoService;
 import io.swagger.annotations.Api;
@@ -11,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 @RestController
 @Api(value = "TaobaoServiceController")
@@ -26,7 +30,10 @@ public class TaobaoController {
     TaobaoService taobaoService;
     @Autowired
     CrawlerService crawlerService;
+    @Autowired
+    AnalyzeService analyzeService;
 
+    private static ScheduledExecutorService executor = Executors.newScheduledThreadPool(5);
 
     @ApiOperation(notes = "login with phone", value = "",httpMethod = "POST")
     @PostMapping(value = "/login/sms/fetch", produces = "application/json")
@@ -104,6 +111,26 @@ public class TaobaoController {
         User user = taobaoService.getUserByUsername(username);
         Stats stats = taobaoService.getStats(user);
         return ResponseEntity.ok().body(stats);
+    }
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public class UpdateCate extends Thread {
+        private User user;
+        @Override
+        public void run() {
+            analyzeService.updateCategory(user);
+        }
+    }
+
+    @ApiOperation(notes = "get user's statistics", value = "", httpMethod = "GET")
+    @PostMapping(value = "/stats/category/update", produces = "application/json")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> updateUserCategory(@RequestParam String username){
+        User user = taobaoService.getUserByUsername(username);
+        executor.execute(new UpdateCate(user));
+//        analyzeService.updateCategory(user);
+        return ResponseEntity.ok().body();
     }
 
 }
