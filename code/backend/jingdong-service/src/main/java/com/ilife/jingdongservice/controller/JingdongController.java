@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,10 +31,14 @@ public class JingdongController {
     @PostMapping(value = "/login/qrcode", produces = "application/json")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> loginIntoJingdong(@RequestParam String username){
-        System.out.println(username);
-        User user = new User(username,new Date(0L));
-        jingDongService.saveUser(user);
+        System.out.println("login : " + username);
+        User user = jingDongService.getUserByUsername(username);
+        if (user == null) {
+            User newUser = new User(username, new Date(0L));
+            jingDongService.saveUser(newUser);
+        }
         String response =  crawlerService.login(username);
+        System.out.println(response);
         return ResponseEntity.ok().body(response);
     }
     @ApiOperation(notes = "login with qrcode", value = "",httpMethod = "POST")
@@ -87,5 +92,11 @@ public class JingdongController {
         List<Order> orders = jingDongService.getOrderByUserAndDate(user, low, high);
         return ResponseEntity.ok().body(orders);
     }
-
+    @ApiOperation(notes = "get user's information", value = "", httpMethod = "GET")
+    @GetMapping(value = "/user", produces = "application/json")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> getUser(@RequestParam String username){
+        User user = jingDongService.getUserByUsername(username);
+        return ResponseEntity.ok().body(user);
+    }
 }

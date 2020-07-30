@@ -63,7 +63,7 @@ def fetchYearOrders(session, year):
     orderListResponse = session.get(orderListUrl.format(year))
 
     soup = BeautifulSoup(orderListResponse.content, "html5lib")
-    print(soup)
+    # print(soup)
     orderWareIds = fetchVariable(soup, "orderWareIds")
     orderWareTypes = fetchVariable(soup, "orderWareTypes")
     orderIds = fetchVariable(soup, "orderIds")
@@ -92,14 +92,17 @@ def fetchYearOrders(session, year):
                 break
         if exist:
             continue
+        numberList = soup.select("#tb-" + orderId + " > tr.tr-bd > td > div.goods-number")
+        # print(numberList)
         order = {"price": soup.select("#tb-" + orderId + " > tr.tr-bd > td > div.amount > span")[0].text[1:],
                  "orderId": orderId, "shop": "",
                  "date": soup.select("#tb-" + orderId + " > tr > td > span.dealtime")[0].text,
-                 "products": []}
+                 "products": [],
+                 "numberList": list(map(lambda node: node.text.strip().strip('\n')[1:], numberList))}
         orders.append(order)
     productIdList = orderWareIds.split(",")
-    print("product", productIdList)
-    print("order", orderIdList)
+    # print("product", productIdList)
+    # print("order", orderIdList)
     for orderItem in orderInfoJson:
         product = {"img_url": orderItem['imgPath'], "productId": orderItem['productId'], "name": orderItem['name'],
                    "price": 0, "number": 0}
@@ -107,6 +110,11 @@ def fetchYearOrders(session, year):
         print("product", product["productId"], ", index", index)
         for idx, order in enumerate(orders):
             if order["orderId"] == orderIdList[index]:
+                ith = len(orders[idx]["products"])
+                if ith < len(order["numberList"]):
+                    product["number"] = order["numberList"][ith]
+                else:
+                    product["number"] = 1
                 orders[idx]["products"].append(product)
                 break
     # print(orders)
@@ -190,8 +198,10 @@ def fetch(username, years):
     for year in years:
         print(year)
         resp = fetchYearOrders(session, year)
+        # print(json.dumps(resp,indent=2))
         results = results + resp
         time.sleep(2)
+    # print(results)
     return results
 
 

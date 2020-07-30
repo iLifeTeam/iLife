@@ -9,7 +9,7 @@ ADD *.proto /app/
 ADD docker-entrypoint.sh /app
 RUN chmod 777 docker-entrypoint.sh \
     && ln -s docker-entrypoint.sh /
-EXPOSE 4001
+EXPOSE 8103
 
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
 # ENTRYPOINT [ "python", "zhihu_crawller_service.py" ]

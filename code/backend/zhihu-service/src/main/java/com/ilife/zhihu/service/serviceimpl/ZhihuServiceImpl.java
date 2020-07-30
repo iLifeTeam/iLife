@@ -109,16 +109,16 @@ public class ZhihuServiceImpl implements ZhihuService {
         JSONArray jsonArray = JSON.parseArray(json);
         for (Object object : jsonArray) {
             JSONObject activityObject = (JSONObject) object;
-            System.out.println(activityObject.toJSONString());
+//            System.out.println(activityObject.toJSONString());
             Activity activity = makeActivityFromJsonObject(activityObject);
-            System.out.println(activity.getCreated_time().toString());
+            System.out.println(activity.getCreated_time().toString() + activity.getAction_text());
             activity.setUser(user);
             switch (activity.getType()) {
                 case "CREATE_QUESTION":
                 case "FOLLOW_QUESTION": {
                     JSONObject questionObject = activityObject.getJSONObject("question");
 //                    System.out.println(questionDao);
-                    System.out.println(questionObject.toJSONString());
+//                    System.out.println(questionObject.toJSONString());
                     Question question = questionDao.save(
                             makeQuestionFromJsonObject(questionObject));
                     JSONArray answerArray = questionObject.getJSONArray("answers");

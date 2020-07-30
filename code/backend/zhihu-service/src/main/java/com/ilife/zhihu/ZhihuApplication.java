@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 @SpringBootApplication
-@CrossOrigin(origins = "*") //TODO: remove later
 public class ZhihuApplication {
 
     public static void main(String[] args) {

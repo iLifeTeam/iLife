@@ -40,7 +40,7 @@ import java.util.TimeZone;
 public class CrawlerServiceImpl implements CrawlerService {
 
     public static  String HTTP_SCHEME = "http";
-    public static  String HOST_IP = "localhost:8102";
+    public static  String HOST_IP = "47.97.206.169:8102";
     CloseableHttpClient httpClient = HttpClientBuilder.create().build();
     @Autowired
     UserDao userDao;
@@ -61,7 +61,9 @@ public class CrawlerServiceImpl implements CrawlerService {
             HttpGet get = new HttpGet(uri);
             CloseableHttpResponse response = httpClient.execute(get);
             HttpEntity contentEntity = response.getEntity();
-            return EntityUtils.toString(contentEntity);
+            String resp = EntityUtils.toString(contentEntity);
+//            System.out.println("response: " + resp);
+            return resp;
         }catch (URISyntaxException | IOException e){
             e.printStackTrace();
         }
@@ -106,39 +108,42 @@ public class CrawlerServiceImpl implements CrawlerService {
     private Order objectToOrder(Object object){
         JSONObject orderObject = (JSONObject) object;
         Order order = new Order();
-        order.setId(orderObject.getLong("orderID"));
+        order.setId(orderObject.getLong("orderId"));
         order.setDate(orderObject.getSqlDate("date"));
-        order.setTotal(orderObject.getDouble("total"));
+        order.setTotal(orderObject.getDouble("price"));
         order.setShop(orderObject.getString("shop"));
         return order;
     }
     private Item objectToItem(Object object){
         JSONObject itemObject = (JSONObject) object;
         Item item = new Item();
-        item.setProduct(itemObject.getString("product"));
+        item.setProduct(itemObject.getString("name"));
         item.setPrice(itemObject.getDouble("price"));
-        item.setImgUrl(itemObject.getString("imgUrl"));
+        item.setImgUrl(itemObject.getString("img_url"));
         item.setNumber(itemObject.getInteger("number"));
         return item;
     }
 
     private Integer saveFetchedHistory(String username, String response){
         User user = userDao.findByUsername(username);
-
+        System.out.println(response);
         JSONArray array = JSON.parseArray(response);
+
         int count = 0;
         Date lastDate = new Date(0L);
         for (Object object: array){
+//            System.out.println(JSON.toJSONString(object));
             Order order = objectToOrder(object);
-            if (orderDao.findById(order.getId()) != null){
-                continue;
-            }
             if (lastDate.before(order.getDate())){
                 lastDate.setTime(order.getDate().getTime());
             }
+            Order existed = orderDao.findById(order.getId());
+            if (existed != null && existed.getUser().getUsername().equals(username)){
+                    continue;
+            }
             order.setUser(user);
             Order savedOrder = orderDao.save(order);
-            JSONArray itemArray = ((JSONObject) object).getJSONArray("items");
+            JSONArray itemArray = ((JSONObject) object).getJSONArray("products");
             for (Object itemArrayObject: itemArray){
                 JSONObject itemObject = (JSONObject) itemArrayObject;
                 Item item = objectToItem(itemObject);

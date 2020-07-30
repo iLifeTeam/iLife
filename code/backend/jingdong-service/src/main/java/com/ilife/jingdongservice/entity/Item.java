@@ -4,6 +4,7 @@ package com.ilife.jingdongservice.entity;
 * has not been finished
 **/
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,6 +39,6 @@ public class Item {
 
     @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
     @JoinColumn(name = "order_id",referencedColumnName = "id")
-    @JSONField(deserialize = false,serialize = false)
+    @JSONField(serialize = false)
     private Order order;
 }

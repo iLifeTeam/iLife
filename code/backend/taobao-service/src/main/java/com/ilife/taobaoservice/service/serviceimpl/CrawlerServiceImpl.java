@@ -9,6 +9,7 @@ import com.ilife.taobaoservice.dao.UserDao;
 import com.ilife.taobaoservice.entity.Item;
 import com.ilife.taobaoservice.entity.Order;
 import com.ilife.taobaoservice.entity.User;
+import com.ilife.taobaoservice.service.AnalyzeService;
 import com.ilife.taobaoservice.service.CrawlerService;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -35,7 +36,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 
 
     public static  String HTTP_SCHEME = "http";
-    public static  String HOST_IP = "localhost:8101";
+    public static  String HOST_IP = "47.97.206.169:8101";
     CloseableHttpClient httpClient = HttpClientBuilder.create().build();
     @Autowired
     UserDao userDao;
@@ -43,6 +44,9 @@ public class CrawlerServiceImpl implements CrawlerService {
     ItemDao itemDao;
     @Autowired
     OrderDao orderDao;
+    @Autowired
+    AnalyzeService analyzeService;
+
     String getRequest(String path, List<NameValuePair> parameters){
         try {
             URI uri = new URIBuilder()
@@ -61,11 +65,16 @@ public class CrawlerServiceImpl implements CrawlerService {
         }
         return null;
     }
-    public String loginRequest(String username, String password)  {
+    public String fetchSmsRequest(String phone)  {
         List<NameValuePair> parameters = new ArrayList<>();
-        parameters.add(new BasicNameValuePair("username", username));
-        parameters.add(new BasicNameValuePair("password", password));
-        return getRequest("/login",parameters);
+        parameters.add(new BasicNameValuePair("phone", phone));
+        return getRequest("/login/sms/fetch",parameters);
+    }
+    public String loginWithSmsRequest(String phone, String code)  {
+        List<NameValuePair> parameters = new ArrayList<>();
+        parameters.add(new BasicNameValuePair("phone", phone));
+        parameters.add(new BasicNameValuePair("code", code));
+        return getRequest("/login/sms",parameters);
     }
     public String fetchAllHistoryRequest(String username)  {
         List<NameValuePair> parameters = new ArrayList<>();
@@ -78,11 +87,11 @@ public class CrawlerServiceImpl implements CrawlerService {
         parameters.add(new BasicNameValuePair("date",date.toString()));
         return getRequest("/history/after",parameters);
     }
-    @Override
-    public String login(String username, String password) {
-        String response = loginRequest(username, password);
-        return response;
-    }
+//    @Override
+//    public String login(String username, String password) {
+//        String response = loginRequest(username, password);
+//        return response;
+//    }
 
     private Order objectToOrder(Object object){
         JSONObject orderObject = (JSONObject) object;
@@ -111,11 +120,16 @@ public class CrawlerServiceImpl implements CrawlerService {
         Date lastDate = new Date(0L);
         for (Object object: array){
             Order order = objectToOrder(object);
-            if (orderDao.findById(order.getId()) != null){
-                continue;
-            }
             if (lastDate.before(order.getDate())){
                 lastDate.setTime(order.getDate().getTime());
+            }
+            Order existed = orderDao.findById(order.getId());
+            if (existed != null){
+                if (!existed.getUser().getUsername().equals(username)){
+                    existed.setUser(user);
+                    orderDao.save(existed);
+                }
+                continue;
             }
             order.setUser(user);
             Order savedOrder = orderDao.save(order);
@@ -124,16 +138,30 @@ public class CrawlerServiceImpl implements CrawlerService {
                 JSONObject itemObject = (JSONObject) itemArrayObject;
                 Item item = objectToItem(itemObject);
                 item.setOrder(savedOrder);
-                itemDao.save(item);
+                itemDao.save(
+                        item
+                );
             }
             count ++;
         }
         if (user.getLastUpdateDate().before(lastDate)) {
             user.setLastUpdateDate(lastDate);
+            System.out.println("change date to " + lastDate);
             userDao.save(user);
         }
         return count;
     }
+
+    @Override
+    public String loginWithSms(String phone, String code) {
+        return loginWithSmsRequest(phone, code);
+    }
+
+    @Override
+    public String fetchSms(String phone) {
+        return fetchSmsRequest(phone);
+    }
+
     @Override
     public Integer fetchHistory(String username) {
         String response  = fetchAllHistoryRequest(username);

@@ -10,7 +10,7 @@ exclude_word = {'我们', '你们', '他们', '它们', '因为', '因而', '所
                 '仍然', '不是',
                 '自己', '知道', '可以', '看到', '那儿', '问题', '一会儿', '一点', '现在', '两个', '三个', '一次', '各位', '可能', '一下', '需要', }
 exclude_char = "[a-zA-Z0-9<>\/\-\=\"\:]"
-db = pymysql.connect("47.97.206.169", "ilife", "ilife2020", "zhihu")
+db = pymysql.connect("18.162.168.229", "ilife", "ilife2020", "zhihu")
 cursor = db.cursor()
 
 
@@ -39,7 +39,7 @@ def generateWordCloud(uid, activity_type):
 
     text = re.sub(exclude_char, '', text)
     word_list = jieba.cut(text)
-    print(text)
+    # print(text)
     wl = " ".join(word_list)
 
     wc = WordCloud(background_color="white",  # 设置背景颜色
