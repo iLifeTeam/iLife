@@ -7,4 +7,4 @@ services:
   zhihu-crawller:
     image: ilife2020/zhihu-python-crawller
     expose:
-      - "4001"
+      - "8103"
