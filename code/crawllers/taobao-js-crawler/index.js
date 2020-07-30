@@ -157,13 +157,20 @@ const traverseHistory = async (page) => {
     await page.waitFor(Math.floor(Math.random() * 500) * Math.floor(Math.random() * 10))
     console.log("确认时第" + pageCount + "页")
     results = results.concat(await traverseHistoryPage(page))
-    const nextBtnHandle = await page.$("div[class*=simple-pagination] button:nth-child(2)")
-    hasNext = ! await (await nextBtnHandle.getProperty("disabled")).jsonValue()
-    console.log("hasNext",hasNext)
-    if(hasNext) {
+    try {
+      const nextBtnHandle = await page.$("div[class*=simple-pagination] button:nth-child(2)")
+      hasNext = !await (await nextBtnHandle.getProperty("disabled")).jsonValue()
+      console.log("hasNext", hasNext)
+      if (hasNext) {
         nextBtnHandle.click({
-          delay:20
+          delay: 20
         })
+      }
+    }catch (e) {
+      await page.screenshot({
+        'path': path.join(__dirname, 'screenshots', 'netBtnTimeout.png')
+      })
+      break;
     }
   } while (hasNext);
   return results
@@ -203,6 +210,7 @@ const traverseHistoryAfterDate = async (page,date) => {
       await page.screenshot({
         'path': path.join(__dirname, 'screenshots', 'netBtnTimeout.png')
       })
+      break;
     }
   } while (hasNext);
   return results
