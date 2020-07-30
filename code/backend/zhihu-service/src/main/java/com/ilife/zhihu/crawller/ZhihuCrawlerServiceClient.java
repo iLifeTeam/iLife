@@ -20,7 +20,7 @@ public class ZhihuCrawlerServiceClient {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        ZhihuCrawlerServiceClient client = new ZhihuCrawlerServiceClient("python-crawller", 4001);
+        ZhihuCrawlerServiceClient client = new ZhihuCrawlerServiceClient("zhihu-crawler", 4001);
         String username = "zxy771906409@163.com";
         String password = "zxy13,./0904";
         String response = client.login(username, password);
