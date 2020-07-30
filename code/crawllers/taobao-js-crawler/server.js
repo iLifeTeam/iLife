@@ -41,7 +41,11 @@ app.get('/login/sms/fetch',async function (req, res) {
     const filename = "./cookies/" + phone + ".cookie"
     let browser
     if(browsers.has(phone)){
-        browser = browsers.get(phone)
+        {browser,page} = browsers.get(phone)
+        if (browser == null) {
+            res.send("error, it shouldn't be null")
+            return
+        }
     }else {
         browser = await crawler.newBrowser(HEADLESS)
     }
