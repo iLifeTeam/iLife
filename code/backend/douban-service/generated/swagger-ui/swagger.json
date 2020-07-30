@@ -111,6 +111,29 @@
         }
       }
     },
+    "/douban/getBookStats" : {
+      "get" : {
+        "tags" : [ "Douban Service Controller" ],
+        "summary" : "get book statistics",
+        "description" : "Get book Statistics by userID",
+        "operationId" : "getBookStats",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "query",
+          "description" : "The user ID of a douban user",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/BookStats"
+            }
+          }
+        }
+      }
+    },
     "/douban/getBooks" : {
       "get" : {
         "tags" : [ "Douban Service Controller" ],
@@ -155,6 +178,29 @@
             "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/douban/getMovieStats" : {
+      "get" : {
+        "tags" : [ "Douban Service Controller" ],
+        "summary" : "get movie statistics",
+        "description" : "Get movie Statistics by userID",
+        "operationId" : "getMovieStats",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "query",
+          "description" : "The user ID of a douban user",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/MovieStats"
             }
           }
         }
@@ -213,6 +259,58 @@
         }
       }
     },
+    "BookStats" : {
+      "type" : "object",
+      "properties" : {
+        "avgPrice" : {
+          "type" : "number",
+          "format" : "float"
+        },
+        "maxPrice" : {
+          "type" : "number",
+          "format" : "float"
+        },
+        "maxPriceBook" : {
+          "$ref" : "#/definitions/Book"
+        },
+        "avgRanking" : {
+          "type" : "number",
+          "format" : "float"
+        },
+        "maxRanking" : {
+          "type" : "number",
+          "format" : "float"
+        },
+        "maxRankingBook" : {
+          "$ref" : "#/definitions/Book"
+        },
+        "avgHot" : {
+          "type" : "number",
+          "format" : "float"
+        },
+        "maxHot" : {
+          "type" : "number",
+          "format" : "float"
+        },
+        "maxHotBook" : {
+          "$ref" : "#/definitions/Book"
+        },
+        "minHot" : {
+          "type" : "number",
+          "format" : "float"
+        },
+        "minHotBook" : {
+          "$ref" : "#/definitions/Book"
+        },
+        "allBook" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "preAuthor" : {
+          "type" : "string"
+        }
+      }
+    },
     "Movie" : {
       "type" : "object",
       "properties" : {
@@ -238,6 +336,57 @@
         }
       }
     },
+    "MovieStats" : {
+      "type" : "object",
+      "properties" : {
+        "avgRanking" : {
+          "type" : "number",
+          "format" : "float"
+        },
+        "maxRanking" : {
+          "type" : "number",
+          "format" : "float"
+        },
+        "maxRankingMovie" : {
+          "$ref" : "#/definitions/Movie"
+        },
+        "minRanking" : {
+          "type" : "number",
+          "format" : "float"
+        },
+        "minRankingMovie" : {
+          "$ref" : "#/definitions/Movie"
+        },
+        "avgHot" : {
+          "type" : "number",
+          "format" : "float"
+        },
+        "maxHot" : {
+          "type" : "number",
+          "format" : "float"
+        },
+        "maxHotMovie" : {
+          "$ref" : "#/definitions/Movie"
+        },
+        "minHot" : {
+          "type" : "number",
+          "format" : "float"
+        },
+        "minHotMovie" : {
+          "$ref" : "#/definitions/Movie"
+        },
+        "allMovie" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "preLanguage" : {
+          "type" : "string"
+        },
+        "preType" : {
+          "type" : "string"
+        }
+      }
+    },
     "User" : {
       "type" : "object",
       "properties" : {
@@ -245,22 +394,6 @@
           "type" : "string"
         },
         "name" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "movie_WISH" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "movie_WATCHED" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "book_WISH" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "following" : {
           "type" : "integer",
           "format" : "int32"
         },
@@ -273,6 +406,22 @@
           "format" : "int32"
         },
         "book_READ" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "movie_WISH" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "following" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "movie_WATCHED" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "book_WISH" : {
           "type" : "integer",
           "format" : "int32"
         }

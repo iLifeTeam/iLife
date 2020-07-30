@@ -1,17 +1,18 @@
 package com.ilife.douban.service.serviceImpl;
 
 import com.ilife.douban.dao.MovieDao;
-import com.ilife.douban.entity.Movie;
+import com.ilife.douban.entity.*;
 import com.ilife.douban.service.UserService;
 import com.ilife.douban.dao.BookDao;
 import com.ilife.douban.dao.UserDao;
-import com.ilife.douban.entity.Book;
-import com.ilife.douban.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static java.lang.Float.parseFloat;
+import static java.lang.Integer.parseInt;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -32,42 +33,195 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<?> deleteById(String id) {
-        if(userDao.findById(id)==null)
+        if (userDao.findById(id) == null)
             return ResponseEntity.status(501).body("User not exists");
         userDao.deleteById(id);
         return ResponseEntity.ok().body("successfully delete user " + id);
     }
 
     @Override
-    public List<Book> getBooksById(String uid){
+    public List<Book> getBooksById(String uid) {
         return bookDao.findById(uid);
     }
 
     @Override
-    public List<Movie> getMoviesById(String uid){
+    public List<Movie> getMoviesById(String uid) {
         return movieDao.findById(uid);
     }
 
     @Override
-    public ResponseEntity<?> deleteBooks(String uid){
+    public ResponseEntity<?> deleteBooks(String uid) {
         User user = userDao.findById(uid);
-        if(user == null)
+        if (user == null)
             return ResponseEntity.status(501).body("user not exists");
         bookDao.DeleteAllById(uid);
         return ResponseEntity.ok().body("successfully delete");
     }
 
     @Override
-    public ResponseEntity<?> deleteMovies(String uid){
+    public ResponseEntity<?> deleteMovies(String uid) {
         User user = userDao.findById(uid);
-        if(user == null)
+        if (user == null)
             return ResponseEntity.status(501).body("user not exists");
         movieDao.DeleteAllById(uid);
         return ResponseEntity.ok().body("successfully delete");
     }
+    @Override
+    public MovieStats getMovieStats(String uid) {
+//        List<Movie> movieList = movieDao.findById(uid);
+//        float avgRanking = 0, maxRanking = 0, avgHot = 0, maxHot = 0, allRanking = 0, allHot = 0, minHot = 9999999, minRanking=9999999;
+//        if (movieList.size() == 0) return new MovieStats(0, 0, null, 0, null, 0, 0, null, 0, null, 0, "0", "0");
+//        Movie maxRankingmovie = movieList.get(0);
+//        Movie maxHotmovie = movieList.get(0);
+//        Movie minHotmovie = movieList.get(0);
+//        Movie minRankingmovie = movieList.get(0);
+//        for (Movie movie: movieList) {
+//            allRanking += movie.getRanking();
+//            allHot += movie.getHot();
+//            if (movie.getHot() >= maxHot) {
+//                maxHot = movie.getHot();
+//                maxHotmovie = movie;
+//            }
+//            if (movie.getRanking() >= maxRanking) {
+//                maxRanking = movie.getRanking();
+//                maxRankingmovie = movie;
+//            }
+//            if (movie.getHot() <= minHot) {
+//                minHot = movie.getHot();
+//                minHotmovie = movie;
+//            }
+//            if (movie.getRanking() <= minRanking) {
+//                minRanking = movie.getRanking();
+//                minRankingmovie = movie;
+//            }
+//        }
+//        avgHot = allHot / movieList.size();
+//        avgRanking = allRanking / movieList.size();
+//        for (int i = 0; i < bookList.size(); ++i) {
+//            boolean flag = false;
+//            for (int j = 0; j < bookList.size() - i - 1; ++j) {
+//                String previous = bookList.get(j).getAuthor();
+//                String next = bookList.get(j + 1).getAuthor();
+//                if (stringCompare(previous, next) > 0) {
+//                    flag = true;
+//                    Book tmpWeibo = bookList.get(j);
+//                    bookList.set(j, bookList.get(j + 1));
+//                    bookList.set(j + 1, tmpWeibo);
+//                }
+//            }
+//            if (!flag) break;
+//        }
+//        int _cur = 0;
+//        int maxCount = 0;
+//        String _curDay = preAuthor;
+//        String _lastDay = preAuthor;
+//        for (Book book : bookList) {
+//            _curDay = book.getAuthor();
+//            if (_curDay.equals(_lastDay)) {
+//                _cur++;
+//                if (_cur > maxCount) {
+//                    maxCount = _cur;
+//                    preAuthor = _curDay;
+//                }
+//            } else {
+//                _cur = 1;
+//            }
+//            _lastDay = _curDay;
+//        }
+//        return new BookStats(avgPrice, maxPrice, maxPriceBook, avgRanking, maxRanking, maxRankingBook, avgHot, maxHot, maxHotBook, minHot, minHotBook, bookList.size(), preAuthor);
+        return null;
+    }
+    @Override
+    public BookStats getBookStats(String uid) {
+        List<Book> bookList = bookDao.findById(uid);
+        float avgPrice = 0, maxPrice = 0, avgRanking = 0, maxRanking = 0, avgHot = 0, maxHot = 0, allRanking = 0, allHot = 0, minHot = 9999999, allPrice = 0;
+        ;
+        if (bookList.size() == 0) return new BookStats(0, 0, null, 0, 0, null, 0, 0, null, 0, null, 0, "0");
+        Book maxPriceBook = bookList.get(0);
+        Book maxRankingBook = bookList.get(0);
+        Book maxHotBook = bookList.get(0);
+        Book minHotBook = bookList.get(0);
+        String preAuthor = bookList.get(0).getAuthor();
+        for (Book book : bookList) {
+            float price = parseFloat(book.getPrice().replace('元', ' ').replace("NT$"," ").trim());
+            allPrice += price;
+            allRanking += book.getRanking();
+            allHot += book.getHot();
+            if (book.getHot() >= maxHot) {
+                maxHot = book.getHot();
+                maxHotBook = book;
+            }
+            if (book.getRanking() >= maxRanking) {
+                maxRanking = book.getRanking();
+                maxRankingBook = book;
+            }
+            if (price >= maxPrice) {
+                maxPrice = price;
+                maxPriceBook = book;
+            }
+            if (book.getHot() <= minHot) {
+                minHot = book.getHot();
+                minHotBook = book;
+            }
+        }
+        avgHot = allHot / bookList.size();
+        avgPrice = allPrice / bookList.size();
+        avgRanking = allRanking / bookList.size();
+        for (int i = 0; i < bookList.size(); ++i) {
+            boolean flag = false;
+            for (int j = 0; j < bookList.size() - i - 1; ++j) {
+                String previous = bookList.get(j).getAuthor();
+                String next = bookList.get(j + 1).getAuthor();
+                if (stringCompare(previous, next) > 0) {
+                    flag = true;
+                    Book tmpWeibo = bookList.get(j);
+                    bookList.set(j, bookList.get(j + 1));
+                    bookList.set(j + 1, tmpWeibo);
+                }
+            }
+            if (!flag) break;
+        }
+        int _cur = 0;
+        int maxCount = 0;
+        String _curDay = preAuthor;
+        String _lastDay = preAuthor;
+        for (Book book : bookList) {
+            _curDay = book.getAuthor();
+            if (_curDay.equals(_lastDay)) {
+                _cur++;
+                if (_cur > maxCount) {
+                    maxCount = _cur;
+                    preAuthor = _curDay;
+                }
+            } else {
+                _cur = 1;
+            }
+            _lastDay = _curDay;
+        }
+        return new BookStats(avgPrice, maxPrice, maxPriceBook, avgRanking, maxRanking, maxRankingBook, avgHot, maxHot, maxHotBook, minHot, minHotBook, bookList.size(), preAuthor);
+    }
 
+    private static int stringCompare(String str1, String str2) {
 
+        int l1 = str1.length();
+        int l2 = str2.length();
+        int lmin = Math.min(l1, l2);
 
+        for (int i = 0; i < lmin; i++) {
+            int str1_ch = (int) str1.charAt(i);
+            int str2_ch = (int) str2.charAt(i);
+
+            if (str1_ch != str2_ch) {
+                return str1_ch - str2_ch;
+            }
+        }
+
+        if (l1 != l2) {
+            return l1 - l2;
+        } else {
+            return 0;
+        }
+    }
 
 
 }
