@@ -190,7 +190,13 @@ const traverseHistoryAfterDate = async (page,date) => {
         results.push(order)
       }
     }
-    const nextBtnHandle = await page.$("div[class*=simple-pagination] button:nth-child(2)")
+    try {
+      const nextBtnHandle = await page.$("div[class*=simple-pagination] button:nth-child(2)")
+    }catch (e) {
+      await page.screenshot({
+        'path': path.join(__dirname, 'screenshots', 'netBtnTimeout.png')
+      })
+    }
     hasNext &= !await (await nextBtnHandle.getProperty("disabled")).jsonValue()
     console.log("hasNext", hasNext)
     if(hasNext) {

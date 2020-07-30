@@ -146,6 +146,7 @@ public class CrawlerServiceImpl implements CrawlerService {
                 JSONObject itemObject = (JSONObject) itemArrayObject;
                 Item item = objectToItem(itemObject);
                 item.setOrder(savedOrder);
+                System.out.println(JSON.toJSONString(item));
                 itemDao.save(item);
             }
             count ++;
