@@ -37,7 +37,7 @@ export default class WeiboBodyContent extends Component {
   async getWeiboId(username) {
     var config = {
       method: 'get',
-      url: 'http://18.162.168.229:8686/auth/getByAccount?account=' + username,
+      url: 'http://18.166.111.161:8686/auth/getByAccount?account=' + username,
       headers: {
         withCredentials: true
       }
@@ -56,7 +56,7 @@ export default class WeiboBodyContent extends Component {
     console.log(weiboId);
     var config = {
       method: 'get',
-      url: 'http://18.162.168.229:8787/weibo/getWeibos?userId=' + weiboId,
+      url: 'http://121.36.196.234:8787/weibo/getWeibos?userId=' + weiboId,
       headers: {
         withCredentials: true
       }
@@ -96,7 +96,7 @@ export default class WeiboBodyContent extends Component {
       var data;
       var config = {
         method: 'post',
-        url: 'http://18.162.168.229:8090/login',
+        url: 'http://121.36.196.234:8090/login',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -118,7 +118,7 @@ export default class WeiboBodyContent extends Component {
   
       if (data.data === "success") {
         var activities_data;
-        await axios.get("http://18.162.168.229:8090/activity/all?username=" + this.state.username)
+        await axios.get("http://121.36.196.234:8090/activity/all?username=" + this.state.username)
           .then(function (response) {
             console.log(response);
             activities_data = response.data;
