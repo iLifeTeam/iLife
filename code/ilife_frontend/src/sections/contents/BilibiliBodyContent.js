@@ -28,7 +28,7 @@ export default class BilibiliBodyContent extends Component {
   }
 
   async QRcodeLogin() {
-    const QRcode = await axios.get("http://47.97.206.169:8848/bili/getloginurl", { headers: { withCredentials: true } })
+    const QRcode = await axios.get("http://18.162.168.229:8848/bili/getloginurl", { headers: { withCredentials: true } })
       .then(function (response) {
         console.log(JSON.stringify(response.data));
         if (response.data.status) return response.data.data;
@@ -55,7 +55,7 @@ export default class BilibiliBodyContent extends Component {
   async getResponse() {
     var config = {
       method: 'post',
-      url: 'http://47.97.206.169:8848/bili/loginconfirm?oauthKey=' + this.state.oauthKey,
+      url: 'http://18.162.168.229:8848/bili/loginconfirm?oauthKey=' + this.state.oauthKey,
       headers: { withCredentials: true }
     };
 
@@ -85,7 +85,7 @@ export default class BilibiliBodyContent extends Component {
   async getUserId(ans) {
     var config = {
       method: 'get',
-      url: 'http://47.97.206.169:8848/bili/userinform?SESSDATA=' + ans,
+      url: 'http://18.162.168.229:8848/bili/userinform?SESSDATA=' + ans,
       headers: { withCredentials: true }
     };
 
@@ -112,7 +112,7 @@ export default class BilibiliBodyContent extends Component {
   async getHistories(userId) {
     var config = {
       method: 'post',
-      url: 'http://47.97.206.169:8848/bili/gethistory?mid=' + userId + '&page=0&size=100',
+      url: 'http://18.162.168.229:8848/bili/gethistory?mid=' + userId + '&page=0&size=100',
       headers: { withCredentials: true }
     };
 
@@ -134,7 +134,7 @@ export default class BilibiliBodyContent extends Component {
   updateHistories() {
     var config = {
       method: 'get',
-      url: 'http://47.97.206.169:8848/bili/updatehistory?SESSDATA=' + this.state.SESSDATA,
+      url: 'http://18.162.168.229:8848/bili/updatehistory?SESSDATA=' + this.state.SESSDATA,
       headers: { withCredentials: true }
     };
 

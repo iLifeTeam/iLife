@@ -43,7 +43,7 @@ export default class LoginPage extends Component {
     //console.log("111");
     var config = {
       method: 'post',
-      url: 'http://18.162.168.229:8686/login',
+      url: 'http://18.166.111.161:8686/login',
       headers: {
         withCredentials: true
       },
