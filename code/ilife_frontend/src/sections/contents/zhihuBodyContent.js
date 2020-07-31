@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import {Button,Dropdown,Menu,Radio} from 'antd';
+import {Button, Radio, Statistic, Row, Col} from 'antd';
 import ZhihuActivity from '../../zhihu/ZhihuActivity';
 import 'antd/dist/antd.css';
-
 import { createBrowserHistory } from 'history'
-
+import { LikeOutlined,ZhihuOutlined, HeartOutlined } from '@ant-design/icons';
 export default class zhihuBodyContent extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +22,6 @@ export default class zhihuBodyContent extends Component {
       radioValue: 1,
       wordCloud: "",
       wordCloudLoading:false,
-      wordCloudReady: false,
       uid:"default",
       userinfo: null,
       account:""
@@ -308,7 +306,7 @@ export default class zhihuBodyContent extends Component {
   }
 
   render() {
-    const { activities,loginSuccess,indeterminate,checkedList,checkAll,username,password, wordCloudReady,wordCloud,userinfo, radioValue,wordCloudLoading} = this.state;
+    const { activities,loginSuccess,username,password, wordCloudReady,wordCloud,userinfo, radioValue,wordCloudLoading} = this.state;
     return (
       <div className="content-wrapper">
         <section className="content">
@@ -318,9 +316,19 @@ export default class zhihuBodyContent extends Component {
               {loginSuccess ?
                   <div className="box box-primary">
                     <div className="box-header with-border">
-                      <h3 className="box-title">登录成功</h3>
+                      <h3 className="box-title">{userinfo.name}, 你好</h3>
                     </div>
-                    <div> welcome: {userinfo.name}, 你在知乎上回答了{userinfo.answerCount}次问题，收到了{userinfo.voteupCount}个赞 , {userinfo.thankedCount}次感谢</div>
+                    <Row gutter={24} justify={"center"} flex="auto">
+                      <Col span={8} justify={"center"} flex="auto" offset={4} >
+                        <Statistic  justify={"center"} title="回答问题" value={userinfo.voteupCount} prefix={<ZhihuOutlined />} />
+                      </Col>
+                      <Col span={8}  justify={"center"} flex="auto">
+                        <Statistic  justify={"center"} title="点赞" value={userinfo.voteupCount} prefix={<LikeOutlined />} />
+                      </Col>
+                      <Col span={8}  justify={"center"} flex="auto">
+                        <Statistic justify={"center"} title="感谢" value={userinfo.thankedCount} prefix={<HeartOutlined />} />
+                      </Col>
+                    </Row>
                     <Button onClick={() => this.update()}>>更新数据</Button>
                   </div> :
 
