@@ -219,7 +219,7 @@ export default class WeiboBodyContent extends Component {
             <div className="col-xs-12">
               <div className="box">
                 <div className="box-header">
-                  <h3 className="box-title">用户{this.state.weiboId}的微博数据</h3>
+                  <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}><h3 className="box-title">用户{this.state.weiboId}的微博数据</h3></Divider>
                 </div>
                 <div className="box-body">
                   {<WeiboInfo activities={activities} />}
@@ -245,9 +245,10 @@ export default class WeiboBodyContent extends Component {
                   </Button>
                 </div>
                 <Row justify="center">
-                  <Col span={12}>
+                  <Col span={12}  >
+                  {/*<div className="report-display" style={{border: '5px solid light-yellow', borderRadius: '10px',elevation:10 }}>*/}
                 {statsReady ?
-                    <Text className="box-body" copyable>
+                    <Text className="box-body" copyable >
                       <Paragraph>  {stats.avgWb > 1 ? "你是一个爱发微博,爱展示自己的人.\n" : "你是一个不太爱发微博,很有神秘感的人.\n"}</Paragraph>
                       <Paragraph> 从 <Text mark strong>{startTime}</Text>到 <Text mark strong>{endTime} </Text>，你每天平均发 <Text mark strong>{stats.avgWb}</Text>条微博，总共已经发了<Text mark strong>{stats.allWb}</Text> 条微博呢！</Paragraph>
                       <Paragraph> <Text mark strong>{stats.maxDate}</Text> 是一个特殊的日子，那天你发了<Text mark strong>{stats.maxWb}</Text> 条微博，一定有很让你兴奋的事情吧！</Paragraph>
@@ -259,6 +260,7 @@ export default class WeiboBodyContent extends Component {
                           mark strong>{stats.maxCm}</Text> 次转发，还记得你发了什么内容吗！<Text mark strong>"{stats.maxCmWb}"</Text> 是这个哟，很辩证的话题呢！</Paragraph>
                     </Text> : statsLoading ? <div> "加载中..." </div> : null
                 }
+                  {/*</div>*/}
                   </Col>
                 </Row>
               </div>

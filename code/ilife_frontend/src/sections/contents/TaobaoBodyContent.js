@@ -40,6 +40,7 @@ export default class TaobaoBodyContent extends Component {
       phone:"",
       smsCode:"",
       loginSuccess: false,
+      crawlerEnabled:false,
       loading: false,
       updating: false,
       fetching: false,
@@ -116,6 +117,12 @@ export default class TaobaoBodyContent extends Component {
       smsCode: smsCode.target.value
     })
   }
+  fakeLogin = (phone) => {
+    this.setState({
+      loginSuccess:true
+    })
+    this.fetchAfter(phone, "2020-01-01") // todo: change this
+  }
   loginRequest = (phone,smsCode) => {
     const config = {
       method: 'post',
@@ -134,9 +141,11 @@ export default class TaobaoBodyContent extends Component {
         .then(response => {
           if (response.data == "success")
           this.setState({
-            loginSuccess:true
+            loginSuccess:true,
+            crawlerEnabled:true
           })
           this.setTbId(phone)
+          this.fetchAfter(phone, "2020-01-01") // todo: change this
         })
   }
   fetchSmsRequest = (phone) => {
@@ -163,12 +172,15 @@ export default class TaobaoBodyContent extends Component {
             this.setState({
               btnDisabled: true,
               loading: false,
+              crawlerEnabled:true
             })
+            this.fetchAfter(phone, "2020-03-01") // todo: change this
           } else if (response.data == "already login") {
             this.setState({
               btnDisabled: true,
               loading: false,
               loginSuccess: true,
+              crawlerEnabled: true
             })
             this.setTbId(phone)
             this.fetchAfter(phone, "2020-03-01") // todo: change this
@@ -300,7 +312,7 @@ export default class TaobaoBodyContent extends Component {
     const style = {
       flex:1
     }
-    const { orders,loginSuccess,uid,phone,btnDisabled,loading,updating,loginLoading,smsCode} = this.state;
+    const { orders,loginSuccess,uid,phone,btnDisabled,loading,updating,loginLoading,smsCode,crawlerEnabled} = this.state;
     console.log(this.state)
     return (
       <div className="content-wrapper">
@@ -339,6 +351,11 @@ export default class TaobaoBodyContent extends Component {
                             disabled={smsCode==""}
                             onClick={() => this.loginRequest(phone,smsCode)}
                         > 登录 </Button>
+                        <Button
+                            type="primary"
+                            loading={loginLoading}
+                            onClick={() => this.fakeLogin(phone)}
+                        > 不登录，直接获取当前帐户数据 </Button>
                       </div>
                     </div>
                   </div>
@@ -354,14 +371,14 @@ export default class TaobaoBodyContent extends Component {
                   <h3 className="box-title">淘宝购物记录</h3>
                   <Button
                       onClick={()=>this.updateIncremental(phone)}
-                      disabled={!loginSuccess}
+                      disabled={!crawlerEnabled}
                       loading={updating}
                   >
                     更新数据
                   </Button> <Button
                     onClick={()=>this.updateAll(phone)}
                     loading={updating}
-                    disabled={!loginSuccess}
+                    disabled={!crawlerEnabled}
                 >
                   全部重新爬取
                 </Button>
