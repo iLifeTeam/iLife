@@ -245,7 +245,6 @@ export default class WeiboBodyContent extends Component {
                   </Button>
                 </div>
                 <Row justify="center">
-                  <Col span={12}>
                 {statsReady ?
                     <Text className="box-body" copyable>
                       <Paragraph>  {stats.avgWb > 1 ? "你是一个爱发微博,爱展示自己的人.\n" : "你是一个不太爱发微博,很有神秘感的人.\n"}</Paragraph>
@@ -259,7 +258,6 @@ export default class WeiboBodyContent extends Component {
                           mark strong>{stats.maxCm}</Text> 次转发，还记得你发了什么内容吗！<Text mark strong>"{stats.maxCmWb}"</Text> 是这个哟，很辩证的话题呢！</Paragraph>
                     </Text> : statsLoading ? <div> "加载中..." </div> : null
                 }
-                  </Col>
                 </Row>
               </div>
             </div>
