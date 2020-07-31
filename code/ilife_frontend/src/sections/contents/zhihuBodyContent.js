@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import {Button,Dropdown,Menu,Radio} from 'antd';
+import {Button, Radio, Statistic, Row, Col} from 'antd';
 import ZhihuActivity from '../../zhihu/ZhihuActivity';
 import 'antd/dist/antd.css';
-
-
+import { createBrowserHistory } from 'history'
+import { LikeOutlined,ZhihuOutlined, HeartOutlined } from '@ant-design/icons';
 export default class zhihuBodyContent extends Component {
   constructor(props) {
     super(props);
@@ -18,27 +18,110 @@ export default class zhihuBodyContent extends Component {
       activities: [],
       indeterminate: true,
       checkAll: false,
-      userinfo: null,
       wordCloudReady:false,
       radioValue: 1,
       wordCloud: "",
-      wordCloudReady: false,
+      wordCloudLoading:false,
+      uid:"default",
+      userinfo: null,
+      account:""
     }
     this.login = this.login.bind(this);
     this.loginTwice = this.loginTwice.bind(this);
   }
   componentDidMount() {
+    const username = localStorage.getItem("username");
+    if (username === null || username === undefined) {
+      const history = createBrowserHistory();
+      history.push("/login");
+      window.location.reload();
+    }
+    this.setState({
+      account: username
+    })
     const script = document.createElement("script");
-
     script.src = "../../dist/js/content.js";
     script.async = true;
     document.body.appendChild(script);
+    this.fetchUserinfo(username)
+  }
+  fetchUserinfo = (account) => {
+    const config = {
+      method: 'get',
+      url: this.authServer + '/auth/getByAccount?account=' + account,
+      headers: {
+        withCredentials: true
+      }
+    };
+    axios(config)
+        .then(response => {
+          console.log(response.data)
+          const username = response.data.zhid == "0" ? "" : response.data.zhid
+          this.setState({
+            username :username,
+            uid: response.data.id
+          })
+          if (username != ""){
+            this.tryLogin(username)
+            this.fetchZhihuUser(username)
+          }
+        })
+  }
+  tryLogin = ()=> {
+    var data;
+    var config = {
+      method: 'post',
+      url: this.zhihuServer + '/login',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data:
+          {
+            password: "",
+            username: this.state.username,
+          },
+      withCredentials: true
+    };
 
+    axios(config)
+        .then(response => {
+          console.log(response.data);
+          if (response.data == "Login successfully!"){
+            this.setState({
+              loginSuccess: true
+            })
+            axios.get(this.zhihuServer + "/activity/all?username=" + this.state.username, {
+              withCredentials: true
+            }).then(response => {
+                  console.log(response);
+                  this.setState({
+                    activities: response.data,
+                  })
+                })}
+        })
+
+  }
+  setZhId = (username) => {
+    const config = {
+      method: 'post',
+      url: this.authServer + '/auth/updateZhId',
+      headers: {
+        withCredentials: true
+      },
+      data:{
+        userId: this.state.uid,
+        zhId: username
+      }
+    }
+    axios(config)
+        .then(response => {
+          console.log("update zhid",response)
+        })
   }
   onRadioChange = e => {
     console.log('radio checked', e.target.value);
     this.setState({
-      value: e.target.value,
+      radioValue: e.target.value,
     });
   };
   nameOnChange(val) {
@@ -56,6 +139,9 @@ export default class zhihuBodyContent extends Component {
       password: val.target.value,
     })
   }
+  authServer = "http://18.166.111.161:8686"
+  zhihuServer = "http://18.166.111.161:8090"
+  word_cloud_server = "http://18.166.24.220:8103"
   fetchWordCloud = (username) =>{
     let type = ""
     switch (this.state.radioValue) {
@@ -72,31 +158,38 @@ export default class zhihuBodyContent extends Component {
         type = ""
         break
     }
+
     const config = {
       method: 'get',
-      url: 'http://18.162.53.235:8103/word_cloud',
+      url: this.word_cloud_server + '/word_cloud',
       headers: {
         'Content-Type': 'application/json'
       },
       params: {
-        username: username,
+        uid: this.state.userinfo.uid,
         type: type,
-      },
-      withCredentials:true
+      }
     }
+    console.log("word-cloud url", config.url)
+    this.setState({
+      wordCloudLoading: true
+    })
     axios(config)
         .then(response => {
-          console.log("qrCorde", response.data)
+          console.log("pic", response.data)
           this.setState({
             wordCloud:`data:image/png;base64,${response.data}`,
-            wordCloudReady : true
+            wordCloudReady : true,
+            wordCloudLoading: false,
           })
-        })
+        }).catch(e =>
+        console.log(e)
+    )
   }
-  fetchUserinfo = (username) => {
+  fetchZhihuUser = (username) => {
     const config = {
       method: 'get',
-      url: 'http://18.162.168.229:8090/user',
+      url: this.zhihuServer + '/user',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -107,11 +200,14 @@ export default class zhihuBodyContent extends Component {
     };
     axios(config)
         .then(response => {
-          console.log("userinfo",response)
+          console.log("userinfo",response.data)
+          this.setState({
+            userinfo: response.data
+          })
         })
   }
   updateUserActivities = (username) => {
-    axios.post("http://18.162.168.229:8090/updateActivities?username=" + this.state.username,{
+    axios.post(this.zhihuServer + "/updateActivities?username=" + this.state.username,{
       withCredentials:true
     }).then(function (response) {
           console.log(response.data);
@@ -121,7 +217,7 @@ export default class zhihuBodyContent extends Component {
     var data;
     var config = {
       method: 'post',
-      url: 'http://18.162.168.229:8090/login',
+      url: this.zhihuServer + '/login',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -147,7 +243,7 @@ export default class zhihuBodyContent extends Component {
 
     if (data.data === "Login successfully!") {
       var activities_data;
-      await axios.get("http://18.162.168.229:8090/activity/all?username=" + this.state.username,{
+      await axios.get( this.zhihuServer + "/activity/all?username=" + this.state.username,{
         withCredentials:true
       })
         .then(function (response) {
@@ -158,6 +254,7 @@ export default class zhihuBodyContent extends Component {
         activities: activities_data,
         loginSuccess: true
       })
+      this.setZhId(this.state.username)
     }
     else
       this.setState({
@@ -169,7 +266,7 @@ export default class zhihuBodyContent extends Component {
   async loginTwice() {
     var config = {
       method: 'post',
-      url: 'http://18.162.168.229:8090/login',
+      url: this.zhihuServer + '/login',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -186,6 +283,7 @@ export default class zhihuBodyContent extends Component {
     await axios(config)
       .then(function (response) {
         console.log(response);
+        this.setZhId(this.state.username)
       })
     console.log("done");
     /*
@@ -195,8 +293,7 @@ export default class zhihuBodyContent extends Component {
       })
     */
     var activities_data;
-    await axios.get("http://18.162.168.229:8090/activity/all?username=" + this.state.username,{
-
+    await axios.get(this.zhihuServer + "/activity/all?username=" + this.state.username,{
       withCredentials:true
     })
       .then(function (response) {
@@ -205,12 +302,11 @@ export default class zhihuBodyContent extends Component {
       })
     this.setState({
       activities: activities_data,
-      loginSuccess: true,
     })
   }
 
   render() {
-    const { activities,loginSuccess,indeterminate,checkedList,checkAll,username,wordCloudReady,wordCloud} = this.state;
+    const { activities,loginSuccess,username,password, wordCloudReady,wordCloud,userinfo, radioValue,wordCloudLoading} = this.state;
     return (
       <div className="content-wrapper">
         <section className="content">
@@ -220,9 +316,20 @@ export default class zhihuBodyContent extends Component {
               {loginSuccess ?
                   <div className="box box-primary">
                     <div className="box-header with-border">
-                      <h3 className="box-title">登录成功</h3>
+                      <h3 className="box-title">{userinfo.name}, 你好</h3>
                     </div>
-                    <Button onClick={()=>this.update()}>>更新数据</Button>
+                    <Row gutter={24} justify={"center"} flex="auto">
+                      <Col span={8} justify={"center"} flex="auto" offset={4} >
+                        <Statistic  justify={"center"} title="回答问题" value={userinfo.voteupCount} prefix={<ZhihuOutlined />} />
+                      </Col>
+                      <Col span={8}  justify={"center"} flex="auto">
+                        <Statistic  justify={"center"} title="点赞" value={userinfo.voteupCount} prefix={<LikeOutlined />} />
+                      </Col>
+                      <Col span={8}  justify={"center"} flex="auto">
+                        <Statistic justify={"center"} title="感谢" value={userinfo.thankedCount} prefix={<HeartOutlined />} />
+                      </Col>
+                    </Row>
+                    <Button onClick={() => this.update()}>>更新数据</Button>
                   </div> :
 
                   <div className="box box-primary">
@@ -235,13 +342,15 @@ export default class zhihuBodyContent extends Component {
                         <div className="form-group">
                           <label htmlFor="exampleInputEmail1">Email地址</label>
                           <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Enter email"
-                                 onChange={(val) => this.nameOnChange(val)}/>
+                                 onChange={(val) => this.nameOnChange(val)}
+                                 value={username}/>
                         </div>
                         <div className="form-group">
                           <label htmlFor="exampleInputPassword1">密码</label>
                           <input type="password" className="form-control" id="exampleInputPassword1"
                                  placeholder="Password"
-                                 onChange={(val) => this.psdOnChange(val)}/>
+                                 onChange={(val) => this.psdOnChange(val)}
+                                 value={password}/>
                         </div>
                       </div>
                     </form>
@@ -293,7 +402,6 @@ export default class zhihuBodyContent extends Component {
                       </tr>
                     </thead>
                     <tbody>
-
                       {activities.map((activity, index) => (
                         <ZhihuActivity
                           key={index}
@@ -304,7 +412,6 @@ export default class zhihuBodyContent extends Component {
                           type={activity.type}
                         ></ZhihuActivity>
                       ))}
-
                     </tbody>
                     <tfoot>
                       <tr>
@@ -322,27 +429,30 @@ export default class zhihuBodyContent extends Component {
           </div>
           {
             loginSuccess ?
-            <div className="row">
-              <div className="col-xs-12">
-                <div className="box">
-                  <div className="box-header">
-                    <h3 className="box-title">知乎浏览关键词</h3>
+                <div className="row">
+                  <div className="col-xs-12">
+                    <div className="box">
+                      <div className="box-header">
+                        <h3 className="box-title">知乎浏览关键词</h3>
+                      </div>
+                      <Radio.Group onChange={this.onRadioChange} value={radioValue}>
+                        <Radio value={1}>回答</Radio>
+                        <Radio value={2}>提问</Radio>
+                        <Radio value={3}>文章</Radio>
+                        <Radio value={4}>全部</Radio>
+                      </Radio.Group>
+                      <Button
+                          onClick={() => this.fetchWordCloud(username)}
+                          loading={wordCloudLoading}
+                      > 生成我的词云报告 </Button>
+                      <div className="box-body">
+                      </div>
+                      {
+                        wordCloudReady ? <img src={wordCloud} className="img-square" alt="词云"/> : null
+                      }
+                    </div>
                   </div>
-                  <Radio.Group onChange={this.onChange} value={this.state.value}>
-                    <Radio value={1}>回答</Radio>
-                    <Radio value={2}>提问</Radio>
-                    <Radio value={3}>文章</Radio>
-                    <Radio value={4}>全部</Radio>
-                  </Radio.Group>
-                  <Button
-                      onClick={()=>this.fetchWordCloud(username)}
-                  > 生成我的词云报告 </Button>
-                </div>
-              </div>
-            </div> : null
-          }
-          {
-            wordCloudReady ? <img src={wordCloud} className="img-square" alt="词云"/> : null
+                </div> : null
           }
         </section>
       </div >

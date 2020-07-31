@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import {Table,Badge, Menu, Dropdown,Button} from 'antd';
 import 'antd/dist/antd.css';
-
+import { createBrowserHistory } from 'history'
 
 const expandedRowRender = (row) => {
   console.log("expanded row render",row)
@@ -40,28 +40,72 @@ export default class TaobaoBodyContent extends Component {
       phone:"",
       smsCode:"",
       loginSuccess: false,
+      crawlerEnabled:false,
       loading: false,
       updating: false,
       fetching: false,
       btnDisabled: false,
-      orders: []
+      orders: [],
+      account: "",
     }
   }
   componentDidMount() {
+    const username = localStorage.getItem("username");
+    if (username === null || username === undefined) {
+      const history = createBrowserHistory();
+      history.push("/login");
+      window.location.reload();
+    }
+    this.setState({
+      account: username
+    })
     const script = document.createElement("script");
-
     script.src = "dist/js/content.js";
     script.async = true;
     document.body.appendChild(script);
-    this.getUid();
+    this.fetchUserinfo(username)
   }
 
-  server = "http://18.162.168.229"
+  server = "http://18.166.111.161"
   port = 8095
-  getUid = () => {
-    this.setState({
-      uid: "zhaoxuyang13"
-    })
+  authPort = 8686
+  fetchUserinfo = (account) => {
+    const config = {
+      method: 'get',
+      url: this.server + ":" + this.authPort + '/auth/getByAccount?account=' + account,
+      headers: {
+        withCredentials: true
+      }
+    };
+    axios(config)
+        .then(response => {
+          console.log(response.data)
+          const phone = response.data.tbid == "0" ? "" : response.data.tbid
+          this.setState({
+            phone: phone,
+            uid: response.data.id
+          })
+          if (phone != null){
+            this.fetchSmsRequest(phone)
+          }
+        })
+  }
+  setTbId = (phone) => {
+    const config = {
+      method: 'post',
+      url: this.server + ":" + this.authPort + '/auth/updateTbId',
+      headers: {
+        withCredentials: true
+      },
+      data:{
+        userId: this.state.uid,
+        TbId: phone
+      }
+    }
+    axios(config)
+        .then(response => {
+          console.log("update tbid",response)
+        })
   }
   phoneOnChange = (phone) =>{
     this.setState({
@@ -72,6 +116,12 @@ export default class TaobaoBodyContent extends Component {
     this.setState({
       smsCode: smsCode.target.value
     })
+  }
+  fakeLogin = (phone) => {
+    this.setState({
+      loginSuccess:true
+    })
+    this.fetchAfter(phone, "2020-01-01") // todo: change this
   }
   loginRequest = (phone,smsCode) => {
     const config = {
@@ -91,8 +141,11 @@ export default class TaobaoBodyContent extends Component {
         .then(response => {
           if (response.data == "success")
           this.setState({
-            loginSuccess:true
+            loginSuccess:true,
+            crawlerEnabled:true
           })
+          this.setTbId(phone)
+          this.fetchAfter(phone, "2020-01-01") // todo: change this
         })
   }
   fetchSmsRequest = (phone) => {
@@ -119,14 +172,18 @@ export default class TaobaoBodyContent extends Component {
             this.setState({
               btnDisabled: true,
               loading: false,
+              crawlerEnabled:true
             })
+            this.fetchAfter(phone, "2020-03-01") // todo: change this
           } else if (response.data == "already login") {
             this.setState({
               btnDisabled: true,
               loading: false,
               loginSuccess: true,
+              crawlerEnabled: true
             })
-            this.fetchAfter(phone, "2020-05-01")
+            this.setTbId(phone)
+            this.fetchAfter(phone, "2020-03-01") // todo: change this
           } else {
             console.log("failed", response.data)
             this.setState({
@@ -157,7 +214,32 @@ export default class TaobaoBodyContent extends Component {
           })
           console.log(response)
           console.log("更新了" + response.data + "条购物信息")
-          this.fetchAfter(phone, "2020-05-01")
+          this.fetchAfter(phone, "2020-03-01") // todo: alter this
+        })
+  }
+  updateAll = (phone)=>{
+    const config = {
+      method: 'post',
+      url: this.server + ":" + this.port  + '/order/crawl/all',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      params: {
+        username: phone,
+      },
+      withCredentials:true
+    }
+    this.setState({
+      updating: true
+    })
+    axios(config)
+        .then(response => {
+          this.setState({
+            updating: false,
+          })
+          console.log(response)
+          console.log("更新了" + response.data + "条购物信息")
+          this.fetchAfter(phone, "2020-01-01") // todo: alter this
         })
   }
   fetchAfter = (phone,date) =>{
@@ -230,7 +312,7 @@ export default class TaobaoBodyContent extends Component {
     const style = {
       flex:1
     }
-    const { orders,loginSuccess,uid,phone,btnDisabled,loading,loginLoading,smsCode} = this.state;
+    const { orders,loginSuccess,uid,phone,btnDisabled,loading,updating,loginLoading,smsCode,crawlerEnabled} = this.state;
     console.log(this.state)
     return (
       <div className="content-wrapper">
@@ -248,8 +330,9 @@ export default class TaobaoBodyContent extends Component {
                   <div className="box-body">
                     <div className="form-group">
                       <label htmlFor="exampleInputEmail1">手机号码</label>
-                      <input type="phone" className="form-control" id="exampleInputEmail1" placeholder="Enter email"
-                             onChange={this.phoneOnChange} />
+                      <input type="phone" className="form-control" id="exampleInputEmail1" placeholder="Enter phone"
+                             onChange={this.phoneOnChange}
+                            value = {phone}/>
                     </div>
                     <div className="form-group">
                       <label htmlFor="exampleInputPassword1">验证码</label>
@@ -268,6 +351,11 @@ export default class TaobaoBodyContent extends Component {
                             disabled={smsCode==""}
                             onClick={() => this.loginRequest(phone,smsCode)}
                         > 登录 </Button>
+                        <Button
+                            type="primary"
+                            loading={loginLoading}
+                            onClick={() => this.fakeLogin(phone)}
+                        > 不登录，直接获取当前帐户数据 </Button>
                       </div>
                     </div>
                   </div>
@@ -283,10 +371,17 @@ export default class TaobaoBodyContent extends Component {
                   <h3 className="box-title">淘宝购物记录</h3>
                   <Button
                       onClick={()=>this.updateIncremental(phone)}
-                      disabled={!loginSuccess}
+                      disabled={!crawlerEnabled}
+                      loading={updating}
                   >
                     更新数据
-                  </Button>
+                  </Button> <Button
+                    onClick={()=>this.updateAll(phone)}
+                    loading={updating}
+                    disabled={!crawlerEnabled}
+                >
+                  全部重新爬取
+                </Button>
                   {this.state.updating ?   <div>正在增量式爬取...</div> : null}
                   {this.state.fetching ?   <div>正在获取...</div> : null}
                 </div>

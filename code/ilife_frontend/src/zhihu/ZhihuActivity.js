@@ -6,7 +6,7 @@ export default class ZhihuActivity extends Component {
     super(props);
     this.state = {
       isvalid: false,
-      key: 1,
+      key: this.props.key,
       action_text: "",
       created_time: "",
       id: 1,
@@ -28,7 +28,7 @@ export default class ZhihuActivity extends Component {
         this.setState({
           key: this.props.key,
           action_text: this.props.action_text,
-          created_time: new Date(this.props.created_time * 1000).toLocaleString(),
+          created_time: new Date(this.props.created_time).toLocaleString(),
           id: this.props.id,
           target_id: this.props.target_id,
           type: this.props.type,
@@ -40,10 +40,9 @@ export default class ZhihuActivity extends Component {
         break;
     }
   }
-
   async getAnswer(id) {
     var answer;
-    await axios.get("http://18.162.168.229:8090/answer?id=" + encodeURI(id))
+    await axios.get("http://18.166.111.161:8090/answer?id=" + encodeURI(id))
       .then(function (response) {
         console.log(response);
         answer = response.data;

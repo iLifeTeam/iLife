@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import {Table,Badge, Menu, Dropdown} from 'antd';
 import 'antd/dist/antd.css';
-
+import { createBrowserHistory } from 'history'
 
 const expandedRowRender = (row) => {
   console.log("expanded row render",row)
@@ -44,23 +44,30 @@ export default class JingdongBodyContent extends Component {
     }
   }
   componentDidMount() {
-    const script = document.createElement("script");
+    const username = localStorage.getItem("username");
 
+    if (username === null || username === undefined) {
+      const history = createBrowserHistory();
+      history.push("/login");
+      window.location.reload();
+    }
+    const script = document.createElement("script");
     script.src = "dist/js/content.js";
     script.async = true;
     document.body.appendChild(script);
-    this.getUid();
+
+    this.getUid(username);
     setTimeout(() => {
       this.checkLoginRequest(this.state.uid)
       this.loginRequest(this.state.uid)
     },0)
   }
 
-  server = "http://18.162.168.229"
-  port = 8097
-  getUid = () => {
+  server = "http://18.166.111.161"
+  port = 8096
+  getUid = (username) => {
     this.setState({
-      uid: "zhaoxuyang13"
+      uid: username
     })
   }
   loginRequest = (uid) => {

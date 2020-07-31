@@ -3,7 +3,10 @@ import axios from 'axios';
 import ZhihuActivity from '../../zhihu/ZhihuActivity';
 import { createBrowserHistory } from 'history'
 import WeiboInfo from '../../weibo/WeiboInfo';
+import {Button,Typography,Row,Col,Divider} from 'antd';
+import 'antd/dist/antd.css';
 
+const { Text, Paragraph } = Typography;
 export default class WeiboBodyContent extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +14,13 @@ export default class WeiboBodyContent extends Component {
       weiboId: null,
       username: "",
       password: "",
-      activities: null
+      activities: null,
+      /* hardcode parameter, need to be passed in */
+      startTime :"Mon May 28 09:51:52 GMT 2019",
+      endTime :"Mon July 29 09:51:52 GMT 2020",
+      stats: null,
+      statsReady: false,
+      statsLoading : false,
     }
     //this.login = this.login.bind(this);
     this.getWeiboId = this.getWeiboId.bind(this);
@@ -32,6 +41,7 @@ export default class WeiboBodyContent extends Component {
     script.async = true;
     document.body.appendChild(script);
     this.getWeiboId(username);
+
   }
 
   async getWeiboId(username) {
@@ -135,8 +145,45 @@ export default class WeiboBodyContent extends Component {
   
     }
   */
+
+  /* start 文案 here <- bad comment style*/
+  weiboServer = "http://121.36.196.234:8787"
+  fetchStats = (userId, startTime, endTime)=>{
+
+    const config = {
+      method: 'get',
+      url: this.weiboServer + '/weibo/getStats',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      params:{
+        userId: userId,
+        startTime: startTime,
+        endTime:endTime
+      },
+      withCredentials:true,
+    };
+    this.setState({
+      statsLoading:true
+    })
+    axios(config)
+        .then( response => {
+          console.log(response.data)
+          this.setState({
+            stats: response.data,
+            statsLoading:false,
+            statsReady:true,
+          })
+        })
+  }
+
+
+  /* end 文案 here*/
+
+
+
   render() {
-    const { activities } = this.state;
+    const { activities,stats,statsReady,statsLoading,weiboId,startTime,endTime } = this.state;
     return (
       <div className="content-wrapper">
         <section className="content">{/*
@@ -172,7 +219,7 @@ export default class WeiboBodyContent extends Component {
             <div className="col-xs-12">
               <div className="box">
                 <div className="box-header">
-                  <h3 className="box-title">用户{this.state.weiboId}的微博数据</h3>
+                  <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}><h3 className="box-title">用户{this.state.weiboId}的微博数据</h3></Divider>
                 </div>
                 <div className="box-body">
                   {<WeiboInfo activities={activities} />}
@@ -181,6 +228,45 @@ export default class WeiboBodyContent extends Component {
             </div>
           </div >
         </section >
+        <section>
+          < div className="row" >
+            <div className="col-xs-12">
+              <div className="box">
+                <div className="box-header">
+                  <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}><h3 className="box-title">用户{this.state.weiboId}的微博报表</h3>
+                  </Divider>
+                  <Button
+                    loading={ statsLoading}
+                    onClick={()=>{
+                      this.fetchStats(weiboId,startTime,endTime)
+                    }}
+                  >
+                    生成报表
+                  </Button>
+                </div>
+                <Row justify="center">
+                  <Col span={12}  >
+                  {/*<div className="report-display" style={{border: '5px solid light-yellow', borderRadius: '10px',elevation:10 }}>*/}
+                {statsReady ?
+                    <Text className="box-body" copyable >
+                      <Paragraph>  {stats.avgWb > 1 ? "你是一个爱发微博,爱展示自己的人.\n" : "你是一个不太爱发微博,很有神秘感的人.\n"}</Paragraph>
+                      <Paragraph> 从 <Text mark strong>{startTime}</Text>到 <Text mark strong>{endTime} </Text>，你每天平均发 <Text mark strong>{stats.avgWb}</Text>条微博，总共已经发了<Text mark strong>{stats.allWb}</Text> 条微博呢！</Paragraph>
+                      <Paragraph> <Text mark strong>{stats.maxDate}</Text> 是一个特殊的日子，那天你发了<Text mark strong>{stats.maxWb}</Text> 条微博，一定有很让你兴奋的事情吧！</Paragraph>
+                      <Paragraph> 你的微博质量很高呢，平均每条微博都有 <Text mark strong>{stats.avgUp}</Text> 个赞，总共获得了<Text mark strong>{stats.allUp}</Text>个赞，其中最多的一条微博，竟然获得了<Text
+                          mark strong>{stats.maxUp}</Text> 个赞，还记得你发了什么内容吗！<Text mark strong>"{stats.maxUpWb}"</Text> 是这个哟，写得确实很出彩！</Paragraph>
+                      <Paragraph> 有很多人转过你的微博，平均每条微博都有<Text mark strong>{stats.avgRt}</Text> 次转发，总共获得了<Text mark strong>{stats.allRt}</Text> 次转发，其中最多的一条微博，竟然获得了<Text
+                          mark strong>{stats.maxRt}</Text> 次转发，还记得你发了什么内容吗！<Text mark strong>"{stats.maxRtWb}"</Text> 是这个哟，果然很有传播力！</Paragraph>
+                      <Paragraph> 你的微博下讨论很热烈，平均每条微博都有<Text mark strong>{stats.avgCm}</Text> 次转发，总共获得了<Text mark strong>{stats.allCm}</Text> 次转发，其中最多的一条微博，竟然获得了<Text
+                          mark strong>{stats.maxCm}</Text> 次转发，还记得你发了什么内容吗！<Text mark strong>"{stats.maxCmWb}"</Text> 是这个哟，很辩证的话题呢！</Paragraph>
+                    </Text> : statsLoading ? <div> "加载中..." </div> : null
+                }
+                  {/*</div>*/}
+                  </Col>
+                </Row>
+              </div>
+            </div>
+          </div >
+        </section>
       </div >
     )
   }
