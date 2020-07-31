@@ -2,13 +2,19 @@ package com.ilife.zhihu.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.ilife.zhihu.crawller.ZhihuCrawlerServiceClient;
+import com.ilife.zhihu.dao.UserDao;
 import com.ilife.zhihu.entity.*;
+import com.ilife.zhihu.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
@@ -136,6 +142,8 @@ class ZhihuControllerTest {
     private MockMvc mockMvc;
     @Mock
     private ZhihuCrawlerServiceClient client;
+    @MockBean
+    private UserRepository userRepository;
     @Autowired
     private WebApplicationContext context;
 
@@ -163,7 +171,7 @@ class ZhihuControllerTest {
                         .content(JSON.toJSONString(request));
         String response = mockMvc.perform(loginRequest).andExpect(MockMvcResultMatchers.status().is(401))
                 .andReturn().getResponse().getContentAsString();
-        Assertions.assertEquals("\"" + captchaResponse + "\"", response);
+        Assertions.assertEquals(captchaResponse , response);
 
         ZhihuController.LoginRequest requestWithCaptcha = new ZhihuController.LoginRequest("test", "test", "test");
         MockHttpServletRequestBuilder captchaRequest =
@@ -172,7 +180,7 @@ class ZhihuControllerTest {
                         .content(JSON.toJSONString(requestWithCaptcha));
         String successResponse = mockMvc.perform(captchaRequest).andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assertions.assertEquals("\"Login successfully!\"", successResponse);
+        Assertions.assertEquals("Login successfully!", successResponse);
 
         ZhihuController.LoginRequest nullRequest = new ZhihuController.LoginRequest(null, null, null);
         MockHttpServletRequestBuilder nullLoginRequest =
@@ -181,24 +189,26 @@ class ZhihuControllerTest {
                         .content(JSON.toJSONString(nullRequest));
         String errorResponse = mockMvc.perform(nullLoginRequest).andExpect(MockMvcResultMatchers.status().is(400))
                 .andReturn().getResponse().getContentAsString();
-        Assertions.assertEquals("\"Need Password!\"", errorResponse);
+        Assertions.assertEquals("Need Password!", errorResponse);
 
     }
 
     @Test
     void updateUserActivities() throws Exception {
         when(client.getActivities("test")).thenReturn(updateResponse);
+        User user = new User("uid","name","email","phone",1,2,3,-1,null);
+        when(userRepository.findByEmail("test")).thenReturn(user);
         zhihuController.setCrawlerServiceClient(client);
         MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.post("/updateActivities").param("username", "test");
         String response = mockMvc.perform(getRequest).andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assertions.assertEquals("\"Update successfully!\"", response);
+        Assertions.assertEquals("Update successfully!", response);
 
         when(client.getActivities("test_not_login")).thenReturn("not login");
         MockHttpServletRequestBuilder errorRequest = MockMvcRequestBuilders.post("/updateActivities").param("username", "test_not_login");
         String errorResponse = mockMvc.perform(errorRequest).andExpect(MockMvcResultMatchers.status().is(401))
                 .andReturn().getResponse().getContentAsString();
-        Assertions.assertEquals("\"Not login!\"", errorResponse);
+        Assertions.assertEquals("Not login!", errorResponse);
     }
 
     @Test
@@ -213,6 +223,8 @@ class ZhihuControllerTest {
 
     @Test
     void getActivity() throws Exception {
+        User user = new User("uid","name","email","phone",1,2,3,-1,null);
+        when(userRepository.findByEmail("test")).thenReturn(user);
         MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/activity/all").param("username", "test");
         ResultActions perform = mockMvc.perform(getRequest);
         perform.andExpect(MockMvcResultMatchers.status().isOk());
