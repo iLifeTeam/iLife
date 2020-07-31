@@ -1,6 +1,6 @@
 from python:3.8-slim
 
-RUN apt install --yes gcc
+RUN apt update && apt install --yes gcc
 ADD requirements.txt /app/
 WORKDIR /app
 RUN pip install -r requirements.txt
