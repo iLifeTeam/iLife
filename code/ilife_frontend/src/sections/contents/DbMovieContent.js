@@ -133,7 +133,7 @@ export default class DbMovieContent extends Component {
   crawl() {
     var config = {
       method: 'get',
-      url: 'http://121.36.196.234:8484/douban/crawlMovie?userId=' + this.state.doubanId + '&limit=2&type=movie',
+      url: 'http://18.166.24.220:8484/douban/crawlMovie?userId=' + this.state.doubanId + '&limit=2&type=movie',
       headers: {
         withCredentials: true,
       }
