@@ -48,3 +48,29 @@
 - 7.23
   - finish taobao-service backend, support incremental crawling.
   - try alipay crawling, integrate with alipay-backend.
+- 7.24 
+  - wrap up jingdong-python crawler with flask http server.
+  - explore and abandon alipay-service crawler and alipay service backend
+  - refine jd-python crawler with functionality to pull all orders with qrcode login
+- 7.25 ~7.26
+  - deploy zhihu,taobao,jinddong service, deloy zhihu,taobao,jingdong crawler. with docker
+  - fix bugs with services and crawlers
+- 7.27
+  - help hyy with frontend, build page for jingdong
+  - refine jingdong service add security configuration, fix backend cors issues
+- 7.28
+  - front-end: add page for taobao
+  - change taobao to login with smscode, because passwd,username login will be banned
+  - add session config on all servers
+- 7.29
+  - try actuator,prometheus and graphana, find a bug with fastjson and actuator
+  - deploy product classification service
+- 7.30 
+  - open all security settings and try to connect with frontend
+  - refine login procedures of jd,tb,zh front-end to avoid retype username.
+  - write logic to show word-cloud
+- 7.31
+  - refine front-end pages, write logic for weibo/douban report.
+  - refine backend unit tests.
+  
+
