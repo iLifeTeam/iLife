@@ -1,11 +1,11 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import axios from 'axios';
-import {createBrowserHistory} from 'history'
+import { createBrowserHistory } from 'history'
 import DoubanBooks from '../../douban/DoubanBooks';
-import {Button, Typography} from 'antd';
+import { Button, Typography } from 'antd';
 import 'antd/dist/antd.css';
 const { Text, Paragraph } = Typography;
-export default class DbMovieContent extends Component {
+export default class DbBookContent extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -59,7 +59,7 @@ export default class DbMovieContent extends Component {
                 return null;
             });
 
-        this.setState({doubanId})
+        this.setState({ doubanId })
         console.log(doubanId);
         var config = {
             method: 'get',
@@ -77,7 +77,7 @@ export default class DbMovieContent extends Component {
             .catch(function (error) {
                 console.log(error);
             });
-        this.setState({activities: activities});
+        this.setState({ activities: activities });
     }
 
     nameOnChange(val) {
@@ -189,7 +189,7 @@ export default class DbMovieContent extends Component {
 
 
     render() {
-        const {activities, stats, statsReady, statsLoading, userId} = this.state;
+        const { activities, stats, statsReady, statsLoading, userId } = this.state;
         return (
             <div className="content-wrapper">
                 <section className="content">{/*
@@ -229,7 +229,7 @@ export default class DbMovieContent extends Component {
                                     <p className="btn btn-primary" onClick={this.crawl}>更新数据</p>
                                 </div>
                                 <div className="box-body">
-                                    {<DoubanBooks activities={activities}/>}
+                                    {<DoubanBooks activities={activities} />}
                                 </div>
                             </div>
                         </div>
@@ -256,21 +256,21 @@ export default class DbMovieContent extends Component {
                                         <Paragraph>你是一个爱看书的人，从你踏入豆瓣的小世界以来，你已经阅读了{stats.allBook}本书，书海无涯，知识作舟，要继续保持哦。</Paragraph>
                                         <Paragraph>在你阅读的书籍中：</Paragraph>
                                         <Paragraph>平均评分是<Text mark strong>{stats.avgRanking}</Text>，评分最高的是<Text mark
-                                                                                                                strong>{stats.maxRankingBook.name}</Text>，达到了<Text
-                                            mark strong>{stats.maxRanking}</Text>分，这是一本由<Text mark
-                                                                                              strong>{stats.maxRankingBook.author}</Text>所著的书，不知道你是否欣喜与它相遇呢？</Paragraph>
+                                            strong>{stats.maxRankingBook.name}</Text>，达到了<Text
+                                                mark strong>{stats.maxRanking}</Text>分，这是一本由<Text mark
+                                                    strong>{stats.maxRankingBook.author}</Text>所著的书，不知道你是否欣喜与它相遇呢？</Paragraph>
                                         <Paragraph>平均价格是<Text mark strong>{stats.avgPrice}</Text>，价格最高的是<Text mark
-                                                                                                              strong>{stats.maxPriceBook.name}</Text>，需要<Text
-                                            mark strong>{stats.maxPrice}</Text>大洋，这是一本由<Text mark
-                                                                                             strong>{stats.maxPriceBook.author}</Text>所著的书，想必它一定有你所中意之处吧？</Paragraph>
+                                            strong>{stats.maxPriceBook.name}</Text>，需要<Text
+                                                mark strong>{stats.maxPrice}</Text>大洋，这是一本由<Text mark
+                                                    strong>{stats.maxPriceBook.author}</Text>所著的书，想必它一定有你所中意之处吧？</Paragraph>
                                         <Paragraph>平均热度是<Text mark strong>{stats.avgHot}</Text>，热度最高的是<Text mark
-                                                                                                            strong>{stats.maxHotBook.name}</Text>，共有<Text
-                                            mark strong>{stats.maxHot}</Text>看过，这是一本由<Text mark
-                                                                                           strong>{stats.maxHotBook.author}</Text>所著的书，这样的爆款书目，读起来一定畅快淋漓吧？</Paragraph>
+                                            strong>{stats.maxHotBook.name}</Text>，共有<Text
+                                                mark strong>{stats.maxHot}</Text>看过，这是一本由<Text mark
+                                                    strong>{stats.maxHotBook.author}</Text>所著的书，这样的爆款书目，读起来一定畅快淋漓吧？</Paragraph>
                                         <Paragraph>热度最低的是<Text mark strong>{stats.minHotBook.name}</Text>，共有<Text mark
-                                                                                                                  strong>{stats.minHot}</Text>看过，这是一本由<Text
-                                            mark
-                                            strong>{stats.minHotBook.author}</Text>所著的书，愿意读小众书籍的人，运气都不会太差！</Paragraph>
+                                            strong>{stats.minHot}</Text>看过，这是一本由<Text
+                                                mark
+                                                strong>{stats.minHotBook.author}</Text>所著的书，愿意读小众书籍的人，运气都不会太差！</Paragraph>
                                         <Paragraph>你最喜欢的作者是<Text mark strong>{stats.preAuthor}</Text>，读一个人的著作，也是和人心灵沟通的一种方式。</Paragraph>
                                     </div> : statsLoading ? <div> "加载中..." </div> : null
                                 }
