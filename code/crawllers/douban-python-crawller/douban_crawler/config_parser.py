@@ -27,8 +27,8 @@ class Config:
         self.id = 132088441
         self.host = "127.0.0.1"
         self.port = 3306
-        self.user = "root"
-        self.password = "root"
+        self.user = "ilife"
+        self.password = "ilife2020"
         self.charset = "utf8mb4"
         self.database = "douban"
 
@@ -37,6 +37,7 @@ class Config:
         # current folder is project base folder
         config = open("config.json", encoding="utf-8")
         dic = json.load(config)
+        self.user = dic['user']
         self.cookies = {"Cookie": dic['cookies']}
         self.id = dic['id']
         self.host = dic['host']
