@@ -113,15 +113,15 @@ public class TaobaoController {
         return ResponseEntity.ok().body(stats);
     }
 
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public class UpdateCate extends Thread {
-        private User user;
-        @Override
-        public void run() {
-            analyzeService.updateCategory(user);
-        }
-    }
+//    @AllArgsConstructor
+//    @NoArgsConstructor
+//    public class UpdateCate extends Thread {
+//        private User user;
+//        @Override
+//        public void run() {
+//            analyzeService.updateCategory(user);
+//        }
+//    }
 
     @ApiOperation(notes = "get user's statistics", value = "", httpMethod = "GET")
     @PostMapping(value = "/stats/category/update", produces = "application/json")
