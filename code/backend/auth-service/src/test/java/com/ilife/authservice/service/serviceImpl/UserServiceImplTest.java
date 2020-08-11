@@ -50,7 +50,7 @@ public class UserServiceImplTest {
     @Before
     public void before() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-        Users user = new Users("zhihuKing", "zhihugood", "123456", "git@sjtu.edu.cn");
+        Users user = new Users("zhihuKing", "zhihugood", "123456", "git@sjtu.edu.cn","ROLE_USER");
         userDao.save(user);
         userDao.updateWbId(2L, 12345L);
         id = userDao.findByAccount("zhihugood").getId();
@@ -105,7 +105,7 @@ public class UserServiceImplTest {
      */
     @Test
     public void testSave() throws Exception {
-        userService.save("zhihuKing1", "zhihugood1", "123456", "git@sjtu.edu.cn");
+        userService.save("zhihuKing1", "zhihugood1", "123456", "git@sjtu.edu.cn","ROLE_USER");
         Assert.assertNotNull(userDao.findByAccount("zhihugood1"));
     }
 

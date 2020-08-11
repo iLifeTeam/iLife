@@ -1,0 +1,6 @@
+version: '2' # 表示该 Docker-Compose 文件使用的是 Version 2 file
+services:
+  weibo-service:
+    build: .
+    ports:
+      - "8787:8081"

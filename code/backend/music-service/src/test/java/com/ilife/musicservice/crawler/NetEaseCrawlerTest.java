@@ -18,6 +18,7 @@ class NetEaseCrawlerTest {
 
     @Test
     void test3() {
-       netEaseCrawler.crawlbyid(netEaseCrawler.getuid("18679480337","Xiong0608"));
+        long id =3220012996L;
+        netEaseCrawler.crawlbyid(417778610L);
     }
 }

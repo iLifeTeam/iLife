@@ -19,8 +19,8 @@ public class Answer {
     @Column(name = "id")
     String id;
 
-    @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
-    @JoinColumn(name = "question_id",referencedColumnName = "id")
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
+    @JoinColumn(name = "question_id", referencedColumnName = "id")
     Question question;
 
     @Column(name = "author")

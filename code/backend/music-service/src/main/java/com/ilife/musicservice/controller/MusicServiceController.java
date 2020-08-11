@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,8 +30,8 @@ public class MusicServiceController {
     @Autowired
     private NetEaseCrawler netEaseCrawler;
 
-
     @PostMapping("/music/gethistorybypage")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Page<wyyuser> gethistorybypage(@RequestParam("page") Integer page, @RequestParam("size") Integer size, @RequestParam String ph, String pw) {
         long uid = netEaseCrawler.getuid(ph, pw).longValue();
         if (uid == -1) return null;
@@ -45,11 +46,13 @@ public class MusicServiceController {
     }
 
     @PostMapping("/music/getid")
-    public Integer getid(@RequestParam String ph, String pw) {
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public Long getid(@RequestParam String ph, String pw) {
         return netEaseCrawler.getuid(ph, pw);
     }
 
     @PostMapping("/music/updatehistory")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public boolean updatehistory(@RequestParam String ph, String pw) {
         long uid = netEaseCrawler.getuid(ph, pw);
         if (uid == -1) return false;
@@ -58,9 +61,9 @@ public class MusicServiceController {
         return true;
     }
 
-
     @PostMapping("/music/gethistorybyid")
-    public Page<wyyuser> gethistorybyid(@RequestParam("page") Integer page, @RequestParam("size") Integer size, @RequestParam Integer id) {
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public Page<wyyuser> gethistorybyid(@RequestParam("page") Integer page, @RequestParam("size") Integer size, @RequestParam Long id) {
         Long uid = id.longValue();
         Pageable pageable = PageRequest.of(page, size);
         Page<wyyuser> t = wyyhistoryService.findAllbyid(uid, pageable);
@@ -72,8 +75,10 @@ public class MusicServiceController {
         } else return t;
     }
 
+
     @PostMapping("/music/updatehistorybyid")
-    public boolean updatehistorybyid(@RequestParam Integer id) {
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public boolean updatehistorybyid(@RequestParam Long id) {
         netEaseCrawler.crawlbyid(id);
         return true;
     }

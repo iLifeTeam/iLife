@@ -69,19 +69,6 @@ export default class Menu extends Component {
 
 const menuItems = [
   {
-    itemURL: "/home/alipay",
-    itemName: "支付宝",
-    childItems: [{
-      name: "账单信息",
-      url: "/bills"
-    },
-    {
-      name: "趋势分析",
-      url: "/analyse"
-    }
-    ]
-  },
-  {
     itemURL: "/home/weibo",
     itemName: "微博",
     childItems: [{
@@ -111,7 +98,72 @@ const menuItems = [
     itemName: "网易云",
     childItems: [{
       name: "听歌记录",
-      url: "/info"
+      url: "/history"
+    },
+    {
+      name: "分析",
+      url: "/analyse"
+    }
+    ]
+  },
+  {
+    itemURL: "/home/bilibili",
+    itemName: "b站",
+    childItems: [{
+      name: "浏览记录",
+      url: "/history"
+    },
+    {
+      name: "分析",
+      url: "/analyse"
+    }
+    ]
+  },
+  {
+    itemURL: "/home/taobao",
+    itemName: "淘宝",
+    childItems: [{
+      name: "浏览记录",
+      url: "/bills"
+    },
+    {
+      name: "分析",
+      url: "/analyse"
+    }
+    ]
+  },
+  {
+    itemURL: "/home/jingdong",
+    itemName: "京东",
+    childItems: [{
+      name: "消费记录",
+      url: "/bills"
+    },
+    {
+      name: "分析",
+      url: "/analyse"
+    }
+    ]
+  },
+  {
+    itemURL: "/home/book",
+    itemName: "书籍",
+    childItems: [{
+      name: "豆瓣图书记录",
+      url: "/records"
+    },
+    {
+      name: "分析",
+      url: "/analyse"
+    }
+    ]
+  },
+  {
+    itemURL: "/home/movie",
+    itemName: "电影",
+    childItems: [{
+      name: "豆瓣观影记录",
+      url: "/records"
     },
     {
       name: "分析",

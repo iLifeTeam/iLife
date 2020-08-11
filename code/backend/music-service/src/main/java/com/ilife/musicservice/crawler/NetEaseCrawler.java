@@ -112,7 +112,7 @@ NetEaseCrawler {
         }
         return null;
     }
-    public String getPlayListRequest(Integer uid) {
+    public String getPlayListRequest(Long uid) {
         List<NameValuePair> parameters = new ArrayList<>();
         parameters.add(new BasicNameValuePair("uid", uid.toString()));
         return getRequest("/user/playlist",parameters);
@@ -124,23 +124,23 @@ NetEaseCrawler {
     /*
      * weekData = true : only return week data
      * */
-    public String getUserPlayHistory(Integer uid, boolean weekData){
+    public String getUserPlayHistory(Long uid, boolean weekData){
         List<NameValuePair> parameters = new ArrayList<>();
         parameters.add(new BasicNameValuePair("uid", uid.toString()));
         int flag = weekData ? 1 : 0 ;
         parameters.add(new BasicNameValuePair("type", Integer.toString(flag)));
         return getRequest("/user/record",parameters);
     }
-    public static Integer ParseUid (String response) {
+    public static Long ParseUid (String response) {
         JSONObject object = JSON.parseObject(response);
         JSONObject account = JSON.parseObject((object.getString("account")));
-        Integer uid = account.getInteger("id");
+        Long uid = account.getLong("id");
         System.out.println("uid: " + uid);
         return uid;
     }
 
 
-    public Integer getuid(String ph,String pw)
+    public Long getuid(String ph,String pw)
     {
         String phone = ph;
         String password = pw; // don't push this to remote
@@ -150,12 +150,12 @@ NetEaseCrawler {
         JSONObject object = JSON.parseObject(response);
         Integer code = object.getInteger("code");
         if (code != 200) {
-            return -1;
+            return (long)-1;
         }
         String cookies = (String) object.get("cookie");
         System.out.println("cookie: " + cookies);
 
-        Integer uid = ParseUid(response);
+        Long uid = ParseUid(response);
         return uid;
     }
 //    @Transactional
@@ -196,7 +196,7 @@ NetEaseCrawler {
 //        }
 //    }
     @Transactional
-    public void  crawlbyid(Integer uid)
+    public void  crawlbyid(Long uid)
     {
 
 
@@ -206,12 +206,13 @@ NetEaseCrawler {
 
 
 
-        Long wid = (long) uid;
+        Long wid =  uid;
         wyyhistoryDao.deletebywyyid(wid);
 
         String playHistoryRaw = netEaseCrawler.getUserPlayHistory(uid,false);
         JSONArray jsonArray;
         jsonArray = JSONObject.parseObject(playHistoryRaw).getJSONArray("allData");
+
         for(int i=0;i<jsonArray.size();i++) {
 
 
@@ -219,7 +220,6 @@ NetEaseCrawler {
             String name = jsonArray.getJSONObject(i).getJSONObject("song").getString("name");
             Integer playcount = jsonArray.getJSONObject(i).getInteger("playCount");
             Integer score = jsonArray.getJSONObject(i).getInteger("score");
-            jsonArray.getJSONObject(i).getInteger("score");
             musicsDao.addmusic(mid,name);
             JSONArray jsonArray1 = jsonArray.getJSONObject(i).getJSONObject("song").getJSONArray("ar");
             for(int j=0;j<jsonArray1.size();j++){

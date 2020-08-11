@@ -6,6 +6,7 @@ import com.ilife.weiboservice.repository.WeiboRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -38,5 +39,9 @@ public class WeiboDaoImpl implements WeiboDao {
     public Weibo save(Weibo weibo) {
         weiboRepository.save(weibo);
         return weibo;
+    }
+
+    public List<Weibo> findLimits(Long uid, Timestamp startTime, Timestamp endTime){
+        return weiboRepository.findLimits(uid,startTime,endTime);
     }
 }
