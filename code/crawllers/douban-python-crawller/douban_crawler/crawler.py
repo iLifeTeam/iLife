@@ -169,6 +169,7 @@ class Crawler:
                 if content is None:
                     print("first parsing FAILED!")
                     print(movie_url)
+                    continue
                 name = content.h1.span.string
                 content = movie_soup.find(id="info")
                 info_list = content.contents
