@@ -166,6 +166,9 @@ class Crawler:
                 movie_page = requests.get(movie_url, cookies=self.cookies, headers=self.headers)
                 movie_soup = BeautifulSoup(movie_page.text, 'lxml')
                 content = movie_soup.find(id="content")
+                if content is None:
+                    print("first parsing FAILED!")
+                    print(movie_url)
                 name = content.h1.span.string
                 content = movie_soup.find(id="info")
                 info_list = content.contents
@@ -180,7 +183,7 @@ class Crawler:
                         if info.string == "语言:":
                             language = info.next_sibling
                 content = movie_soup.find(class_=["ll rating_num"])
-                if content.string is None:
+                if content is None or content.string is None:
                     ranking = str(0)
                 else:
                     ranking = content.string
