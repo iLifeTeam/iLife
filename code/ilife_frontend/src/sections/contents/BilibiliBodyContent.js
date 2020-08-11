@@ -15,6 +15,7 @@ export default class BilibiliBodyContent extends Component {
       SESSDATA: null,
       islogin: false,
       histories: null,
+      updating: false,
     }
     this.QRcodeLogin = this.QRcodeLogin.bind(this);
     this.getResponse = this.getResponse.bind(this);
@@ -28,7 +29,8 @@ export default class BilibiliBodyContent extends Component {
   }
 
   async QRcodeLogin() {
-    const QRcode = await axios.get("http://18.162.168.229:8848/bili/getloginurl", { headers: { withCredentials: true } })
+    this.setState({ loading: true, })
+    const QRcode = await axios.get("http://18.166.111.161:8848/bili/getloginurl", { headers: { withCredentials: true } })
       .then(function (response) {
         console.log(JSON.stringify(response.data));
         if (response.data.status) return response.data.data;
@@ -44,7 +46,7 @@ export default class BilibiliBodyContent extends Component {
         oauthKey: QRcode.oauthKey,
         QRCodeurl: QRcode.url,
         needQRCode: true,
-        loading: true,
+        loading: false,
       })
       this.interval = setInterval(() => this.getResponse(), 2000);
     }
@@ -55,7 +57,7 @@ export default class BilibiliBodyContent extends Component {
   async getResponse() {
     var config = {
       method: 'post',
-      url: 'http://18.162.168.229:8848/bili/loginconfirm?oauthKey=' + this.state.oauthKey,
+      url: 'http://18.166.111.161:8848/bili/loginconfirm?oauthKey=' + this.state.oauthKey,
       headers: { withCredentials: true }
     };
 
@@ -71,10 +73,9 @@ export default class BilibiliBodyContent extends Component {
       });
 
     if (ans) {
-      this.getUserId(ans);
       clearInterval(this.interval);
+      this.getUserId(ans);
       this.setState({
-        loading: false,
         SESSDATA: ans,
         islogin: true,
       })
@@ -85,7 +86,7 @@ export default class BilibiliBodyContent extends Component {
   async getUserId(ans) {
     var config = {
       method: 'get',
-      url: 'http://18.162.168.229:8848/bili/userinform?SESSDATA=' + ans,
+      url: 'http://18.166.111.161:8848/bili/userinform?SESSDATA=' + ans,
       headers: { withCredentials: true }
     };
 
@@ -112,7 +113,7 @@ export default class BilibiliBodyContent extends Component {
   async getHistories(userId) {
     var config = {
       method: 'post',
-      url: 'http://18.162.168.229:8848/bili/gethistory?mid=' + userId + '&page=0&size=100',
+      url: 'http://18.166.111.161:8848/bili/gethistory?mid=' + userId + '&page=0&size=100',
       headers: { withCredentials: true }
     };
 
@@ -131,22 +132,33 @@ export default class BilibiliBodyContent extends Component {
     })
 
   }
-  updateHistories() {
+  async updateHistories() {
+    this.setState({
+      updating: true
+    });
     var config = {
       method: 'get',
-      url: 'http://18.162.168.229:8848/bili/updatehistory?SESSDATA=' + this.state.SESSDATA,
+      url: 'http://18.166.111.161:8848/bili/updatehistory?SESSDATA=' + this.state.SESSDATA,
       headers: { withCredentials: true }
     };
 
-    axios(config)
+    const ans = await axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
         alert("刷新浏览记录成功！")
+        return true;
       })
       .catch(function (error) {
         console.log(error);
         alert("刷新失败！");
+        return true;
       });
+
+    if (ans) {
+      this.setState({
+        updating: false,
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -167,10 +179,13 @@ export default class BilibiliBodyContent extends Component {
                 <form role="form">
                   <div className="box-body">
                     <div className="form-group">
-                      <p id="QRcodeButton" className="btn btn-primary" onClick={this.QRcodeLogin}>点击以获取二维码</p>
+                      <p id="QRcodeButton" aria-disabled={this.state.loading} className="btn btn-primary" onClick={this.QRcodeLogin}>点击以获取二维码</p>
                     </div>
-                    {this.state.SESSDATA ? <div className="form-group">
+                    {this.state.SESSDATA && !this.state.updating ? <div className="form-group">
                       <p id="Update" className="btn btn-primary" onClick={this.updateHistories}>更新浏览记录</p>
+                    </div> : null}
+                    {this.state.SESSDATA && this.state.updating ? <div className="form-group">
+                      <p id="Update" className="btn " >正在更新...</p>
                     </div> : null}
                   </div>
                 </form>
