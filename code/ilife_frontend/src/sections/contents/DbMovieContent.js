@@ -132,19 +132,20 @@ export default class DbMovieContent extends Component {
     }
   */
 
-  crawl() {
-    var config = {
+  crawl=()=> {
+    let config = {
       method: 'get',
       url: 'http://121.36.196.234:8484/douban/crawlMovie?userId=' + this.state.doubanId + '&limit=2&type=movie',
       headers: {
         withCredentials: true,
       }
     };
-
+    let that =this;
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        alert("更新成功！")
+        alert("电影数据更新成功！请重新进入页面查看");
+        that.forceUpdate();
       })
       .catch(function (error) {
         console.log(error);
