@@ -220,12 +220,15 @@ class Crawler:
                          headers=self.headers)
         soup = BeautifulSoup(r.text, "lxml")
         content = soup.find(class_="paginator")
-        span = content.find(class_="thispage")
-        total_page = span["data-total-page"]
-        if int(page) > int(total_page):
-            return total_page
+        if not content is None:
+            span = content.find(class_="thispage")
+            total_page = span["data-total-page"]
+            if int(page) > int(total_page):
+                return total_page
+            else:
+                return page
         else:
-            return page
+            return 1
 
 
 def main(_id, _type, page):
