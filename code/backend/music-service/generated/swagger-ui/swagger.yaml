@@ -1,0 +1,244 @@
+---
+swagger: "2.0"
+info:
+  description: "NetEaseCloudMusic Service"
+  version: "v1"
+  title: "NetEaseCloudMusic Service"
+  contact:
+    name: "Xiong Tianlei"
+    email: "1410661066@qq.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost"
+basePath: "/music"
+schemes:
+- "http"
+paths:
+  /music/gethistorybyid:
+    post:
+      operationId: "gethistorybyid"
+      parameters:
+      - name: "page"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "size"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "id"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PageWyyuser"
+  /music/gethistorybypage:
+    post:
+      operationId: "gethistorybypage"
+      parameters:
+      - name: "page"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "size"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "ph"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PageWyyuser"
+  /music/getid:
+    post:
+      operationId: "getid"
+      parameters:
+      - name: "ph"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "integer"
+            format: "int64"
+  /music/updatehistory:
+    post:
+      operationId: "updatehistory"
+      parameters:
+      - name: "ph"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "boolean"
+  /music/updatehistorybyid:
+    post:
+      operationId: "updatehistorybyid"
+      parameters:
+      - name: "id"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "boolean"
+definitions:
+  Page:
+    type: "object"
+    properties:
+      totalPages:
+        type: "integer"
+        format: "int32"
+      totalElements:
+        type: "integer"
+        format: "int64"
+      number:
+        type: "integer"
+        format: "int32"
+      size:
+        type: "integer"
+        format: "int32"
+      content:
+        type: "array"
+        items:
+          type: "object"
+      first:
+        type: "boolean"
+      last:
+        type: "boolean"
+      pageable:
+        $ref: "#/definitions/Pageable"
+      numberOfElements:
+        type: "integer"
+        format: "int32"
+      sort:
+        $ref: "#/definitions/Sort"
+      empty:
+        type: "boolean"
+  PageWyyuser:
+    type: "object"
+    properties:
+      totalPages:
+        type: "integer"
+        format: "int32"
+      totalElements:
+        type: "integer"
+        format: "int64"
+      number:
+        type: "integer"
+        format: "int32"
+      size:
+        type: "integer"
+        format: "int32"
+      content:
+        type: "array"
+        items:
+          $ref: "#/definitions/wyyuser"
+      first:
+        type: "boolean"
+      last:
+        type: "boolean"
+      pageable:
+        $ref: "#/definitions/Pageable"
+      numberOfElements:
+        type: "integer"
+        format: "int32"
+      sort:
+        $ref: "#/definitions/Sort"
+      empty:
+        type: "boolean"
+  Pageable:
+    type: "object"
+    properties:
+      offset:
+        type: "integer"
+        format: "int64"
+      paged:
+        type: "boolean"
+      pageSize:
+        type: "integer"
+        format: "int32"
+      unpaged:
+        type: "boolean"
+      pageNumber:
+        type: "integer"
+        format: "int32"
+      sort:
+        $ref: "#/definitions/Sort"
+  Sort:
+    type: "object"
+    properties:
+      sorted:
+        type: "boolean"
+      unsorted:
+        type: "boolean"
+      empty:
+        type: "boolean"
+  musics:
+    type: "object"
+    properties:
+      mid:
+        type: "integer"
+        format: "int64"
+      mname:
+        type: "string"
+      style:
+        type: "string"
+      times:
+        type: "string"
+      singers:
+        type: "array"
+        items:
+          $ref: "#/definitions/sing"
+  sing:
+    type: "object"
+    properties:
+      singid:
+        type: "integer"
+        format: "int64"
+      mid:
+        type: "integer"
+        format: "int64"
+      sid:
+        type: "integer"
+        format: "int64"
+      sname:
+        type: "string"
+  wyyuser:
+    type: "object"
+    properties:
+      hisid:
+        type: "integer"
+        format: "int64"
+      wyyid:
+        type: "integer"
+        format: "int64"
+      musics:
+        $ref: "#/definitions/musics"
+      playcount:
+        type: "integer"
+        format: "int32"
+      score:
+        type: "integer"
+        format: "int32"

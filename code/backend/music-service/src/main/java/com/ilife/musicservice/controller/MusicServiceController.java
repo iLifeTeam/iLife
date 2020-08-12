@@ -1,13 +1,9 @@
 package com.ilife.musicservice.controller;
 
 import com.ilife.musicservice.crawler.NetEaseCrawler;
-import com.ilife.musicservice.entity.musics;
 import com.ilife.musicservice.entity.wyyuser;
-import com.ilife.musicservice.service.MusicsService;
-import com.ilife.musicservice.service.SingService;
 import com.ilife.musicservice.service.WyyhistoryService;
 import io.swagger.annotations.Api;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.data.domain.Page;
@@ -15,8 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController
