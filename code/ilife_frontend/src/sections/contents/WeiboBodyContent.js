@@ -243,7 +243,7 @@ export default class WeiboBodyContent extends Component {
                   <p className="btn btn-primary" onClick={this.crawl}>更新数据</p>
                   <p className="btn btn-primary" onClick={()=>{this.setState({show:!this.state.show})}}>绑定账户</p>
                   {this.state.show?
-                      <p><input id="changeId"/><button onClick={this.changeId}>确认</button></p>:null}
+                      <p><input id="changeId" placeholder={"输入微博用户主页中浏览器地址栏处的用户ID"} style={{width:'350px'}}/><button onClick={this.changeId}>确认</button></p>:null}
                 </div>
                 <div className="box-body">
                   {<WeiboInfo activities={activities} />}
@@ -267,26 +267,24 @@ export default class WeiboBodyContent extends Component {
                   >
                     生成报表
                   </Button>
-                </div>
-                <Row justify="center">
-                  <Col span={12}  >
+                </div >
+                <div style={{borderStyle: 'outset',borderWidth:'5px'}}>
                   {/*<div className="report-display" style={{border: '5px solid light-yellow', borderRadius: '10px',elevation:10 }}>*/}
                 {statsReady ?
                     <Text className="box-body" copyable >
                       <Paragraph>  {stats.avgWb > 1 ? "你是一个爱发微博,爱展示自己的人.\n" : "你是一个不太爱发微博,很有神秘感的人.\n"}</Paragraph>
-                      <Paragraph> 从 <Text mark strong>{startTime}</Text>到 <Text mark strong>{endTime} </Text>，你每天平均发 <Text mark strong>{stats.avgWb}</Text>条微博，总共已经发了<Text mark strong>{stats.allWb}</Text> 条微博呢！</Paragraph>
-                      <Paragraph> <Text mark strong>{stats.maxDate}</Text> 是一个特殊的日子，那天你发了<Text mark strong>{stats.maxWb}</Text> 条微博，一定有很让你兴奋的事情吧！</Paragraph>
+                      <Paragraph> 从 <Text mark strong>{startTime}</Text>到 <Text mark strong>{endTime} </Text>这一段时间内，你每天平均发 <Text mark strong>{stats.avgWb}</Text>条微博，总共已经发了<Text mark strong>{stats.allWb}</Text> 条微博呢！</Paragraph>
+                      <Paragraph> <Text mark strong>{stats.maxDate}</Text> 是一个特殊的日子，那天你发了<Text mark strong>{stats.maxWb}</Text> 条微博，是这些天你发微博最多的一天，一定有很让你兴奋的事情吧！</Paragraph>
                       <Paragraph> 你的微博质量很高呢，平均每条微博都有 <Text mark strong>{stats.avgUp}</Text> 个赞，总共获得了<Text mark strong>{stats.allUp}</Text>个赞，其中最多的一条微博，竟然获得了<Text
                           mark strong>{stats.maxUp}</Text> 个赞，还记得你发了什么内容吗！<Text mark strong>"{stats.maxUpWb}"</Text> 是这个哟，写得确实很出彩！</Paragraph>
                       <Paragraph> 有很多人转过你的微博，平均每条微博都有<Text mark strong>{stats.avgRt}</Text> 次转发，总共获得了<Text mark strong>{stats.allRt}</Text> 次转发，其中最多的一条微博，竟然获得了<Text
                           mark strong>{stats.maxRt}</Text> 次转发，还记得你发了什么内容吗！<Text mark strong>"{stats.maxRtWb}"</Text> 是这个哟，果然很有传播力！</Paragraph>
                       <Paragraph> 你的微博下讨论很热烈，平均每条微博都有<Text mark strong>{stats.avgCm}</Text> 次转发，总共获得了<Text mark strong>{stats.allCm}</Text> 次转发，其中最多的一条微博，竟然获得了<Text
-                          mark strong>{stats.maxCm}</Text> 次转发，还记得你发了什么内容吗！<Text mark strong>"{stats.maxCmWb}"</Text> 是这个哟，很辩证的话题呢！</Paragraph>
+                          mark strong>{stats.maxCm}</Text> 个评论，还记得你发了什么内容吗！<Text mark strong>"{stats.maxCmWb}"</Text> 是这个哟，很辩证的话题呢！</Paragraph>
                     </Text> : statsLoading ? <div> "加载中..." </div> : null
                 }
+                </div>
                   {/*</div>*/}
-                  </Col>
-                </Row>
               </div>
             </div>
           </div >
