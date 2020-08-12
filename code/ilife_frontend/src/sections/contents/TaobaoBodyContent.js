@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import {Table,Badge, Menu, Dropdown,Button} from 'antd';
+import {Table, Badge, Menu, Dropdown, Button, Divider, Row, Col } from 'antd';
 import 'antd/dist/antd.css';
 import { createBrowserHistory } from 'history'
 
@@ -14,6 +14,9 @@ const expandedRowRender = (row) => {
         <div><img src={imgUrl}></img></div>
       },
     {title:'单价', dataIndex:'price',key:'price',},
+    {title:'一级类目', dataIndex:'firstCategory',key:'firstCategory',},
+    {title:'二级类目', dataIndex:'secondCategory',key:'secondCategory',},
+    {title:'三级泪目', dataIndex:'thirdCategory',key:'thirdCategory',},
   ]
   return <Table columns={columns} dataSource={row.items}  pagination={false} />;
 }
@@ -47,6 +50,9 @@ export default class TaobaoBodyContent extends Component {
       btnDisabled: false,
       orders: [],
       account: "",
+      stats: null,
+      statsLoading: false,
+      statsReady: false,
     }
   }
   componentDidMount() {
@@ -86,7 +92,7 @@ export default class TaobaoBodyContent extends Component {
             uid: response.data.id
           })
           if (phone != null){
-            this.fetchSmsRequest(phone)
+            // this.fetchSmsRequest(phone)
           }
         })
   }
@@ -308,11 +314,36 @@ export default class TaobaoBodyContent extends Component {
           })
         })
   }
+  fetchStats = (phone) => {
+    const config = {
+      method: 'get',
+      url: this.server + ":" + this.port  + '/stats',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      params: {
+        username: phone,
+      },
+      withCredentials:true
+    }
+    this.setState({
+      statsLoading: true
+    })
+    axios(config)
+        .then(response => {
+          console.log(response.data)
+          this.setState({
+            statsLoading: false,
+            statsReady: true,
+            stats: response.data,
+          })
+        })
+  }
   render() {
     const style = {
       flex:1
     }
-    const { orders,loginSuccess,uid,phone,btnDisabled,loading,updating,loginLoading,smsCode,crawlerEnabled} = this.state;
+    const { orders,loginSuccess,uid,phone,btnDisabled,loading,updating,loginLoading,smsCode,crawlerEnabled,statsLoading,stats,statsReady} = this.state;
     console.log(this.state)
     return (
       <div className="content-wrapper">
@@ -425,6 +456,37 @@ export default class TaobaoBodyContent extends Component {
             </div>
           </div>
         </section>
+        {/*<section>*/}
+        {/*  < div className="row" >*/}
+        {/*    <div className="col-xs-12">*/}
+        {/*      <div className="box">*/}
+        {/*        <div className="box-header">*/}
+        {/*          <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}><h3 className="box-title">我的淘宝购物统计</h3>*/}
+        {/*          </Divider>*/}
+        {/*          <Button*/}
+        {/*              loading={ statsLoading}*/}
+        {/*              onClick={()=>{*/}
+        {/*                this.fetchStats(phone)*/}
+        {/*              }}*/}
+        {/*          >*/}
+        {/*            生成报表*/}
+        {/*          </Button>*/}
+        {/*        </div>*/}
+        {/*        <Row justify="center">*/}
+        {/*          <Col span={12}  >*/}
+        {/*            {statsReady ?*/}
+        {/*                  <Text className="box-body">*/}
+        {/*                    <Paragraph> 我的本月的消费是 {stats.expenseMonth},我今年的消费是{stats.expenseYear}</Paragraph>*/}
+        {/*                    <Paragraph> 我买过最贵的一单花了{stats.mostExpensive.total}, 是在 {stats.mostExpensive.shop}店里, 买了{stats.mostExpensive.items.length}件宝贝</Paragraph>*/}
+        {/*                  </Text>*/}
+        {/*                 : statsLoading ? <div> "加载中..." </div> : null*/}
+        {/*            }*/}
+        {/*          </Col>*/}
+        {/*        </Row>*/}
+        {/*      </div>*/}
+        {/*    </div>*/}
+        {/*  </div >*/}
+        {/*</section>*/}
       </div >
     )
   }
