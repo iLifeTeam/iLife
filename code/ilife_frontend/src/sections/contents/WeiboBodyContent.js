@@ -268,7 +268,7 @@ export default class WeiboBodyContent extends Component {
                     生成报表
                   </Button>
                 </div >
-                <div style={{borderStyle: 'outset',borderWidth:'5px'}}>
+                <div style={{borderWidth:'5px'}}>
                   {/*<div className="report-display" style={{border: '5px solid light-yellow', borderRadius: '10px',elevation:10 }}>*/}
                 {statsReady ?
                     <Text className="box-body" copyable >

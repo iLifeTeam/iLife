@@ -93,50 +93,6 @@ export default class DbBookContent extends Component {
         })
     }
 
-    /*
-      async login() {
-        var data;
-        var config = {
-          method: 'post',
-          url: 'http://121.36.196.234:8090/login',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          data:
-          {
-            password: this.state.password,
-            username: this.state.username,
-          }
-        };
-        await axios(config)
-          .then(function (response) {
-            console.log(response);
-            data = response;
-          })
-          .catch(function (error) {
-            console.log(error.response);
-            data = error.response;
-          })
-
-        if (data.data === "success") {
-          var activities_data;
-          await axios.get("http://121.36.196.234:8090/activity/all?username=" + this.state.username)
-            .then(function (response) {
-              console.log(response);
-              activities_data = response.data;
-            })
-          this.setState({
-            activities: activities_data
-          })
-        }
-        else
-          this.setState({
-            picBase64: `data:image/png;base64,${data.data}`,
-            needCaptcha: true,
-          });
-
-      }
-    */
 
     crawl() {
         var config = {
@@ -176,14 +132,14 @@ export default class DbBookContent extends Component {
         });
         axios(config)
             .then(response => {
-                console.log(response.data)
+                console.log(response.data);
                 this.setState({
                     stats: response.data,
                     statsLoading: false,
                     statsReady: true,
                 })
             })
-    }
+    };
 
 
     /* end 文案 here*/
@@ -239,7 +195,6 @@ export default class DbBookContent extends Component {
                         </div>
                     </div>
                 </section>
-
                 <section>
                     < div className="row">
                         <div className="col-xs-12">
@@ -257,6 +212,7 @@ export default class DbBookContent extends Component {
                                 </div>
                                 {statsReady ?
                                     <div className="box-body">
+                                        <Paragraph>孙中山有言：“我一生的嗜好，除了革命之外，就是读书。我一天不读书，就不能够生活。”</Paragraph>
                                         <Paragraph>你是一个爱看书的人，从你踏入豆瓣的小世界以来，你已经阅读了{stats.allBook}本书，书海无涯，知识作舟，要继续保持哦。</Paragraph>
                                         <Paragraph>在你阅读的书籍中：</Paragraph>
                                         <Paragraph>平均评分是<Text mark strong>{stats.avgRanking}</Text>，评分最高的是<Text mark
