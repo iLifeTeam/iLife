@@ -1,0 +1,15 @@
+spring:
+  application:
+    name:  eureka
+server:
+  port: 8090 # use docker to map to port 1001
+eureka:
+  instance:
+    hostname: 0.0.0.0 # ip
+    prefer-ip-address: true
+  client:
+    register-with-eureka: false
+    fetch-registry:  false
+  server: # unknown copied configuration
+    eviction-interval-timer-in-ms: 5000
+    enable-self-preservation: false
