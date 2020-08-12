@@ -100,9 +100,9 @@ public class DoubanServiceController {
 
     @ApiOperation(notes = "Get movie Statistics by userID", value = "get movie statistics", httpMethod = "GET")
     @GetMapping(path = "/douban/getMovieStats")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     public MovieStats getMovieStats(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
-        System.out.println("********** getBookStats **********");
+        System.out.println("********** getMovieStats **********");
         return userService.getMovieStats(uid);
     }
 }
