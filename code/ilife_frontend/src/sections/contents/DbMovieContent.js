@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { createBrowserHistory } from 'history'
 import DoubanMovies from '../../douban/DoubanMovies';
+import {Divider} from "antd";
 
 export default class DbMovieContent extends Component {
   constructor(props) {
@@ -87,50 +88,6 @@ export default class DbMovieContent extends Component {
       password: val.target.value,
     })
   }
-  /*
-    async login() {
-      var data;
-      var config = {
-        method: 'post',
-        url: 'http://121.36.196.234:8090/login',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data:
-        {
-          password: this.state.password,
-          username: this.state.username,
-        }
-      };
-      await axios(config)
-        .then(function (response) {
-          console.log(response);
-          data = response;
-        })
-        .catch(function (error) {
-          console.log(error.response);
-          data = error.response;
-        })
-  
-      if (data.data === "success") {
-        var activities_data;
-        await axios.get("http://121.36.196.234:8090/activity/all?username=" + this.state.username)
-          .then(function (response) {
-            console.log(response);
-            activities_data = response.data;
-          })
-        this.setState({
-          activities: activities_data
-        })
-      }
-      else
-        this.setState({
-          picBase64: `data:image/png;base64,${data.data}`,
-          needCaptcha: true,
-        });
-  
-    }
-  */
 
   crawl=()=> {
     let config = {
@@ -151,7 +108,7 @@ export default class DbMovieContent extends Component {
         console.log(error);
       });
 
-  }
+  };
 
 
    changeId=async (e)=>{
@@ -186,40 +143,12 @@ export default class DbMovieContent extends Component {
     const { activities } = this.state;
     return (
       <div className="content-wrapper">
-        <section className="content">{/*
-          <div className="row">
-            <div className="col-md-9">
-              <div className="box box-primary">
-                <div className="box-header with-border">
-                  <h3 className="box-title">登录</h3>
-                </div>
-                {/* form start *}
-          <form role="form">
-            <div className="box-body">
-              <div className="form-group">
-                <label htmlFor="exampleInputEmail1">Email地址</label>
-                <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Enter email"
-                  onChange={(val) => this.nameOnChange(val)} />
-              </div>
-              <div className="form-group">
-                <label htmlFor="exampleInputPassword1">密码</label>
-                <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"
-                  onChange={(val) => this.psdOnChange(val)} />
-              </div>
-            </div>
-          </form>
-          {/* /.box-body *}
-          <div className="box-footer">
-            <button className="btn btn-primary" onClick={this.login}>Submit1</button>
-          </div>
-              </div>
-      </div>
-          </div >*/}
+        <section className="content">
           < div className="row" >
             <div className="col-xs-12">
               <div className="box">
                 <div className="box-header">
-                  <h3 className="box-title">用户{this.state.doubanId}的电影数据</h3>
+                  <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}> <h3 className="box-title">用户{this.state.doubanId}的电影数据</h3></Divider>
                   <p className="btn btn-primary" onClick={this.crawl}>更新数据</p>
                   <p className="btn btn-primary" onClick={()=>{this.setState({show:!this.state.show})}}>绑定账户</p>
                   {this.state.show?

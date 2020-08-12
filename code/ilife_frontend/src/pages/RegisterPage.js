@@ -16,7 +16,7 @@ export default class RegisterPage extends Component {
       email: "",
       check_psd: false,
       confirm: false,
-    }
+    };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleAccountChange = this.handleAccountChange.bind(this);
     this.handlePsdChange = this.handlePsdChange.bind(this);

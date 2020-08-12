@@ -11,6 +11,7 @@ export default class WeiboBodyContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      show:false,
       weiboId: null,
       username: "",
       password: "",
@@ -21,7 +22,7 @@ export default class WeiboBodyContent extends Component {
       stats: null,
       statsReady: false,
       statsLoading : false,
-    }
+    };
     //this.login = this.login.bind(this);
     this.getWeiboId = this.getWeiboId.bind(this);
   }
@@ -56,6 +57,7 @@ export default class WeiboBodyContent extends Component {
     const weiboId = await axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        localStorage.setItem("iLifeId",response.data.id);
         return response.data.weibid;
       })
       .catch(function (error) {
@@ -165,7 +167,7 @@ export default class WeiboBodyContent extends Component {
     };
     this.setState({
       statsLoading:true
-    })
+    });
     axios(config)
         .then( response => {
           console.log(response.data)
@@ -175,51 +177,73 @@ export default class WeiboBodyContent extends Component {
             statsReady:true,
           })
         })
-  }
+  };
+  changeId=async (e)=>{
+    let userId=localStorage.getItem("iLifeId");
+    let wbId=document.getElementById("changeId").value;
+    let data1={
+      "userId":userId,
+      "wbId":wbId
+    };
+    var config = {
+      method: 'post',
+      data:data1,
+      url: 'http://18.166.111.161:8686/auth/updateWbId',
+      headers: {
+        withCredentials: true,
+      }
+    };
 
+    const weiboId = await axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          return response;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    if(weiboId) this.setState({weiboId:wbId})
+
+  };
 
   /* end 文案 here*/
 
+  crawl=()=> {
+    let config = {
+      method: 'get',
+      url: 'http://121.36.196.234:8585/weibo/crawlWeibo?userId='+ this.state.weiboId+'&startDate=2020-07-01&endDate=now',
+      headers: {
+        withCredentials: true,
+      }
+    };
+    let that =this;
+    axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          alert("微博数据更新成功！请重新进入页面查看");
+          that.forceUpdate();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+  };
 
 
   render() {
     const { activities,stats,statsReady,statsLoading,weiboId,startTime,endTime } = this.state;
     return (
       <div className="content-wrapper">
-        <section className="content">{/*
-          <div className="row">
-            <div className="col-md-9">
-              <div className="box box-primary">
-                <div className="box-header with-border">
-                  <h3 className="box-title">登录</h3>
-                </div>
-                {/* form start *}
-          <form role="form">
-            <div className="box-body">
-              <div className="form-group">
-                <label htmlFor="exampleInputEmail1">Email地址</label>
-                <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Enter email"
-                  onChange={(val) => this.nameOnChange(val)} />
-              </div>
-              <div className="form-group">
-                <label htmlFor="exampleInputPassword1">密码</label>
-                <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"
-                  onChange={(val) => this.psdOnChange(val)} />
-              </div>
-            </div>
-          </form>
-          {/* /.box-body *}
-          <div className="box-footer">
-            <button className="btn btn-primary" onClick={this.login}>Submit1</button>
-          </div>
-              </div>
-      </div>
-          </div >*/}
+        <section className="content">{}
           < div className="row" >
             <div className="col-xs-12">
               <div className="box">
                 <div className="box-header">
                   <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}><h3 className="box-title">用户{this.state.weiboId}的微博数据</h3></Divider>
+                  <p className="btn btn-primary" onClick={this.crawl}>更新数据</p>
+                  <p className="btn btn-primary" onClick={()=>{this.setState({show:!this.state.show})}}>绑定账户</p>
+                  {this.state.show?
+                      <p><input id="changeId"/><button onClick={this.changeId}>确认</button></p>:null}
                 </div>
                 <div className="box-body">
                   {<WeiboInfo activities={activities} />}

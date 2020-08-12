@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { createBrowserHistory } from 'history'
 import DoubanBooks from '../../douban/DoubanBooks';
-import { Button, Typography } from 'antd';
+import {Button, Divider, Typography} from 'antd';
 import 'antd/dist/antd.css';
 const { Text, Paragraph } = Typography;
 export default class DbBookContent extends Component {
@@ -221,40 +221,12 @@ export default class DbBookContent extends Component {
         const { activities, stats, statsReady, statsLoading, userId } = this.state;
         return (
             <div className="content-wrapper">
-                <section className="content">{/*
-          <div className="row">
-            <div className="col-md-9">
-              <div className="box box-primary">
-                <div className="box-header with-border">
-                  <h3 className="box-title">登录</h3>
-                </div>
-                {/* form start *}
-          <form role="form">
-            <div className="box-body">
-              <div className="form-group">
-                <label htmlFor="exampleInputEmail1">Email地址</label>
-                <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Enter email"
-                  onChange={(val) => this.nameOnChange(val)} />
-              </div>
-              <div className="form-group">
-                <label htmlFor="exampleInputPassword1">密码</label>
-                <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"
-                  onChange={(val) => this.psdOnChange(val)} />
-              </div>
-            </div>
-          </form>
-          {/* /.box-body *}
-          <div className="box-footer">
-            <button className="btn btn-primary" onClick={this.login}>Submit1</button>
-          </div>
-              </div>
-      </div>
-          </div >*/}
+                <section className="content">
                     < div className="row">
                         <div className="col-xs-12">
                             <div className="box">
                                 <div className="box-header">
-                                    <h3 className="box-title">用户{this.state.doubanId}的微博图书数据</h3>
+                                    <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}> <h3 className="box-title">用户{this.state.doubanId}的豆瓣图书数据</h3></Divider>
                                     <p className="btn btn-primary" onClick={this.crawl}>更新数据</p>
                                     <p className="btn btn-primary" onClick={()=>{this.setState({show:!this.state.show})}}>绑定账户</p>
                                     {this.state.show?
