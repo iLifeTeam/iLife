@@ -1,5 +1,5 @@
 server:
-  port: 8801
+  port: 8090
 spring:
   application:
     name: zuul-proxy
@@ -8,7 +8,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:1001/eureka/
+      defaultZone: http://18.166.111.161:1001/eureka/
 
 zuul:
   add-host-header: true #设置为true重定向是会添加host请求头
