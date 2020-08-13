@@ -5,7 +5,8 @@ WORKDIR /app
 VOLUME tmp
 
 ADD pom.xml .
-RUN ["/usr/local/bin/mvn-entrypoint.sh", "mvn", "verify", "clean", "--fail-never"]
+RUN mvn dependency:go-offline
+# RUN ["/usr/local/bin/mvn-entrypoint.sh", "mvn", "verify", "clean", "--fail-never"]
 
 ADD . .
 RUN mvn clean package -Dmaven.test.skip=true
