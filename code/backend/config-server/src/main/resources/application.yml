@@ -9,6 +9,8 @@ spring:
       server:
         native:
           search-locations: classpath:/config
+      discovery:
+        enabled: true
   profiles:
     active: native
 
