@@ -23,8 +23,8 @@ export default class Menu extends Component {
         <a><i className="fa fa-circle text-success" /> Online</a>
       </div>;
     return (
-      <div>{/* Left side column. contains the logo and sidebar */}
-        <div className="main-sidebar">
+      <div >{/* Left side column. contains the logo and sidebar */}
+        <div className="main-sidebar" style={{height:'1700px'}}>
           {/* sidebar: style can be found in sidebar.less */}
           <div className="sidebar">
             {/* Sidebar user panel */}
@@ -52,10 +52,9 @@ export default class Menu extends Component {
               {menuItems.map((menuItem, index) =>
                 <MenuItem key={index} itemURL={menuItem.itemURL} itemName={menuItem.itemName} childItems={menuItem.childItems} />
               )}
-              <li className="header">LABELS</li>
-              <li><a href="fake_url"><i className="fa fa-circle-o text-red" /> <span>Important</span></a></li>
-              <li><a href="fake_url"><i className="fa fa-circle-o text-yellow" /> <span>Warning</span></a></li>
-              <li><a href="fake_url"><i className="fa fa-circle-o text-aqua" /> <span>Information</span></a></li>
+              <li className="header">分析</li>
+              <li><a href="fake_url"><i className="fa fa-circle-o text-red" /> <span>娱乐推荐</span></a></li>
+              <li><a href="fake_url"><i className="fa fa-circle-o text-yellow" /> <span>博主推荐</span></a></li>
             </ul>
           </div>
           {/* /.sidebar */}
@@ -151,10 +150,6 @@ const menuItems = [
     childItems: [{
       name: "豆瓣图书记录",
       url: "/records"
-    },
-    {
-      name: "分析",
-      url: "/analyse"
     }
     ]
   },
@@ -164,11 +159,7 @@ const menuItems = [
     childItems: [{
       name: "豆瓣观影记录",
       url: "/records"
-    },
-    {
-      name: "分析",
-      url: "/analyse"
     }
     ]
   }
-]
+];

@@ -184,10 +184,10 @@ export default class DbMovieContent extends Component {
             return (
                 <div className="row">
                     <div className="col-xs-4">
-                        <img style={{width:'500px',heigth:'500px',float:"left"}} src="https://img9.doubanio.com/view/photo/raw/public/p2515437624.jpg" alt=""/>
+                        <img style={{width:'500px',heigth:'500px'}} src="https://img9.doubanio.com/view/photo/raw/public/p2515437624.jpg" alt=""/>
                     </div>
-                    <div className="col-xs-8">
-                        <p style={{float:"right",marginLeft:'30px'}}>富田多满子（新垣结衣 饰）的母亲是一名十分优秀的乒乓球运动员，在母亲的严厉教导下，多满子的整个童年都在天才乒乓球少女的荣光之下度过。然而，多满子却并不是真心喜爱这项运动，于是，母亲过世后，她便彻底放飞了自我，就此远离了球桌。
+                    <div className="col-xs-7">
+                        <p style={{marginLeft:'30px'}}>富田多满子（新垣结衣 饰）的母亲是一名十分优秀的乒乓球运动员，在母亲的严厉教导下，多满子的整个童年都在天才乒乓球少女的荣光之下度过。然而，多满子却并不是真心喜爱这项运动，于是，母亲过世后，她便彻底放飞了自我，就此远离了球桌。
                             随着时间的推移，多满子平凡的长大成为了一名OL，并且遇见了名为江岛晃彦（濑户康史 饰）的男子，两人走到了一起。然而，美梦是短暂的，第三者的出现让多满子和江岛之间的恋情画上了句号，与此同时，多满子辞掉了工作，灰头土脸的返回家乡，在那里，母亲留下的经营不善的乒乓球俱乐部等待着她的接手</p>
                     </div>
                 </div>
