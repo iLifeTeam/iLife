@@ -167,6 +167,33 @@ export default class DbMovieContent extends Component {
         if (doubanId) this.setState({doubanId: dbId})
 
     };
+    recommend = (e) => {
+        if (e === "动画") {
+            return (
+                <div className="row">
+                    <div className="col-xs-4">
+                        <img style={{width:'500px',heigth:'500px',float:"left"}} src="https://img3.doubanio.com/view/photo/raw/public/p456676352.jpg" alt=""/>
+                    </div>
+                    <div className="col-xs-8">
+                        <p style={{float:"right",marginLeft:'30px'}}>琪琪今年13岁了，按照魔法界的规矩，魔法少女年满13岁就要出外进行为期一年的修行。所以琪琪带着宠物黑猫吉吉踏上了修行之旅。然而，修行之旅开始得并不顺利，当琪琪来到海边一座大城市时，人们并没有欢迎她的到来，人人都不搭理她。幸亏琪琪有一颗善良的心，当她拾到了一件别人的失物时，热心的琪琪找到了失主。她的善良赢得了面包店老板娘的好感，琪琪就在面包店开始了她用飞行魔法为客人服务的快递业务。琪琪很快适应了新环境，一次，一个热衷于飞机制造的男孩邀请琪琪去参加飞行俱乐部的聚会，途中琪琪因为帮一位老大娘送东西而被雨淋了。从此，琪琪突然发现自己的魔法正在一天天变弱。</p>
+                    </div>
+                </div>
+            )
+        }
+        if (e === "爱情") {
+            return (
+                <div className="row">
+                    <div className="col-xs-4">
+                        <img style={{width:'500px',heigth:'500px',float:"left"}} src="https://img9.doubanio.com/view/photo/raw/public/p2515437624.jpg" alt=""/>
+                    </div>
+                    <div className="col-xs-8">
+                        <p style={{float:"right",marginLeft:'30px'}}>富田多满子（新垣结衣 饰）的母亲是一名十分优秀的乒乓球运动员，在母亲的严厉教导下，多满子的整个童年都在天才乒乓球少女的荣光之下度过。然而，多满子却并不是真心喜爱这项运动，于是，母亲过世后，她便彻底放飞了自我，就此远离了球桌。
+                            随着时间的推移，多满子平凡的长大成为了一名OL，并且遇见了名为江岛晃彦（濑户康史 饰）的男子，两人走到了一起。然而，美梦是短暂的，第三者的出现让多满子和江岛之间的恋情画上了句号，与此同时，多满子辞掉了工作，灰头土脸的返回家乡，在那里，母亲留下的经营不善的乒乓球俱乐部等待着她的接手</p>
+                    </div>
+                </div>
+            )
+        }
+    };
 
     render() {
         const {activities, stats, statsReady, statsLoading, doubanId} = this.state;
@@ -211,7 +238,7 @@ export default class DbMovieContent extends Component {
                                     </Button>
                                 </div>
                                 {statsReady ?
-                                    <div className="box-body">
+                                    <div className="box-body" style={{fontSize: '22px'}}>
 
                                         <Paragraph>让一个人置身于变幻无穷的环境中，让他与数不尽或远或近的人物错身而过，让他与整个世界发生关系：这就是电影的意义。——安德烈·塔可夫斯基</Paragraph>
                                         <Paragraph>你是一个爱看电影的人，从你踏入豆瓣的小世界以来，你已经观看了<Text mark
@@ -233,10 +260,14 @@ export default class DbMovieContent extends Component {
                                                                                                strong>{stats.maxHotMovie.type}</Text>，它不仅是一部红遍大江南北的电影，更拥有者不俗的
                                             <Text mark strong>{stats.maxHotMovie.ranking}</Text>的评分呢！</Paragraph>
                                         <Paragraph>热度最低的是<Text mark strong>{stats.minHotMovie.name}</Text>，共有
-                                            <Text mark strong>{stats.minHot}</Text>人看过，这部电影的类型是<Text mark strong>{stats.minHotMovie.type}</Text>，它不仅是一部红遍大江南北的电影，更拥有者不俗的
-                                            <Text mark strong>{stats.maxHot}</Text>的热度值呢！</Paragraph>
-                                        你最喜欢的作品语言是<Text mark strong>{stats.preLanguage}</Text>，喜欢{stats.preLanguage}的人，品位都不差哦！
-                                        你最喜欢的电影类型是<Text mark strong>{stats.preType}</Text>，喜欢{stats.preType}的人，品位都不差哦！
+                                            <Text mark strong>{stats.minHot}</Text>人看过，这部电影的类型是<Text mark
+                                                                                                     strong>{stats.minHotMovie.type}</Text>，它不仅是一部红遍大江南北的电影，更拥有者不俗的
+                                            <Text mark strong>{stats.minHotMovie.ranking}</Text>的评分呢！</Paragraph>
+                                        你最喜欢的作品语言是<Text mark strong>{stats.preLanguage}</Text>，最喜欢的电影类型是<Text mark
+                                                                                                              strong>{stats.preType}</Text>，
+                                        喜欢{stats.preType}和{stats.preLanguage}的人，品位都不差哦！
+                                        <Paragraph style={{fontSize: '30px', fontColor: "blue"}}>电影推介：</Paragraph>
+                                        {this.recommend(stats.preType)}
                                     </div> : statsLoading ? <div> "加载中..." </div> : null
                                 }
                             </div>
