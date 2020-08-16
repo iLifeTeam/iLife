@@ -13,6 +13,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookStats {
+    Integer preferHot;
     float avgPrice;
     float maxPrice;
     Book maxPriceBook;

@@ -5,6 +5,7 @@ import com.ilife.douban.entity.*;
 import com.ilife.douban.service.UserService;
 import com.ilife.douban.dao.BookDao;
 import com.ilife.douban.dao.UserDao;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -40,6 +42,13 @@ public class UserServiceImpl implements UserService {
         return ResponseEntity.ok().body("successfully delete user " + id);
     }
 
+    @Override
+    public MovieStats getRcmd(String uid){
+        MovieStats movieStats = getMovieStats(uid);
+        BookStats bookStats = getBookStats(uid);
+
+        return null;
+    }
     @Override
     public List<Book> getBooksById(String uid) {
         return bookDao.findById(uid);
@@ -71,7 +80,7 @@ public class UserServiceImpl implements UserService {
     public MovieStats getMovieStats(String uid) {
         List<Movie> movieList = movieDao.findById(uid);
         float avgRanking = 0, maxRanking = 0, avgHot = 0, maxHot = 0, allRanking = 0, allHot = 0, minHot = 9999999, minRanking=9999999;
-        if (movieList.size() == 0) return new MovieStats(0, 0, null, 0, null, 0, 0, null, 0, null, 0, "0", "0");
+        if (movieList.size() == 0) return new MovieStats(0,0, 0, null, 0, null, 0, 0, null, 0, null, 0, "0", "0");
         Movie maxRankingmovie = movieList.get(0);
         Movie maxHotmovie = movieList.get(0);
         Movie minHotmovie = movieList.get(0);
@@ -141,14 +150,16 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-        return new MovieStats(avgRanking,maxRanking,maxRankingmovie,minRanking,minRankingmovie,avgHot,maxHot,maxHotmovie,minHot,minHotmovie,movieList.size(),preLanguage,preType);
+        return new MovieStats(0,avgRanking,maxRanking,maxRankingmovie,minRanking,minRankingmovie,avgHot,maxHot,maxHotmovie,minHot,minHotmovie,movieList.size(),preLanguage,preType);
     }
     @Override
     public BookStats getBookStats(String uid) {
+        Integer preferHot=0;
+        int[] preferHotList = new int[4];
         List<Book> bookList = bookDao.findById(uid);
         float avgPrice = 0, maxPrice = 0, avgRanking = 0, maxRanking = 0, avgHot = 0, maxHot = 0, allRanking = 0, allHot = 0, minHot = 9999999, allPrice = 0;
         ;
-        if (bookList.size() == 0) return new BookStats(0, 0, null, 0, 0, null, 0, 0, null, 0, null, 0, "0");
+        if (bookList.size() == 0) return new BookStats(0,0, 0, null, 0, 0, null, 0, 0, null, 0, null, 0, "0");
         Book maxPriceBook = bookList.get(0);
         Book maxRankingBook = bookList.get(0);
         Book maxHotBook = bookList.get(0);
@@ -163,6 +174,15 @@ public class UserServiceImpl implements UserService {
                 maxHot = book.getHot();
                 maxHotBook = book;
             }
+            if(book.getHot()<1000){
+                preferHotList[0]++;
+            }else if(book.getHot()>=1000 && book.getHot()<10000){
+                preferHotList[1]++;
+            }else if(book.getHot()>=10000 && book.getHot()<50000){
+                preferHotList[2]++;
+            }else if(book.getHot()>=50000){
+                preferHotList[3]++;
+            }
             if (book.getRanking() >= maxRanking) {
                 maxRanking = book.getRanking();
                 maxRankingBook = book;
@@ -175,6 +195,18 @@ public class UserServiceImpl implements UserService {
                 minHot = book.getHot();
                 minHotBook = book;
             }
+        }
+        if(preferHotList[0]>preferHotList[1]&&preferHotList[0]>preferHotList[2]&&preferHotList[0]>preferHotList[3]){
+            preferHot=0;
+        }
+        if(preferHotList[1]>preferHotList[0]&&preferHotList[1]>preferHotList[2]&&preferHotList[1]>preferHotList[3]){
+            preferHot=1;
+        }
+        if(preferHotList[2]>preferHotList[1]&&preferHotList[2]>preferHotList[0]&&preferHotList[2]>preferHotList[3]){
+            preferHot=2;
+        }
+        if(preferHotList[3]>preferHotList[1]&&preferHotList[3]>preferHotList[2]&&preferHotList[3]>preferHotList[0]){
+            preferHot=3;
         }
         avgHot = allHot / bookList.size();
         avgPrice = allPrice / bookList.size();
@@ -210,7 +242,7 @@ public class UserServiceImpl implements UserService {
             }
             _lastDay = _curDay;
         }
-        return new BookStats(avgPrice, maxPrice, maxPriceBook, avgRanking, maxRanking, maxRankingBook, avgHot, maxHot, maxHotBook, minHot, minHotBook, bookList.size(), preAuthor);
+        return new BookStats(preferHot,avgPrice, maxPrice, maxPriceBook, avgRanking, maxRanking, maxRankingBook, avgHot, maxHot, maxHotBook, minHot, minHotBook, bookList.size(), preAuthor);
     }
 
 

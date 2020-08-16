@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MovieStats {
+    Integer preferHot;
     float avgRanking;
     float maxRanking;
     Movie maxRankingMovie;

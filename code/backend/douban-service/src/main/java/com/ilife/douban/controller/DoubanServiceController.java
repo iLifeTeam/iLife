@@ -105,4 +105,12 @@ public class DoubanServiceController {
         System.out.println("********** getMovieStats **********");
         return userService.getMovieStats(uid);
     }
+
+    @ApiOperation(notes = "Get Recommendation parameter by userID", value = "get movie recommendation", httpMethod = "GET")
+    @GetMapping(path = "/douban/getRcmd")
+//    @PreAuthorize("hasRole('ROLE_USER')")
+    public MovieStats getRefParameter(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
+        System.out.println("********** getRecommendation**********");
+        return userService.getRcmd(uid);
+    }
 }
