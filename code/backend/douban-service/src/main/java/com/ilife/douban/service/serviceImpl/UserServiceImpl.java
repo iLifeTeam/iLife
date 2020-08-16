@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Float.parseFloat;
@@ -41,13 +42,62 @@ public class UserServiceImpl implements UserService {
         userDao.deleteById(id);
         return ResponseEntity.ok().body("successfully delete user " + id);
     }
+    private static ArrayList<String> getBookRcmd(ArrayList<String> bookTypeList,BookStats bookStats) {
+        if(bookStats.getPreferHot()<=1){
+            bookTypeList.add("新书速递");
+        }
+        if(bookStats.getPreferHot()>=2){
+            bookTypeList.add("畅销图书");
+        }
+        if(bookStats.getAvgRanking()>7){
+            bookTypeList.add("Top250");
+        }
+
+        return bookTypeList;
+    }
+    private static ArrayList<String> getMovieRcmd(ArrayList<String> movieTypeList,MovieStats movieStats){
+        if(movieStats.getPreferHot()<=1){
+            movieTypeList.add("冷门佳片");
+        }
+        if(movieStats.getPreferHot()>=2){
+            movieTypeList.add("热门");
+        }
+        if(movieStats.getAvgRanking()>=7){
+            movieTypeList.add("豆瓣高分");
+        }
+        if(movieStats.getPreLanguage().equals("英语")||movieStats.getPreLanguage().equals("德语")
+                ||movieStats.getPreLanguage().equals("法语")||movieStats.getPreLanguage().equals("西班牙语")
+                ||movieStats.getPreLanguage().equals("意大利语")) movieTypeList.add("欧美");
+        if (movieStats.getPreLanguage().equals("日语")){
+            movieTypeList.add("日本");
+        }
+        if (movieStats.getPreLanguage().equals("韩语")){
+            movieTypeList.add("韩国");
+        }
+        if (movieStats.getPreLanguage().equals("汉语普通话")){
+            movieTypeList.add("华语");
+        }
+        if (movieStats.getPreType().equals("爱情")){
+            movieTypeList.add("爱情");
+        }
+        if (movieStats.getPreType().equals("悬疑")||movieStats.getPreType().equals("犯罪")){
+            movieTypeList.add("悬疑");
+        }
+        if (movieStats.getPreType().equals("恐怖")||movieStats.getPreType().equals("惊悚")){
+            movieTypeList.add("恐怖");
+        }
+        return movieTypeList;
+    }
 
     @Override
-    public MovieStats getRcmd(String uid){
+    public Reference getRcmd(String uid){
+        ArrayList<String> movieTypeList = new ArrayList<>();
+        ArrayList<String> bookTypeList = new ArrayList<>();
         MovieStats movieStats = getMovieStats(uid);
         BookStats bookStats = getBookStats(uid);
-
-        return null;
+        movieTypeList = getMovieRcmd(movieTypeList,movieStats);
+        bookTypeList = getBookRcmd(bookTypeList,bookStats);
+        return new Reference(bookTypeList,bookStats.getPreAuthor(),movieTypeList,"","");
     }
     @Override
     public List<Book> getBooksById(String uid) {
@@ -78,6 +128,8 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public MovieStats getMovieStats(String uid) {
+        int preferHot=0;
+        int[] preferHotList = new int[4];
         List<Movie> movieList = movieDao.findById(uid);
         float avgRanking = 0, maxRanking = 0, avgHot = 0, maxHot = 0, allRanking = 0, allHot = 0, minHot = 9999999, minRanking=9999999;
         if (movieList.size() == 0) return new MovieStats(0,0, 0, null, 0, null, 0, 0, null, 0, null, 0, "0", "0");
@@ -87,6 +139,15 @@ public class UserServiceImpl implements UserService {
         Movie minRankingmovie = movieList.get(0);
         String preLanguage = movieList.get(0).getLanguage();
         for (Movie movie: movieList) {
+            if(movie.getHot()<1000){
+                preferHotList[0]++;
+            }else if(movie.getHot()>=1000 && movie.getHot()<10000){
+                preferHotList[1]++;
+            }else if(movie.getHot()>=10000 && movie.getHot()<50000){
+                preferHotList[2]++;
+            }else if(movie.getHot()>=50000){
+                preferHotList[3]++;
+            }
             if(!movie.getType().trim().equals(""))
                 parseType(movie.getType());
             allHot += movie.getHot();
@@ -124,6 +185,15 @@ public class UserServiceImpl implements UserService {
             }
             if (!flag) break;
         }
+        if(preferHotList[1]>=preferHotList[0]&&preferHotList[1]>=preferHotList[2]&&preferHotList[1]>=preferHotList[3]){
+            preferHot=1;
+        }
+        if(preferHotList[2]>=preferHotList[1]&&preferHotList[2]>=preferHotList[0]&&preferHotList[2]>=preferHotList[3]){
+            preferHot=2;
+        }
+        if(preferHotList[3]>=preferHotList[1]&&preferHotList[3]>=preferHotList[2]&&preferHotList[3]>=preferHotList[0]){
+            preferHot=3;
+        }
         int _cur = 0;
         int maxCount = 0;
         String _curDay = preLanguage;
@@ -150,11 +220,11 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-        return new MovieStats(0,avgRanking,maxRanking,maxRankingmovie,minRanking,minRankingmovie,avgHot,maxHot,maxHotmovie,minHot,minHotmovie,movieList.size(),preLanguage,preType);
+        return new MovieStats(preferHot,avgRanking,maxRanking,maxRankingmovie,minRanking,minRankingmovie,avgHot,maxHot,maxHotmovie,minHot,minHotmovie,movieList.size(),preLanguage,preType);
     }
     @Override
     public BookStats getBookStats(String uid) {
-        Integer preferHot=0;
+        int preferHot=0;
         int[] preferHotList = new int[4];
         List<Book> bookList = bookDao.findById(uid);
         float avgPrice = 0, maxPrice = 0, avgRanking = 0, maxRanking = 0, avgHot = 0, maxHot = 0, allRanking = 0, allHot = 0, minHot = 9999999, allPrice = 0;
@@ -196,16 +266,13 @@ public class UserServiceImpl implements UserService {
                 minHotBook = book;
             }
         }
-        if(preferHotList[0]>preferHotList[1]&&preferHotList[0]>preferHotList[2]&&preferHotList[0]>preferHotList[3]){
-            preferHot=0;
-        }
-        if(preferHotList[1]>preferHotList[0]&&preferHotList[1]>preferHotList[2]&&preferHotList[1]>preferHotList[3]){
+        if(preferHotList[1]>=preferHotList[0]&&preferHotList[1]>=preferHotList[2]&&preferHotList[1]>=preferHotList[3]){
             preferHot=1;
         }
-        if(preferHotList[2]>preferHotList[1]&&preferHotList[2]>preferHotList[0]&&preferHotList[2]>preferHotList[3]){
+        if(preferHotList[2]>=preferHotList[1]&&preferHotList[2]>=preferHotList[0]&&preferHotList[2]>=preferHotList[3]){
             preferHot=2;
         }
-        if(preferHotList[3]>preferHotList[1]&&preferHotList[3]>preferHotList[2]&&preferHotList[3]>preferHotList[0]){
+        if(preferHotList[3]>=preferHotList[1]&&preferHotList[3]>=preferHotList[2]&&preferHotList[3]>=preferHotList[0]){
             preferHot=3;
         }
         avgHot = allHot / bookList.size();

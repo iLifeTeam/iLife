@@ -24,5 +24,5 @@ public interface UserService {
 
     MovieStats getMovieStats(String uid);
 
-    MovieStats getRcmd(String uid);
+    Reference getRcmd(String uid);
 }

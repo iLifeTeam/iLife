@@ -178,6 +178,24 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Movie"
+  /douban/getRcmd:
+    get:
+      tags:
+      - "Douban Service Controller"
+      summary: "get movie recommendation"
+      description: "Get Recommendation parameter by userID"
+      operationId: "getRefParameter"
+      parameters:
+      - name: "userId"
+        in: "query"
+        description: "The user ID of a douban user"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/MovieStats"
 definitions:
   Book:
     type: "object"
@@ -199,6 +217,9 @@ definitions:
   BookStats:
     type: "object"
     properties:
+      preferHot:
+        type: "integer"
+        format: "int32"
       avgPrice:
         type: "number"
         format: "float"
@@ -253,6 +274,9 @@ definitions:
   MovieStats:
     type: "object"
     properties:
+      preferHot:
+        type: "integer"
+        format: "int32"
       avgRanking:
         type: "number"
         format: "float"
@@ -293,22 +317,22 @@ definitions:
         type: "string"
       name:
         type: "string"
+      book_READ:
+        type: "integer"
+        format: "int32"
       comment:
         type: "integer"
         format: "int32"
-      book_READ:
+      book_WISH:
+        type: "integer"
+        format: "int32"
+      movie_WISH:
         type: "integer"
         format: "int32"
       movie_WATCHED:
         type: "integer"
         format: "int32"
       following:
-        type: "integer"
-        format: "int32"
-      movie_WISH:
-        type: "integer"
-        format: "int32"
-      book_WISH:
         type: "integer"
         format: "int32"
       follower:
