@@ -3,7 +3,7 @@ import axios from 'axios';
 import ZhihuActivity from '../../zhihu/ZhihuActivity';
 import { createBrowserHistory } from 'history'
 import WeiboInfo from '../../weibo/WeiboInfo';
-import {Button,Typography,Row,Col,Divider} from 'antd';
+import {Button,Typography,Row,Col,Divider,message} from 'antd';
 import 'antd/dist/antd.css';
 
 const { Text, Paragraph } = Typography;
@@ -209,6 +209,11 @@ export default class WeiboBodyContent extends Component {
   /* end 文案 here*/
 
   crawl=()=> {
+    message.loading({
+      content:"正在更新微博数据，请稍作等待！",
+      style:{marginTop:'40px'},
+    duration:0
+    });
     let config = {
       method: 'get',
       url: 'http://121.36.196.234:8585/weibo/crawlWeibo?userId='+ this.state.weiboId+'&startDate=2020-07-01&endDate=now',
@@ -220,8 +225,13 @@ export default class WeiboBodyContent extends Component {
     axios(config)
         .then(function (response) {
           console.log(JSON.stringify(response.data));
-          alert("微博数据更新成功！请重新进入页面查看");
+          message.destroy();
+          message.success({
+            content:"微博数据更新成功！请重新进入页面查看",
+            style:{marginTop:'40px'},
+            });
           that.forceUpdate();
+
         })
         .catch(function (error) {
           console.log(error);
@@ -240,7 +250,7 @@ export default class WeiboBodyContent extends Component {
               <div className="box">
                 <div className="box-header">
                   <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}><h3 className="box-title">用户{this.state.weiboId}的微博数据</h3></Divider>
-                  <p className="btn btn-primary" onClick={this.crawl}>更新数据</p>
+                  <p className="btn btn-danger" onClick={this.crawl}>更新数据</p>
                   <p className="btn btn-primary" onClick={()=>{this.setState({show:!this.state.show})}}>绑定账户</p>
                   {this.state.show?
                       <p><input id="changeId" placeholder={"输入微博用户主页中浏览器地址栏处的用户ID"} style={{width:'350px'}}/><button onClick={this.changeId}>确认</button></p>:null}
@@ -257,9 +267,10 @@ export default class WeiboBodyContent extends Component {
             <div className="col-xs-12">
               <div className="box">
                 <div className="box-header">
-                  <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}><h3 className="box-title">用户{this.state.weiboId}的微博报表</h3>
+                  <Divider orientation="left" style={{ color: '#333', fontWeight: 'bold' }}><h3 className="box-title">用户{this.state.weiboId}的微博报表</h3>
                   </Divider>
                   <Button
+                      size={"large"}
                     loading={ statsLoading}
                     onClick={()=>{
                       this.fetchStats(weiboId,startTime,endTime)
@@ -268,7 +279,7 @@ export default class WeiboBodyContent extends Component {
                     生成报表
                   </Button>
                 </div >
-                <div style={{borderWidth:'5px' ,fontSize:'20px'}}>
+                <div style={{marginLeft:"10px"}}>
                   {/*<div className="report-display" style={{border: '5px solid light-yellow', borderRadius: '10px',elevation:10 }}>*/}
                 {statsReady ?
                     <Text className="box-body" copyable >

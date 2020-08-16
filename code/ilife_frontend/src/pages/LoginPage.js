@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Link } from "react-router-dom"
 import { createBrowserHistory } from 'history'
 import axios from 'axios'
+import {message} from "antd";
+
 
 
 axios.defaults.withCredentials = true;
@@ -11,7 +13,7 @@ export default class LoginPage extends Component {
     this.state = {
       username: "",
       password: ""
-    }
+    };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handlePsdChange = this.handlePsdChange.bind(this);
     this.login = this.login.bind(this);
@@ -58,17 +60,18 @@ export default class LoginPage extends Component {
       .then(function (response) {
         console.log(JSON.stringify(response.data));
         if (response.data === "iLife login success") {
-          alert("登录成功！");
+
           localStorage.setItem("username", config.data.account);
           history.push("/home/weibo");
+          message.success("登陆成功");
           window.location.reload();
         }
-        else alert("登录失败！")
+        else message.error("登录失败！")
         return;
       })
       .catch(function (error) {
         console.log(error);
-        alert("用户名或密码错误！");
+        message.success("用户名或密码错误！");
         return;
       });
 

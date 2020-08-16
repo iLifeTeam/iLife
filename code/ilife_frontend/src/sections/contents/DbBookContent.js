@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { createBrowserHistory } from 'history'
 import DoubanBooks from '../../douban/DoubanBooks';
-import {Button, Divider, Typography} from 'antd';
+import {Button, Divider, message, Typography} from 'antd';
 import 'antd/dist/antd.css';
 const { Text, Paragraph } = Typography;
 export default class DbBookContent extends Component {
@@ -95,6 +95,11 @@ export default class DbBookContent extends Component {
 
 
     crawl() {
+        message.loading({
+            content:"正在更新图书数据，请稍作等待！",
+            style:{marginTop:'40px'},
+            duration:0
+        });
         var config = {
             method: 'get',
             url: 'http://121.36.196.234:8484/douban/crawlMovie?userId=' + this.state.doubanId + '&limit=2&type=book',
@@ -106,7 +111,11 @@ export default class DbBookContent extends Component {
         axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
-                alert("图书数据更新成功！请重新进入页面查看")
+                message.destroy();
+                message.success({
+                    content:"图书数据更新成功！请重新进入页面查看",
+                    style:{marginTop:'40px'},
+                });
             })
             .catch(function (error) {
                 console.log(error);
@@ -183,7 +192,7 @@ export default class DbBookContent extends Component {
                             <div className="box">
                                 <div className="box-header">
                                     <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}> <h3 className="box-title">用户{this.state.doubanId}的豆瓣图书数据</h3></Divider>
-                                    <p className="btn btn-primary" onClick={this.crawl}>更新数据</p>
+                                    <p className="btn btn-danger" onClick={this.crawl}>更新数据</p>
                                     <p className="btn btn-primary" onClick={()=>{this.setState({show:!this.state.show})}}>绑定账户</p>
                                     {this.state.show?
                                         <p><input id="changeId"/><button onClick={this.changeId}>确认</button></p>:null}
@@ -202,6 +211,7 @@ export default class DbBookContent extends Component {
                                 <div className="box-header">
                                     <h3 className="box-title">用户{this.state.weiboId}的豆瓣读书报表</h3>
                                     <Button
+                                        size={"large"}
                                         loading={statsLoading}
                                         onClick={() => {
                                             this.fetchStats(this.state.doubanId)

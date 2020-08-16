@@ -53,7 +53,7 @@ export default class Menu extends Component {
                 <MenuItem key={index} itemURL={menuItem.itemURL} itemName={menuItem.itemName} childItems={menuItem.childItems} />
               )}
               <li className="header">分析</li>
-              <li><a href="fake_url"><i className="fa fa-circle-o text-red" /> <span>娱乐推荐</span></a></li>
+              <li><a href="/home/entertain"><i className="fa fa-circle-o text-red" /> <span>娱乐推荐</span></a></li>
               <li><a href="fake_url"><i className="fa fa-circle-o text-yellow" /> <span>博主推荐</span></a></li>
             </ul>
           </div>

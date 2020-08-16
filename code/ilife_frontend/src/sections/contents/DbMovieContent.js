@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import axios from 'axios';
 import {createBrowserHistory} from 'history'
 import DoubanMovies from '../../douban/DoubanMovies';
-import {Button, Divider, Typography} from "antd";
+import {Button, Divider, message, Typography} from "antd";
 
 const {Text, Paragraph} = Typography;
 
@@ -96,6 +96,11 @@ export default class DbMovieContent extends Component {
     }
 
     crawl = () => {
+        message.loading({
+            content:"正在更新电影数据，请稍作等待！",
+            style:{marginTop:'40px'},
+            duration:0
+        });
         let config = {
             method: 'get',
             url: 'http://121.36.196.234:8484/douban/crawlMovie?userId=' + this.state.doubanId + '&limit=2&type=movie',
@@ -107,7 +112,11 @@ export default class DbMovieContent extends Component {
         axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
-                alert("电影数据更新成功！请重新进入页面查看");
+                message.destroy();
+                message.success({
+                    content:"电影数据更新成功！请重新进入页面查看",
+                    style:{marginTop:'40px'},
+                });
                 that.forceUpdate();
             })
             .catch(function (error) {
@@ -206,7 +215,7 @@ export default class DbMovieContent extends Component {
                                 <div className="box-header">
                                     <Divider orientation="left" style={{color: '#333', fontWeight: 'normal'}}><h3
                                         className="box-title">用户{this.state.doubanId}的电影数据</h3></Divider>
-                                    <p className="btn btn-primary" onClick={this.crawl}>更新数据</p>
+                                    <p className="btn btn-danger" onClick={this.crawl}>更新数据</p>
                                     <p className="btn btn-primary" onClick={() => {
                                         this.setState({show: !this.state.show})
                                     }}>绑定账户</p>
@@ -229,6 +238,7 @@ export default class DbMovieContent extends Component {
                                 <div className="box-header">
                                     <h3 className="box-title">用户{this.state.doubanId}的豆瓣电影报表</h3>
                                     <Button
+                                        size={"large"}
                                         loading={statsLoading}
                                         onClick={() => {
                                             this.fetchStats(this.state.doubanId)
