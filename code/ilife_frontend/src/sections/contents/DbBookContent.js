@@ -231,6 +231,7 @@ export default class DbBookContent extends Component {
                                             strong>{stats.minHot}</Text>人看过，这是一本由<Text
                                                 mark
                                                 strong>{stats.minHotBook.author}</Text>所著的书，愿意读小众书籍的人，运气都不会太差！</Paragraph>
+                                        <Paragraph>你的热度喜好是{stats.preferHot+1}颗星</Paragraph>
                                         <Paragraph>你最喜欢的作者是<Text mark strong>{stats.preAuthor}</Text>，读一个人的著作，也是和人心灵沟通的一种方式。</Paragraph>
                                     </div> : statsLoading ? <div> "加载中..." </div> : null
                                 }
