@@ -3,6 +3,16 @@ import React, { Component } from 'react'
 const $ = require('jquery');
 $.DataTable = require('datatables.net')
 
+function parseData(data) {
+
+  data.forEach(element => {
+    var str = JSON.stringify(element.publish_time);
+    element.publish_time = str.split('\"')[1].split('T')[0] + " " + str.split('T')[1].split(':')[0] + ':' + str.split('T')[1].split(':')[1];
+  });
+
+  return data;
+}
+
 export default class WeiboInfo extends Component {
   constructor(props) {
     super(props);
@@ -12,7 +22,7 @@ export default class WeiboInfo extends Component {
     this.$el = $(this.el);
 
     this.$el.DataTable({
-      data: this.props.activities ? this.props.activities : null,
+      data: this.props.activities ? parseData(this.props.activities) : null,
       columns: [
         { data: "id" },
         { data: "publish_time" },
@@ -30,7 +40,7 @@ export default class WeiboInfo extends Component {
       var table = $('#weiboTable').DataTable()
       table.clear();
       //向table中添加数据
-      table.rows.add(this.props.activities);
+      table.rows.add(parseData(this.props.activities));
       //重新绘画表格
       table.draw();
     }
@@ -45,20 +55,12 @@ export default class WeiboInfo extends Component {
       <table id="weiboTable" ref={el => this.el = el} className="table table-bordered table-striped" >
         <thead>
           <tr>
-            <th>微博id</th>
-            <th>发表时间</th>
-            <th>内容 &nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-            <th>转发次数</th>
-            <th>评论数</th>
-            <th>获赞数</th>
+            <th style={{ width: "8%" }}>微博id</th>
+            <th style={{ width: "20%" }}>发表时间</th>
+            <th style={{ width: "48%" }}>内容</th>
+            <th style={{ width: "8%" }}>转发次数</th>
+            <th style={{ width: "8%" }}>评论数</th>
+            <th style={{ width: "8%" }}>获赞数</th>
           </tr>
         </thead>
       </table>
