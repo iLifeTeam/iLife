@@ -16,7 +16,6 @@ public class AiController {
     private baiduapi baiduapi;
 
 
-    @CrossOrigin
     @PostMapping("/baiduapi/analysis")
     public JSONObject analysis(@RequestBody List<String> weibo) throws IOException {
         int total = weibo.size();
@@ -41,7 +40,6 @@ public class AiController {
         return jsonObject;
     }
 
-    @CrossOrigin
     @PostMapping("/baiduapi/analysiswithkey")
     public JSONObject analysiswithkey(@RequestBody List<String> weibo, @RequestParam String ak,@RequestParam String sk) throws IOException {
         int total = weibo.size();
@@ -64,7 +62,6 @@ public class AiController {
         return jsonObject;
     }
 
-    @CrossOrigin
     @PostMapping("/baiduapi/analysis1")
     public int analysis1(@RequestParam String weibo) throws IOException {
 
