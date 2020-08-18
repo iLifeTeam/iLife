@@ -1,6 +1,7 @@
 import requests
 import multiprocessing
 import time
+import json
 from bs4 import BeautifulSoup, NavigableString, Tag
 from absl import app
 import random
@@ -12,18 +13,9 @@ from entity.User import User
 from writer.mysql_writer import Mysqlwriter
 
 
-class Crawler:
-    def __init__(self, _id):
+class CrawlerRcmd:
+    def __init__(self):
         # load config
-        config = config_parser.Config()
-        config.get_config()
-        self.config = config
-        self.id = _id
-        # self.proxies = {
-        #     'http': 'http://191.235.72.244:8080',
-        #     'https': 'http://191.235.72.244:8080',
-        # }
-        self.cookies = config.cookies
         self.headers = {
             'User-Agent': 'PostmanRuntime/7.26.1',
             'Connection': 'keep-alive',
@@ -206,68 +198,106 @@ class Crawler:
         mysqlwriter = Mysqlwriter(self.config)
         mysqlwriter.write_movie(st_movies)
 
-    def work_movie(self, prefix, postfix, sleepTime):
-        time.sleep(sleepTime)
-        text = self.crawl(prefix, postfix)
-        self.parse_movies(text)
+    def work_movie(self, movieTagList, attitude, queue, hashtag):
+        movie_all_List = []
+        high_rate = hot = 0
+        picture = movie_soup = rate = title = url = introduction = type = actors_list = content = ""
+        startNum = (hashtag % 7) * 20
+        for tag in movieTagList:
+            if tag == "豆瓣高分":
+                high_rate = 1
+                continue
+            if tag == "冷门佳片":
+                hot = 0
+                continue
+            if tag == "热门":
+                hot = 1
+                continue
+            movie_url = 'https://movie.douban.com/j/search_subjects?type=movie&tag=' + str(
+                tag) + '&sort=recommend&page_limit=20&page_start=' + str(startNum)
+            movie_page = requests.get(movie_url, headers=self.headers)
+            movie_list = movie_page.json()['subjects']
+            movie = movie_list[hashtag % 20]
+            # if user like high_rating movie, don't recommend low_rating movie to them
+            for i in range(20):
+                movie = movie_list[(hashtag + i) % 20]
+                if high_rate == 1 and int(movie['rate']) <= 7 and not i == 19:
+                    continue
+                else:
+                    title = movie['title']
+                    url = movie['url']
+                    rate = movie['rate']
+                    movie_page = requests.get(url, headers=self.headers)
+                    movie_soup = BeautifulSoup(movie_page.text, 'lxml')
+                    content = movie_soup.find(id="content")
+                    if content is None and not i == 19:
+                        continue
+                    else:
+                        break
+            content = content.find(id="info")
+            actors = content.find(class_="actor")
+            actors = actors.find(class_="attrs")
+            for actor in actors.contents:
+                if isinstance(actor, NavigableString) or actor is None:
+                    continue
+                actors_list += actor.string.strip()
+                actors_list += '/'
+            content = movie_soup.find(id="link-report")
+            for con in content.span.span.children:
+                if con is None or isinstance(con, Tag):
+                    continue
+                else:
+                    introduction += con.strip()
+            content = movie_soup.find(class_='nbgnbg')
+            pic_url = content['href']
+            print(pic_url)
+            pic_page = requests.get(pic_url, headers=self.headers)
+            pic_soup = BeautifulSoup(pic_page.text, 'lxml')
+            content = pic_soup.find(class_=['poster-col3', 'clearfix'])
+            picture = content.li.div.a
+            picture_url = picture['href']
+            print(picture_url)
+            pic_origin_page = requests.get(picture_url, headers=self.headers)
+            pic_origin_soup = BeautifulSoup(pic_origin_page.text, 'lxml')
+            content = pic_origin_soup.find(class_=['update', 'magnifier'])
+            picture = content.a['href']
+            print(picture)
 
-    def work_book(self, prefix, postfix, sleepTime):
-        time.sleep(sleepTime)
-        text = self.crawl(prefix, postfix)
-        self.parse_books(text)
+        queue.put({"movie": "test1"})
+        return 1
 
-    def work_user(self, prefix, postfix):
-        text = self.crawl(prefix, postfix)
-        self.parse_user(text)
+    def work_book(self, bookTagList, preAuthor, attitude, queue, hashtag):
+        queue.put({"book": "test2"})
+        return 1
 
-    def real_page_movie(self, page):
-        url = MOVIE_URL + str(self.id) + "/collect?start=0"
-        r = requests.get(url,
-                         cookies=self.cookies,
-                         headers=self.headers)
-        soup = BeautifulSoup(r.text, "lxml")
-        content = soup.find(class_="paginator")
-        if not content is None:
-            span = content.find(class_="thispage")
-            total_page = span["data-total-page"]
-            if int(page) > int(total_page):
-                return total_page
-            else:
-                return page
-        else:
-            return 1
+    def work_music(self, musicTag, queue, hashtag):
+        queue.put({"music": "test3"})
+        return 1
+
+    def work_game(self, gameTag, queue, hashtag):
+        queue.put({"game": "test4"})
+        return 1
 
 
-def main(_id, _type, page):
-    crawler = Crawler(_id)
-    # the real page number is in class_ = paginator
-    if _type == "movie":
-        pool = multiprocessing.Pool(processes=4)
-        data_list = []
-        page = crawler.real_page_movie(page)
-        for i in range(int(page)):
-            randomInt = random.randint(2, min(int(i) + 2, 10))
-            data_list.append((MOVIE_URL, "/collect?start=" + str(15 * i), randomInt))
-        print(data_list)
-        res = pool.starmap(crawler.work_movie, data_list)
-        pool.close()
-        pool.join()
-        # print(data_list)
-    if _type == "book":
-        pool = multiprocessing.Pool(processes=4)
-        data_list = []
-        # book_page = crawler.real_page_bookpage
-        for i in range(int(page)):
-            randomInt = random.randint(0, min(int(page), 8))
-            print(randomInt)
-            data_list.append((BOOK_URL, "/collect?start=" + str(15 * i), randomInt))
-        print(data_list)
-        res = pool.starmap(crawler.work_book, data_list)
-        pool.close()
-        pool.join()
-        # print(data_list)
-    if _type == "user":
-        crawler.work_user(BASE_URL, "")
+def main(bookTagList, preAuthor, movieTagList, musicTag, gameTag, attitude, hashTag):
+    queue = multiprocessing.Queue()
+    crawler = CrawlerRcmd()
+    # use multiprocessing to parallel the recommendation process
+    process_book = multiprocessing.Process(target=crawler.work_book,
+                                           args=(bookTagList, preAuthor, attitude, queue, hashTag))
+    process_movie = multiprocessing.Process(target=crawler.work_movie, args=(movieTagList, attitude, queue, hashTag))
+    process_music = multiprocessing.Process(target=crawler.work_music, args=(musicTag, queue, hashTag))
+    process_game = multiprocessing.Process(target=crawler.work_game, args=(gameTag, queue, hashTag))
+    process_book.start()
+    process_movie.start()
+    process_game.start()
+    process_music.start()
+    process_music.join()
+    process_game.join()
+    process_movie.join()
+    process_book.join()
+    results = [queue.get() for i in range(4)]
+    print(results)
 
 
 if __name__ == '__main__':
