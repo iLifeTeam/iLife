@@ -101,9 +101,9 @@ export default class EntertainContent extends Component {
                 console.log(error);
             });
         this.setState({movies: books});
-        this.getAttitude();
+        this.getAttitude(doubanId);
     };
-    getAttitude=async ()=>{
+    getAttitude=async (doubanId)=>{
         let data=[];
         for(let movie of this.state.movies){
             data.push(movie.name)
@@ -112,6 +112,7 @@ export default class EntertainContent extends Component {
             data.push(book.name)
         }
         console.log(data);
+        //通过百度AI获取书籍和电影的情感倾向
         var config = {
             method: 'post',
             data:data,
@@ -128,8 +129,26 @@ export default class EntertainContent extends Component {
             .catch(function (error) {
                 console.log(error);
             });
-        if(result.positive===0||result.positive/result.negative<=5) return 0;
-        else return 1;
+        let attitude;
+        if(result.negative===0) attitude=1;
+        else if(result.positive===0||result.positive/result.negative<=5) attitude=0;
+        else attitude=1;
+        var configRcmd = {
+            method: 'get',
+            url: 'http://121.36.196.234:8383/douban/getRcmd?userId=' + doubanId,
+            headers: {
+                withCredentials: true,
+            }
+        };
+        const resultRcmd = await axios(configRcmd)
+            .then(function (response) {
+                console.log(response.data);
+                return response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        
     };
     confirm=()=>{
         this.getMovies(this.state.doubanId);
