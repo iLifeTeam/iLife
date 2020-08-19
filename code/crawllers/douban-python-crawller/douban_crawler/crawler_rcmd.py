@@ -10,6 +10,7 @@ from const.const import BASE_URL, MOVIE_URL, BOOK_URL
 from entity.Movie import Movie
 from entity.Book import Book
 from entity.User import User
+from entity.MovieRcmd import MovieRcmd
 from writer.mysql_writer import Mysqlwriter
 
 
@@ -242,6 +243,18 @@ class CrawlerRcmd:
                     continue
                 actors_list += actor.string.strip()
                 actors_list += '/'
+            # ------------------------------------
+            content = movie_soup.find(id="info")
+            info_list = content.contents
+
+            for info in info_list:
+                if isinstance(info, Tag):
+                    if info.has_attr('property') and not info.has_attr('content'):
+                        if type == "":
+                            type += info.string
+                        else:
+                            type += (" / " + info.string)
+            # -------------------------------------
             content = movie_soup.find(id="link-report")
             for con in content.span.span.children:
                 if con is None or isinstance(con, Tag):
@@ -262,8 +275,9 @@ class CrawlerRcmd:
             content = pic_origin_soup.find(class_=['update', 'magnifier'])
             picture = content.a['href']
             print(picture)
-
-        queue.put({"movie": "test1"})
+            movie_all_List.append(MovieRcmd(title, rate, type, url, introduction, actors_list, picture))
+        for movie in movie_all_List:
+            queue.put(movie_all_List[0].__dict__)
         return 1
 
     def work_book(self, bookTagList, preAuthor, attitude, queue, hashtag):
@@ -298,6 +312,7 @@ def main(bookTagList, preAuthor, movieTagList, musicTag, gameTag, attitude, hash
     process_book.join()
     results = [queue.get() for i in range(4)]
     print(results)
+    return results
 
 
 if __name__ == '__main__':

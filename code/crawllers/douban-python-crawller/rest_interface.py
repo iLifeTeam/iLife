@@ -45,8 +45,9 @@ def recommendation():
         gameTag = json_data.get('preAuthor')
         attitude = json_data.get('attitude')
         hashTag = json_data.get('hashTag')
-        main(bookTagList, preAuthor, movieTagList, musicTag, gameTag, attitude,hashTag)
-        return "0"
+        tag =  main(bookTagList, preAuthor, movieTagList, musicTag, gameTag, attitude,hashTag)
+        print(tag)
+        return tag
     except TypeError:
         print("TypeError")
         return "TypeError"
