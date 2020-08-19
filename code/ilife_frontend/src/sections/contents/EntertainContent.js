@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import { createBrowserHistory } from 'history'
-import DoubanBooks from '../../douban/DoubanBooks';
-import {Button, Divider, Typography} from 'antd';
+import {Button, Divider, Typography,Popconfirm} from 'antd';
 import 'antd/dist/antd.css';
 const { Text, Paragraph } = Typography;
+const text = <div><Paragraph>'进行推荐前，请确保你已经绑定了豆瓣账户且进行了书籍和电影数据的获取，否则推荐结果将不太准确。</Paragraph>
+    <Paragraph>所有数据和图片均来自网上公开资料，请放心食用。</Paragraph>
+    <Paragraph>推荐将会花费一段时间，请耐心等待~</Paragraph></div>;
 export default class EntertainContent extends Component {
     constructor(props) {
         super(props);
@@ -14,7 +16,8 @@ export default class EntertainContent extends Component {
             doubanId: null,
             username: "",
             password: "",
-            activities: null,
+            movies:null,
+            books:null,
             statsLoading: false,
             statsReady: false,
             stats: null,
@@ -61,7 +64,96 @@ export default class EntertainContent extends Component {
     }
 
     /* end 文案 here*/
+    async getMovies(doubanId) {
+        var config = {
+            method: 'get',
+            url: 'http://121.36.196.234:8383/douban/getBooks?userId=' + doubanId,
+            headers: {
+                withCredentials: true,
+            }
+        };
+        const movies = await axios(config)
+            .then(function (response) {
+                console.log(response.data);
+                return response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        this.setState({ books: movies });
+        this.getBooks(doubanId);
+    }
+    getBooks=async (doubanId)=>{
+        var config = {
+            method: 'get',
+            url: 'http://121.36.196.234:8383/douban/getMovies?userId=' + doubanId,
+            headers: {
+                withCredentials: true,
+            }
+        };
 
+        const books = await axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+                return response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        this.setState({movies: books});
+        this.getAttitude(doubanId);
+    };
+    getAttitude=async (doubanId)=>{
+        let data=[];
+        for(let movie of this.state.movies){
+            data.push(movie.name)
+        }
+        for(let book of this.state.books){
+            data.push(book.name)
+        }
+        console.log(data);
+        //通过百度AI获取书籍和电影的情感倾向
+        var config = {
+            method: 'post',
+            data:data,
+            url: 'http://18.166.111.161:8188/baiduapi/analysis',
+            headers: {
+                withCredentials: true,
+            }
+        };
+        const result = await axios(config)
+            .then(function (response) {
+                console.log(response.data);
+                return response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        let attitude;
+        if(result.negative===0) attitude=1;
+        else if(result.positive===0||result.positive/result.negative<=5) attitude=0;
+        else attitude=1;
+        var configRcmd = {
+            method: 'get',
+            url: 'http://121.36.196.234:8383/douban/getRcmd?userId=' + doubanId,
+            headers: {
+                withCredentials: true,
+            }
+        };
+        const resultRcmd = await axios(configRcmd)
+            .then(function (response) {
+                console.log(response.data);
+                return response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        
+    };
+    confirm=()=>{
+        this.getMovies(this.state.doubanId);
+        return null;
+    };
     changeId=async (e)=>{
         let userId=localStorage.getItem("iLifeId");
         let dbId=document.getElementById("changeId").value;
@@ -90,7 +182,6 @@ export default class EntertainContent extends Component {
         if(doubanId) this.setState({doubanId:dbId})
 
     };
-
     render() {
         const { activities, stats, statsReady, statsLoading, userId } = this.state;
         return (
@@ -101,7 +192,15 @@ export default class EntertainContent extends Component {
                             <div className="box">
                                 <div className="box-header">
                                     <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}> <h3 className="box-title">{this.state.doubanId===null?"请先点击“绑定账户”绑定豆瓣用户！":"用户"+this.state.doubanId+"的娱乐推荐"}</h3></Divider>
-                                    <p className="btn btn-danger" onClick={()=>{this.setState({pop:true})}}>开始推荐</p>
+                                    <Popconfirm
+                                        placement="bottomLeft"
+                                        title={text}
+                                        onConfirm={this.confirm}
+                                        okText="开始推荐"
+                                        cancelText="再想想"
+                                    >
+                                        <p className="btn btn-danger" >开始推荐</p>
+                                    </Popconfirm>
                                     <p className="btn btn-primary" onClick={()=>{this.setState({show:!this.state.show})}}>绑定账户</p>
                                     {this.state.show?
                                         <p><input id="changeId"/><button onClick={this.changeId}>确认</button></p>:null}

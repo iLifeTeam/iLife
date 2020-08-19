@@ -71,7 +71,7 @@ export default class LoginPage extends Component {
       })
       .catch(function (error) {
         console.log(error);
-        message.success("用户名或密码错误！");
+        message.error("用户名或密码错误！");
         return;
       });
 
