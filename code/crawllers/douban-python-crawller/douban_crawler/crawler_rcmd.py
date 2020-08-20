@@ -11,6 +11,7 @@ from entity.Movie import Movie
 from entity.Book import Book
 from entity.User import User
 from entity.MovieRcmd import MovieRcmd
+from entity.BookRcmd import BookRcmd
 from writer.mysql_writer import Mysqlwriter
 
 
@@ -199,7 +200,7 @@ class CrawlerRcmd:
         mysqlwriter = Mysqlwriter(self.config)
         mysqlwriter.write_movie(st_movies)
 
-    def work_movie(self, movieTagList, attitude, queue, hashtag):
+    def work_movie(self, movieTagList, attitude, queue, hashtag, lock):
         movie_all_List = []
         high_rate = hot = 0
         picture = movie_soup = rate = title = url = introduction = type = actors_list = content = ""
@@ -275,33 +276,102 @@ class CrawlerRcmd:
             content = pic_origin_soup.find(class_=['update', 'magnifier'])
             picture = content.a['href']
             print(picture)
-            movie_all_List.append(MovieRcmd(title, rate, type, url, introduction, actors_list, picture))
+            movie_all_List.append(MovieRcmd(title.strip(), rate.strip(), url, introduction, type.strip(), actors_list, picture))
         for movie in movie_all_List:
-            queue.put(movie_all_List[0].__dict__)
+            lock.acquire()
+            queue.put(movie_all_List[0].__dict__, block=False)
+            lock.release()
+        print("finish movie rcmd")
         return 1
 
-    def work_book(self, bookTagList, preAuthor, attitude, queue, hashtag):
-        queue.put({"book": "test2"})
+    def work_book(self, bookTagList, preAuthor, attitude, queue, hashtag, lock):
+
+        book_all_List = []
+        tag_list = ['推理', '随笔', '理财', '科普', '武侠', '历史', '小说']
+        high_rate = hot = 0
+        book_url2 = ""
+        picture = movie_soup = rate = title = url = introduction = author = price = content = ""
+        startNum = (hashtag % 7) * 20
+        for tag in bookTagList:
+            if tag == "新书速递":
+                hot = 0
+                continue
+            if tag == "畅销图书":
+                hot = 1
+                continue
+        book_url2 = 'https://book.douban.com/tag/' + tag_list[hashtag % 7] + '?start=' + str(startNum)
+        pic_page = requests.get(book_url2, headers=self.headers)
+        pic_soup = BeautifulSoup(pic_page.text, 'lxml')
+        content = pic_soup.find(class_='subject-list')
+
+        content = content.find_all('li')
+        book_url = content[hashtag % 7].find('h2').a
+        title = book_url['title']
+        book_url = book_url['href']
+        url = book_url
+        pic_page = requests.get(book_url, headers=self.headers)
+        book_soup = BeautifulSoup(pic_page.text, 'lxml')
+        content = book_soup.find(id="info")
+        author = str(content.a.string).replace('\n', "").strip()
+        for _info in content.children:
+            if not isinstance(_info, Tag):
+                continue
+            if _info.string == "定价:":
+                price = str(_info.next_sibling).replace('\n', "").strip()
+        content = book_soup.find(class_="ll rating_num")
+        if str(content.string).strip() == "":
+            rate = str(0)
+        else:
+            rate = content.string.strip()
+
+        content = book_soup.find(class_="rating_sum")
+        if str(content.span.string).strip() == "目前无人评价":
+            hot = str(0)
+        else:
+            hot = content.span.a.span.string.strip()
+        content = book_soup.find(id='link-report')
+        introduction_tag = content.find(class_='intro')
+        for p in introduction_tag.contents:
+            if p is None or str(p) == "<br/>":
+                continue
+            introduction += p.string
+
+        content = book_soup.find(id='mainpic')
+        picture = content.a['href']
+        bookRcmd = BookRcmd(title, rate, url, introduction, author, price, picture, hot)
+        book_all_List.append(bookRcmd)
+        lock.acquire()
+        queue.put(bookRcmd.__dict__)
+        lock.release()
+        print("finish book rcmd")
         return 1
 
-    def work_music(self, musicTag, queue, hashtag):
-        queue.put({"music": "test3"})
+    def work_music(self, musicTag, queue, hashtag, lock):
+        lock.acquire()
+        queue.put({"music": 'none'}, block=False)
+        lock.release()
+        print("finish music rcmd")
         return 1
 
-    def work_game(self, gameTag, queue, hashtag):
-        queue.put({"game": "test4"})
+    def work_game(self, gameTag, queue, hashtag, lock):
+        lock.acquire()
+        queue.put({"game": 'none'}, block=False)
+        lock.release()
+        print("finish game rcmd")
         return 1
 
 
 def main(bookTagList, preAuthor, movieTagList, musicTag, gameTag, attitude, hashTag):
+    lock = multiprocessing.Lock()
     queue = multiprocessing.Queue()
     crawler = CrawlerRcmd()
     # use multiprocessing to parallel the recommendation process
     process_book = multiprocessing.Process(target=crawler.work_book,
-                                           args=(bookTagList, preAuthor, attitude, queue, hashTag))
-    process_movie = multiprocessing.Process(target=crawler.work_movie, args=(movieTagList, attitude, queue, hashTag))
-    process_music = multiprocessing.Process(target=crawler.work_music, args=(musicTag, queue, hashTag))
-    process_game = multiprocessing.Process(target=crawler.work_game, args=(gameTag, queue, hashTag))
+                                           args=(bookTagList, preAuthor, attitude, queue, hashTag, lock))
+    process_movie = multiprocessing.Process(target=crawler.work_movie,
+                                            args=(movieTagList, attitude, queue, hashTag, lock))
+    process_music = multiprocessing.Process(target=crawler.work_music, args=(musicTag, queue, hashTag, lock))
+    process_game = multiprocessing.Process(target=crawler.work_game, args=(gameTag, queue, hashTag, lock))
     process_book.start()
     process_movie.start()
     process_game.start()
@@ -310,7 +380,16 @@ def main(bookTagList, preAuthor, movieTagList, musicTag, gameTag, attitude, hash
     process_game.join()
     process_movie.join()
     process_book.join()
-    results = [queue.get() for i in range(4)]
+    results = {}
+    print(queue.qsize())
+    print('---------------------------------------')
+    for i in range(0, 4):
+        print("将要取出前的队列大小", queue.qsize())
+        c = queue.get(False)
+        print("取出元素", c)
+        print("取出后的队列大小", queue.qsize())
+        results.update(c)
+    print('---------------------------------------')
     print(results)
     return results
 
