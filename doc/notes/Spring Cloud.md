@@ -113,5 +113,47 @@ eureka:
 
 ---
 
-##### Feign 服务消费
+### Config-server
+
+---
+
+config-server提供一个中心化的配置中心，spring-boot可以从config-server获取配置。
+
+##### config-server配置
+
+```yml
+server:
+  port: 8888 # map port to 8888
+spring:
+  application:
+    name: config
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: classpath:/config
+          # 定义从本地获取配置文件，这样配置后配置文件放置在resources/config/目录下即可
+      discovery:
+        enabled: true
+  profiles:
+    active: native
+```
+
+假设已经添加了文件resources/config/registry-prod.yml
+
+从URL尝试获取文件, `http://localhost:8888/registry/prod`
+
+##### spring-boot程序配置
+
+使用在resourcce下添加bootstrap.yml从而被优先读取,此处的name和profile要对应config-server中的配置文件名. 如下配置对应的就是registry-prod
+
+```yml
+spring:
+    cloud:
+      config:
+        name: registry
+        profile: prod
+        uri: http://18.166.111.161:8888
+```
+
 

@@ -3,12 +3,12 @@ server:
 
 spring:
   application:
-    name: config-server
+    name: config
   cloud:
     config:
       server:
         native:
-          search-locations: classpath:/config
+          searchLocations: classpath:/config
       discovery:
         enabled: true
   profiles:
