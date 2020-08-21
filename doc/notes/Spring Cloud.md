@@ -156,4 +156,10 @@ spring:
         uri: http://18.166.111.161:8888
 ```
 
+##### 将现有的spring-boot程序配置移到config-server
 
+1. 修改sprintboot的配置文件名为 ($spring.application.name)-prod.(yml/properties)，放在config-server的resources/config目录下
+
+2. 在配置文件目录下增加bootstrap.yml文件并配置spring.cloud.config参数
+3. 重启config-server和springboot程序
+4. 建议开发的时候还是用本地的配置文件，可以配置一个bootstrap-dev.yml
