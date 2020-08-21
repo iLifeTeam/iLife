@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import { createBrowserHistory } from 'history'
-import {Button, Divider, Typography, Popconfirm, message} from 'antd';
+import {Button, Divider, Typography, Popconfirm, message,Row,Col} from 'antd';
 import 'antd/dist/antd.css';
 const { Text, Paragraph } = Typography;
 const text = <div><Paragraph>'进行推荐前，请确保你已经绑定了豆瓣账户且进行了书籍和电影数据的获取，否则推荐结果将不太准确。</Paragraph>
@@ -22,6 +22,7 @@ export default class EntertainContent extends Component {
             statsLoading: false,
             statsReady: false,
             stats: null,
+            rcmd:null
         };
     }
 
@@ -171,20 +172,44 @@ export default class EntertainContent extends Component {
         };
         const finalResult = await axios(config2)
             .then(function (response) {
-                console.log(response.data);
                 message.destroy();
                 message.success({
                     content: "娱乐推荐完毕！请重新进入页面查看",
                     style: { marginTop: '40px' },
                 });
-                that.setState({finish:true});
+                that.setState({finish:true,rcmd:response.data});
                 return response.data;
-
             })
             .catch(function (error) {
                 console.log(error);
             });
-        
+        console.log(finalResult);
+        Object.defineProperty(Image.prototype, 'authsrc', {
+            writable : true,
+            enumerable : true,
+            configurable : true
+        });
+        let img = document.getElementById('img');
+        let url = finalResult.picture_movie;
+        var config3 = {
+            method: 'get',
+            url: url,
+            headers: {
+                Referer: 'https://movie.douban.com/photos/photo/2548750147/'
+            }
+        };
+        // const moviePic = await axios(config3)
+        //     .then(function (response) {
+        //         console.log(response.data);
+        //         return response.data;
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
+        // img.src = URL.createObjectURL(moviePic);
+        // img.onload = () => {
+        //     URL.revokeObjectURL(img.src);
+        // };
     };
     confirm=()=>{
         message.loading({
@@ -246,6 +271,20 @@ export default class EntertainContent extends Component {
                                     {this.state.show?
                                         <p><input id="changeId"/><button onClick={this.changeId}>确认</button></p>:null}
                                 </div>
+                                {
+                                    this.state.finish?
+                                        <div className="box-body">
+                                            <Row>
+                                                <Col span={8}>
+                                                    <img id="img" src={"https://img9.doubanio.com/view/photo/l_ratio_poster/public/p2574029074.webp"} alt={"正在加载中..."}/>
+                                                </Col>
+                                                <Col span={8}>
+
+                                                </Col>
+                                            </Row>
+                                        </div>:null
+                                }
+
                             </div>
                         </div>
                     </div>

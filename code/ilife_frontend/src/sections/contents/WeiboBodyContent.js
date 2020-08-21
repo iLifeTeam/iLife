@@ -185,7 +185,6 @@ export default class WeiboBodyContent extends Component {
     let that = this;
     axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
         message.destroy();
         message.success({
           content: "微博数据更新成功！请重新进入页面查看",
@@ -252,6 +251,7 @@ export default class WeiboBodyContent extends Component {
                         var GMT1 = new Date(dates[1]._d);
                         this.setState({ startTime: GMT.toUTCString(), endTime: GMT1.toUTCString() })
                       }}
+                      style={{marginLeft:'20px'}}
                     />
                   </Space>
                 </div >
