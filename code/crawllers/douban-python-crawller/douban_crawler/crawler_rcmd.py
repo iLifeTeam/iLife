@@ -257,11 +257,14 @@ class CrawlerRcmd:
                             type += (" / " + info.string)
             # -------------------------------------
             content = movie_soup.find(id="link-report")
-            for con in content.span.span.children:
-                if con is None or isinstance(con, Tag):
-                    continue
-                else:
-                    introduction += con.strip()
+            if content.span.span is None:
+                introduction=content.span.string.strip()
+            else:
+                for con in content.span.span.children:
+                    if con is None or isinstance(con, Tag):
+                        continue
+                    else:
+                        introduction += con.strip()
             content = movie_soup.find(class_='nbgnbg')
             pic_url = content['href']
             print(pic_url)
@@ -385,7 +388,7 @@ def main(bookTagList, preAuthor, movieTagList, musicTag, gameTag, attitude, hash
     print('---------------------------------------')
     for i in range(0, 4):
         print("将要取出前的队列大小", queue.qsize())
-        c = queue.get(False)
+        c = queue.get()
         print("取出元素", c)
         print("取出后的队列大小", queue.qsize())
         results.update(c)
