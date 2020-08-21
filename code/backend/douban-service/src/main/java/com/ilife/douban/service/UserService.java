@@ -23,4 +23,6 @@ public interface UserService {
     BookStats getBookStats(String uid);
 
     MovieStats getMovieStats(String uid);
+
+    Reference getRcmd(String uid);
 }

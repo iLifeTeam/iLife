@@ -231,6 +231,29 @@
           }
         }
       }
+    },
+    "/douban/getRcmd" : {
+      "get" : {
+        "tags" : [ "Douban Service Controller" ],
+        "summary" : "get movie recommendation",
+        "description" : "Get Recommendation parameter by userID",
+        "operationId" : "getRefParameter",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "query",
+          "description" : "The user ID of a douban user",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/MovieStats"
+            }
+          }
+        }
+      }
     }
   },
   "definitions" : {
@@ -262,6 +285,10 @@
     "BookStats" : {
       "type" : "object",
       "properties" : {
+        "preferHot" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
         "avgPrice" : {
           "type" : "number",
           "format" : "float"
@@ -339,6 +366,10 @@
     "MovieStats" : {
       "type" : "object",
       "properties" : {
+        "preferHot" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
         "avgRanking" : {
           "type" : "number",
           "format" : "float"
@@ -394,14 +425,17 @@
           "type" : "string"
         },
         "name" : {
+          "type" : "string"
+        },
+        "book_READ" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "comment" : {
           "type" : "integer",
           "format" : "int32"
         },
         "book_WISH" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "book_READ" : {
           "type" : "integer",
           "format" : "int32"
         },
@@ -418,10 +452,6 @@
           "format" : "int32"
         },
         "follower" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "comment" : {
           "type" : "integer",
           "format" : "int32"
         }

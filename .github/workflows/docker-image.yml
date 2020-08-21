@@ -1,0 +1,30 @@
+@@ -0,0 +1,29 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ back-end-douban ]
+  pull_request:
+    branches: [ back-end-douban ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: CHECKOUT DOUBAN
+        uses: actions/checkout@v2
+        with:
+          ref: back-end-douban
+      - name: Run SSH command
+        uses: garygrossgarten/github-action-ssh@v0.5.0
+        with:
+          username: root
+          host: 121.36.196.234
+          port: 22
+          privateKey : ${{ secrets.HWYUN_PASSWORD }}
+          command: |
+            cd ~/code/douban_iLife
+            chmod 777 ./run.sh
+            ./run.sh

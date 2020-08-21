@@ -16,7 +16,7 @@ public class User {
     @Column(name = "ID")
     private String id;
     @Column(name = "NAME")
-    private Integer name;
+    private String name;
     @Column(name = "MOVIE_WISH")
     private Integer MOVIE_WISH;
     @Column(name = "MOVIE_WATCHED")
