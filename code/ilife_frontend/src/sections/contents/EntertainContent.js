@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import { createBrowserHistory } from 'history'
-import {Button, Divider, Typography,Popconfirm} from 'antd';
+import {Button, Divider, Typography, Popconfirm, message} from 'antd';
 import 'antd/dist/antd.css';
 const { Text, Paragraph } = Typography;
 const text = <div><Paragraph>'进行推荐前，请确保你已经绑定了豆瓣账户且进行了书籍和电影数据的获取，否则推荐结果将不太准确。</Paragraph>
@@ -11,6 +11,7 @@ export default class EntertainContent extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            finish:false,
             pop:false,
             show:false,
             doubanId: null,
@@ -148,9 +149,49 @@ export default class EntertainContent extends Component {
             .catch(function (error) {
                 console.log(error);
             });
+        let hashTag = resultRcmd.preAuthor.length*resultRcmd.preAuthor.length;
+        if (hashTag%7===0) hashTag+=1;
+        let data2={
+          "bookTagList":resultRcmd.bookTagList,
+          "preAuthor":resultRcmd.preAuthor,
+            "movieTagList":resultRcmd.movieTagList,
+            "musicTag":resultRcmd.musicTag,
+            "gameTag":resultRcmd.gameTag,
+            "attitude":attitude,
+            "hashTag":hashTag
+        };
+        const that = this;
+        var config2 = {
+            method: 'post',
+            data:data2,
+            url: 'http://121.36.196.234:8484//douban/crawlRcmd',
+            headers: {
+                withCredentials: true,
+            }
+        };
+        const finalResult = await axios(config2)
+            .then(function (response) {
+                console.log(response.data);
+                message.destroy();
+                message.success({
+                    content: "娱乐推荐完毕！请重新进入页面查看",
+                    style: { marginTop: '40px' },
+                });
+                that.setState({finish:true});
+                return response.data;
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         
     };
     confirm=()=>{
+        message.loading({
+            content: "正在进行娱乐推荐，请稍作等待！",
+            style: { marginTop: '40px' },
+            duration: 0
+        });
         this.getMovies(this.state.doubanId);
         return null;
     };
