@@ -248,8 +248,9 @@ export default class WeiboBodyContent extends Component {
                       showTime
                       format="YYYY/MM/DD HH:mm:ss"
                       onChange={(dates) => {
-                        console.log(dates[0]._d);
-                        this.setState({ startTime: JSON.stringify(dates[0]._d), endTime: JSON.stringify(dates[1]._d) })
+                        var GMT = new Date(dates[0]._d);
+                        var GMT1 = new Date(dates[1]._d);
+                        this.setState({ startTime: GMT.toUTCString(), endTime: GMT1.toUTCString() })
                       }}
                     />
                   </Space>
