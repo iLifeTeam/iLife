@@ -249,13 +249,12 @@ export default class WeiboBodyContent extends Component {
               <div className="box">
                 <div className="box-header">
                   <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}><h3 className="box-title">您的微博数据</h3></Divider>
-                </div>
-                <div className="box-body">
                   <p className="btn btn-danger" onClick={this.crawl}>更新数据</p>
                   <p className="btn btn-primary" onClick={() => { this.setState({ show: !this.state.show }) }}>绑定账户</p>
                   {this.state.show ?
                     <Input id="changeId" style={{ marginTop: 10 }} placeholder={"输入微博用户主页中浏览器地址栏处的用户ID"} suffix={<Button onClick={this.changeId}>确认</Button>} /> : null}
-
+                </div>
+                <div className="box-body">
                   <WeiboInfo activities={activities} />
                 </div>
               </div>
