@@ -2,10 +2,13 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { createBrowserHistory } from 'history'
 import WeiboInfo from '../../weibo/WeiboInfo';
-import { Button, Typography, Row, Col, Divider, message, Input } from 'antd';
+import { Button, Typography, DatePicker, Space, Divider, message, Input } from 'antd';
 import 'antd/dist/antd.css';
+import moment from 'moment';
 
+const { RangePicker } = DatePicker;
 const { Text, Paragraph } = Typography;
+
 export default class WeiboBodyContent extends Component {
   constructor(props) {
     super(props);
@@ -26,21 +29,24 @@ export default class WeiboBodyContent extends Component {
     this.getWeiboId = this.getWeiboId.bind(this);
   }
   componentDidMount() {
+
     const username = localStorage.getItem("username");
 
+    // annotation for debug
+    /*
     if (username === null || username === undefined) {
       const history = createBrowserHistory();
       history.push("/login");
       window.location.reload();
     }
-
+    */
 
     const script = document.createElement("script");
 
     script.src = "../../dist/js/content.js";
     script.async = true;
     document.body.appendChild(script);
-    this.getWeiboId(username);
+    this.getWeiboId(username || "yg");
 
   }
 
@@ -102,50 +108,7 @@ export default class WeiboBodyContent extends Component {
       password: val.target.value,
     })
   }
-  /*
-    async login() {
-      var data;
-      var config = {
-        method: 'post',
-        url: 'http://121.36.196.234:8090/login',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data:
-        {
-          password: this.state.password,
-          username: this.state.username,
-        }
-      };
-      await axios(config)
-        .then(function (response) {
-          console.log(response);
-          data = response;
-        })
-        .catch(function (error) {
-          console.log(error.response);
-          data = error.response;
-        })
-  
-      if (data.data === "success") {
-        var activities_data;
-        await axios.get("http://121.36.196.234:8090/activity/all?username=" + this.state.username)
-          .then(function (response) {
-            console.log(response);
-            activities_data = response.data;
-          })
-        this.setState({
-          activities: activities_data
-        })
-      }
-      else
-        this.setState({
-          picBase64: `data:image/png;base64,${data.data}`,
-          needCaptcha: true,
-        });
-  
-    }
-  */
+
 
   /* start 文案 here <- bad comment style*/
   weiboServer = "http://121.36.196.234:8787"
@@ -202,7 +165,6 @@ export default class WeiboBodyContent extends Component {
         console.log(error);
       });
     if (weiboId) this.setState({ weiboId: wbId })
-
   };
 
   /* end 文案 here*/
@@ -276,6 +238,22 @@ export default class WeiboBodyContent extends Component {
                   >
                     生成报表
                   </Button>
+
+                  <Space direction="vertical" size={12}>
+
+                    <RangePicker
+                      ranges={{
+                        Today: [moment(), moment()],
+                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                      }}
+                      showTime
+                      format="YYYY/MM/DD HH:mm:ss"
+                      onChange={(dates) => {
+                        console.log(dates[0]._d);
+                        this.setState({ startTime: JSON.stringify(dates[0]._d), endTime: JSON.stringify(dates[1]._d) })
+                      }}
+                    />
+                  </Space>
                 </div >
                 <div style={{ marginLeft: "10px" }}>
                   {/*<div className="report-display" style={{border: '5px solid light-yellow', borderRadius: '10px',elevation:10 }}>*/}
