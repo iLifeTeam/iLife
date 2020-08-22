@@ -223,7 +223,7 @@ class CrawlerRcmd:
             # if user like high_rating movie, don't recommend low_rating movie to them
             for i in range(20):
                 movie = movie_list[(hashtag + i) % 20]
-                if high_rate == 1 and int(movie['rate']) <= 7 and not i == 19:
+                if high_rate == 1 and str(movie['rate']) == '7' and not i == 19:
                     continue
                 else:
                     title = movie['title']
