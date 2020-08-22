@@ -122,7 +122,10 @@ class Crawler:
             content = book_soup.find(id="wrapper")
             name = str(content.h1.span.string).strip()
             content = book_soup.find(id="info")
-            author = str(content.a.string).replace('\n', "").strip()
+            if content.a is None:
+                author = '匿名'
+            else:
+                author = str(content.a.string).replace('\n', "").strip()
             for _info in content.children:
                 if not isinstance(_info, Tag):
                     continue
@@ -134,7 +137,7 @@ class Crawler:
             else:
                 ranking = content.string
             content = book_soup.find(class_="rating_sum")
-            if str(content.span.string).strip() == "目前无人评价":
+            if str(content.span.string).strip() == "目前无人评价" or str(content.span.a.string).strip() == "评价人数不足":
                 hot = str(0)
             else:
                 hot = content.span.a.span.string
