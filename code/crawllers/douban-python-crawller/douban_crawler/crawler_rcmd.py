@@ -258,7 +258,7 @@ class CrawlerRcmd:
             # -------------------------------------
             content = movie_soup.find(id="link-report")
             if content.span.span is None:
-                introduction=content.span.string.strip()
+                introduction = content.span.string.strip()
             else:
                 for con in content.span.span.children:
                     if con is None or isinstance(con, Tag):
@@ -266,20 +266,23 @@ class CrawlerRcmd:
                     else:
                         introduction += con.strip()
             content = movie_soup.find(class_='nbgnbg')
-            pic_url = content['href']
-            print(pic_url)
-            pic_page = requests.get(pic_url, headers=self.headers)
-            pic_soup = BeautifulSoup(pic_page.text, 'lxml')
-            content = pic_soup.find(class_=['poster-col3', 'clearfix'])
-            picture = content.li.div.a
-            picture_url = picture['href']
-            print(picture_url)
-            pic_origin_page = requests.get(picture_url, headers=self.headers)
-            pic_origin_soup = BeautifulSoup(pic_origin_page.text, 'lxml')
-            content = pic_origin_soup.find(class_=['update', 'magnifier'])
-            picture = content.a['href']
+            picture = content.img['src']
+            picture = str(picture).replace('s_ratio', 'l_ratio')
+            # pic_url = content['href']
+            # print(pic_url)
+            # pic_page = requests.get(pic_url, headers=self.headers)
+            # pic_soup = BeautifulSoup(pic_page.text, 'lxml')
+            # content = pic_soup.find(class_=['poster-col3', 'clearfix'])
+            # picture = content.li.div.a
+            # picture_url = picture['href']
+            # print(picture_url)
+            # pic_origin_page = requests.get(picture_url, headers=self.headers)
+            # pic_origin_soup = BeautifulSoup(pic_origin_page.text, 'lxml')
+            # content = pic_origin_soup.find(class_=['update', 'magnifier'])
+            # picture = content.a['href']
             print(picture)
-            movie_all_List.append(MovieRcmd(title.strip(), rate.strip(), url, introduction, type.strip(), actors_list, picture))
+            movie_all_List.append(
+                MovieRcmd(title.strip(), rate.strip(), url, introduction, type.strip(), actors_list, picture))
         for movie in movie_all_List:
             lock.acquire()
             queue.put(movie_all_List[0].__dict__, block=False)
