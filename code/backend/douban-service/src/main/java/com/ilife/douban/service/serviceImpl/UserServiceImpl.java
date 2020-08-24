@@ -86,6 +86,9 @@ public class UserServiceImpl implements UserService {
         if (movieStats.getPreType().strip().equals("恐怖")||movieStats.getPreType().strip().equals("惊悚")){
             movieTypeList.add("恐怖");
         }
+        if(movieTypeList.size()==1){
+            movieTypeList.add("恐怖");
+        }
         return movieTypeList;
     }
 
