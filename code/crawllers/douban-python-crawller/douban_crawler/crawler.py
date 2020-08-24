@@ -30,17 +30,12 @@ class Crawler:
             'Cookie': 'bid=ZN1dBm-0o9g; douban-fav-remind=1; ll="118201"; '
                       '_vwo_uuid_v2=D58A7FEF07D6C3A2E2FAB8E378796D6C6|3174d2e6e85c8111e9144960f76088fe; '
                       'gr_user_id=3c33da18-73de-42a4-8cbf-57af0bfa5aba; push_doumail_num=0; __utmv=30149280.13208; '
-                      'douban-profile-remind=1; _ga=GA1.2.193287346.1588984522; viewed="35080696_26284925"; apiKey=; '
-                      '__utmc=30149280; ct=y; __utmz=30149280.1597749914.48.23.utmcsr=google|utmccn=('
-                      'organic)|utmcmd=organic|utmctr=(not%20provided); ap_v=0,'
-                      '6.0; __utma=30149280.193287346.1588984522.1597749914.1597753310.49; user_data={'
-                      '%22area_code%22:%22+86%22%2C%22number%22:%2213559249209%22%2C%22code%22:%221859%22}; '
-                      'vtoken=undefined; _pk_ref.100001.2fad=%5B%22%22%2C%22%22%2C1597756273%2C%22https%3A%2F%2Fmovie'
-                      '.douban.com%2Fphotos%2Fphoto%2F2548750147%2F%22%5D; _pk_ses.100001.2fad=*; '
-                      'last_login_way=account; dbcl2="132088467:kvNkDZUNfgY"; ck=L6VY; __utmt=1; '
-                      '__utmb=30149280.6.10.1597753310; push_noty_num=0; '
-                      '_pk_id.100001.2fad=6e322d9fc83ea1ec.1595382445.7.1597756602.1596004253.; '
-                      'login_start_time=1597756603899 '
+                      'douban-profile-remind=1; _ga=GA1.2.193287346.1588984522; ct=y; push_noty_num=0; '
+                      '__utmc=30149280; viewed="33100481_35092870_35080696_26284925"; ap_v=0,'
+                      '6.0; __utma=30149280.193287346.1588984522.1598229810.1598232894.64; '
+                      '__utmz=30149280.1598232894.64.30.utmcsr=accounts.douban.com|utmccn=('
+                      'referral)|utmcmd=referral|utmcct=/passport/login; __utmt_douban=1; '
+                      '__utmb=30149280.4.10.1598232894; dbcl2="132088467:VE+/tT7pA3A"; ck=LpKQ '
         }
 
     def crawl(self, prefix, postfix):

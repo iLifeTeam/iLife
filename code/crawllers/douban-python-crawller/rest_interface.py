@@ -27,9 +27,9 @@ def login():
         print(command)
         os.system(command)
         return "0"
-    except TypeError:
-        print("TypeError occurs!Please check the crawler status.")
-        return "TypeError"
+    except AttributeError:
+        print("AttributeError occurs!Please check the crawler status.")
+        return "Error"
 
 
 @app.route('/douban/crawlRcmd', methods=['POST'])
@@ -48,9 +48,9 @@ def recommendation():
         tag =main(bookTagList, preAuthor, movieTagList, musicTag, gameTag, attitude,hashTag)
         print(tag)
         return tag
-    except TypeError:
-        print("TypeError")
-        return "TypeError"
+    except AttributeError or TypeError:
+        print("TypeError or AttributeError")
+        return "Error"
 
 
 if __name__ == "__main__":
