@@ -17,7 +17,7 @@ export default class DbBookContent extends Component {
             statsLoading: false,
             statsReady: false,
             stats: null,
-        }
+        };
         //this.login = this.login.bind(this);
         this.getMovies = this.getMovies.bind(this);
         this.crawl = this.crawl.bind(this);
