@@ -251,9 +251,14 @@ class CrawlerRcmd:
                         else:
                             type += (" / " + info.string)
             # -------------------------------------
+            print(url)
             content = movie_soup.find(id="link-report")
+            print(content.span)
             if content.span.span is None:
-                introduction = content.span.string.strip()
+                if not content.span.string is None:
+                    introduction = content.span.string.strip()
+                else:
+                    introduction = content.span.contents[0].strip()
             else:
                 for con in content.span.span.children:
                     if con is None or isinstance(con, Tag):
