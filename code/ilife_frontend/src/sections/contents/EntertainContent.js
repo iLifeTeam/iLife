@@ -291,6 +291,7 @@ export default class EntertainContent extends Component {
                                         <p><input id="changeId"/>
                                             <button onClick={this.changeId}>确认</button>
                                         </p> : null}
+
                                 </div>
                                 {
                                     this.state.finish ?
@@ -323,7 +324,6 @@ export default class EntertainContent extends Component {
                                             </div>
                                         </div> : null
                                 }
-
                             </div>
                         </div>
                     </div>

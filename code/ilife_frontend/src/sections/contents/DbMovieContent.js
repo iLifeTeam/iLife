@@ -248,7 +248,7 @@ export default class DbMovieContent extends Component {
                                     </Button>
                                 </div>
                                 {statsReady ?
-                                    <div className="box-body" style={{fontSize: '22px'}}>
+                                    <div className="box-body" style={{fontSize: '18px'}}>
 
                                         <Paragraph>让一个人置身于变幻无穷的环境中，让他与数不尽或远或近的人物错身而过，让他与整个世界发生关系：这就是电影的意义。——安德烈·塔可夫斯基</Paragraph>
                                         <Paragraph>你是一个爱看电影的人，从你踏入豆瓣的小世界以来，你已经观看了<Text mark
@@ -276,8 +276,7 @@ export default class DbMovieContent extends Component {
                                         你最喜欢的作品语言是<Text mark strong>{stats.preLanguage}</Text>，最喜欢的电影类型是<Text mark
                                                                                                               strong>{stats.preType}</Text>，
                                         喜欢{stats.preType}和{stats.preLanguage}的人，品位都不差哦！
-                                        <Paragraph style={{fontSize: '30px', fontColor: "blue"}}>电影推介：</Paragraph>
-                                        {this.recommend(stats.preType)}
+
                                     </div> : statsLoading ? <div> "加载中..." </div> : null
                                 }
                             </div>
