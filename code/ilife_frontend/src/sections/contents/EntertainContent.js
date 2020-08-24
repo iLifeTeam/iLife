@@ -163,7 +163,7 @@ export default class EntertainContent extends Component {
             .catch(function (error) {
                 console.log(error);
             });
-        let hashTag = resultRcmd.preAuthor.length * resultRcmd.preAuthor.length * this.state.movies.length;
+        let hashTag = resultRcmd.preAuthor.length * resultRcmd.preAuthor.length * this.state.movies.length + this.state.books.length;
         if (hashTag % 7 === 0) hashTag += 1;
         let data2 = {
             "bookTagList": resultRcmd.bookTagList,
