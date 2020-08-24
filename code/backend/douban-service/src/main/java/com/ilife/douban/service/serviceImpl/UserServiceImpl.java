@@ -65,25 +65,25 @@ public class UserServiceImpl implements UserService {
         if(movieStats.getAvgRanking()>=7){
             movieTypeList.add("豆瓣高分");
         }
-        if(movieStats.getPreLanguage().equals("英语")||movieStats.getPreLanguage().equals("德语")
-                ||movieStats.getPreLanguage().equals("法语")||movieStats.getPreLanguage().equals("西班牙语")
-                ||movieStats.getPreLanguage().equals("意大利语")) movieTypeList.add("欧美");
-        if (movieStats.getPreLanguage().equals("日语")){
+        if(movieStats.getPreLanguage().strip().equals("英语")||movieStats.getPreLanguage().strip().equals("德语")
+                ||movieStats.getPreLanguage().strip().equals("法语")||movieStats.getPreLanguage().strip().equals("西班牙语")
+                ||movieStats.getPreLanguage().strip().equals("意大利语")) movieTypeList.add("欧美");
+        if (movieStats.getPreLanguage().strip().equals("日语")){
             movieTypeList.add("日本");
         }
-        if (movieStats.getPreLanguage().equals("韩语")){
+        if (movieStats.getPreLanguage().strip().equals("韩语")){
             movieTypeList.add("韩国");
         }
-        if (movieStats.getPreLanguage().equals("汉语普通话")){
+        if (movieStats.getPreLanguage().strip().equals("汉语普通话")){
             movieTypeList.add("华语");
         }
-        if (movieStats.getPreType().equals("爱情")){
+        if (movieStats.getPreType().strip().equals("爱情")){
             movieTypeList.add("爱情");
         }
-        if (movieStats.getPreType().equals("悬疑")||movieStats.getPreType().equals("犯罪")){
+        if (movieStats.getPreType().strip().equals("悬疑")||movieStats.getPreType().strip().equals("犯罪")){
             movieTypeList.add("悬疑");
         }
-        if (movieStats.getPreType().equals("恐怖")||movieStats.getPreType().equals("惊悚")){
+        if (movieStats.getPreType().strip().equals("恐怖")||movieStats.getPreType().strip().equals("惊悚")){
             movieTypeList.add("恐怖");
         }
         return movieTypeList;
