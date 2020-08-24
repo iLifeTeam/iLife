@@ -249,7 +249,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/MovieStats"
+              "$ref" : "#/definitions/Reference"
             }
           }
         }
@@ -418,6 +418,32 @@
         }
       }
     },
+    "Reference" : {
+      "type" : "object",
+      "properties" : {
+        "bookTagList" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "preAuthor" : {
+          "type" : "string"
+        },
+        "movieTagList" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "musicTag" : {
+          "type" : "string"
+        },
+        "gamgTag" : {
+          "type" : "string"
+        }
+      }
+    },
     "User" : {
       "type" : "object",
       "properties" : {
@@ -427,15 +453,7 @@
         "name" : {
           "type" : "string"
         },
-        "book_READ" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "comment" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "book_WISH" : {
+        "follower" : {
           "type" : "integer",
           "format" : "int32"
         },
@@ -447,11 +465,19 @@
           "type" : "integer",
           "format" : "int32"
         },
-        "following" : {
+        "book_WISH" : {
           "type" : "integer",
           "format" : "int32"
         },
-        "follower" : {
+        "book_READ" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "comment" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "following" : {
           "type" : "integer",
           "format" : "int32"
         }

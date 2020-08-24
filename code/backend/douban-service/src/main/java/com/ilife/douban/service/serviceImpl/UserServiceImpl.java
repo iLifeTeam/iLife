@@ -236,7 +236,17 @@ public class UserServiceImpl implements UserService {
         Book minHotBook = bookList.get(0);
         String preAuthor = bookList.get(0).getAuthor();
         for (Book book : bookList) {
-            float price = parseFloat(book.getPrice().replace('元', ' ').replace("NT$"," ").trim());
+            float price = 0;
+            String priceString = book.getPrice().replace('元', ' ').replace("NT$", " ").replace("USD", "")
+                    .replace("GBP", "").replace("$","").replace("CNY","")
+                    .replace("CAD","").trim();
+            if(priceString.equals("")) priceString = "0";
+            try{
+                price = parseFloat(priceString);
+            }catch (NumberFormatException e){
+                    System.out.println("e");
+                price=0;
+            }
             allPrice += price;
             allRanking += book.getRanking();
             allHot += book.getHot();
