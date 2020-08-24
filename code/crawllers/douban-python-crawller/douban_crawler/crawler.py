@@ -92,117 +92,127 @@ class Crawler:
         mysqlwriter.write_user(user)
 
     def parse_books(self, text):
-        st_books = []
-        soup = BeautifulSoup(text, 'lxml')
-        book_head = soup.find(class_="interest-list")
-        for book in book_head.children:
-            # average sleeping time:
-            rad = random.randint(0, 7)
-            if rad == 3 or rad == 4:
-                time.sleep(1)
-            if rad == 5 or rad == 6:
-                time.sleep(2)
-            if rad == 7:
-                time.sleep(4)
-            if rad == 8:
-                time.sleep(5)
-            price = ""
-            hot = ""
-            if not isinstance(book, Tag):
-                continue
-            book_info = book.find(class_="info")
-            book_url = book_info.h2.a['href']
-            book_page = requests.get(book_url, cookies=self.cookies, headers=self.headers)
-            book_soup = BeautifulSoup(book_page.text, 'lxml')
-            content = book_soup.find(id="wrapper")
-            name = str(content.h1.span.string).strip()
-            content = book_soup.find(id="info")
-            if content.a is None:
-                author = '匿名'
-            else:
-                author = str(content.a.string).replace('\n', "").strip()
-            for _info in content.children:
-                if not isinstance(_info, Tag):
+        try:
+            st_books = []
+            soup = BeautifulSoup(text, 'lxml')
+            book_head = soup.find(class_="interest-list")
+            for book in book_head.children:
+                # average sleeping time:
+                rad = random.randint(0, 7)
+                if rad == 3 or rad == 4:
+                    time.sleep(1)
+                if rad == 5 or rad == 6:
+                    time.sleep(2)
+                if rad == 7:
+                    time.sleep(4)
+                if rad == 8:
+                    time.sleep(5)
+                price = ""
+                hot = ""
+                if not isinstance(book, Tag):
                     continue
-                if _info.string == "定价:":
-                    price = str(_info.next_sibling).replace('\n', "").strip()
-            content = book_soup.find(class_="ll rating_num")
-            if str(content.string).strip() == "":
-                ranking = str(0)
-            else:
-                ranking = content.string
-            content = book_soup.find(class_="rating_sum")
-            if str(content.span.string).strip() == "目前无人评价" or str(content.span.a.string).strip() == "评价人数不足":
-                hot = str(0)
-            else:
-                hot = content.span.a.span.string
-            book = Book(self.id, name, author, price, ranking, hot)
-            st_books.append(book)
-            print(book)
-        mysqlwriter = Mysqlwriter(self.config)
-        mysqlwriter.write_book(st_books)
-
-    def parse_movies(self, text):
-        st_movies = []
-        print(self.id)
-        soup = BeautifulSoup(text, 'lxml')
-        movie_head = soup.find(class_='grid-view')
-        movie_list = movie_head.children
-        for movie in movie_list:
-            rad = random.randint(0, 8)
-            if rad == 3 or rad == 4:
-                time.sleep(1)
-            if rad == 5 or rad == 6:
-                time.sleep(2)
-            if rad == 7:
-                time.sleep(4)
-            if rad == 8:
-                time.sleep(5)
-            if isinstance(movie, NavigableString):
-                continue
-            if isinstance(movie, Tag):
-                # name type language rank
-                _type = ""
-                language = ""
-                # start parsing
-                movie_info = movie.find('ul')
-                movie_url = movie_info.li.a['href']
-                movie_page = requests.get(movie_url, cookies=self.cookies, headers=self.headers)
-                movie_soup = BeautifulSoup(movie_page.text, 'lxml')
-                content = movie_soup.find(id="content")
-                if content is None:
-                    print("first parsing FAILED!")
-                    print(movie_url)
-                    continue
-                name = content.h1.span.string
-                content = movie_soup.find(id="info")
-                info_list = content.contents
-
-                for info in info_list:
-                    if isinstance(info, Tag):
-                        if info.has_attr('property') and not info.has_attr('content'):
-                            if _type == "":
-                                _type += info.string
-                            else:
-                                _type += (" / " + info.string)
-                        if info.string == "语言:":
-                            language = info.next_sibling
-                content = movie_soup.find(class_=["ll rating_num"])
-                if content is None or content.string is None:
+                book_info = book.find(class_="info")
+                book_url = book_info.h2.a['href']
+                book_page = requests.get(book_url, cookies=self.cookies, headers=self.headers)
+                book_soup = BeautifulSoup(book_page.text, 'lxml')
+                content = book_soup.find(id="wrapper")
+                name = str(content.h1.span.string).strip()
+                content = book_soup.find(id="info")
+                if content.a is None:
+                    author = '匿名'
+                else:
+                    author = str(content.a.string).replace('\n', "").strip()
+                for _info in content.children:
+                    if not isinstance(_info, Tag):
+                        continue
+                    if _info.string == "定价:":
+                        price = str(_info.next_sibling).replace('\n', "").strip()
+                content = book_soup.find(class_="ll rating_num")
+                if str(content.string).strip() == "":
                     ranking = str(0)
                 else:
                     ranking = content.string
-                content = movie_soup.find(class_=["rating_sum"])
-                # some people will mark not
-                if str(content.contents[0]).strip() == "尚未上映" or str(content.contents[0]).strip() == "暂无评分":
+                content = book_soup.find(class_="rating_sum")
+                if str(content.span.string).strip() == "目前无人评价" or str(content.span.a.string).strip() == "评价人数不足":
                     hot = str(0)
                 else:
-                    hot = content.a.span.string
-                movie = Movie(self.id, name, _type, language, ranking, hot)
-                st_movies.append(movie)
-                print(movie)
-        mysqlwriter = Mysqlwriter(self.config)
-        mysqlwriter.write_movie(st_movies)
+                    hot = content.span.a.span.string
+                book = Book(self.id, name, author, price, ranking, hot)
+                st_books.append(book)
+                print(book)
+                mysqlwriter = Mysqlwriter(self.config)
+                mysqlwriter.write_book(st_books)
+        except AttributeError:
+            print("AttributeError")
+
+    def parse_movies(self, text):
+        try:
+            st_movies = []
+            print(self.id)
+            soup = BeautifulSoup(text, 'lxml')
+            movie_head = soup.find(class_='grid-view')
+            movie_list = movie_head.children
+            for movie in movie_list:
+                rad = random.randint(0, 8)
+                if rad == 3 or rad == 4:
+                    time.sleep(1)
+                if rad == 5 or rad == 6:
+                    time.sleep(2)
+                if rad == 7:
+                    time.sleep(4)
+                if rad == 8:
+                    time.sleep(5)
+                if isinstance(movie, NavigableString):
+                    continue
+                if isinstance(movie, Tag):
+                    # name type language rank
+                    _type = ""
+                    language = ""
+                    # start parsing
+                    movie_info = movie.find('ul')
+                    movie_url = movie_info.li.a['href']
+                    movie_page = requests.get(movie_url, cookies=self.cookies, headers=self.headers)
+                    movie_soup = BeautifulSoup(movie_page.text, 'lxml')
+                    content = movie_soup.find(id="content")
+                    if content is None:
+                        print("first parsing FAILED!")
+                        print(movie_url)
+                        continue
+                    name = content.h1.span.string
+                    content = movie_soup.find(id="info")
+                    info_list = content.contents
+
+                    for info in info_list:
+                        if isinstance(info, Tag):
+                            if info.has_attr('property') and not info.has_attr('content'):
+                                if _type == "":
+                                    _type += info.string
+                                else:
+                                    _type += (" / " + info.string)
+                            if info.string == "语言:":
+                                language = info.next_sibling
+                    content = movie_soup.find(class_=["ll rating_num"])
+                    if content is None or content.string is None:
+                        ranking = str(0)
+                    else:
+                        ranking = content.string
+                    content = movie_soup.find(class_=["rating_sum"])
+                    # some people will mark not
+
+                    if str(content.contents[0]).strip() == "尚未上映" or str(content.contents[0]).strip() == "暂无评分":
+                        hot = str(0)
+                    else:
+                        if not content.a is None:
+                            hot = content.a.span.string
+                        else:
+                            hot = content.span.string
+                    movie = Movie(self.id, name, _type, language, ranking, hot)
+                    st_movies.append(movie)
+                    print(movie)
+            mysqlwriter = Mysqlwriter(self.config)
+            mysqlwriter.write_movie(st_movies)
+        except AttributeError:
+            print("AttributeError")
 
     def work_movie(self, prefix, postfix, sleepTime):
         time.sleep(sleepTime)
