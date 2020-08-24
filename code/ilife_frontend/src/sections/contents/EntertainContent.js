@@ -297,7 +297,7 @@ export default class EntertainContent extends Component {
                                         <div className="box-body">
                                             < div className="row">
                                                 <div className="col-xs-6">
-                                                    <img id="img" src={this.state.rcmd.picture_movie} alt={"正在加载中..."}
+                                                    <img id="img" src={this.state.rcmd.picture_movie.trim()} alt={"正在加载中..."}
                                                          style={{width: '100%'}}/>
                                                     <Card style={{ width: '95%'}} >
                                                         <p>推荐书籍：</p>
@@ -317,7 +317,7 @@ export default class EntertainContent extends Component {
                                                         <h3 style={{marginTop:'40px'}}>演员列表：{this.state.rcmd.actors_list_movie}</h3>
                                                         <h3 style={{marginTop:'40px'}}>电影简介：{this.state.rcmd.introduction_movie}</h3>
                                                     </Card>
-                                                    <img id="img" src={this.state.rcmd.picture_book} alt={"正在加载中..."}
+                                                    <img id="img" src={this.state.rcmd.picture_book.trim()} alt={"正在加载中..."}
                                                          style={{width: '100%',marginTop:'40px'}}/>
                                                 </div>
                                             </div>
