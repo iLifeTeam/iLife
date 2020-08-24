@@ -10,7 +10,7 @@ export default class WyyBodyContent extends Component {
       account: "",
       password: "",
       histories: null,
-    }
+    };
     this.updateHistory = this.updateHistory.bind(this);
     this.getHistory = this.getHistory.bind(this);
     this.login = this.login.bind(this);

@@ -144,7 +144,8 @@ export default class EntertainContent extends Component {
                 console.log(error);
             });
         let attitude;
-        if (result.negative === 0) attitude = 1;
+        if (result === null || result === undefined) attitude = 0;
+        else if (result.negative === 0) attitude = 1;
         else if (result.positive === 0 || result.positive / result.negative <= 5) attitude = 0;
         else attitude = 1;
         var configRcmd = {
