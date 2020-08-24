@@ -174,6 +174,7 @@ export default class EntertainContent extends Component {
             "attitude": attitude,
             "hashTag": hashTag
         };
+        console.log(data2)
         const that = this;
         var config2 = {
             method: 'post',
