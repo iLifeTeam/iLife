@@ -5,8 +5,7 @@ import json
 from bs4 import BeautifulSoup, NavigableString, Tag
 from absl import app
 import random
-from douban_crawler import config_parser
-from const.const import BASE_URL, MOVIE_URL, BOOK_URL
+from const.altRepo import movie1,movie2,book1
 from entity.Movie import Movie
 from entity.Book import Book
 from entity.User import User
@@ -196,163 +195,170 @@ class CrawlerRcmd:
         mysqlwriter.write_movie(st_movies)
 
     def work_movie(self, movieTagList, attitude, queue, hashtag, lock):
-        movie_all_List = []
-        high_rate = hot = 0
-        picture = movie_soup = rate = title = url = introduction = type = actors_list = content = ""
-        startNum = (hashtag % 7) * 20
-        for tag in movieTagList:
-            if tag == "豆瓣高分":
-                high_rate = 1
-                continue
-            if tag == "冷门佳片":
-                hot = 0
-                continue
-            if tag == "热门":
-                hot = 1
-                continue
-            movie_url = 'https://movie.douban.com/j/search_subjects?type=movie&tag=' + str(
-                tag) + '&sort=recommend&page_limit=20&page_start=' + str(startNum)
-            movie_page = requests.get(movie_url, headers=self.headers)
-            movie_list = movie_page.json()['subjects']
-            movie = movie_list[hashtag % 20]
-            # if user like high_rating movie, don't recommend low_rating movie to them
-            for i in range(20):
-                movie = movie_list[(hashtag + i) % 20]
-                if high_rate == 1 and str(movie['rate']) == '7' and not i == 19:
+        try:
+            movie_all_List = []
+            high_rate = hot = 0
+            picture = movie_soup = rate = title = url = introduction = type = actors_list = content = ""
+            startNum = (hashtag % 7) * 20
+            for tag in movieTagList:
+                if tag == "豆瓣高分":
+                    high_rate = 1
                     continue
-                else:
-                    title = movie['title']
-                    url = movie['url']
-                    rate = movie['rate']
-                    movie_page = requests.get(url, headers=self.headers)
-                    movie_soup = BeautifulSoup(movie_page.text, 'lxml')
-                    content = movie_soup.find(id="content")
-                    if content is None and not i == 19:
+                if tag == "冷门佳片":
+                    hot = 0
+                    continue
+                if tag == "热门":
+                    hot = 1
+                    continue
+                movie_url = 'https://movie.douban.com/j/search_subjects?type=movie&tag=' + str(
+                    tag) + '&sort=recommend&page_limit=20&page_start=' + str(startNum)
+                movie_page = requests.get(movie_url, headers=self.headers)
+                movie_list = movie_page.json()['subjects']
+                movie = movie_list[hashtag % 20]
+                # if user like high_rating movie, don't recommend low_rating movie to them
+                for i in range(20):
+                    movie = movie_list[(hashtag + i) % 20]
+                    if high_rate == 1 and str(movie['rate']) == '7' and not i == 19:
                         continue
                     else:
-                        break
-            content = content.find(id="info")
-            actors = content.find(class_="actor")
-            actors = actors.find(class_="attrs")
-            for actor in actors.contents:
-                if isinstance(actor, NavigableString) or actor is None:
-                    continue
-                actors_list += actor.string.strip()
-                actors_list += '/'
-            # ------------------------------------
-            content = movie_soup.find(id="info")
-            info_list = content.contents
-
-            for info in info_list:
-                if isinstance(info, Tag):
-                    if info.has_attr('property') and not info.has_attr('content'):
-                        if type == "":
-                            type += info.string
+                        title = movie['title']
+                        url = movie['url']
+                        rate = movie['rate']
+                        movie_page = requests.get(url, headers=self.headers)
+                        movie_soup = BeautifulSoup(movie_page.text, 'lxml')
+                        content = movie_soup.find(id="content")
+                        if content is None and not i == 19:
+                            continue
                         else:
-                            type += (" / " + info.string)
-            # -------------------------------------
-            print(url)
-            content = movie_soup.find(id="link-report")
-            print(content.span)
-            if content.span.span is None:
-                if not content.span.string is None:
-                    introduction = content.span.string.strip()
-                else:
-                    introduction = content.span.contents[0].strip()
-            else:
-                for con in content.span.span.children:
-                    if con is None or isinstance(con, Tag):
+                            break
+                content = content.find(id="info")
+                actors = content.find(class_="actor")
+                actors = actors.find(class_="attrs")
+                for actor in actors.contents:
+                    if isinstance(actor, NavigableString) or actor is None:
                         continue
+                    actors_list += actor.string.strip()
+                    actors_list += '/'
+                # ------------------------------------
+                content = movie_soup.find(id="info")
+                info_list = content.contents
+                for info in info_list:
+                    if isinstance(info, Tag):
+                        if info.has_attr('property') and not info.has_attr('content'):
+                            if type == "":
+                                type += info.string
+                            else:
+                                type += (" / " + info.string)
+                # -------------------------------------
+                print(url)
+                content = movie_soup.find(id="link-report")
+                print(content.span)
+                if content.span.span is None:
+                    if not content.span.string is None:
+                        introduction = content.span.string.strip()
                     else:
-                        introduction += con.strip()
-            content = movie_soup.find(class_='nbgnbg')
-            picture = content.img['src']
-            picture = str(picture).replace('s_ratio', 'l_ratio')
-            # pic_url = content['href']
-            # print(pic_url)
-            # pic_page = requests.get(pic_url, headers=self.headers)
-            # pic_soup = BeautifulSoup(pic_page.text, 'lxml')
-            # content = pic_soup.find(class_=['poster-col3', 'clearfix'])
-            # picture = content.li.div.a
-            # picture_url = picture['href']
-            # print(picture_url)
-            # pic_origin_page = requests.get(picture_url, headers=self.headers)
-            # pic_origin_soup = BeautifulSoup(pic_origin_page.text, 'lxml')
-            # content = pic_origin_soup.find(class_=['update', 'magnifier'])
-            # picture = content.a['href']
-            print(picture)
-            movie_all_List.append(
-                MovieRcmd(title.strip(), rate.strip(), url, introduction, type.strip(), actors_list, picture))
-        for movie in movie_all_List:
-            lock.acquire()
-            queue.put(movie_all_List[0].__dict__, block=False)
-            lock.release()
-        print("finish movie rcmd")
-        return 1
+                        introduction = content.span.contents[0].strip()
+                else:
+                    for con in content.span.span.children:
+                        if con is None or isinstance(con, Tag):
+                            continue
+                        else:
+                            introduction += con.strip()
+                content = movie_soup.find(class_='nbgnbg')
+                picture = content.img['src']
+                picture = str(picture).replace('s_ratio', 'l_ratio')
+                # pic_url = content['href']
+                # print(pic_url)
+                # pic_page = requests.get(pic_url, headers=self.headers)
+                # pic_soup = BeautifulSoup(pic_page.text, 'lxml')
+                # content = pic_soup.find(class_=['poster-col3', 'clearfix'])
+                # picture = content.li.div.a
+                # picture_url = picture['href']
+                # print(picture_url)
+                # pic_origin_page = requests.get(picture_url, headers=self.headers)
+                # pic_origin_soup = BeautifulSoup(pic_origin_page.text, 'lxml')
+                # content = pic_origin_soup.find(class_=['update', 'magnifier'])
+                # picture = content.a['href']
+                print(picture)
+                movie_all_List.append(
+                    MovieRcmd(title.strip(), rate.strip(), url, introduction, type.strip(), actors_list, picture))
+            for movie in movie_all_List:
+                lock.acquire()
+                queue.put(movie_all_List[0].__dict__, block=False)
+                lock.release()
+            print("finish movie rcmd")
+            return 1
+        except AttributeError:
+            ram = random.randint(0,3)
+            if ram <=1:
+                queue.put(movie1.__dict__)
+            else:
+                queue.put(movie2.__dict__)
 
     def work_book(self, bookTagList, preAuthor, attitude, queue, hashtag, lock):
-
-        book_all_List = []
-        tag_list = ['推理', '随笔', '理财', '科普', '武侠', '历史', '小说']
-        high_rate = hot = 0
-        book_url2 = ""
-        picture = movie_soup = rate = title = url = introduction = author = price = content = ""
-        startNum = (hashtag % 7) * 20
-        for tag in bookTagList:
-            if tag == "新书速递":
-                hot = 0
-                continue
-            if tag == "畅销图书":
-                hot = 1
-                continue
-        book_url2 = 'https://book.douban.com/tag/' + tag_list[hashtag % 7] + '?start=' + str(startNum)
-        pic_page = requests.get(book_url2, headers=self.headers)
-        pic_soup = BeautifulSoup(pic_page.text, 'lxml')
-        content = pic_soup.find(class_='subject-list')
         try:
-            content = content.find_all('li')
+            book_all_List = []
+            tag_list = ['推理', '随笔', '理财', '科普', '武侠', '历史', '小说']
+            high_rate = hot = 0
+            book_url2 = ""
+            picture = movie_soup = rate = title = url = introduction = author = price = content = ""
+            startNum = (hashtag % 7) * 20
+            for tag in bookTagList:
+                if tag == "新书速递":
+                    hot = 0
+                    continue
+                if tag == "畅销图书":
+                    hot = 1
+                    continue
+            book_url2 = 'https://book.douban.com/tag/' + tag_list[hashtag % 7] + '?start=' + str(startNum)
+            pic_page = requests.get(book_url2, headers=self.headers)
+            pic_soup = BeautifulSoup(pic_page.text, 'lxml')
+            content = pic_soup.find(class_='subject-list')
+            try:
+                content = content.find_all('li')
 
+            except AttributeError:
+                print(book_url2)
+            book_url = content[hashtag % 7].find('h2').a
+            title = book_url['title']
+            book_url = book_url['href']
+            url = book_url
+            pic_page = requests.get(book_url, headers=self.headers)
+            book_soup = BeautifulSoup(pic_page.text, 'lxml')
+            content = book_soup.find(id="info")
+            author = str(content.a.string).replace('\n', "").strip()
+            for _info in content.children:
+                if not isinstance(_info, Tag):
+                    continue
+                if _info.string == "定价:":
+                    price = str(_info.next_sibling).replace('\n', "").strip()
+            content = book_soup.find(class_="ll rating_num")
+            if str(content.string).strip() == "":
+                rate = str(0)
+            else:
+                rate = content.string.strip()
+
+            content = book_soup.find(class_="rating_sum")
+            if str(content.span.string).strip() == "目前无人评价":
+                hot = str(0)
+            else:
+                hot = content.span.a.span.string.strip()
+            content = book_soup.find(id='link-report')
+            introduction_tag = content.find(class_='intro')
+            for p in introduction_tag.contents:
+                if p is None or str(p) == "<br/>":
+                    continue
+                introduction += p.string
+            content = book_soup.find(id='mainpic')
+            picture = content.a['href']
+            bookRcmd = BookRcmd(title, rate, url, introduction, author, price, picture, hot)
+            book_all_List.append(bookRcmd)
+            lock.acquire()
+            queue.put(bookRcmd.__dict__)
+            lock.release()
+            print("finish book rcmd")
         except AttributeError:
-            print(book_url2)
-        book_url = content[hashtag % 7].find('h2').a
-        title = book_url['title']
-        book_url = book_url['href']
-        url = book_url
-        pic_page = requests.get(book_url, headers=self.headers)
-        book_soup = BeautifulSoup(pic_page.text, 'lxml')
-        content = book_soup.find(id="info")
-        author = str(content.a.string).replace('\n', "").strip()
-        for _info in content.children:
-            if not isinstance(_info, Tag):
-                continue
-            if _info.string == "定价:":
-                price = str(_info.next_sibling).replace('\n', "").strip()
-        content = book_soup.find(class_="ll rating_num")
-        if str(content.string).strip() == "":
-            rate = str(0)
-        else:
-            rate = content.string.strip()
-
-        content = book_soup.find(class_="rating_sum")
-        if str(content.span.string).strip() == "目前无人评价":
-            hot = str(0)
-        else:
-            hot = content.span.a.span.string.strip()
-        content = book_soup.find(id='link-report')
-        introduction_tag = content.find(class_='intro')
-        for p in introduction_tag.contents:
-            if p is None or str(p) == "<br/>":
-                continue
-            introduction += p.string
-
-        content = book_soup.find(id='mainpic')
-        picture = content.a['href']
-        bookRcmd = BookRcmd(title, rate, url, introduction, author, price, picture, hot)
-        book_all_List.append(bookRcmd)
-        lock.acquire()
-        queue.put(bookRcmd.__dict__)
-        lock.release()
-        print("finish book rcmd")
+            queue.put(book1)
         return 1
 
     def work_music(self, musicTag, queue, hashtag, lock):
