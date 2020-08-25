@@ -262,7 +262,15 @@ export default class EntertainContent extends Component {
         if (doubanId) this.setState({doubanId: dbId})
 
     };
-
+    changeSrcMovie = () =>{
+      let movie = document.getElementById('img');
+      movie.setAttribute('src','https://img1.doubanio.com/view/photo/l_ratio_poster/public/p2074715729.webp');
+    };
+    changeSrcBook = () =>{
+        let book = document.getElementById('img2');
+        console.log("test1");
+        book.setAttribute('src',require('../../pic/backBook1.jpg'))
+    };
     render() {
         const {activities, stats, statsReady, statsLoading, userId} = this.state;
         return (
@@ -299,8 +307,9 @@ export default class EntertainContent extends Component {
                                         <div className="box-body">
                                             < div className="row">
                                                 <div className="col-xs-6">
-                                                    <img id="img" src={this.state.rcmd.picture_movie.trim()} alt={"正在加载中..."}
-                                                         style={{width: '100%'}}/>
+                                                    <img id="img" src={this.state.rcmd.picture_movie.trim()} alt={"https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2074715729.webp"}
+                                                         style={{width: '100%'}}
+                                                         onError={this.changeSrcMovie}  />
                                                     <Card style={{ width: '95%'}} >
                                                         <p>推荐书籍：</p>
                                                         <h1 style={{marginTop:'40px',fontWeight:'bold',color:'blue'}}>{this.state.rcmd.title_book}</h1>
@@ -319,8 +328,9 @@ export default class EntertainContent extends Component {
                                                         <h3 style={{marginTop:'40px'}}>演员列表：{this.state.rcmd.actors_list_movie}</h3>
                                                         <h3 style={{marginTop:'40px'}}>电影简介：{this.state.rcmd.introduction_movie}</h3>
                                                     </Card>
-                                                    <img id="img" src={this.state.rcmd.picture_book.trim()} alt={"正在加载中..."}
-                                                         style={{width: '100%',marginTop:'40px'}}/>
+                                                    <img id="img2" src={this.state.rcmd.picture_book.trim()} alt={"正在加载中..."}
+                                                         style={{width: '100%',marginTop:'40px'}}
+                                                         onError={this.changeSrcBook}/>
                                                 </div>
                                             </div>
                                         </div> : null
