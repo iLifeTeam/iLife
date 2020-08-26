@@ -195,7 +195,7 @@ paths:
         200:
           description: "successful operation"
           schema:
-            $ref: "#/definitions/MovieStats"
+            $ref: "#/definitions/Reference"
 definitions:
   Book:
     type: "object"
@@ -310,6 +310,23 @@ definitions:
         type: "string"
       preType:
         type: "string"
+  Reference:
+    type: "object"
+    properties:
+      bookTagList:
+        type: "array"
+        items:
+          type: "string"
+      preAuthor:
+        type: "string"
+      movieTagList:
+        type: "array"
+        items:
+          type: "string"
+      musicTag:
+        type: "string"
+      gamgTag:
+        type: "string"
   User:
     type: "object"
     properties:
@@ -320,13 +337,13 @@ definitions:
       book_READ:
         type: "integer"
         format: "int32"
-      comment:
+      movie_WISH:
         type: "integer"
         format: "int32"
       book_WISH:
         type: "integer"
         format: "int32"
-      movie_WISH:
+      comment:
         type: "integer"
         format: "int32"
       movie_WATCHED:

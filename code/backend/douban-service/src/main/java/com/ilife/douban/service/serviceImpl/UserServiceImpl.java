@@ -65,25 +65,28 @@ public class UserServiceImpl implements UserService {
         if(movieStats.getAvgRanking()>=7){
             movieTypeList.add("豆瓣高分");
         }
-        if(movieStats.getPreLanguage().equals("英语")||movieStats.getPreLanguage().equals("德语")
-                ||movieStats.getPreLanguage().equals("法语")||movieStats.getPreLanguage().equals("西班牙语")
-                ||movieStats.getPreLanguage().equals("意大利语")) movieTypeList.add("欧美");
-        if (movieStats.getPreLanguage().equals("日语")){
+        if(movieStats.getPreLanguage().strip().equals("英语")||movieStats.getPreLanguage().strip().equals("德语")
+                ||movieStats.getPreLanguage().strip().equals("法语")||movieStats.getPreLanguage().strip().equals("西班牙语")
+                ||movieStats.getPreLanguage().strip().equals("意大利语")) movieTypeList.add("欧美");
+        if (movieStats.getPreLanguage().strip().equals("日语")){
             movieTypeList.add("日本");
         }
-        if (movieStats.getPreLanguage().equals("韩语")){
+        if (movieStats.getPreLanguage().strip().equals("韩语")){
             movieTypeList.add("韩国");
         }
-        if (movieStats.getPreLanguage().equals("汉语普通话")){
+        if (movieStats.getPreLanguage().strip().equals("汉语普通话")){
             movieTypeList.add("华语");
         }
-        if (movieStats.getPreType().equals("爱情")){
+        if (movieStats.getPreType().strip().equals("爱情")){
             movieTypeList.add("爱情");
         }
-        if (movieStats.getPreType().equals("悬疑")||movieStats.getPreType().equals("犯罪")){
+        if (movieStats.getPreType().strip().equals("悬疑")||movieStats.getPreType().strip().equals("犯罪")){
             movieTypeList.add("悬疑");
         }
-        if (movieStats.getPreType().equals("恐怖")||movieStats.getPreType().equals("惊悚")){
+        if (movieStats.getPreType().strip().equals("恐怖")||movieStats.getPreType().strip().equals("惊悚")){
+            movieTypeList.add("恐怖");
+        }
+        if(movieTypeList.size()==1){
             movieTypeList.add("恐怖");
         }
         return movieTypeList;
@@ -236,7 +239,17 @@ public class UserServiceImpl implements UserService {
         Book minHotBook = bookList.get(0);
         String preAuthor = bookList.get(0).getAuthor();
         for (Book book : bookList) {
-            float price = parseFloat(book.getPrice().replace('元', ' ').replace("NT$"," ").trim());
+            float price = 0;
+            String priceString = book.getPrice().replace('元', ' ').replace("NT$", " ").replace("USD", "")
+                    .replace("GBP", "").replace("$","").replace("CNY","")
+                    .replace("CAD","").trim();
+            if(priceString.equals("")) priceString = "0";
+            try{
+                price = parseFloat(priceString);
+            }catch (NumberFormatException e){
+                    System.out.println("e");
+                price=0;
+            }
             allPrice += price;
             allRanking += book.getRanking();
             allHot += book.getHot();
