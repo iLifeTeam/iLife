@@ -18,20 +18,20 @@ def after_request(response):
     return response
 
 
-@app.route('/weibo/crawlWeibo', methods=['GET'])
+@app.route('/weibo/crawlRcmd', methods=['GET'])
 def login():
     userId = request.args.get('userId')
     avgUp = request.args.get('avgUp')
     avgCm = request.args.get('avgCm')
     avgWb = request.args.get('avgWb')
     print(userId, avgUp, avgCm, avgWb)
-    crawler = crawl.Crawl(userId, startDate, endDate)
+    crawler = crawl.Crawl(userId, 'now', 'now')
     crawler.read_json()
     crawler.crawl()
     return "1"
 
 
-@app.route('/weibo/crawlRcmd', methods=['GET'])
+@app.route('/weibo/crawlWeibo', methods=['GET'])
 def rcmd():
     userId = request.args.get('userId')
     startDate = request.args.get('startDate')
