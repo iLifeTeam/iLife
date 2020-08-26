@@ -1,8 +1,6 @@
 import copy
 import sys
 import traceback
-import requests
-from bs4 import BeautifulSoup
 
 from .writer import Writer
 
