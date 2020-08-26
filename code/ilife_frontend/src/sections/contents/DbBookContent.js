@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { createBrowserHistory } from 'history'
 import DoubanBooks from '../../douban/DoubanBooks';
-import {Button, Divider, message, Popconfirm, Typography} from 'antd';
+import {Button, Divider, message, Popconfirm, Typography,Input} from 'antd';
 import 'antd/dist/antd.css';
 const { Text, Paragraph } = Typography;
 const text = <div>
@@ -213,7 +213,7 @@ export default class DbBookContent extends Component {
                                     </Popconfirm>
                                     <p className="btn btn-primary" onClick={()=>{this.setState({show:!this.state.show})}}>绑定账户</p>
                                     {this.state.show?
-                                        <p><input id="changeId"/><button onClick={this.changeId}>确认</button></p>:null}
+                                        <Input id="changeId" style={{ marginTop: 10 }} placeholder={"输入豆瓣用户主页中浏览器地址栏处的用户ID"} suffix={<Button onClick={this.changeId}>确认</Button>} /> : null}
                                 </div>
                                 <div className="box-body">
                                     {<DoubanBooks activities={activities} />}
