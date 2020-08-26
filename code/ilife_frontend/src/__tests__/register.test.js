@@ -8,7 +8,7 @@ import RegisterPage from '../pages/RegisterPage';
 import MockAdapter from "axios-mock-adapter";
 import axios from 'axios'
 const mock = new MockAdapter(axios);
-mock.onPost("http://18.162.168.229:8686/login").reply((config) => {
+mock.onPost("http://18.166.111.161:8686/login").reply((config) => {
   return new Promise(function (resolve, reject) {
     resolve([200, { data: "iLife login success" }]);
   }).then(() => {

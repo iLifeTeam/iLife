@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
+import axios from 'axios'
 
 export default class Account extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: localStorage.getItem("username"),
+      username: window.sessionStorage.getItem("username"),
     }
   }
 
   logoff() {
     const history = createBrowserHistory();
-    localStorage.clear();
+    window.sessionStorage.clear();
 
     var config = {
       method: 'post',
