@@ -274,7 +274,6 @@ export default class EntertainContent extends Component {
     render() {
         const {activities, stats, statsReady, statsLoading, userId} = this.state;
         return (
-
             <div className="content-wrapper">
                 <section className="content">
                     < div className="row">

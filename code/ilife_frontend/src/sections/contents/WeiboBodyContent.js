@@ -2,13 +2,30 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { createBrowserHistory } from 'history'
 import WeiboInfo from '../../weibo/WeiboInfo';
-import { Button, Typography, DatePicker, Space, Divider, message, Input } from 'antd';
+import {Button, Typography, DatePicker, Space, Divider, message, Input, Popconfirm} from 'antd';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 
 const { RangePicker } = DatePicker;
 const { Text, Paragraph } = Typography;
-
+const text = <div>
+  <Paragraph>所有数据和图片均来自网上公开资料，请放心食用。</Paragraph>
+  <Paragraph>数据更新将会花费一段时间，请耐心等待~</Paragraph>
+  希望获取什么时间段的数据？<RangePicker
+    ranges={{
+      Today: [moment(), moment()],
+      'This Month': [moment().startOf('month'), moment().endOf('month')],
+    }}
+    format="YYYY-MM-DD"
+    onChange={(dates) => {
+      console.log(dates);
+      // let GMT = new (dates[0]._d);
+      // let GMT1 = new Date(dates[1]._d);
+      //this.setState({ startDate: GMT.toUTCString(), endDate: GMT1.toUTCString() })
+    }}
+    style={{marginLeft:'20px'}}
+/>
+</div>;
 export default class WeiboBodyContent extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +38,8 @@ export default class WeiboBodyContent extends Component {
       /* hardcode parameter, need to be passed in */
       startTime: "Mon May 28 09:51:52 GMT 2019",
       endTime: "Mon July 29 09:51:52 GMT 2020",
+      startDate:"2020-07-01",
+      endDate:"now",
       stats: null,
       statsReady: false,
       statsLoading: false,
@@ -210,7 +229,16 @@ export default class WeiboBodyContent extends Component {
               <div className="box">
                 <div className="box-header">
                   <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}><h3 className="box-title">您的微博数据</h3></Divider>
-                  <p className="btn btn-danger" onClick={this.crawl}>更新数据</p>
+                  <Popconfirm
+                      placement="bottomLeft"
+                      title={text}
+                      onConfirm={this.crawl}
+                      okText="更新数据"
+                      cancelText="再想想"
+                  >
+                    <p className="btn btn-danger" >更新数据</p>
+                  </Popconfirm>
+
                   <p className="btn btn-primary" onClick={() => { this.setState({ show: !this.state.show }) }}>绑定账户</p>
                   {this.state.show ?
                     <Input id="changeId" style={{ marginTop: 10 }} placeholder={"输入微博用户主页中浏览器地址栏处的用户ID"} suffix={<Button onClick={this.changeId}>确认</Button>} /> : null}

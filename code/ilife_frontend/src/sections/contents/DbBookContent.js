@@ -2,9 +2,14 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { createBrowserHistory } from 'history'
 import DoubanBooks from '../../douban/DoubanBooks';
-import {Button, Divider, message, Typography} from 'antd';
+import {Button, Divider, message, Popconfirm, Typography} from 'antd';
 import 'antd/dist/antd.css';
 const { Text, Paragraph } = Typography;
+const text = <div>
+    <Paragraph>所有数据和图片均来自网上公开资料，请放心食用。</Paragraph>
+    <Paragraph>数据更新将会花费一段时间，请耐心等待~</Paragraph>
+    希望获取几页数据? <input id="bookInput" />
+</div>;
 export default class DbBookContent extends Component {
     constructor(props) {
         super(props);
@@ -94,7 +99,12 @@ export default class DbBookContent extends Component {
     }
 
 
-    crawl() {
+    crawl=()=> {
+        let bookInput = document.getElementById('bookInput');
+        console.log(bookInput.value);
+        if(bookInput.value===null||bookInput.value ===""||bookInput.value===0){
+            bookInput.value = 2;
+        }
         message.loading({
             content:"正在更新图书数据，请稍作等待！",
             style:{marginTop:'40px'},
@@ -102,7 +112,7 @@ export default class DbBookContent extends Component {
         });
         var config = {
             method: 'get',
-            url: 'http://121.36.196.234:8484/douban/crawlMovie?userId=' + this.state.doubanId + '&limit=2&type=book',
+            url: 'http://121.36.196.234:8484/douban/crawlMovie?userId=' + this.state.doubanId + '&limit='+bookInput.value+'&type=book',
             headers: {
                 withCredentials: true,
             }
@@ -192,7 +202,15 @@ export default class DbBookContent extends Component {
                             <div className="box">
                                 <div className="box-header">
                                     <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}> <h3 className="box-title">用户{this.state.doubanId}的豆瓣图书数据</h3></Divider>
-                                    <p className="btn btn-danger" onClick={this.crawl}>更新数据</p>
+                                    <Popconfirm
+                                        placement="bottomLeft"
+                                        title={text}
+                                        onConfirm={this.crawl}
+                                        okText="更新数据"
+                                        cancelText="再想想"
+                                    >
+                                        <p className="btn btn-danger" >更新数据</p>
+                                    </Popconfirm>
                                     <p className="btn btn-primary" onClick={()=>{this.setState({show:!this.state.show})}}>绑定账户</p>
                                     {this.state.show?
                                         <p><input id="changeId"/><button onClick={this.changeId}>确认</button></p>:null}
