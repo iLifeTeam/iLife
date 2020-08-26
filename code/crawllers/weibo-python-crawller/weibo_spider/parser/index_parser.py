@@ -13,6 +13,7 @@ class IndexParser(Parser):
         self.selector = handle_html(self.cookie, self.url)
 
     def _get_user_id(self):
+        print(self.selector)
         """获取用户id，使用者输入的user_id不一定是正确的，可能是个性域名等，需要获取真正的user_id"""
         user_id = self.user_uri
         url_list = self.selector.xpath("//div[@class='u']//a")
@@ -32,7 +33,9 @@ class IndexParser(Parser):
             self.user = InfoParser(self.cookie,
                                    user_id).extract_user_info()  # 获取用户信息
             self.user.id = user_id
-
+            user_url = self.selector.xpath("//img[@class='por']/attribute::src")
+            print(user_url[0])
+            self.user.avatar = user_url[0]
             user_info = self.selector.xpath("//div[@class='tip2']/*/text()")
             self.user.weibo_num = int(user_info[0][3:-1])
             self.user.following = int(user_info[1][3:-1])

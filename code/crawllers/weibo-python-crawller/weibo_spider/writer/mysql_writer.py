@@ -6,9 +6,14 @@ from .writer import Writer
 
 
 class MySqlWriter(Writer):
-    def __init__(self, mysql_config):
+    def __init__(self, mysql_config, userId, cookies):
+        self.headers = {
+            'User-Agent': 'PostmanRuntime/7.26.1',
+            'Connection': 'keep-alive'
+        }
         self.mysql_config = mysql_config
-
+        self.userId = userId
+        self.cookies = cookies
         # 创建'weibo'数据库
         create_database = """CREATE DATABASE IF NOT EXISTS weibo DEFAULT
                             CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"""
@@ -42,9 +47,18 @@ class MySqlWriter(Writer):
         connection = pymysql.connect(**self.mysql_config)
         self._mysql_create(connection, sql)
 
+    def crawlPic(self):
+        print(self.userId[0])
+        # url = 'https://weibo.com/u/' + str(self.userId[0])+'?is_hot=1'
+        # home_page = requests.request('GET', url, cookies=self.cookies, headers=self.headers)
+        # book_soup = BeautifulSoup(home_page.text, 'lxml')
+        # print(book_soup.prettify())
+        return self.userId
+
     def _mysql_insert(self, table, data_list):
         """向MySQL表插入或更新数据"""
         import pymysql
+        picUrl = self.crawlPic()
         if len(data_list) > 0:
             # We use this to filter out unset values.
             data_list = [{k: v

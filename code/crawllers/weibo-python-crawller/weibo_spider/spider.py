@@ -43,9 +43,11 @@ class Spider:
         self.video_download = config[
             'video_download']  # 取值范围为0、1,程序默认为0,代表不下载微博视频,1代表下载
         self.cookie = {'Cookie': config['cookie']}
+        self.cookie_value = config['cookie']
         self.mysql_config = config.get('mysql_config')  # MySQL数据库连接配置，可以不填
 
         self.user_config_file_path = ''
+        self.userId = config['user_id_list']
         user_id_list = config['user_id_list']
         if FLAGS.user_id_list:
             user_id_list = FLAGS.user_id_list
@@ -117,7 +119,7 @@ class Spider:
                     weibos, self.weibo_id_list = PageParser(
                         self.cookie,
                         self.user_config, page, self.filter).get_one_page(
-                            self.weibo_id_list)  # 获取第page页的全部微博
+                        self.weibo_id_list)  # 获取第page页的全部微博
                     # print(u'{}已获取{}({})的第{}页微博{}'.format(
                     #     '-' * 30,
                     #     self.user.nickname,
@@ -185,7 +187,7 @@ class Spider:
         if 'mysql' in self.write_mode:
             from .writer import MySqlWriter
 
-            self.writers.append(MySqlWriter(self.mysql_config))
+            self.writers.append(MySqlWriter(self.mysql_config, self.userId,self.cookie))
         if 'mongo' in self.write_mode:
             from .writer import MongoWriter
 
