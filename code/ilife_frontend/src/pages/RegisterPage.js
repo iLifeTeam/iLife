@@ -123,7 +123,7 @@ export default class RegisterPage extends Component {
       });
 
     /*
-  await axios.get("http://18.166.111.161:8686/auth/getByAccount?account=" + localStorage.getItem("username"),
+  await axios.get("http://18.166.111.161:8686/auth/getByAccount?account=" + window.sessionStorage.getItem("username"),
     { headers: { withCredentials: true } })
     .then(function (response) {
       console.log(JSON.stringify(response.data));

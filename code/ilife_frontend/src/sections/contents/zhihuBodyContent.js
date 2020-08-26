@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import {Button, Radio, Statistic, Row, Col} from 'antd';
+import { Button, Radio, Statistic, Row, Col } from 'antd';
 import ZhihuActivity from '../../zhihu/ZhihuActivity';
 import 'antd/dist/antd.css';
 import { createBrowserHistory } from 'history'
-import { LikeOutlined,ZhihuOutlined, HeartOutlined } from '@ant-design/icons';
+import { LikeOutlined, ZhihuOutlined, HeartOutlined } from '@ant-design/icons';
 export default class zhihuBodyContent extends Component {
   constructor(props) {
     super(props);
@@ -18,19 +18,19 @@ export default class zhihuBodyContent extends Component {
       activities: [],
       indeterminate: true,
       checkAll: false,
-      wordCloudReady:false,
+      wordCloudReady: false,
       radioValue: 1,
       wordCloud: "",
-      wordCloudLoading:false,
-      uid:"default",
+      wordCloudLoading: false,
+      uid: "default",
       userinfo: null,
-      account:""
+      account: ""
     }
     this.login = this.login.bind(this);
     this.loginTwice = this.loginTwice.bind(this);
   }
   componentDidMount() {
-    const username = localStorage.getItem("username");
+    const username = window.sessionStorage.getItem("username");
     if (username === null || username === undefined) {
       const history = createBrowserHistory();
       history.push("/login");
@@ -54,20 +54,20 @@ export default class zhihuBodyContent extends Component {
       }
     };
     axios(config)
-        .then(response => {
-          console.log(response.data)
-          const username = response.data.zhid == "0" ? "" : response.data.zhid
-          this.setState({
-            username :username,
-            uid: response.data.id
-          })
-          if (username != ""){
-            this.tryLogin(username)
-            this.fetchZhihuUser(username)
-          }
+      .then(response => {
+        console.log(response.data)
+        const username = response.data.zhid == "0" ? "" : response.data.zhid
+        this.setState({
+          username: username,
+          uid: response.data.id
         })
+        if (username != "") {
+          this.tryLogin(username)
+          this.fetchZhihuUser(username)
+        }
+      })
   }
-  tryLogin = ()=> {
+  tryLogin = () => {
     var data;
     var config = {
       method: 'post',
@@ -76,29 +76,30 @@ export default class zhihuBodyContent extends Component {
         'Content-Type': 'application/json'
       },
       data:
-          {
-            password: "",
-            username: this.state.username,
-          },
+      {
+        password: "",
+        username: this.state.username,
+      },
       withCredentials: true
     };
 
     axios(config)
-        .then(response => {
-          console.log(response.data);
-          if (response.data == "Login successfully!"){
+      .then(response => {
+        console.log(response.data);
+        if (response.data == "Login successfully!") {
+          this.setState({
+            loginSuccess: true
+          })
+          axios.get(this.zhihuServer + "/activity/all?username=" + this.state.username, {
+            withCredentials: true
+          }).then(response => {
+            console.log(response);
             this.setState({
-              loginSuccess: true
+              activities: response.data,
             })
-            axios.get(this.zhihuServer + "/activity/all?username=" + this.state.username, {
-              withCredentials: true
-            }).then(response => {
-                  console.log(response);
-                  this.setState({
-                    activities: response.data,
-                  })
-                })}
-        })
+          })
+        }
+      })
 
   }
   setZhId = (username) => {
@@ -108,15 +109,15 @@ export default class zhihuBodyContent extends Component {
       headers: {
         withCredentials: true
       },
-      data:{
+      data: {
         userId: this.state.uid,
         zhId: username
       }
     }
     axios(config)
-        .then(response => {
-          console.log("update zhid",response)
-        })
+      .then(response => {
+        console.log("update zhid", response)
+      })
   }
   onRadioChange = e => {
     console.log('radio checked', e.target.value);
@@ -142,7 +143,7 @@ export default class zhihuBodyContent extends Component {
   authServer = "http://18.166.111.161:8686"
   zhihuServer = "http://18.166.111.161:8090"
   word_cloud_server = "http://18.166.24.220:8103"
-  fetchWordCloud = (username) =>{
+  fetchWordCloud = (username) => {
     let type = ""
     switch (this.state.radioValue) {
       case 1:
@@ -175,16 +176,16 @@ export default class zhihuBodyContent extends Component {
       wordCloudLoading: true
     })
     axios(config)
-        .then(response => {
-          console.log("pic", response.data)
-          this.setState({
-            wordCloud:`data:image/png;base64,${response.data}`,
-            wordCloudReady : true,
-            wordCloudLoading: false,
-          })
-        }).catch(e =>
+      .then(response => {
+        console.log("pic", response.data)
+        this.setState({
+          wordCloud: `data:image/png;base64,${response.data}`,
+          wordCloudReady: true,
+          wordCloudLoading: false,
+        })
+      }).catch(e =>
         console.log(e)
-    )
+      )
   }
   fetchZhihuUser = (username) => {
     const config = {
@@ -193,25 +194,25 @@ export default class zhihuBodyContent extends Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      params:{
+      params: {
         username: username,
       },
-      withCredentials:true
+      withCredentials: true
     };
     axios(config)
-        .then(response => {
-          console.log("userinfo",response.data)
-          this.setState({
-            userinfo: response.data
-          })
+      .then(response => {
+        console.log("userinfo", response.data)
+        this.setState({
+          userinfo: response.data
         })
+      })
   }
   updateUserActivities = (username) => {
-    axios.post(this.zhihuServer + "/updateActivities?username=" + this.state.username,{
-      withCredentials:true
+    axios.post(this.zhihuServer + "/updateActivities?username=" + this.state.username, {
+      withCredentials: true
     }).then(function (response) {
-          console.log(response.data);
-        })
+      console.log(response.data);
+    })
   }
   async login() {
     var data;
@@ -226,7 +227,7 @@ export default class zhihuBodyContent extends Component {
         password: this.state.password,
         username: this.state.username,
       },
-      withCredentials:true
+      withCredentials: true
     };
 
     await axios(config)
@@ -243,8 +244,8 @@ export default class zhihuBodyContent extends Component {
 
     if (data.data === "Login successfully!") {
       var activities_data;
-      await axios.get( this.zhihuServer + "/activity/all?username=" + this.state.username,{
-        withCredentials:true
+      await axios.get(this.zhihuServer + "/activity/all?username=" + this.state.username, {
+        withCredentials: true
       })
         .then(function (response) {
           console.log(response);
@@ -276,7 +277,7 @@ export default class zhihuBodyContent extends Component {
         username: this.state.username,
         captcha: this.state.code
       },
-      withCredentials:true
+      withCredentials: true
     };
 
 
@@ -293,8 +294,8 @@ export default class zhihuBodyContent extends Component {
       })
     */
     var activities_data;
-    await axios.get(this.zhihuServer + "/activity/all?username=" + this.state.username,{
-      withCredentials:true
+    await axios.get(this.zhihuServer + "/activity/all?username=" + this.state.username, {
+      withCredentials: true
     })
       .then(function (response) {
         console.log(response);
@@ -306,7 +307,7 @@ export default class zhihuBodyContent extends Component {
   }
 
   render() {
-    const { activities,loginSuccess,username,password, wordCloudReady,wordCloud,userinfo, radioValue,wordCloudLoading} = this.state;
+    const { activities, loginSuccess, username, password, wordCloudReady, wordCloud, userinfo, radioValue, wordCloudLoading } = this.state;
     return (
       <div className="content-wrapper">
         <section className="content">
@@ -314,53 +315,53 @@ export default class zhihuBodyContent extends Component {
             <div className="col-md-9">
 
               {loginSuccess ?
-                  <div className="box box-primary">
-                    <div className="box-header with-border">
-                      <h3 className="box-title">{userinfo.name}, 你好</h3>
-                    </div>
-                    <Row gutter={24} justify={"center"} flex="auto">
-                      <Col span={8} justify={"center"} flex="auto" offset={4} >
-                        <Statistic  justify={"center"} title="回答问题" value={userinfo.voteupCount} prefix={<ZhihuOutlined />} />
-                      </Col>
-                      <Col span={8}  justify={"center"} flex="auto">
-                        <Statistic  justify={"center"} title="点赞" value={userinfo.voteupCount} prefix={<LikeOutlined />} />
-                      </Col>
-                      <Col span={8}  justify={"center"} flex="auto">
-                        <Statistic justify={"center"} title="感谢" value={userinfo.thankedCount} prefix={<HeartOutlined />} />
-                      </Col>
-                    </Row>
-                    <Button onClick={() => this.update()}>>更新数据</Button>
-                  </div> :
-
-                  <div className="box box-primary">
-                    <div className="box-header with-border">
-                      <h3 className="box-title">登录</h3>
-                    </div>
-                    {/* form start */}
-                    <form role="form">
-                      <div className="box-body">
-                        <div className="form-group">
-                          <label htmlFor="exampleInputEmail1">Email地址</label>
-                          <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Enter email"
-                                 onChange={(val) => this.nameOnChange(val)}
-                                 value={username}/>
-                        </div>
-                        <div className="form-group">
-                          <label htmlFor="exampleInputPassword1">密码</label>
-                          <input type="password" className="form-control" id="exampleInputPassword1"
-                                 placeholder="Password"
-                                 onChange={(val) => this.psdOnChange(val)}
-                                 value={password}/>
-                        </div>
-                      </div>
-                    </form>
-                    {/* /.box-body */}
-                    <div className="box-footer">
-                      <button id="submit1" className="btn btn-primary" onClick={this.login}>Submit1</button>
-                    </div>
+                <div className="box box-primary">
+                  <div className="box-header with-border">
+                    <h3 className="box-title">{userinfo.name}, 你好</h3>
                   </div>
+                  <Row gutter={24} justify={"center"} flex="auto">
+                    <Col span={8} justify={"center"} flex="auto" offset={4} >
+                      <Statistic justify={"center"} title="回答问题" value={userinfo.voteupCount} prefix={<ZhihuOutlined />} />
+                    </Col>
+                    <Col span={8} justify={"center"} flex="auto">
+                      <Statistic justify={"center"} title="点赞" value={userinfo.voteupCount} prefix={<LikeOutlined />} />
+                    </Col>
+                    <Col span={8} justify={"center"} flex="auto">
+                      <Statistic justify={"center"} title="感谢" value={userinfo.thankedCount} prefix={<HeartOutlined />} />
+                    </Col>
+                  </Row>
+                  <Button onClick={() => this.update()}>>更新数据</Button>
+                </div> :
+
+                <div className="box box-primary">
+                  <div className="box-header with-border">
+                    <h3 className="box-title">登录</h3>
+                  </div>
+                  {/* form start */}
+                  <form role="form">
+                    <div className="box-body">
+                      <div className="form-group">
+                        <label htmlFor="exampleInputEmail1">Email地址</label>
+                        <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Enter email"
+                          onChange={(val) => this.nameOnChange(val)}
+                          value={username} />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="exampleInputPassword1">密码</label>
+                        <input type="password" className="form-control" id="exampleInputPassword1"
+                          placeholder="Password"
+                          onChange={(val) => this.psdOnChange(val)}
+                          value={password} />
+                      </div>
+                    </div>
+                  </form>
+                  {/* /.box-body */}
+                  <div className="box-footer">
+                    <button id="submit1" className="btn btn-primary" onClick={this.login}>Submit1</button>
+                  </div>
+                </div>
               }
-              </div>
+            </div>
             {this.state.needCaptcha ?
               <div className="col-md-3" >
                 <div className="box box-primary">
@@ -429,30 +430,30 @@ export default class zhihuBodyContent extends Component {
           </div>
           {
             loginSuccess ?
-                <div className="row">
-                  <div className="col-xs-12">
-                    <div className="box">
-                      <div className="box-header">
-                        <h3 className="box-title">知乎浏览关键词</h3>
-                      </div>
-                      <Radio.Group onChange={this.onRadioChange} value={radioValue}>
-                        <Radio value={1}>回答</Radio>
-                        <Radio value={2}>提问</Radio>
-                        <Radio value={3}>文章</Radio>
-                        <Radio value={4}>全部</Radio>
-                      </Radio.Group>
-                      <Button
-                          onClick={() => this.fetchWordCloud(username)}
-                          loading={wordCloudLoading}
-                      > 生成我的词云报告 </Button>
-                      <div className="box-body">
-                      </div>
-                      {
-                        wordCloudReady ? <img src={wordCloud} className="img-square" alt="词云"/> : null
-                      }
+              <div className="row">
+                <div className="col-xs-12">
+                  <div className="box">
+                    <div className="box-header">
+                      <h3 className="box-title">知乎浏览关键词</h3>
                     </div>
+                    <Radio.Group onChange={this.onRadioChange} value={radioValue}>
+                      <Radio value={1}>回答</Radio>
+                      <Radio value={2}>提问</Radio>
+                      <Radio value={3}>文章</Radio>
+                      <Radio value={4}>全部</Radio>
+                    </Radio.Group>
+                    <Button
+                      onClick={() => this.fetchWordCloud(username)}
+                      loading={wordCloudLoading}
+                    > 生成我的词云报告 </Button>
+                    <div className="box-body">
+                    </div>
+                    {
+                      wordCloudReady ? <img src={wordCloud} className="img-square" alt="词云" /> : null
+                    }
                   </div>
-                </div> : null
+                </div>
+              </div> : null
           }
         </section>
       </div >

@@ -49,7 +49,7 @@ export default class WeiboBodyContent extends Component {
   }
   componentDidMount() {
 
-    const username = localStorage.getItem("username");
+    const username = window.sessionStorage.getItem("username");
 
     // annotation for debug
     /*
@@ -81,7 +81,7 @@ export default class WeiboBodyContent extends Component {
     const weiboId = await axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        localStorage.setItem("iLifeId", response.data.id);
+        window.sessionStorage.setItem("iLifeId", response.data.id);
         return response.data.weibid;
       })
       .catch(function (error) {
@@ -160,7 +160,7 @@ export default class WeiboBodyContent extends Component {
       })
   };
   changeId = async (e) => {
-    let userId = localStorage.getItem("iLifeId");
+    let userId = window.sessionStorage.getItem("iLifeId");
     let wbId = document.getElementById("changeId").value;
     let data1 = {
       "userId": userId,
@@ -279,7 +279,7 @@ export default class WeiboBodyContent extends Component {
                         var GMT1 = new Date(dates[1]._d);
                         this.setState({ startTime: GMT.toUTCString(), endTime: GMT1.toUTCString() })
                       }}
-                      style={{marginLeft:'20px'}}
+                      style={{ marginLeft: '20px' }}
                     />
                   </Space>
                 </div >

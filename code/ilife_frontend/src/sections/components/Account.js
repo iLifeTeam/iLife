@@ -7,13 +7,13 @@ export default class Account extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: localStorage.getItem("username"),
+      username: window.sessionStorage.getItem("username"),
     }
   }
 
   logoff() {
     const history = createBrowserHistory();
-    localStorage.clear();
+    window.sessionStorage.clear();
 
     var config = {
       method: 'post',
