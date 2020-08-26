@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { createBrowserHistory } from 'history'
 import DoubanBooks from '../../douban/DoubanBooks';
-import {Button, Divider, message, Typography} from 'antd';
+import { Button, Divider, message, Typography } from 'antd';
 import 'antd/dist/antd.css';
 const { Text, Paragraph } = Typography;
 export default class DbBookContent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            show:false,
+            show: false,
             doubanId: null,
             username: "",
             password: "",
@@ -24,7 +24,7 @@ export default class DbBookContent extends Component {
     }
 
     componentDidMount() {
-        const username = localStorage.getItem("username");
+        const username = window.sessionStorage.getItem("username");
 
         if (username === null || username === undefined) {
             const history = createBrowserHistory();
@@ -96,9 +96,9 @@ export default class DbBookContent extends Component {
 
     crawl() {
         message.loading({
-            content:"正在更新图书数据，请稍作等待！",
-            style:{marginTop:'40px'},
-            duration:0
+            content: "正在更新图书数据，请稍作等待！",
+            style: { marginTop: '40px' },
+            duration: 0
         });
         var config = {
             method: 'get',
@@ -113,8 +113,8 @@ export default class DbBookContent extends Component {
                 console.log(JSON.stringify(response.data));
                 message.destroy();
                 message.success({
-                    content:"图书数据更新成功！请重新进入页面查看",
-                    style:{marginTop:'40px'},
+                    content: "图书数据更新成功！请重新进入页面查看",
+                    style: { marginTop: '40px' },
                 });
             })
             .catch(function (error) {
@@ -153,17 +153,17 @@ export default class DbBookContent extends Component {
 
     /* end 文案 here*/
 
-    changeId=async (e)=>{
-        let userId=localStorage.getItem("iLifeId");
-        let dbId=document.getElementById("changeId").value;
+    changeId = async (e) => {
+        let userId = window.sessionStorage.getItem("iLifeId");
+        let dbId = document.getElementById("changeId").value;
 
-        let data1={
-            "userId":userId,
-            "dbId":dbId
+        let data1 = {
+            "userId": userId,
+            "dbId": dbId
         };
         var config = {
             method: 'post',
-            data:data1,
+            data: data1,
             url: 'http://18.166.111.161:8686/auth/updateDbId',
             headers: {
                 withCredentials: true,
@@ -178,7 +178,7 @@ export default class DbBookContent extends Component {
             .catch(function (error) {
                 console.log(error);
             });
-        if(doubanId) this.setState({doubanId:dbId})
+        if (doubanId) this.setState({ doubanId: dbId })
 
     };
 
@@ -193,9 +193,9 @@ export default class DbBookContent extends Component {
                                 <div className="box-header">
                                     <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}> <h3 className="box-title">用户{this.state.doubanId}的豆瓣图书数据</h3></Divider>
                                     <p className="btn btn-danger" onClick={this.crawl}>更新数据</p>
-                                    <p className="btn btn-primary" onClick={()=>{this.setState({show:!this.state.show})}}>绑定账户</p>
-                                    {this.state.show?
-                                        <p><input id="changeId"/><button onClick={this.changeId}>确认</button></p>:null}
+                                    <p className="btn btn-primary" onClick={() => { this.setState({ show: !this.state.show }) }}>绑定账户</p>
+                                    {this.state.show ?
+                                        <p><input id="changeId" /><button onClick={this.changeId}>确认</button></p> : null}
                                 </div>
                                 <div className="box-body">
                                     {<DoubanBooks activities={activities} />}
@@ -241,7 +241,7 @@ export default class DbBookContent extends Component {
                                             strong>{stats.minHot}</Text>人看过，这是一本由<Text
                                                 mark
                                                 strong>{stats.minHotBook.author}</Text>所著的书，愿意读小众书籍的人，运气都不会太差！</Paragraph>
-                                        <Paragraph>你的热度喜好是{stats.preferHot+1}颗星</Paragraph>
+                                        <Paragraph>你的热度喜好是{stats.preferHot + 1}颗星</Paragraph>
                                         <Paragraph>你最喜欢的作者是<Text mark strong>{stats.preAuthor}</Text>，读一个人的著作，也是和人心灵沟通的一种方式。</Paragraph>
                                     </div> : statsLoading ? <div> "加载中..." </div> : null
                                 }

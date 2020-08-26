@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from "react-router-dom"
 import { createBrowserHistory } from 'history'
 import axios from 'axios'
-import {message} from "antd";
+import { message } from "antd";
 
 
 
@@ -61,7 +61,7 @@ export default class LoginPage extends Component {
         console.log(JSON.stringify(response.data));
         if (response.data === "iLife login success") {
 
-          localStorage.setItem("username", config.data.account);
+          window.sessionStorage.setItem("username", config.data.account);
           history.push("/home/weibo");
           message.success("登陆成功");
           window.location.reload();

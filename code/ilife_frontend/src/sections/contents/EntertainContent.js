@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import axios from 'axios';
-import {createBrowserHistory} from 'history'
-import {Button, Divider, Typography, Popconfirm, message, Row, Col,Card} from 'antd';
+import { createBrowserHistory } from 'history'
+import { Button, Divider, Typography, Popconfirm, message, Row, Col, Card } from 'antd';
 import 'antd/dist/antd.css';
 const { Meta } = Card;
-const {Text, Paragraph} = Typography;
+const { Text, Paragraph } = Typography;
 const text = <div><Paragraph>'进行推荐前，请确保你已经绑定了豆瓣账户且进行了书籍和电影数据的获取，否则推荐结果将不太准确。</Paragraph>
     <Paragraph>所有数据和图片均来自网上公开资料，请放心食用。</Paragraph>
     <Paragraph>推荐将会花费一段时间，请耐心等待~</Paragraph></div>;
@@ -38,7 +38,7 @@ export default class EntertainContent extends Component {
     };
 
     componentDidMount() {
-        const username = localStorage.getItem("username");
+        const username = window.sessionStorage.getItem("username");
 
         if (username === null || username === undefined) {
             const history = createBrowserHistory();
@@ -72,7 +72,7 @@ export default class EntertainContent extends Component {
                 return null;
             });
 
-        this.setState({doubanId})
+        this.setState({ doubanId })
         console.log(doubanId);
     }
 
@@ -93,7 +93,7 @@ export default class EntertainContent extends Component {
             .catch(function (error) {
                 console.log(error);
             });
-        this.setState({books: movies});
+        this.setState({ books: movies });
         this.getBooks(doubanId);
     }
 
@@ -114,7 +114,7 @@ export default class EntertainContent extends Component {
             .catch(function (error) {
                 console.log(error);
             });
-        this.setState({movies: books});
+        this.setState({ movies: books });
         this.getAttitude(doubanId);
     };
     getAttitude = async (doubanId) => {
@@ -189,9 +189,9 @@ export default class EntertainContent extends Component {
                 message.destroy();
                 message.success({
                     content: "娱乐推荐完毕！请重新进入页面查看",
-                    style: {marginTop: '40px'},
+                    style: { marginTop: '40px' },
                 });
-                that.setState({finish: true, rcmd: response.data});
+                that.setState({ finish: true, rcmd: response.data });
                 return response.data;
             })
             .catch(function (error) {
@@ -228,14 +228,14 @@ export default class EntertainContent extends Component {
     confirm = () => {
         message.loading({
             content: "正在进行娱乐推荐，请稍作等待！",
-            style: {marginTop: '40px'},
+            style: { marginTop: '40px' },
             duration: 0
         });
         this.getMovies(this.state.doubanId);
         return null;
     };
     changeId = async (e) => {
-        let userId = localStorage.getItem("iLifeId");
+        let userId = window.sessionStorage.getItem("iLifeId");
         let dbId = document.getElementById("changeId").value;
 
         let data1 = {
@@ -259,20 +259,20 @@ export default class EntertainContent extends Component {
             .catch(function (error) {
                 console.log(error);
             });
-        if (doubanId) this.setState({doubanId: dbId})
+        if (doubanId) this.setState({ doubanId: dbId })
 
     };
-    changeSrcMovie = () =>{
-      let movie = document.getElementById('img');
-      movie.setAttribute('src','https://img1.doubanio.com/view/photo/l_ratio_poster/public/p2074715729.webp');
+    changeSrcMovie = () => {
+        let movie = document.getElementById('img');
+        movie.setAttribute('src', 'https://img1.doubanio.com/view/photo/l_ratio_poster/public/p2074715729.webp');
     };
-    changeSrcBook = () =>{
+    changeSrcBook = () => {
         let book = document.getElementById('img2');
         console.log("test1");
-        book.setAttribute('src',require('../../pic/backBook1.jpg'))
+        book.setAttribute('src', require('../../pic/backBook1.jpg'))
     };
     render() {
-        const {activities, stats, statsReady, statsLoading, userId} = this.state;
+        const { activities, stats, statsReady, statsLoading, userId } = this.state;
         return (
 
             <div className="content-wrapper">
@@ -281,7 +281,7 @@ export default class EntertainContent extends Component {
                         <div className="col-xs-12">
                             <div className="box">
                                 <div className="box-header">
-                                    <Divider orientation="left" style={{color: '#333', fontWeight: 'normal'}}><h3
+                                    <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}><h3
                                         className="box-title">{this.state.doubanId === null ? "请先点击“绑定账户”绑定豆瓣用户！" : "用户" + this.state.doubanId + "的娱乐推荐"}</h3>
                                     </Divider>
                                     <Popconfirm
@@ -294,10 +294,10 @@ export default class EntertainContent extends Component {
                                         <p className="btn btn-danger">开始推荐</p>
                                     </Popconfirm>
                                     <p className="btn btn-primary" onClick={() => {
-                                        this.setState({show: !this.state.show})
+                                        this.setState({ show: !this.state.show })
                                     }}>绑定账户</p>
                                     {this.state.show ?
-                                        <p><input id="changeId"/>
+                                        <p><input id="changeId" />
                                             <button onClick={this.changeId}>确认</button>
                                         </p> : null}
 
@@ -308,29 +308,29 @@ export default class EntertainContent extends Component {
                                             < div className="row">
                                                 <div className="col-xs-6">
                                                     <img id="img" src={this.state.rcmd.picture_movie.trim()} alt={"https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2074715729.webp"}
-                                                         style={{width: '100%'}}
-                                                         onError={this.changeSrcMovie}  />
-                                                    <Card style={{ width: '95%'}} >
+                                                        style={{ width: '100%' }}
+                                                        onError={this.changeSrcMovie} />
+                                                    <Card style={{ width: '95%' }} >
                                                         <p>推荐书籍：</p>
-                                                        <h1 style={{marginTop:'40px',fontWeight:'bold',color:'blue'}}>{this.state.rcmd.title_book}</h1>
-                                                        <h3 style={{marginTop:'40px'}}>书籍评分：{this.state.rcmd.rate_book}</h3>
-                                                        <h3 style={{marginTop:'40px'}}>书籍热度：{this.state.rcmd.hot_book}</h3>
-                                                        <h3 style={{marginTop:'40px'}}>书籍价格：{this.state.rcmd.price_book}</h3>
-                                                        <h3 style={{marginTop:'40px'}}>书籍简介：{this.state.rcmd.introduction_book}</h3>
+                                                        <h1 style={{ marginTop: '40px', fontWeight: 'bold', color: 'blue' }}>{this.state.rcmd.title_book}</h1>
+                                                        <h3 style={{ marginTop: '40px' }}>书籍评分：{this.state.rcmd.rate_book}</h3>
+                                                        <h3 style={{ marginTop: '40px' }}>书籍热度：{this.state.rcmd.hot_book}</h3>
+                                                        <h3 style={{ marginTop: '40px' }}>书籍价格：{this.state.rcmd.price_book}</h3>
+                                                        <h3 style={{ marginTop: '40px' }}>书籍简介：{this.state.rcmd.introduction_book}</h3>
                                                     </Card>
                                                 </div>
                                                 <div className="col-xs-6">
-                                                    <Card style={{ width: '95%'}} >
+                                                    <Card style={{ width: '95%' }} >
                                                         <p>推荐电影：</p>
-                                                        <h1 style={{marginTop:'40px',fontWeight:'bold',color:'blue'}}>{this.state.rcmd.title_movie}</h1>
-                                                        <h3 style={{marginTop:'40px'}}>电影类型：{this.state.rcmd.type_movie}</h3>
-                                                        <h3 style={{marginTop:'40px'}}>豆瓣评分：{this.state.rcmd.rate_movie}</h3>
-                                                        <h3 style={{marginTop:'40px'}}>演员列表：{this.state.rcmd.actors_list_movie}</h3>
-                                                        <h3 style={{marginTop:'40px'}}>电影简介：{this.state.rcmd.introduction_movie}</h3>
+                                                        <h1 style={{ marginTop: '40px', fontWeight: 'bold', color: 'blue' }}>{this.state.rcmd.title_movie}</h1>
+                                                        <h3 style={{ marginTop: '40px' }}>电影类型：{this.state.rcmd.type_movie}</h3>
+                                                        <h3 style={{ marginTop: '40px' }}>豆瓣评分：{this.state.rcmd.rate_movie}</h3>
+                                                        <h3 style={{ marginTop: '40px' }}>演员列表：{this.state.rcmd.actors_list_movie}</h3>
+                                                        <h3 style={{ marginTop: '40px' }}>电影简介：{this.state.rcmd.introduction_movie}</h3>
                                                     </Card>
                                                     <img id="img2" src={this.state.rcmd.picture_book.trim()} alt={"正在加载中..."}
-                                                         style={{width: '100%',marginTop:'40px'}}
-                                                         onError={this.changeSrcBook}/>
+                                                        style={{ width: '100%', marginTop: '40px' }}
+                                                        onError={this.changeSrcBook} />
                                                 </div>
                                             </div>
                                         </div> : null
