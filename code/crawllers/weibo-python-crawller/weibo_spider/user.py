@@ -11,7 +11,7 @@ class User:
 
         self.education = ''
         self.work = ''
-
+        
         self.weibo_num = 0
         self.following = 0
         self.followers = 0
