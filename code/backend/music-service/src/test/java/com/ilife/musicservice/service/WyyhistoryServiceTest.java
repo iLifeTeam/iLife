@@ -23,6 +23,7 @@ class WyyhistoryServiceTest {
     void testFindAllbyid() {
         Pageable pageable = PageRequest.of(5, 10);
         assertEquals(10,wyyhistoryService.findAllbyid((long) 417778610, pageable).getNumberOfElements());
+        System.out.println(wyyhistoryService.findAllbyid((long) 417778610));
     }
 
     @Test

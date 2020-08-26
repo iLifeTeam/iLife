@@ -68,6 +68,7 @@ class MusicServiceControllerTest {
 
 
     @Test
+
     @WithMockUser(roles="USER")
     public void updatehistorybyid() throws Exception {
         MvcResult result = mockMvc.perform(post("/music/updatehistorybyid")
@@ -85,6 +86,17 @@ class MusicServiceControllerTest {
                 .param("size", "10")
                 .param("page", "3")
                 .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+    }
+    @Test
+    @WithMockUser(roles="USER")
+    public void getFaovorSong() throws Exception {
+        MvcResult result = mockMvc.perform(post("/music/getFavorSong")
+                .param("ph", "18679480337")
+                .param("pw", "Xiong0608")
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());

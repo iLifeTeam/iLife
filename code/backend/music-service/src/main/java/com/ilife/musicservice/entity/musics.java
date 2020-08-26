@@ -23,7 +23,7 @@ public class musics {
     @Column(name = "TIMES")
     private String times;
 
-    @OneToMany
+    @OneToMany(fetch=FetchType.EAGER)
     @JoinColumn(name = "M_ID")
     private List<sing> singers;
 }
