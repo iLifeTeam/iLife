@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 
 const $ = require('jquery');
-$.DataTable = require('datatables.net')
 
 function parseData(data) {
 
   data.forEach(element => {
     if (element.publish_time) {
       var str = JSON.stringify(element.publish_time);
-      element.publish_time = str.split('\"')[1].split('T')[0] + " " + str.split('T')[1].split(':')[0] + ':' + str.split('T')[1].split(':')[1];
+      element.publish_time = str.split('"')[1].split('T')[0] + " " + str.split('T')[1].split(':')[0] + ':' + str.split('T')[1].split(':')[1];
     }
   });
 
@@ -16,13 +15,10 @@ function parseData(data) {
 }
 
 export default class WeiboInfo extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
-
-    $('#weiboTable').DataTable({
+    this.$el = $(this.el);
+    this.$el.DataTable({
       data: this.props.activities ? parseData(this.props.activities) : null,
       columns: [
         { data: "id" },
