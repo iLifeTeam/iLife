@@ -17,6 +17,47 @@
   "basePath" : "/music",
   "schemes" : [ "http" ],
   "paths" : {
+    "/music/getFavorSingers" : {
+      "post" : {
+        "operationId" : "getFavorSingers",
+        "parameters" : [ {
+          "name" : "ph",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/music/getFavorSong" : {
+      "post" : {
+        "operationId" : "getFavorSong",
+        "parameters" : [ {
+          "name" : "ph",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/musics"
+            }
+          }
+        }
+      }
+    },
     "/music/gethistorybyid" : {
       "post" : {
         "operationId" : "gethistorybyid",
@@ -166,21 +207,21 @@
             "type" : "object"
           }
         },
-        "first" : {
-          "type" : "boolean"
-        },
-        "last" : {
-          "type" : "boolean"
-        },
-        "pageable" : {
-          "$ref" : "#/definitions/Pageable"
+        "sort" : {
+          "$ref" : "#/definitions/Sort"
         },
         "numberOfElements" : {
           "type" : "integer",
           "format" : "int32"
         },
-        "sort" : {
-          "$ref" : "#/definitions/Sort"
+        "first" : {
+          "type" : "boolean"
+        },
+        "pageable" : {
+          "$ref" : "#/definitions/Pageable"
+        },
+        "last" : {
+          "type" : "boolean"
         },
         "empty" : {
           "type" : "boolean"
@@ -212,21 +253,21 @@
             "$ref" : "#/definitions/wyyuser"
           }
         },
-        "first" : {
-          "type" : "boolean"
-        },
-        "last" : {
-          "type" : "boolean"
-        },
-        "pageable" : {
-          "$ref" : "#/definitions/Pageable"
+        "sort" : {
+          "$ref" : "#/definitions/Sort"
         },
         "numberOfElements" : {
           "type" : "integer",
           "format" : "int32"
         },
-        "sort" : {
-          "$ref" : "#/definitions/Sort"
+        "first" : {
+          "type" : "boolean"
+        },
+        "pageable" : {
+          "$ref" : "#/definitions/Pageable"
+        },
+        "last" : {
+          "type" : "boolean"
         },
         "empty" : {
           "type" : "boolean"
@@ -240,12 +281,11 @@
           "type" : "integer",
           "format" : "int64"
         },
+        "sort" : {
+          "$ref" : "#/definitions/Sort"
+        },
         "paged" : {
           "type" : "boolean"
-        },
-        "pageSize" : {
-          "type" : "integer",
-          "format" : "int32"
         },
         "unpaged" : {
           "type" : "boolean"
@@ -254,18 +294,19 @@
           "type" : "integer",
           "format" : "int32"
         },
-        "sort" : {
-          "$ref" : "#/definitions/Sort"
+        "pageSize" : {
+          "type" : "integer",
+          "format" : "int32"
         }
       }
     },
     "Sort" : {
       "type" : "object",
       "properties" : {
-        "sorted" : {
+        "unsorted" : {
           "type" : "boolean"
         },
-        "unsorted" : {
+        "sorted" : {
           "type" : "boolean"
         },
         "empty" : {

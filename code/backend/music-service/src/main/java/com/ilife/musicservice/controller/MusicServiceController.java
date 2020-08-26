@@ -1,5 +1,6 @@
 package com.ilife.musicservice.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.ilife.musicservice.crawler.NetEaseCrawler;
 import com.ilife.musicservice.entity.musics;
 import com.ilife.musicservice.entity.wyyuser;
@@ -97,6 +98,17 @@ public class MusicServiceController {
 //        wyyhistoryService.deletebyid(uid);
 
         return musicsService.getFavoriteSong(uid);
+    }
+
+
+    @PostMapping("/music/getFavorSingers")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public JSONArray getFavorSingers(@RequestParam String ph, String pw) {
+        long uid = netEaseCrawler.getuid(ph, pw);
+        if (uid == -1) return null;
+//        wyyhistoryService.deletebyid(uid);
+
+        return wyyhistoryService.getFavorSingers(uid);
     }
 
 }
