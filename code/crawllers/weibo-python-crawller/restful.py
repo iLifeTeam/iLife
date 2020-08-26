@@ -25,7 +25,7 @@ def login():
     avgCm = request.args.get('avgCm')
     avgWb = request.args.get('avgWb')
     print(userId, avgUp, avgCm, avgWb)
-    crawler = crawl.Crawl(userId, 'now', 'now')
+    crawler = crawl.Crawl(userId, '2020-07-01', '2020-07-01')
     crawler.read_json()
     crawler.crawl()
     return "1"
