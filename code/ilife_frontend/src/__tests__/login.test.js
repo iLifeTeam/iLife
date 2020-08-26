@@ -8,6 +8,7 @@ import LoginPage from '../pages/LoginPage';
 import MockAdapter from "axios-mock-adapter";
 import axios from 'axios'
 const mock = new MockAdapter(axios);
+
 mock.onPost("http://18.162.168.229:8686/login").reply((config) => {
   return new Promise(function (resolve, reject) {
     resolve([200, { data: "iLife login success" }]);
@@ -15,13 +16,11 @@ mock.onPost("http://18.162.168.229:8686/login").reply((config) => {
 
   })
 })
+
 describe('LoginPage test with Enzyme', () => {
-  it('renders without crashing (logoff state)', () => {
-    shallow(<LoginPage />);
-  });
+  const body = shallow(<LoginPage />);
 
   it('renders without crashing (login state)', () => {
-    const body = shallow(<LoginPage />);
     body.setState({ username: "test" })
     expect(body.state().username).toEqual("test");
   })

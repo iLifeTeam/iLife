@@ -16,7 +16,7 @@ export default class RegisterPage extends Component {
       email: "",
       check_psd: false,
       confirm: false,
-    }
+    };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleAccountChange = this.handleAccountChange.bind(this);
     this.handlePsdChange = this.handlePsdChange.bind(this);
@@ -93,7 +93,7 @@ export default class RegisterPage extends Component {
 
     var config = {
       method: 'post',
-      url: 'http://18.162.168.229:8686/auth/register',
+      url: 'http://18.166.111.161:8686/auth/register',
       headers: {
         'Content-Type': 'application/json',
         withCredentials: true
@@ -123,7 +123,7 @@ export default class RegisterPage extends Component {
       });
 
     /*
-  await axios.get("http://18.162.168.229:8686/auth/getByAccount?account=" + localStorage.getItem("username"),
+  await axios.get("http://18.166.111.161:8686/auth/getByAccount?account=" + window.sessionStorage.getItem("username"),
     { headers: { withCredentials: true } })
     .then(function (response) {
       console.log(JSON.stringify(response.data));

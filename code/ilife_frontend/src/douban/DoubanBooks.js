@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 const $ = require('jquery');
 $.DataTable = require('datatables.net')
 
-export default class DoubanMovies extends Component {
+export default class DoubanBooks extends Component {
   constructor(props) {
     super(props);
   }
