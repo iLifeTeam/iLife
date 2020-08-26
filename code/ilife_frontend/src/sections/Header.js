@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Notification from '../components/Notification'
-import Task from '../components/Task'
-import Account from '../components/Account'
+import Notification from './components/Notification'
+import Task from './components/Task'
+import Account from './components/Account'
 
 export default class Header extends Component {
   render() {

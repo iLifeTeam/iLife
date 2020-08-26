@@ -1,29 +1,41 @@
 import React, { Component } from 'react'
-import MenuItem from '../components/MenuItem'
+import MenuItem from './components/MenuItem'
 
 import {
   Link
 } from "react-router-dom";
 
 export default class Menu extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: localStorage.getItem("username"),
+    }
+  }
+
   render() {
+    console.log(this.state.username);
+    const User = this.state.username === null ? <div className="pull-left info">
+      <p ><Link to={"/login"}>登录</Link></p>
+    </div> :
+      <div className="pull-left info">
+        <p>{this.state.username}</p>
+        <a><i className="fa fa-circle text-success" /> Online</a>
+      </div>;
     return (
       <div>{/* Left side column. contains the logo and sidebar */}
-        <aside className="main-sidebar">
+        <div className="main-sidebar">
           {/* sidebar: style can be found in sidebar.less */}
-          <section className="sidebar">
+          <div className="sidebar">
             {/* Sidebar user panel */}
             <div className="user-panel">
               <div className="pull-left image">
-                <img src="dist/img/user2-160x160.jpg" className="img-circle" alt="User" />
+                <img src="../../dist/img/user2-160x160.jpg" className="img-circle" alt="User" />
               </div>
-              <div className="pull-left info">
-                <p>Alexander Pierce</p>
-                <a><i className="fa fa-circle text-success" /> Online</a>
-              </div>
+              {User}
             </div>
             {/* search form */}
-            <form action="#" method="get" className="sidebar-form">
+            <div action="#" method="get" className="sidebar-form">
               <div className="input-group">
                 <input type="text" name="q" className="form-control" placeholder="Search..." />
                 <span className="input-group-btn">
@@ -32,7 +44,7 @@ export default class Menu extends Component {
                   </button>
                 </span>
               </div>
-            </form>
+            </div>
             {/* /.search form */}
             {/* sidebar menu: : style can be found in sidebar.less */}
             <ul className="sidebar-menu" data-widget="tree">
@@ -45,9 +57,9 @@ export default class Menu extends Component {
               <li><a href="fake_url"><i className="fa fa-circle-o text-yellow" /> <span>Warning</span></a></li>
               <li><a href="fake_url"><i className="fa fa-circle-o text-aqua" /> <span>Information</span></a></li>
             </ul>
-          </section>
+          </div>
           {/* /.sidebar */}
-        </aside>
+        </div>
       </div>
 
     )
@@ -57,20 +69,7 @@ export default class Menu extends Component {
 
 const menuItems = [
   {
-    itemURL: "/alipay",
-    itemName: "支付宝",
-    childItems: [{
-      name: "账单信息",
-      url: "/bills"
-    },
-    {
-      name: "趋势分析",
-      url: "/analyse"
-    }
-    ]
-  },
-  {
-    itemURL: "/weibo",
+    itemURL: "/home/weibo",
     itemName: "微博",
     childItems: [{
       name: "浏览信息",
@@ -83,11 +82,88 @@ const menuItems = [
     ]
   },
   {
-    itemURL: "/zhihu",
+    itemURL: "/home/zhihu",
     itemName: "知乎",
     childItems: [{
       name: "动态信息",
       url: "/info"
+    },
+    {
+      name: "分析",
+      url: "/analyse"
+    }
+    ]
+  }, {
+    itemURL: "/home/wyy",
+    itemName: "网易云",
+    childItems: [{
+      name: "听歌记录",
+      url: "/history"
+    },
+    {
+      name: "分析",
+      url: "/analyse"
+    }
+    ]
+  },
+  {
+    itemURL: "/home/bilibili",
+    itemName: "b站",
+    childItems: [{
+      name: "浏览记录",
+      url: "/history"
+    },
+    {
+      name: "分析",
+      url: "/analyse"
+    }
+    ]
+  },
+  {
+    itemURL: "/home/taobao",
+    itemName: "淘宝",
+    childItems: [{
+      name: "浏览记录",
+      url: "/bills"
+    },
+    {
+      name: "分析",
+      url: "/analyse"
+    }
+    ]
+  },
+  {
+    itemURL: "/home/jingdong",
+    itemName: "京东",
+    childItems: [{
+      name: "消费记录",
+      url: "/bills"
+    },
+    {
+      name: "分析",
+      url: "/analyse"
+    }
+    ]
+  },
+  {
+    itemURL: "/home/book",
+    itemName: "书籍",
+    childItems: [{
+      name: "豆瓣图书记录",
+      url: "/records"
+    },
+    {
+      name: "分析",
+      url: "/analyse"
+    }
+    ]
+  },
+  {
+    itemURL: "/home/movie",
+    itemName: "电影",
+    childItems: [{
+      name: "豆瓣观影记录",
+      url: "/records"
     },
     {
       name: "分析",

@@ -18,4 +18,10 @@ public interface UserDao {
     int updateZhId(Long id, String zhId);
 
     Users findByAccount(String account);
+
+    int updateDbId(Long id, String dbId);
+
+    int updateBiliId(Long id, String dbId);
+
+    int updateTbId(Long id, String dbId);
 }

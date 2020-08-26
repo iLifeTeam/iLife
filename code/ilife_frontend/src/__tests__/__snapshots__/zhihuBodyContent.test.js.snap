@@ -1,0 +1,152 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Menu changes the class when hovered 1`] = `
+<div
+  className="content-wrapper"
+>
+  <section
+    className="content"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-md-9"
+      >
+        <div
+          className="box box-primary"
+        >
+          <div
+            className="box-header with-border"
+          >
+            <h3
+              className="box-title"
+            >
+              登录
+            </h3>
+          </div>
+          <form
+            role="form"
+          >
+            <div
+              className="box-body"
+            >
+              <div
+                className="form-group"
+              >
+                <label
+                  htmlFor="exampleInputEmail1"
+                >
+                  Email地址
+                </label>
+                <input
+                  className="form-control"
+                  id="exampleInputEmail1"
+                  onChange={[Function]}
+                  placeholder="Enter email"
+                  type="email"
+                />
+              </div>
+              <div
+                className="form-group"
+              >
+                <label
+                  htmlFor="exampleInputPassword1"
+                >
+                  密码
+                </label>
+                <input
+                  className="form-control"
+                  id="exampleInputPassword1"
+                  onChange={[Function]}
+                  placeholder="Password"
+                  type="password"
+                />
+              </div>
+            </div>
+          </form>
+          <div
+            className="box-footer"
+          >
+            <button
+              className="btn btn-primary"
+              onClick={[Function]}
+            >
+              Submit1
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col-xs-12"
+      >
+        <div
+          className="box"
+        >
+          <div
+            className="box-header"
+          >
+            <h3
+              className="box-title"
+            >
+              Data Table With Full Features
+            </h3>
+          </div>
+          <div
+            className="box-body"
+          >
+            <table
+              className="table table-bordered table-striped"
+              id="example1"
+            >
+              <thead>
+                <tr>
+                  <th>
+                    action_text
+                  </th>
+                  <th>
+                    question
+                  </th>
+                  <th>
+                    answer
+                  </th>
+                  <th>
+                    target_id
+                  </th>
+                  <th>
+                    created_time
+                  </th>
+                </tr>
+              </thead>
+              <tbody />
+              <tfoot>
+                <tr>
+                  <th>
+                    action_text
+                  </th>
+                  <th>
+                    question
+                  </th>
+                  <th>
+                    answer
+                  </th>
+                  <th>
+                    target_id
+                  </th>
+                  <th>
+                    created_time
+                  </th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+`;

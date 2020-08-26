@@ -1,15 +1,11 @@
 package com.ilife.zhihu.dao.daoimpl;
 
-import com.ilife.zhihu.dao.ArticleDao;
 import com.ilife.zhihu.dao.QuestionDao;
-import com.ilife.zhihu.entity.Article;
 import com.ilife.zhihu.entity.Question;
-import com.ilife.zhihu.repository.ArticleRepository;
 import com.ilife.zhihu.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 

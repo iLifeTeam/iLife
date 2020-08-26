@@ -183,47 +183,6 @@ Get user info by nickname
 Weibo Service Controller
 
 
-<a name="crawlweibousingget_7"></a>
-#### crawl Weibo 
-```
-GET /weibo/crawlWeibo
-```
-
-
-##### 说明
-Crawl Weibos of one user specified by userID,should be called when user ask to update the databse
-
-
-##### 参数
-
-|类型|名称|说明|类型|
-|---|---|---|---|
-|**Query**|**userId**  <br>*可选*|The user ID of a WeiBo user,should be a Long Integer|integer (int64)|
-
-
-##### 响应
-
-|HTTP代码|说明|类型|
-|---|---|---|
-|**200**|OK|无内容|
-|**204**|No Content|无内容|
-|**401**|Unauthorized|无内容|
-|**403**|Forbidden|无内容|
-
-
-##### 生成
-
-* `\*/*`
-
-
-##### HTTP请求示例
-
-###### 请求 path
-```
-/weibo/crawlWeibo
-```
-
-
 <a name="deleteweibousingget_7"></a>
 #### delete one Weibo
 ```

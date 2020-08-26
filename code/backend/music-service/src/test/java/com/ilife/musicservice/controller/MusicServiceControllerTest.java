@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -41,6 +42,7 @@ class MusicServiceControllerTest {
 
 
     @Test
+    @WithMockUser(roles="USER")
     public void updatehistory() throws Exception {
         MvcResult result = mockMvc.perform(post("/music/updatehistory")
                 .param("ph", "18679480337")
@@ -51,6 +53,7 @@ class MusicServiceControllerTest {
         System.out.println(result.getResponse().getContentAsString());
     }
     @Test
+    @WithMockUser(roles="USER")
     public void gethistory() throws Exception {
         MvcResult result = mockMvc.perform(post("/music/gethistorybypage")
                 .param("ph", "18679480337")
@@ -65,6 +68,7 @@ class MusicServiceControllerTest {
 
 
     @Test
+    @WithMockUser(roles="USER")
     public void updatehistorybyid() throws Exception {
         MvcResult result = mockMvc.perform(post("/music/updatehistorybyid")
                 .param("id", "417778610")
@@ -74,6 +78,7 @@ class MusicServiceControllerTest {
         System.out.println(result.getResponse().getContentAsString());
     }
     @Test
+    @WithMockUser(roles="USER")
     public void gethistorybyid() throws Exception {
         MvcResult result = mockMvc.perform(post("/music/gethistorybyid")
                 .param("id", "417778610")

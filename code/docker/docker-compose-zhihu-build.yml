@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  zhihu:
+    build: "../backend/zhihu-service/"
+    ports:
+      - "8201:8090"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  zhihu-crawller:
+    build: "../crawllers/zhihu-python-crawller"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  alipay:
+    image: ilife2020/alipay-service
+    ports: 
+      - "8091:8090"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  

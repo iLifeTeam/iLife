@@ -3,11 +3,9 @@ package com.ilife.zhihu.service.serviceimpl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.ilife.zhihu.dao.*;
 import com.ilife.zhihu.entity.*;
 import com.ilife.zhihu.service.ZhihuService;
-import io.grpc.netty.shaded.io.netty.handler.codec.json.JsonObjectDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -104,22 +102,23 @@ public class ZhihuServiceImpl implements ZhihuService {
         article.setUpdate_time(convertEpochToTimestamp(articleObject.getLong("update_time")));
         return article;
     }
+
     @Override
     @Transactional
     public void saveActivitiesFromJsonString(User user, String json) {
         JSONArray jsonArray = JSON.parseArray(json);
         for (Object object : jsonArray) {
             JSONObject activityObject = (JSONObject) object;
-            System.out.println(activityObject.toJSONString());
+//            System.out.println(activityObject.toJSONString());
             Activity activity = makeActivityFromJsonObject(activityObject);
-            System.out.println(activity.getCreated_time().toString());
+            System.out.println(activity.getCreated_time().toString() + activity.getAction_text());
             activity.setUser(user);
             switch (activity.getType()) {
                 case "CREATE_QUESTION":
                 case "FOLLOW_QUESTION": {
                     JSONObject questionObject = activityObject.getJSONObject("question");
 //                    System.out.println(questionDao);
-                    System.out.println(questionObject.toJSONString());
+//                    System.out.println(questionObject.toJSONString());
                     Question question = questionDao.save(
                             makeQuestionFromJsonObject(questionObject));
                     JSONArray answerArray = questionObject.getJSONArray("answers");
@@ -156,20 +155,14 @@ public class ZhihuServiceImpl implements ZhihuService {
     }
 
     @Override
-    public User saveUser(User user) {
-        return userDao.save(user);
-    }
-
-    @Override
     public User saveUserFromJsonString(String email, String json) {
 //        JSONObject userObject = JSON.parseObject(json);
 //        User user = makeUserFromJsonObject(userObject);
-        User user = JSON.parseObject(json,User.class);
+        User user = JSON.parseObject(json, User.class);
         user.setEmail(email);
         System.out.println(JSON.toJSONString(user));
         return userDao.save(user);
     }
-
 
 
     @Override
