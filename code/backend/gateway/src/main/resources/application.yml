@@ -17,3 +17,8 @@ zuul:
       service-id: music-service
       path: /music-service/**
       sensitive-headers:
+    taobao:
+      path: /taobao/**  ## 匹配的路径
+      service-id: taobao-service ## 转到的路径
+      url: http://18.166.111.161:8095
+      sensitive-headers: 
