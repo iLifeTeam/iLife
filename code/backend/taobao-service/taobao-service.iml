@@ -151,6 +151,7 @@
     <orderEntry type="library" name="Maven: io.micrometer:micrometer-registry-prometheus:1.5.1" level="project" />
     <orderEntry type="library" name="Maven: io.prometheus:simpleclient_common:0.8.1" level="project" />
     <orderEntry type="library" name="Maven: io.prometheus:simpleclient:0.8.1" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-starter:unknown" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:unknown" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.72" level="project" />
     <orderEntry type="library" name="Maven: io.springfox:springfox-swagger2:2.9.2" level="project" />
