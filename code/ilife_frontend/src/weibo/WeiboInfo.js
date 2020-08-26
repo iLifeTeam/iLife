@@ -21,9 +21,8 @@ export default class WeiboInfo extends Component {
   }
 
   componentDidMount() {
-    this.$el = $(this.el);
 
-    this.$el.DataTable({
+    $('#weiboTable').DataTable({
       data: this.props.activities ? parseData(this.props.activities) : null,
       columns: [
         { data: "id" },
