@@ -8,7 +8,9 @@ spring:
     config:
       server:
         native:
-          search-locations: classpath:/config
+          searchLocations: classpath:/config
+      discovery:
+        enabled: true
   profiles:
     active: native
 

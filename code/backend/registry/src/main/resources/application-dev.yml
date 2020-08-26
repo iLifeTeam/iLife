@@ -1,6 +1,7 @@
+
 spring:
   application:
-    name:  eureka
+    name:  registry
 
 server:
   port: 8090

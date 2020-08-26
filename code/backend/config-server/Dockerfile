@@ -11,9 +11,11 @@ RUN mvn dependency:go-offline
 ADD . .
 RUN mvn clean package -Dmaven.test.skip=true
 
-## runtime stage
-FROM adoptopenjdk/openjdk14:alpine
-WORKDIR /app
-COPY --from=0 /app/target/config-server-0.0.1-SNAPSHOT.jar ./app.jar
+ENTRYPOINT ["java", "-jar", "./target/config-server-0.0.1-SNAPSHOT.jar"]
 
-ENTRYPOINT ["java","-jar","./app.jar"]
+## runtime stage
+# FROM adoptopenjdk/openjdk14:alpine
+# WORKDIR /app
+# COPY --from=0 /app/target/config-server-0.0.1-SNAPSHOT.jar ./app.jar
+
+# ENTRYPOINT ["java","-jar","./app.jar"]
