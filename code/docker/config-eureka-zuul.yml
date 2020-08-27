@@ -1,0 +1,15 @@
+version: '3.2'
+
+services:
+    config-server:
+        image: ilife2020/config-server
+        ports:
+            - "8888:8888"
+    registry:
+        image: ilife2020/registry
+        ports:
+            - "1001:8090"
+    gateway:
+        image: ilife2020/gateway
+        ports:
+            - "8000:8090"

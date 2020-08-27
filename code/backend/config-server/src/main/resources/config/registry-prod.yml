@@ -1,11 +1,10 @@
 spring:
   application:
-    name:  eureka
+    name:  registry
 server:
   port: 8090 # use docker to map to port 1001
 eureka:
   instance:
-    hostname: 0.0.0.0 # ip
     prefer-ip-address: true
   client:
     register-with-eureka: false

@@ -4,6 +4,8 @@ spring:
   application:
     name: zuul-proxy
 eureka:
+  instance:
+    hostname: gateway
   client:
     register-with-eureka: true
     fetch-registry: true
@@ -11,14 +13,22 @@ eureka:
       defaultZone: http://18.166.111.161:1001/eureka/
 
 zuul:
+  debug:
+    request: true
   add-host-header: true #设置为true重定向是会添加host请求头
   routes: #给服务配置路由
     music-service:
       service-id: music-service
       path: /music-service/**
       sensitive-headers:
-    taobao:
+    taobao-service:
       path: /taobao/**  ## 匹配的路径
-      service-id: taobao-service ## 转到的路径
-      url: http://18.166.111.161:8095
+      service-id: taobao-service ## 对应eureka中注册的服务
+      # url: http://47.97.206.169:8095
       sensitive-headers: 
+    # jingdong:
+    # zhihu:
+    # bilibili:
+    # douban:
+    # weibo:
+    
