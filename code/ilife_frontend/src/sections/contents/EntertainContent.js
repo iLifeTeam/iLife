@@ -264,7 +264,14 @@ export default class EntertainContent extends Component {
     };
     changeSrcMovie = () => {
         let movie = document.getElementById('img');
-        movie.setAttribute('src', 'https://img1.doubanio.com/view/photo/l_ratio_poster/public/p2074715729.webp');
+        let ram = Math.random()*3;
+        if(ram <= 1)
+            movie.setAttribute('src', 'https://img1.doubanio.com/view/photo/l_ratio_poster/public/p2074715729.webp');
+        if(ram <= 2)
+            movie.setAttribute('src','https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2584726781.webp');
+        else{
+            movie.setAttribute('src','\'https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2589768807.webp');
+        }
     };
     changeSrcBook = () => {
         let book = document.getElementById('img2');
