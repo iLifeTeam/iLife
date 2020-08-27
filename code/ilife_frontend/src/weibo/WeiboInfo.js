@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 
-const $ = require('jquery');
-$.DataTable = require('datatables.net')
+var $ = require('jquery');
+require('datatables.net')
 
 function parseData(data) {
 
   data.forEach(element => {
     if (element.publish_time) {
       var str = JSON.stringify(element.publish_time);
-      element.publish_time = str.split('\"')[1].split('T')[0] + " " + str.split('T')[1].split(':')[0] + ':' + str.split('T')[1].split(':')[1];
+      element.publish_time = str.split('"')[1].split('T')[0] + " " + str.split('T')[1].split(':')[0] + ':' + str.split('T')[1].split(':')[1];
     }
   });
 
@@ -16,28 +16,26 @@ function parseData(data) {
 }
 
 export default class WeiboInfo extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
 
-    $('#weiboTable').DataTable({
-      data: this.props.activities ? parseData(this.props.activities) : null,
-      columns: [
-        { data: "id" },
-        { data: "publish_time" },
-        { data: "content" },
-        { data: "retweet_num" },
-        { data: "comment_count" },
-        { data: "up_num" },
+    $(document).ready(() => {
 
-      ]
+      this.$el = $(this.el);
+      this.$el.DataTable({
+        columns: [
+          { data: "id" },
+          { data: "publish_time" },
+          { data: "content" },
+          { data: "retweet_num" },
+          { data: "comment_count" },
+          { data: "up_num" },
+        ]
+      });
     });
-
   }
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.activities && this.props.activities != prevProps.activities) {
+    if (this.props.activities && this.props.activities !== prevProps.activities) {
       var table = $('#weiboTable').DataTable()
       table.clear();
       //向table中添加数据
@@ -50,7 +48,7 @@ export default class WeiboInfo extends Component {
   componentWillUnmount() {
     console.log("unmount");
     this.setState = () => false;
-    this.$el.DataTable().destroy(true);
+    $('#weiboTable').DataTable().destroy(true);
   }
 
 
