@@ -153,15 +153,15 @@ definitions:
           type: "object"
       sort:
         $ref: "#/definitions/Sort"
-      numberOfElements:
-        type: "integer"
-        format: "int32"
       last:
         type: "boolean"
       first:
         type: "boolean"
       pageable:
         $ref: "#/definitions/Pageable"
+      numberOfElements:
+        type: "integer"
+        format: "int32"
       empty:
         type: "boolean"
   PageWyyuser:
@@ -185,15 +185,15 @@ definitions:
           $ref: "#/definitions/wyyuser"
       sort:
         $ref: "#/definitions/Sort"
-      numberOfElements:
-        type: "integer"
-        format: "int32"
       last:
         type: "boolean"
       first:
         type: "boolean"
       pageable:
         $ref: "#/definitions/Pageable"
+      numberOfElements:
+        type: "integer"
+        format: "int32"
       empty:
         type: "boolean"
   Pageable:
@@ -204,14 +204,14 @@ definitions:
         format: "int64"
       sort:
         $ref: "#/definitions/Sort"
-      unpaged:
-        type: "boolean"
       paged:
         type: "boolean"
-      pageSize:
+      unpaged:
+        type: "boolean"
+      pageNumber:
         type: "integer"
         format: "int32"
-      pageNumber:
+      pageSize:
         type: "integer"
         format: "int32"
   Sort:
