@@ -18,14 +18,24 @@ zuul:
   add-host-header: true #设置为true重定向是会添加host请求头
   routes: #给服务配置路由
     music-service:
-      service-id: music-service
       path: /music-service/**
+      service-id: music-service
       sensitive-headers:
     taobao-service:
       path: /taobao/**  ## 匹配的路径
       service-id: taobao-service ## 对应eureka中注册的服务
       # url: http://47.97.206.169:8095
       sensitive-headers: 
+    douban-service:
+      path: /douban/**  ## 匹配的路径
+      # service-id: douban-service ## 对应eureka中注册的服务
+      url: http://121.36.196.234:8383
+      sensitive-headers: 
+    bilibili-service:
+      path: /bilibili/**  ## 匹配的路径
+      service-id: bilibili-service ## 对应eureka中注册的服务
+      sensitive-headers: 
+
     # jingdong:
     # zhihu:
     # bilibili:
