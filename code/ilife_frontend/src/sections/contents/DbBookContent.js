@@ -100,6 +100,7 @@ export default class DbBookContent extends Component {
 
 
     crawl=()=> {
+        const that = this;
         let bookInput = document.getElementById('bookInput');
         console.log(bookInput.value);
         if(bookInput.value===null||bookInput.value ===""||bookInput.value===0){
@@ -121,17 +122,18 @@ export default class DbBookContent extends Component {
         axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
+                that.componentDidMount();
                 message.destroy();
                 message.success({
                     content: "图书数据更新成功！请重新进入页面查看",
                     style: { marginTop: '40px' },
                 });
+
             })
             .catch(function (error) {
                 console.log(error);
             });
-
-    }
+    };
 
     /* start 文案 here <- bad comment style*/
     doubanServer = "http://121.36.196.234:8383";
