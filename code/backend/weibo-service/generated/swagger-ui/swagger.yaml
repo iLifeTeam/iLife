@@ -263,6 +263,8 @@ definitions:
         type: "string"
       work:
         type: "string"
+      avatar:
+        type: "string"
   Weibo:
     type: "object"
     properties:

@@ -38,4 +38,6 @@ public class User {
     private String education;
     @Column(name = "WORK")
     private String work;
+    @Column(name = "AVATAR")
+    private String avatar;
 }

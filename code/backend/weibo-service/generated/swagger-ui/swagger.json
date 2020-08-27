@@ -339,6 +339,9 @@
         },
         "work" : {
           "type" : "string"
+        },
+        "avatar" : {
+          "type" : "string"
         }
       }
     },
