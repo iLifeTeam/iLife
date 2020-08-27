@@ -8,13 +8,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class HistoryServiceImpl implements HistoryService {
     @Autowired
     private HistoryDao historyDao;
 
+
+    Map<String,Integer> map = new HashMap<>();
 
     public List<history> findAllByMid(Long mid){
         return historyDao.findAllByMid(mid);

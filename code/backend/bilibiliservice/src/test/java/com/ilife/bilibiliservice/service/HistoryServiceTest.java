@@ -16,6 +16,6 @@ class HistoryServiceTest {
 
     @Test
     void findAllByMid() {
-        System.out.println(historyService.findAllByMid((long)480346309));
+        System.out.println(historyService.findAllByMid((long)35159960));
     }
 }

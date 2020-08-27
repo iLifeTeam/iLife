@@ -214,14 +214,14 @@
           "type" : "integer",
           "format" : "int32"
         },
+        "last" : {
+          "type" : "boolean"
+        },
         "first" : {
           "type" : "boolean"
         },
         "pageable" : {
           "$ref" : "#/definitions/Pageable"
-        },
-        "last" : {
-          "type" : "boolean"
         },
         "empty" : {
           "type" : "boolean"
@@ -260,14 +260,14 @@
           "type" : "integer",
           "format" : "int32"
         },
+        "last" : {
+          "type" : "boolean"
+        },
         "first" : {
           "type" : "boolean"
         },
         "pageable" : {
           "$ref" : "#/definitions/Pageable"
-        },
-        "last" : {
-          "type" : "boolean"
         },
         "empty" : {
           "type" : "boolean"
@@ -284,17 +284,17 @@
         "sort" : {
           "$ref" : "#/definitions/Sort"
         },
-        "paged" : {
-          "type" : "boolean"
-        },
         "unpaged" : {
           "type" : "boolean"
         },
-        "pageNumber" : {
+        "paged" : {
+          "type" : "boolean"
+        },
+        "pageSize" : {
           "type" : "integer",
           "format" : "int32"
         },
-        "pageSize" : {
+        "pageNumber" : {
           "type" : "integer",
           "format" : "int32"
         }
@@ -303,10 +303,10 @@
     "Sort" : {
       "type" : "object",
       "properties" : {
-        "unsorted" : {
+        "sorted" : {
           "type" : "boolean"
         },
-        "sorted" : {
+        "unsorted" : {
           "type" : "boolean"
         },
         "empty" : {
