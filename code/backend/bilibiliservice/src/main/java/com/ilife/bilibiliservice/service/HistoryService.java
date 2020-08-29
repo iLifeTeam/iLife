@@ -9,4 +9,7 @@ import java.util.List;
 public interface HistoryService {
     List<history> findAllByMid(Long mid);
     Page<history> findAllByMid(Long mid, Pageable pageable);
+    List<String> getFavoriteTag(Long id);
+    int getFavoriteTagid(String s);
+    List<Long> getFavoriteUp(Long id);
 }

@@ -16,6 +16,12 @@ class HistoryServiceTest {
 
     @Test
     void findAllByMid() {
-        System.out.println(historyService.findAllByMid((long)480346309));
+        System.out.println(historyService.findAllByMid((long)35159960));
+    }
+
+    @Test
+    void getTag(){
+        System.out.println(historyService.getFavoriteTag((long)35159960));
+        System.out.println(historyService.getFavoriteTagid("搞笑"));
     }
 }

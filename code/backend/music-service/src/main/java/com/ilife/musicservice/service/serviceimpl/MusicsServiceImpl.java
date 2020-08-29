@@ -14,8 +14,13 @@ public class MusicsServiceImpl implements MusicsService {
     private MusicsDao musicsDao;
 
 
-    public  void addmusic(Long id,String name){
-        musicsDao.addmusic(id, name);
+//    public  void addmusic(Long id,String name){
+//        musicsDao.addmusic(id, name);
+//    }
+
+    public musics getFavoriteSong(Long wyyid){
+        Long mid = musicsDao.getFavoriteSong(wyyid);
+        return musicsDao.findById(mid);
     }
 
 

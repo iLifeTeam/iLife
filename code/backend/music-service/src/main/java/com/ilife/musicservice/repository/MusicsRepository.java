@@ -13,5 +13,14 @@ public interface MusicsRepository extends JpaRepository<musics,Long> {
     void addmusic(Long id, String name);
 
 
+    @Query(value = "select m_id\n" +
+            "from wyyuser\n" +
+            "WHERE score in (\n" +
+            "SELECT MAX(score)\n" +
+            "FROM wyyuser\n" +
+            "where wyyid=?1)\n" +
+            "and wyyid=?1",nativeQuery = true)
+    Long getFavoriteSong(Long id);
+
 
 }

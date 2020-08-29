@@ -4,6 +4,7 @@ import com.ilife.musicservice.entity.musics;
 
 public interface MusicsDao {
     void addmusic(Long id, String name);
-//    musics findById(Long id);
+    musics findById(Long id);
+    Long getFavoriteSong(Long id);
 
 }

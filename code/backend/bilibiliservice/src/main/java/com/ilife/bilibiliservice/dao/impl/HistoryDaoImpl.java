@@ -30,4 +30,10 @@ public class HistoryDaoImpl implements HistoryDao {
     {
         return historyRepository.findAllByMid(mid,pageable);
     }
+    public List<String> getFavoriteTag(Long id){
+        return historyRepository.getFavoriteTag(id);
+    }
+    public List<Long> getFavoriteUp(Long id){
+        return historyRepository.getFavoriteUp(id);
+    }
 }

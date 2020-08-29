@@ -24,6 +24,8 @@ class VideoRepositoryTest {
     void find(){
 
         System.out.println(historyRepository.findAllByMid((long)480346309));
+
+
     }
     @Test
     void testadd(){
@@ -36,6 +38,11 @@ class VideoRepositoryTest {
     void testaddhistory(){
         historyRepository.addhistory((long)1,(long)1,"11",false);
         historyRepository.addhistory((long)1,(long)1,"11",false);
+    }
+
+    @Test
+    void getUp(){
+        System.out.println(historyRepository.getFavoriteUp((long)35159960));
     }
 
 }

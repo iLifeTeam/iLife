@@ -1,5 +1,6 @@
 package com.ilife.musicservice.dao;
 
+import com.ilife.musicservice.entity.musics;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,6 +35,7 @@ class WyyhistoryDaoTest {
         musicsDao.addmusic((long) 1, "我好想你");
         singDao.addsing((long) 1, (long) 1, "吴青峰");
     }
+
 
     @Test
     void addsongandhistory() {

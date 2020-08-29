@@ -79,4 +79,47 @@ class BiliControllerTest {
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
     }
+
+    @Test
+    @WithMockUser(roles="USER")
+    void getTag() throws Exception {
+        MvcResult result = mockMvc.perform(get("/bili/getFavortag")
+                .param("mid", "35159960")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    @WithMockUser(roles="USER")
+    void getUp() throws Exception {
+        MvcResult result = mockMvc.perform(get("/bili/getFavorUp")
+                .param("mid", "35159960")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    @WithMockUser(roles="USER")
+    void getPop() throws Exception {
+        MvcResult result = mockMvc.perform(get("/bili/getPopVideo")
+                .param("mid", "35159960")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+    }
+    @Test
+    @WithMockUser(roles="USER")
+    void getUpVideo() throws Exception {
+        MvcResult result = mockMvc.perform(get("/bili/getUpVideo")
+                .param("mid", "5970160")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+    }
 }

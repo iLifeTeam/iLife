@@ -13,7 +13,11 @@ class NetEaseCrawlerTest {
 
     @Test
     void test2() {
-        assertEquals(417778610,netEaseCrawler.getuid("18679480337","Xiong0608"));
+        assertEquals(562690552, netEaseCrawler.getuid("18804940083", "liyifeng0504521."));
+    }
+    @Test
+    void test1() {
+        netEaseCrawler.crawlbyid(netEaseCrawler.getuid("18804940083","liyifeng0504521."));
     }
 
     @Test

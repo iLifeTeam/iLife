@@ -1,13 +1,12 @@
 package com.ilife.musicservice.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.ilife.musicservice.crawler.NetEaseCrawler;
 import com.ilife.musicservice.entity.musics;
 import com.ilife.musicservice.entity.wyyuser;
 import com.ilife.musicservice.service.MusicsService;
-import com.ilife.musicservice.service.SingService;
 import com.ilife.musicservice.service.WyyhistoryService;
 import io.swagger.annotations.Api;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.data.domain.Page;
@@ -15,8 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController
@@ -26,6 +23,9 @@ public class MusicServiceController {
 
     @Autowired
     private WyyhistoryService wyyhistoryService;
+
+    @Autowired
+    private MusicsService musicsService;
 
     @Autowired
     private NetEaseCrawler netEaseCrawler;
@@ -45,11 +45,16 @@ public class MusicServiceController {
         } else return t;
     }
 
+
     @PostMapping("/music/getid")
     @PreAuthorize("hasRole('ROLE_USER')")
     public Long getid(@RequestParam String ph, String pw) {
         return netEaseCrawler.getuid(ph, pw);
     }
+
+
+
+
 
     @PostMapping("/music/updatehistory")
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -60,6 +65,7 @@ public class MusicServiceController {
         netEaseCrawler.crawlbyid(netEaseCrawler.getuid(ph,pw));
         return true;
     }
+
 
     @PostMapping("/music/gethistorybyid")
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -81,6 +87,28 @@ public class MusicServiceController {
     public boolean updatehistorybyid(@RequestParam Long id) {
         netEaseCrawler.crawlbyid(id);
         return true;
+    }
+
+
+    @PostMapping("/music/getFavorSong")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public musics getFavorSong(@RequestParam String ph, String pw) {
+        long uid = netEaseCrawler.getuid(ph, pw);
+        if (uid == -1) return null;
+//        wyyhistoryService.deletebyid(uid);
+
+        return musicsService.getFavoriteSong(uid);
+    }
+
+
+    @PostMapping("/music/getFavorSingers")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public JSONArray getFavorSingers(@RequestParam String ph, String pw) {
+        long uid = netEaseCrawler.getuid(ph, pw);
+        if (uid == -1) return null;
+//        wyyhistoryService.deletebyid(uid);
+
+        return wyyhistoryService.getFavorSingers(uid);
     }
 
 }

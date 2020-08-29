@@ -23,4 +23,14 @@ public interface WyyhistoryRepository extends JpaRepository<wyyuser,Long> {
     @Transactional
     @Modifying
     int deleteByWyyid(Long id);
+
+
+    @Query(value = "SELECT mname\n" +
+            "FROM musics\n" +
+            "WHERE m_id = \n" +
+            "(select m_id \n" +
+            "FROM wyyuser\n" +
+            "WHERE score >= all(SELECT score from wyyuser) and wyyid = ?1)",nativeQuery = true)
+    String getmaxscore(Long id);
+
 }
