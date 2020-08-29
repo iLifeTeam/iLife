@@ -24,7 +24,7 @@ export default class Menu extends Component {
       </div>;
     return (
       <div >{/* Left side column. contains the logo and sidebar */}
-        <div className="main-sidebar" style={{ height: '1700px' }}>
+        <div className="main-sidebar" >
           {/* sidebar: style can be found in sidebar.less */}
           <div className="sidebar">
             {/* Sidebar user panel */}

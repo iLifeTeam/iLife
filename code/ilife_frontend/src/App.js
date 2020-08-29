@@ -12,14 +12,12 @@ import RegisterPage from './pages/RegisterPage'
 export default class App extends Component {
   render() {
     return (
-      <div>
-        <Router>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/home" component={HomePage} />
-          <Route path="/login" component={LoginPage} />
-          <Route path="/register" component={RegisterPage} />
-        </Router>
-      </div>
+      <Router>
+        <Route exact path="/" component={HomePage} />
+        <Route path="/home" component={HomePage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/register" component={RegisterPage} />
+      </Router>
     )
   }
 }
