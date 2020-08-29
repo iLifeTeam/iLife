@@ -1,49 +1,46 @@
 import React, { Component } from 'react'
-
-var $ = require('jquery');
+import $ from 'jquery'
 require('datatables.net')
-
-function parseData(data) {
-
-  data.forEach(element => {
-    if (element.publish_time) {
-      var str = JSON.stringify(element.publish_time);
-      element.publish_time = str.split('"')[1].split('T')[0] + " " + str.split('T')[1].split(':')[0] + ':' + str.split('T')[1].split(':')[1];
-    }
-  });
-
-  return data;
-}
+require('datatables.net-dt/css/jquery.dataTables.min.css')
 
 export default class WeiboInfo extends Component {
 
   componentDidMount() {
+    this.$el = $(this.el);
 
-    $(document).ready(() => {
-
-      this.$el = $(this.el);
-      this.$el.DataTable({
-        columns: [
-          { data: "id" },
-          { data: "publish_time" },
-          { data: "content" },
-          { data: "retweet_num" },
-          { data: "comment_count" },
-          { data: "up_num" },
-        ]
-      });
+    this.$el.DataTable({
+      columns: [
+        { data: "id" },
+        { data: "publish_time" },
+        { data: "content" },
+        { data: "retweet_num" },
+        { data: "comment_count" },
+        { data: "up_num" },
+      ]
     });
+  }
+  parseData(data) {
+    //console.log(data)
+    data.forEach(element => {
+      if (element.publish_time) {
+        var str = JSON.stringify(element.publish_time);
+        element.publish_time = str.split('"')[1].split('T')[0] + " " + str.split('T')[1].split(':')[0] + ':' + str.split('T')[1].split(':')[1];
+      }
+    });
+
+    return data;
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.props.activities && this.props.activities !== prevProps.activities) {
       var table = $('#weiboTable').DataTable()
       table.clear();
       //向table中添加数据
-      table.rows.add(parseData(this.props.activities));
+      table.rows.add(this.parseData(this.props.activities));
       //重新绘画表格
       table.draw();
     }
   }
+
 
   componentWillUnmount() {
     console.log("unmount");

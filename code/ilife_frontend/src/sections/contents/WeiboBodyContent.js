@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { createBrowserHistory } from 'history'
 import WeiboInfo from '../../weibo/WeiboInfo';
-import {Button, Typography, DatePicker, Space, Divider, message, Input, Popconfirm} from 'antd';
+import { Button, Typography, DatePicker, Space, Divider, message, Input, Popconfirm } from 'antd';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 
@@ -23,8 +23,8 @@ const text = <div>
       // let GMT1 = new Date(dates[1]._d);
       //this.setState({ startDate: GMT.toUTCString(), endDate: GMT1.toUTCString() })
     }}
-    style={{marginLeft:'20px'}}
-/>
+    style={{ marginLeft: '20px' }}
+  />
 </div>;
 export default class WeiboBodyContent extends Component {
   constructor(props) {
@@ -38,8 +38,8 @@ export default class WeiboBodyContent extends Component {
       /* hardcode parameter, need to be passed in */
       startTime: "Mon May 28 09:51:52 GMT 2019",
       endTime: "Mon July 29 09:51:52 GMT 2020",
-      startDate:"2020-07-01",
-      endDate:"now",
+      startDate: "2020-07-01",
+      endDate: "now",
       stats: null,
       statsReady: false,
       statsLoading: false,
@@ -80,7 +80,7 @@ export default class WeiboBodyContent extends Component {
 
     const weiboId = await axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
+        //console.log(JSON.stringify(response.data));
         window.sessionStorage.setItem("iLifeId", response.data.id);
         return response.data.weibid;
       })
@@ -100,7 +100,7 @@ export default class WeiboBodyContent extends Component {
 
     const activities = await axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
+        //console.log(JSON.stringify(response.data));
         return response.data;
       })
       .catch(function (error) {
@@ -230,11 +230,11 @@ export default class WeiboBodyContent extends Component {
                 <div className="box-header">
                   <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}><h3 className="box-title">您的微博数据</h3></Divider>
                   <Popconfirm
-                      placement="bottomLeft"
-                      title={text}
-                      onConfirm={this.crawl}
-                      okText="更新数据"
-                      cancelText="再想想"
+                    placement="bottomLeft"
+                    title={text}
+                    onConfirm={this.crawl}
+                    okText="更新数据"
+                    cancelText="再想想"
                   >
                     <p className="btn btn-danger" >更新数据</p>
                   </Popconfirm>
