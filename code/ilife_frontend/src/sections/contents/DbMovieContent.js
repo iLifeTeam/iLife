@@ -120,12 +120,13 @@ export default class DbMovieContent extends Component {
         axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
+
                 message.destroy();
                 message.success({
                     content: "电影数据更新成功！请重新进入页面查看",
                     style: { marginTop: '40px' },
                 });
-                that.forceUpdate();
+                that.componentDidMount();
             })
             .catch(function (error) {
                 console.log(error);

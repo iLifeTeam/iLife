@@ -209,8 +209,7 @@ export default class WeiboBodyContent extends Component {
           content: "微博数据更新成功！请重新进入页面查看",
           style: { marginTop: '40px' },
         });
-        that.forceUpdate();
-
+        that.componentDidMount();
       })
       .catch(function (error) {
         console.log(error);
