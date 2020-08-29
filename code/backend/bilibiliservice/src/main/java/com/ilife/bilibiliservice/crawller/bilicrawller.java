@@ -126,6 +126,41 @@ public class bilicrawller {
         JSONObject jsonObject = JSONObject.parseObject(EntityUtils.toString(contentEntity));
         return jsonObject;
     }
+    public JSONObject getPopVideo(int id) throws IOException {
+        CloseableHttpResponse response = null;
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        String uri = "http://api.bilibili.com/x/web-interface/ranking/region?day=7&rid=" + String.valueOf(id);
+        HttpGet httpGet = new HttpGet(uri);
+
+        response = httpClient.execute(httpGet);
+        HttpEntity contentEntity = response.getEntity();
+        JSONObject jsonObject = JSONObject.parseObject(EntityUtils.toString(contentEntity));
+        return jsonObject;
+    }
+
+    public JSONObject getAuther(Long mid) throws IOException {
+        CloseableHttpResponse response = null;
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        String uri = "http://api.bilibili.com/x/space/acc/info?mid=" + String.valueOf(mid);
+        HttpGet httpGet = new HttpGet(uri);
+
+        response = httpClient.execute(httpGet);
+        HttpEntity contentEntity = response.getEntity();
+        JSONObject jsonObject = JSONObject.parseObject(EntityUtils.toString(contentEntity));
+        return jsonObject;
+    }
+
+    public JSONObject getAutherVideo(Long mid) throws IOException {
+        CloseableHttpResponse response = null;
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        String uri = "http://api.bilibili.com/x/space/arc/search?pn=1&ps=10&order=click&mid=" + String.valueOf(mid);
+        HttpGet httpGet = new HttpGet(uri);
+
+        response = httpClient.execute(httpGet);
+        HttpEntity contentEntity = response.getEntity();
+        JSONObject jsonObject = JSONObject.parseObject(EntityUtils.toString(contentEntity));
+        return jsonObject;
+    }
     public JSONObject gethistory(String SessData,Long view_at) throws IOException {
         String uri= "http://api.bilibili.com/x/web-interface/history/cursor?view_at=" + view_at.toString();
         CloseableHttpResponse response = null;
@@ -138,6 +173,8 @@ public class bilicrawller {
         JSONObject jsonObject = JSONObject.parseObject(EntityUtils.toString(contentEntity));
         return jsonObject;
     }
+
+
 
     @Transactional
     public void updatehistory(String SessData) throws IOException {

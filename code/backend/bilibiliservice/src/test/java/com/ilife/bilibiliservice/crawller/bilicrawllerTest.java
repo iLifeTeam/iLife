@@ -34,4 +34,17 @@ class bilicrawllerTest {
     void getuser() throws IOException {
         System.out.println(bilicrawller.getuserinform("73b7c81e%2C1613980001%2Cb5483*81"));
     }
+
+    @Test
+    void getPopVideo() throws IOException {
+        System.out.println(bilicrawller.getPopVideo(138));
+    }
+    @Test
+    void getAuther() throws IOException {
+        System.out.println(bilicrawller.getAuther(35159960L));
+    }
+    @Test
+    void getAutherVideo() throws IOException {
+        System.out.println(bilicrawller.getAutherVideo(5970160L));
+    }
 }

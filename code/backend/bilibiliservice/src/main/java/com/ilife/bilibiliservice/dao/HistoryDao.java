@@ -11,4 +11,6 @@ public interface HistoryDao {
     Page<history> findAllByMid(Long mid, Pageable pageable);
     void addhistory(Long mid,Long oid,String type,Boolean is_fav);
     void deleteAllbymid(Long mid);
+    List<String> getFavoriteTag(Long id);
+    List<Long> getFavoriteUp(Long id);
 }

@@ -1,5 +1,6 @@
 package com.ilife.bilibiliservice.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ilife.bilibiliservice.crawller.bilicrawller;
 import com.ilife.bilibiliservice.entity.biliuser;
@@ -64,4 +65,37 @@ public class BiliController {
     public void updatehistory(@RequestParam("SESSDATA") String SESSDATA) throws IOException {
         bilicrawller.updatehistory(SESSDATA);
     }
+
+
+
+    @GetMapping("/bili/getFavortag")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public List<String> getFavortag(@RequestParam("mid") Long mid)  {
+        return historyService.getFavoriteTag(mid);
+    }
+
+    @GetMapping("/bili/getPopVideo")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public JSONObject getPopVideo(@RequestParam("tag") String tag) throws IOException {
+        int tid = historyService.getFavoriteTagid(tag);
+        return bilicrawller.getPopVideo(tid);
+    }
+
+    @GetMapping("/bili/getFavorUp")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public JSONArray getFavorUp(@RequestParam("mid") Long mid) throws IOException {
+        List<Long> listofup = historyService.getFavoriteUp(mid);
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < listofup.size();++i){
+            JSONObject jsonObject = bilicrawller.getAuther(listofup.get(i));
+            jsonArray.add(jsonObject);
+        }
+        return jsonArray;
+    }
+    @GetMapping("/bili/getUpVideo")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public JSONObject getUpVideo(@RequestParam("mid") Long id) throws IOException {
+        return bilicrawller.getAutherVideo(id);
+    }
+
 }
