@@ -188,7 +188,7 @@ export default class JingdongBodyContent extends Component {
     console.log(this.state)
     return (
       <div className="content-wrapper">
-        <section className="content">
+        <section className="content" id='bills'>
           <div className="row">
             <div className="col-md-9">
               <div className="box box-primary">
@@ -232,32 +232,6 @@ export default class JingdongBodyContent extends Component {
                     bordered
                   >
                   </Table>
-                  {/*<thead>*/}
-                  {/*  <tr>*/}
-                  {/*    <th>orderId</th>*/}
-                  {/*    <th>question</th>*/}
-                  {/*    <th>answer</th>*/}
-                  {/*    <th>target_id</th>*/}
-                  {/*    <th>created_time</th>*/}
-                  {/*  </tr>*/}
-                  {/*</thead>*/}
-                  {/*<tbody>*/}
-                  {/*  {orders.length > 0 ?  orders.map((order, index) => (*/}
-                  {/*    <JingdongOrders*/}
-                  {/*    ></JingdongOrders>*/}
-                  {/*  )) : null }*/}
-
-                  {/*</tbody>*/}
-                  {/*<tfoot>*/}
-                  {/*  <tr>*/}
-                  {/*    <th>action_text</th>*/}
-                  {/*    <th>question</th>*/}
-                  {/*    <th>answer</th>*/}
-                  {/*    <th>target_id</th>*/}
-                  {/*    <th>created_time</th>*/}
-                  {/*  </tr>*/}
-                  {/*</tfoot>*/}
-                  {/*</table>*/}
                 </div>
               </div>
             </div>

@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { createBrowserHistory } from 'history'
 import DoubanMovies from '../../douban/DoubanMovies';
-import {Button, Divider, message, Popconfirm, Typography,Input} from "antd";
-const {Text, Paragraph} = Typography;
+import { Button, Divider, message, Popconfirm, Typography, Input } from "antd";
+const { Text, Paragraph } = Typography;
 const text = <div>
     <Paragraph>所有数据和图片均来自网上公开资料，请放心食用。</Paragraph>
     <Paragraph>数据更新将会花费一段时间，请耐心等待~</Paragraph>
@@ -101,7 +101,7 @@ export default class DbMovieContent extends Component {
     crawl = () => {
         let bookInput = document.getElementById('bookInput');
         console.log(bookInput.value);
-        if(bookInput.value===null||bookInput.value ===""||bookInput.value===0){
+        if (bookInput.value === null || bookInput.value === "" || bookInput.value === 0) {
             bookInput.value = 2;
         }
         message.loading({
@@ -111,7 +111,7 @@ export default class DbMovieContent extends Component {
         });
         let config = {
             method: 'get',
-            url: 'http://121.36.196.234:8484/douban/crawlMovie?userId=' + this.state.doubanId + '&limit='+bookInput.value+'&type=movie',
+            url: 'http://121.36.196.234:8484/douban/crawlMovie?userId=' + this.state.doubanId + '&limit=' + bookInput.value + '&type=movie',
             headers: {
                 withCredentials: true,
             }
@@ -217,7 +217,7 @@ export default class DbMovieContent extends Component {
         const { activities, stats, statsReady, statsLoading, doubanId } = this.state;
         return (
             <div className="content-wrapper">
-                <section className="content">
+                <section className="content" id='records'>
                     < div className="row">
                         <div className="col-xs-12">
                             <div className="box">
@@ -247,7 +247,7 @@ export default class DbMovieContent extends Component {
                     </div>
                 </section>
                 <section>
-                    < div className="row">
+                    < div className="row" id='analyse'>
                         <div className="col-xs-12">
                             <div className="box">
                                 <div className="box-header">

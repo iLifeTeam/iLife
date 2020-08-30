@@ -351,7 +351,7 @@ export default class TaobaoBodyContent extends Component {
     console.log(this.state)
     return (
       <div className="content-wrapper">
-        <section className="content">
+        <section className="content" id='bills'>
           <div className="row">
             <div className="col-md-9">
               <div className="box box-primary">

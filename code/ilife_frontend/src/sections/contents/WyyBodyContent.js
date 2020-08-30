@@ -158,7 +158,7 @@ export default class WyyBodyContent extends Component {
             </div>
           </div>
 
-          <div className="row">
+          <div className="row" id='history'>
             <div className="col-xs-12">
               <div className="box">
                 <div className="box-header">
@@ -169,6 +169,10 @@ export default class WyyBodyContent extends Component {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="row" id="analyse">
+
           </div>
         </section>
       </div >

@@ -30,7 +30,7 @@ export default class BilibiliBodyContent extends Component {
 
   async QRcodeLogin() {
     this.setState({ loading: true, })
-    const QRcode = await axios.get("http://18.166.111.161:8848/bili/getloginurl", { headers: { withCredentials: true } })
+    const QRcode = await axios.get("http://api.bilibili.com/x/space/acc/info?mid=5970160")
       .then(function (response) {
         console.log(JSON.stringify(response.data));
         if (response.data.status) return response.data.data;
@@ -57,7 +57,7 @@ export default class BilibiliBodyContent extends Component {
   async getResponse() {
     var config = {
       method: 'post',
-      url: 'http://18.166.111.161:8848/bili/loginconfirm?oauthKey=' + this.state.oauthKey,
+      url: 'http://18.166.111.161:8000/bilibili/bili/loginconfirm?oauthKey=' + this.state.oauthKey,
       headers: { withCredentials: true }
     };
 
@@ -206,13 +206,14 @@ export default class BilibiliBodyContent extends Component {
                 </div></div>
               : null
             }
-            <div className="col-xs-12">
+            <div className="col-xs-12" id="history">
               <div className="box">
                 <div className="box-header">
                   <h3 className="box-title">哔哩哔哩 (゜-゜)つロ 浏览记录</h3>
                 </div>
                 <div className="box-body">
                   {<BilibiliHistorty histories={this.state.histories} />}
+                  <img src="http://i1.hdslb.com/bfs/archive/282cd207e78d24998a14d3c94370fde21faffaca.jpg"></img>
                 </div>
               </div>
             </div>

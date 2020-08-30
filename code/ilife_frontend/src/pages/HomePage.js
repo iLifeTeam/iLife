@@ -4,9 +4,11 @@ import Footer from '../sections/Footer'
 import Menu from '../sections/Menu'
 import Content from '../sections/Content'
 import ControlSidebar from '../sections/ControlSidebar'
-import DataTable from '../sections/components/DataTable'
 
-export default class HomePage extends Component {
+class HomePage extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <div>
@@ -19,3 +21,4 @@ export default class HomePage extends Component {
     )
   }
 }
+export default HomePage

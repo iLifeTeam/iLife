@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import MenuItem from './components/MenuItem'
 
 import {
-  Link
+  withRouter
 } from "react-router-dom";
 
-export default class Menu extends Component {
+class Menu extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,10 +13,14 @@ export default class Menu extends Component {
     }
   }
 
+  login() {
+    this.props.history.push('/login')
+  }
+
   render() {
     console.log(this.state.username);
     const User = this.state.username === null ? <div className="pull-left info">
-      <p ><Link to={"/login"}>登录</Link></p>
+      <span onClick={() => this.login()}><p >登录</p></span>
     </div> :
       <div className="pull-left info">
         <p>{this.state.username}</p>
@@ -64,7 +68,7 @@ export default class Menu extends Component {
     )
   }
 }
-
+export default withRouter(Menu);
 
 const menuItems = [
   {
@@ -72,11 +76,11 @@ const menuItems = [
     itemName: "微博",
     childItems: [{
       name: "浏览信息",
-      url: "/info"
+      id: "info"
     },
     {
       name: "趋势分析",
-      url: "/analyse"
+      id: "analyse"
     }
     ]
   },
@@ -85,11 +89,11 @@ const menuItems = [
     itemName: "知乎",
     childItems: [{
       name: "动态信息",
-      url: "/info"
+      id: "info"
     },
     {
       name: "分析",
-      url: "/analyse"
+      id: "analyse"
     }
     ]
   }, {
@@ -97,11 +101,11 @@ const menuItems = [
     itemName: "网易云",
     childItems: [{
       name: "听歌记录",
-      url: "/history"
+      id: "history"
     },
     {
       name: "分析",
-      url: "/analyse"
+      id: "analyse"
     }
     ]
   },
@@ -110,11 +114,11 @@ const menuItems = [
     itemName: "b站",
     childItems: [{
       name: "浏览记录",
-      url: "/history"
+      id: "history"
     },
     {
       name: "分析",
-      url: "/analyse"
+      id: "analyse"
     }
     ]
   },
@@ -123,11 +127,11 @@ const menuItems = [
     itemName: "淘宝",
     childItems: [{
       name: "浏览记录",
-      url: "/bills"
+      id: "bills"
     },
     {
       name: "分析",
-      url: "/analyse"
+      id: "analyse"
     }
     ]
   },
@@ -136,11 +140,11 @@ const menuItems = [
     itemName: "京东",
     childItems: [{
       name: "消费记录",
-      url: "/bills"
+      id: "bills"
     },
     {
       name: "分析",
-      url: "/analyse"
+      id: "analyse"
     }
     ]
   },
@@ -149,7 +153,11 @@ const menuItems = [
     itemName: "书籍",
     childItems: [{
       name: "豆瓣图书记录",
-      url: "/records"
+      id: "records"
+    },
+    {
+      name: "豆瓣图书f分析",
+      id: "analyse"
     }
     ]
   },
@@ -158,7 +166,11 @@ const menuItems = [
     itemName: "电影",
     childItems: [{
       name: "豆瓣观影记录",
-      url: "/records"
+      id: "records"
+    },
+    {
+      name: "豆瓣观影分析",
+      id: "analyse"
     }
     ]
   }

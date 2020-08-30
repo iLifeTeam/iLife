@@ -310,7 +310,7 @@ export default class zhihuBodyContent extends Component {
     const { activities, loginSuccess, username, password, wordCloudReady, wordCloud, userinfo, radioValue, wordCloudLoading } = this.state;
     return (
       <div className="content-wrapper">
-        <section className="content">
+        <section className="content" id='info'>
           <div className="row">
             <div className="col-md-9">
 
@@ -330,7 +330,7 @@ export default class zhihuBodyContent extends Component {
                       <Statistic justify={"center"} title="感谢" value={userinfo.thankedCount} prefix={<HeartOutlined />} />
                     </Col>
                   </Row>
-                  <Button onClick={() => this.update()}>>更新数据</Button>
+                  <Button onClick={() => this.update()}>更新数据</Button>
                 </div> :
 
                 <div className="box box-primary">
@@ -446,7 +446,7 @@ export default class zhihuBodyContent extends Component {
                       onClick={() => this.fetchWordCloud(username)}
                       loading={wordCloudLoading}
                     > 生成我的词云报告 </Button>
-                    <div className="box-body">
+                    <div className="box-body" id='analyse'>
                     </div>
                     {
                       wordCloudReady ? <img src={wordCloud} className="img-square" alt="词云" /> : null

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { createBrowserHistory } from 'history'
 import DoubanBooks from '../../douban/DoubanBooks';
-import {Button, Divider, message, Popconfirm, Typography,Input} from 'antd';
+import { Button, Divider, message, Popconfirm, Typography, Input } from 'antd';
 import 'antd/dist/antd.css';
 const { Text, Paragraph } = Typography;
 const text = <div>
@@ -99,11 +99,11 @@ export default class DbBookContent extends Component {
     }
 
 
-    crawl=()=> {
+    crawl = () => {
         const that = this;
         let bookInput = document.getElementById('bookInput');
         console.log(bookInput.value);
-        if(bookInput.value===null||bookInput.value ===""||bookInput.value===0){
+        if (bookInput.value === null || bookInput.value === "" || bookInput.value === 0) {
             bookInput.value = 2;
         }
         message.loading({
@@ -113,7 +113,7 @@ export default class DbBookContent extends Component {
         });
         var config = {
             method: 'get',
-            url: 'http://121.36.196.234:8484/douban/crawlMovie?userId=' + this.state.doubanId + '&limit='+bookInput.value+'&type=book',
+            url: 'http://121.36.196.234:8484/douban/crawlMovie?userId=' + this.state.doubanId + '&limit=' + bookInput.value + '&type=book',
             headers: {
                 withCredentials: true,
             }
@@ -198,7 +198,7 @@ export default class DbBookContent extends Component {
         const { activities, stats, statsReady, statsLoading, userId } = this.state;
         return (
             <div className="content-wrapper">
-                <section className="content">
+                <section className="content" id='records'>
                     < div className="row">
                         <div className="col-xs-12">
                             <div className="box">
@@ -213,8 +213,8 @@ export default class DbBookContent extends Component {
                                     >
                                         <p className="btn btn-danger" >更新数据</p>
                                     </Popconfirm>
-                                    <p className="btn btn-primary" onClick={()=>{this.setState({show:!this.state.show})}}>绑定账户</p>
-                                    {this.state.show?
+                                    <p className="btn btn-primary" onClick={() => { this.setState({ show: !this.state.show }) }}>绑定账户</p>
+                                    {this.state.show ?
                                         <Input id="changeId" style={{ marginTop: 10 }} placeholder={"输入豆瓣用户主页中浏览器地址栏处的用户ID"} suffix={<Button onClick={this.changeId}>确认</Button>} /> : null}
                                 </div>
                                 <div className="box-body">
@@ -225,7 +225,7 @@ export default class DbBookContent extends Component {
                     </div>
                 </section>
                 <section>
-                    < div className="row">
+                    < div className="row" id='analyse'>
                         <div className="col-xs-12">
                             <div className="box">
                                 <div className="box-header">
@@ -241,7 +241,7 @@ export default class DbBookContent extends Component {
                                     </Button>
                                 </div>
                                 {statsReady ?
-                                    <div className="box-body">
+                                    <div className="box-body" id='analyse'>
                                         <Paragraph>孙中山有言：“我一生的嗜好，除了革命之外，就是读书。我一天不读书，就不能够生活。”</Paragraph>
                                         <Paragraph>你是一个爱看书的人，从你踏入豆瓣的小世界以来，你已经阅读了{stats.allBook}本书，书海无涯，知识作舟，要继续保持哦。</Paragraph>
                                         <Paragraph>在你阅读的书籍中：</Paragraph>

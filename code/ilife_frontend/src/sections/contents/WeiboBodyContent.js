@@ -222,7 +222,7 @@ export default class WeiboBodyContent extends Component {
     const { activities, stats, statsReady, statsLoading, weiboId, startTime, endTime } = this.state;
     return (
       <div className="content-wrapper">
-        <section className="content">
+        <section className="content" id='info'>
           <div className="row" >
             <div className="col-xs-12">
               <div className="box">
@@ -248,7 +248,7 @@ export default class WeiboBodyContent extends Component {
               </div>
             </div>
           </div >
-          < div className="row" >
+          < div className="row" id="analyse" >
             <div className="col-xs-12">
               <div className="box">
                 <div className="box-header">
