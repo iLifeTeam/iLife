@@ -12,6 +12,9 @@ eureka:
     service-url:
       defaultZone: http://18.166.111.161:1001/eureka/
 
+ribbon:
+  ReadTimeout: 600000
+  connection-timeout: 30000
 zuul:
   debug:
     request: true
@@ -41,4 +44,6 @@ zuul:
     # bilibili:
     # douban:
     # weibo:
-    
+  host:
+    connect-timeout-millis: 100000
+    socket-timeout-millis:  100000
