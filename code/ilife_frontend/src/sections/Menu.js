@@ -156,7 +156,7 @@ const menuItems = [
       id: "records"
     },
     {
-      name: "豆瓣图书f分析",
+      name: "豆瓣图书分析",
       id: "analyse"
     }
     ]

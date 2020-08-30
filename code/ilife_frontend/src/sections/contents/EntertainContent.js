@@ -264,18 +264,17 @@ export default class EntertainContent extends Component {
     };
     changeSrcMovie = () => {
         let movie = document.getElementById('img');
-        let ram = Math.random()*3;
+        let ram = this.state.movies.length % 4;
         if(ram <= 1)
             movie.setAttribute('src', 'https://img1.doubanio.com/view/photo/l_ratio_poster/public/p2074715729.webp');
         if(ram <= 2)
-            movie.setAttribute('src','https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2584726781.webp');
+            movie.setAttribute('src','https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1062375456,1059818807&fm=26&gp=0.jpg');
         else{
-            movie.setAttribute('src','\'https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2589768807.webp');
+            movie.setAttribute('src','https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2589768807.webp');
         }
     };
     changeSrcBook = () => {
         let book = document.getElementById('img2');
-        console.log("test1");
         book.setAttribute('src', require('../../pic/backBook1.jpg'))
     };
     render() {
