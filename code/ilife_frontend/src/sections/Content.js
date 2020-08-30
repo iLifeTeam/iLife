@@ -17,7 +17,7 @@ export default class Content extends Component {
   render() {
     return (
       <div>
-        <Route path="/home" exact component={DataTable} />
+        <Route path="/" exact component={DataTable} />
         <Route path="/home/zhihu" component={zhihuBodyContent} />
         <Route path="/home/weibo" component={WeiboBodyContent} />
         <Route path="/home/bilibili" component={BilibiliBodyContent} />
