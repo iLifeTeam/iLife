@@ -34,7 +34,7 @@ import java.util.List;
 public class AnalyzeServiceImpl implements AnalyzeService {
 
     public static  String HTTP_SCHEME = "http";
-    public static  String HOST_IP = "18.162.53.235:7002";
+    public static  String HOST_IP = "18.166.24.220:7002";
     CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
     @Autowired
