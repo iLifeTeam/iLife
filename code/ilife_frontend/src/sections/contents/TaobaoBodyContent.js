@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import { Table, Badge, Menu, Dropdown, Button, Divider, Row, Col } from 'antd';
+import {Table, Badge, Menu, Dropdown, Button, Divider, Row, Col, Typography} from 'antd';
 import 'antd/dist/antd.css';
 import { createBrowserHistory } from 'history'
+
+const { Text, Paragraph } = Typography;
 
 const expandedRowRender = (row) => {
   console.log("expanded row render", row)
@@ -77,7 +79,7 @@ export default class TaobaoBodyContent extends Component {
   }
 
   server = "http://18.166.111.161"
-  port = 8095
+  port = 8000
   authPort = 8686
   fetchUserinfo = (account) => {
     const config = {
@@ -136,7 +138,7 @@ export default class TaobaoBodyContent extends Component {
   loginRequest = (phone, smsCode) => {
     const config = {
       method: 'post',
-      url: this.server + ":" + this.port + '/login/sms',
+      url: this.server + ":" + this.port + '/taobao/login/sms',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -162,7 +164,7 @@ export default class TaobaoBodyContent extends Component {
     console.log("fetch sms")
     const config = {
       method: 'post',
-      url: this.server + ":" + this.port + '/login/sms/fetch',
+      url: this.server + ":" + this.port + '/taobao/login/sms/fetch',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -184,7 +186,6 @@ export default class TaobaoBodyContent extends Component {
             loading: false,
             crawlerEnabled: true
           })
-          this.fetchAfter(phone, "2020-03-01") // todo: change this
         } else if (response.data == "already login") {
           this.setState({
             btnDisabled: true,
@@ -193,7 +194,7 @@ export default class TaobaoBodyContent extends Component {
             crawlerEnabled: true
           })
           this.setTbId(phone)
-          this.fetchAfter(phone, "2020-03-01") // todo: change this
+          this.fetchAfter(phone, "2020-01-01") // todo: change this
         } else {
           console.log("failed", response.data)
           this.setState({
@@ -205,7 +206,7 @@ export default class TaobaoBodyContent extends Component {
   updateIncremental = (phone) => {
     const config = {
       method: 'post',
-      url: this.server + ":" + this.port + '/order/crawl/incremental',
+      url: this.server + ":" + this.port + '/taobao/order/crawl/incremental',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -230,7 +231,7 @@ export default class TaobaoBodyContent extends Component {
   updateAll = (phone) => {
     const config = {
       method: 'post',
-      url: this.server + ":" + this.port + '/order/crawl/all',
+      url: this.server + ":" + this.port + '/taobao/order/crawl/all',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -255,7 +256,7 @@ export default class TaobaoBodyContent extends Component {
   fetchAfter = (phone, date) => {
     const config = {
       method: 'get',
-      url: this.server + ":" + this.port + '/order/between',
+      url: this.server + ":" + this.port + '/taobao/order/between',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -284,12 +285,14 @@ export default class TaobaoBodyContent extends Component {
           fetching: false,
           orders: orders
         })
-      })
+      }).catch(err =>{
+        console.log(err)
+    })
   }
   fetchAll = (phone) => {
     const config = {
       method: 'get',
-      url: this.server + ":" + this.port + '/order/all',
+      url: this.server + ":" + this.port + '/taobao/order/all',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -321,7 +324,7 @@ export default class TaobaoBodyContent extends Component {
   fetchStats = (phone) => {
     const config = {
       method: 'get',
-      url: this.server + ":" + this.port + '/stats',
+      url: this.server + ":" + this.port + '/taobao/stats',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -351,7 +354,7 @@ export default class TaobaoBodyContent extends Component {
     console.log(this.state)
     return (
       <div className="content-wrapper">
-        <section className="content" id='bills'>
+        <section className="content">
           <div className="row">
             <div className="col-md-9">
               <div className="box box-primary">
@@ -460,37 +463,37 @@ export default class TaobaoBodyContent extends Component {
             </div>
           </div>
         </section>
-        {/*<section>*/}
-        {/*  < div className="row" >*/}
-        {/*    <div className="col-xs-12">*/}
-        {/*      <div className="box">*/}
-        {/*        <div className="box-header">*/}
-        {/*          <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}><h3 className="box-title">我的淘宝购物统计</h3>*/}
-        {/*          </Divider>*/}
-        {/*          <Button*/}
-        {/*              loading={ statsLoading}*/}
-        {/*              onClick={()=>{*/}
-        {/*                this.fetchStats(phone)*/}
-        {/*              }}*/}
-        {/*          >*/}
-        {/*            生成报表*/}
-        {/*          </Button>*/}
-        {/*        </div>*/}
-        {/*        <Row justify="center">*/}
-        {/*          <Col span={12}  >*/}
-        {/*            {statsReady ?*/}
-        {/*                  <Text className="box-body">*/}
-        {/*                    <Paragraph> 我的本月的消费是 {stats.expenseMonth},我今年的消费是{stats.expenseYear}</Paragraph>*/}
-        {/*                    <Paragraph> 我买过最贵的一单花了{stats.mostExpensive.total}, 是在 {stats.mostExpensive.shop}店里, 买了{stats.mostExpensive.items.length}件宝贝</Paragraph>*/}
-        {/*                  </Text>*/}
-        {/*                 : statsLoading ? <div> "加载中..." </div> : null*/}
-        {/*            }*/}
-        {/*          </Col>*/}
-        {/*        </Row>*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*  </div >*/}
-        {/*</section>*/}
+        <section>
+          < div className="row" >
+            <div className="col-xs-12">
+              <div className="box">
+                <div className="box-header">
+                  <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}><h3 className="box-title">我的淘宝购物统计</h3>
+                  </Divider>
+                  <Button
+                      loading={ statsLoading}
+                      onClick={()=>{
+                        this.fetchStats(phone)
+                      }}
+                  >
+                    生成报表
+                  </Button>
+                </div>
+                <Row justify="center">
+                  <Col span={12}  >
+                    {statsReady ?
+                          <Text className="box-body">
+                            <Paragraph> 我的本月的消费是 {stats.expenseMonth},我今年的消费总计{stats.expenseYear.toFixed(2)}</Paragraph>
+                            <Paragraph> 我买过最贵的一单花了{stats.mostExpensive.total.toFixed(2)}, 是在 {stats.mostExpensive.shop}店里, 买了{stats.mostExpensive.items.length}件宝贝</Paragraph>
+                          </Text>
+                         : statsLoading ? <div> "加载中..." </div> : null
+                    }
+                  </Col>
+                </Row>
+              </div>
+            </div>
+          </div >
+        </section>
       </div >
     )
   }
