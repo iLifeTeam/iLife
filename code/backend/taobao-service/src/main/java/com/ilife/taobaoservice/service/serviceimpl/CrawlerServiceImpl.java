@@ -139,7 +139,7 @@ public class CrawlerServiceImpl implements CrawlerService {
                 Item item = objectToItem(itemObject);
                 item.setOrder(savedOrder);
                 itemDao.save(
-                        item
+                      analyzeService.setCategory(item)
                 );
             }
             count ++;
