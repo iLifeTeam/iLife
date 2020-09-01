@@ -147,7 +147,7 @@ var upInfo = [
 var User = {
   mid: 39238459,
   url:
-    "http://i1.hdslb.com/bfs/face/a3b38288f0b486753ec981c043e64edb81fdcf32.jpg",
+    "http://i1.hdslb.com/bfs/face/834eb0de8d2f470bf03e4ea92831b14f3824c863.jpg",
 };
 
 function setDataPerson(json, n) {
@@ -175,14 +175,15 @@ function setDataPhone(json, n) {
       x: i * 50,
       y: size + i * 10,
       name: p,
+      title: json[p].data.official.title,
+      sign: json[p].data.sign,
+      rank: json[p].data.rank,
       showName: json[p].data.name,
       symbol: "image://" + json[p].data.face,
       symbolSize: size,
       category: n,
       draggable: "false",
-      formatter: function (params) {
-        return params.data.showName;
-      },
+      url: json[p].data.mid,
       label: {
         position: "bottom",
       },
@@ -236,7 +237,23 @@ export default class BilibiliUp extends Component {
 
     var option = {
       tooltip: {
-        formatter: "{b}",
+        trigger: "item",
+        enterable: true,
+        position: "right",
+        formatter: function (params) {
+          return (
+            params.data.showName +
+            "<br />" +
+            params.data.title +
+            "<br />" +
+            params.data.sign +
+            "<br />" +
+            "排名: " +
+            params.data.rank
+          );
+        },
+        extraCssText:
+          "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);text-align:center;",
       },
 
       backgroundColor: "#ffffff",
@@ -249,7 +266,7 @@ export default class BilibiliUp extends Component {
           force: {
             repulsion: 30,
             gravity: 0,
-            edgeLength: [40, 60],
+            edgeLength: [60, 90],
             layoutAnimation: true,
           },
           data: listdata,
@@ -316,7 +333,9 @@ export default class BilibiliUp extends Component {
   }
 
   clickFun = (param) => {
-    console.log(param.name);
+    window.open(
+      "https://space.bilibili.com/" + encodeURIComponent(param.data.url)
+    );
   };
 
   render() {
@@ -324,7 +343,7 @@ export default class BilibiliUp extends Component {
       //width和height可由属性值传入
       <div
         id="Up-echarts"
-        style={{ width: "100%", height: "100%", minHeight: 400 }}
+        style={{ width: "100%", height: "100%", minHeight: 500 }}
       ></div>
     );
   }

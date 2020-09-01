@@ -5,6 +5,7 @@ import BilibiliHistorty from "../../bilibili/BilibiliHistorty";
 import BilibiliEcharts from "../../bilibili/BilibiliEcharts";
 import bilibiliUp from "../../bilibili/BilibiliUp";
 import BilibiliUp from "../../bilibili/BilibiliUp";
+import { Divider } from "antd";
 export default class BilibiliBodyContent extends Component {
   constructor(props) {
     super(props);
@@ -250,9 +251,18 @@ export default class BilibiliBodyContent extends Component {
                 </div>
                 <div className="box-body">
                   <div className="col-xs-8">
+                    <p>点击以跳转推荐up主的个人主页哦~</p>
                     <BilibiliUp />
                   </div>
-                  <div className="col-xs-4">
+
+                  <div className="col-xs-1">
+                    <Divider
+                      type="vertical"
+                      style={{ height: "100%", minHeight: 500 }}
+                    />
+                  </div>
+                  <div className="col-xs-3">
+                    <p>你的专属标签</p>
                     <BilibiliEcharts />
                   </div>
                 </div>
