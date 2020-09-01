@@ -1,6 +1,7 @@
 package com.ilife.douban.service.serviceImpl;
 
 import com.ilife.douban.dao.MovieDao;
+import com.ilife.douban.dao.RcmdDao;
 import com.ilife.douban.entity.*;
 import com.ilife.douban.service.UserService;
 import com.ilife.douban.dao.BookDao;
@@ -30,11 +31,22 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private MovieDao movieDao;
 
+    @Autowired
+    private RcmdDao rcmdDao;
+
+    @Override
+    public Recommendation getStoredRcmd(String uid){
+        return rcmdDao.findById(uid);
+    }
     @Override
     public User findById(String id) {
         return userDao.findById(id);
     }
 
+    @Override
+    public void saveRcmd(Recommendation recommendation){
+        rcmdDao.save(recommendation);
+    }
     @Override
     public ResponseEntity<?> deleteById(String id) {
         if (userDao.findById(id) == null)

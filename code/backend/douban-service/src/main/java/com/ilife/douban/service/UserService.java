@@ -25,4 +25,8 @@ public interface UserService {
     MovieStats getMovieStats(String uid);
 
     Reference getRcmd(String uid);
+
+    Recommendation getStoredRcmd(String uid);
+
+    void saveRcmd(Recommendation recommendation);
 }
