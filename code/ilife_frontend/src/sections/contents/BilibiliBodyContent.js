@@ -32,7 +32,7 @@ export default class BilibiliBodyContent extends Component {
   async QRcodeLogin() {
     this.setState({ loading: true });
     const QRcode = await axios
-      .get("http://18.166.111.161:8000/bilibili/bili/getloginurl", {
+      .get("http://18.166.111.161:8848/bili/getloginurl", {
         headers: { withCredentials: true },
       })
       .then(function (response) {
@@ -60,7 +60,7 @@ export default class BilibiliBodyContent extends Component {
     var config = {
       method: "post",
       url:
-        "http://18.166.111.161:8000/bilibili/bili/loginconfirm?oauthKey=" +
+        "http://18.166.111.161:8848/bili/loginconfirm?oauthKey=" +
         this.state.oauthKey,
       headers: { withCredentials: true },
     };

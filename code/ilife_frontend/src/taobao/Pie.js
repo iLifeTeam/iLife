@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import echarts from "echarts";
 
 
-
-const sourceData = [{'name': '澳门特别行政区', 'value': 30, 'extData': [89, '#ccfd66', 0, '']},
+const sourceDataOrigin = [{'name': '澳门特别行政区', 'value': 30, 'extData': [89, '#ccfd66', 0, '']},
     {'name': '西藏自治区', 'value': 33, 'extData': [367, '#cdf967', 0, '']},
     {'name': '青海省', 'value': 38, 'extData': [809, '#cff169', 0, '']},
     {'name': '宁夏回族自治区', 'value': 40, 'extData': [1023, '#cfee69', 0, '']},
@@ -35,8 +35,7 @@ const sourceData = [{'name': '澳门特别行政区', 'value': 30, 'extData': [8
     {'name': '江苏省', 'value': 131, 'extData': [10140, '#ee5388', 0, '']},
     {'name': '山东省', 'value': 145, 'extData': [11558, '#f33b8d', 0, '']},
     {'name': '广东省', 'value': 152, 'extData': [12260, '#f62f90', 0, '']}]
-
-
+let sourceData = []
 const graphicData = [{
     type: 'group',
     left: 'center',
@@ -90,30 +89,6 @@ const graphicText = [{
         textAlign: 'center'
     }
 }]
-const graphic_total_Text = [{
-    type: 'text',
-    right: -220,
-    bottom: 500,
-    z: 100,
-    style: {
-        fill: 'black',
-        text: '数据时间2020年3月',
-        font: 'bold 12px Microsoft YaHei',
-        textAlign: 'right'
-    }
-}, {
-    type: 'text',
-    right: -220,
-    bottom: 475,
-    z: 100,
-    style: {
-        fill: 'black',
-        text: '中国有166886个银行网点',
-        font: 'bold 18px Microsoft YaHei',
-        textAlign: 'right',
-
-    }
-}]
 const graphicChildren = {
     type: 'group',
     // left: 'center',
@@ -125,7 +100,20 @@ const graphicChildren = {
 
 }
 
+let totalNumber = 0;
 function convertData1() {
+    const graphic_total_Text = [{
+        type: 'text',
+        right: -220,
+        bottom: 500,
+        z: 100,
+        style: {
+            fill: 'black',
+            text: '数据时间2020年',
+            font: 'bold 12px Microsoft YaHei',
+            textAlign: 'right'
+        }
+    }]
     var maxScale = 1
     var minScale = 0.1
     var stepRadius = 2 * Math.PI / sourceData.length
@@ -178,18 +166,14 @@ function convertData1() {
                 0.5) / sourceData.length * 2 * Math.PI) + Math.PI / 2 : 0)
             curChild.scale = [curScale, curScale]
             let curgraphicText = JSON.parse(JSON.stringify(graphicText[j]))
-            curgraphicText.style.text = j == 0 ? sourceData[i]["name"] : (j == 1 ? (i > 11 ? sourceData[i][
-                "extData"
-                ][0] + "网点" : "") : (j == 2 && i > 33 ? (sourceData[i][
-                "extData"
-                ][2] + "个") : (i <= 11 ? sourceData[i][
-                "extData"
-                ][3] : "")))
-            // curgraphicText.style.text = j == 0 ? sourceData[i]["name"] : (j == 1 ? i > 11 ? sourceData[i][
+            // curgraphicText.style.text = j == 0 ? sourceData[i]["name"] : (j == 1 ? (i > 11 ? sourceData[i][
             //     "extData"
-            // ][0] + "例" : "" : i > 33 ? sourceData[i][
+            //     ][0] + "网点" : "") : (j == 2 && i > 33 ? (sourceData[i][
             //     "extData"
-            // ][2] + "例" : "")
+            //     ][2] + "个") : (i <= 11 ? sourceData[i][
+            //     "extData"
+            //     ][3] : "")))
+            curgraphicText.style.text = j == 0 ? sourceData[i]["name"] : (j == 1 ? (i > 11 ? "" : "") : (j == 2 && i > 33 ? "" : (i <= 11 ? "" : "")))
             if (i <= 11) {
                 curgraphicText.style.fill = "black"
                 curgraphicText.style.textAlign = "left"
@@ -211,12 +195,9 @@ function convertData1() {
     return sourceData
 }
 
-
-
 const option = {
     title: {
-        text: '全国商业银行网点分布',
-        // subtext: '纯属虚构',
+        text: '淘宝购物数据分布',
         left: 'center',
         textStyle: {
             //color: "red",
@@ -229,11 +210,6 @@ const option = {
         trigger: 'item',
         formatter: '{a} <br/>{b} : {c} ({d}%)'
     },
-    // legend: {
-    //     left: 'center',
-    //     top: 'bottom',
-    //     data: ['rose1', 'rose2', 'rose3', 'rose4', 'rose5', 'rose6', 'rose7', 'rose8']
-    // },
     toolbox: {
         show: true,
         feature: {
@@ -258,7 +234,7 @@ const option = {
     },
     graphic: graphicData,
     series: [{
-        name: '银行网点个数',
+        name: '该类型购物总数',
         type: 'pie',
         radius: [20, 450],
         center: ['50%', '60%'],
@@ -287,3 +263,73 @@ const option = {
         }
     }]
 };
+
+
+export default class Pie extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            initdone: false,
+
+        };
+    }
+    componentDidMount() {
+        //初始化图表
+        this.initChart(this.props);
+    }
+    /*生成图表，做了判断，如果不去判断dom有没有生成，
+    每次更新图表都要生成一个dom节点*/
+    initChart(props) {
+        console.log(props)
+        if (props == null) return
+        const {stats} = props
+        console.log(stats)
+        const keys = Object.keys(stats.categories)
+        console.log(keys)
+        const categories = []
+        for (const key of keys){
+            categories.push({
+                "key": key,
+                "orderIds": stats.categories[key].orderIds,
+                "orderNum": stats.categories[key].orderIds.length,
+                "totalExpense": stats.categories[key].expense,
+            })
+        }
+        categories.sort((a,b) => a.orderNum - b.orderNum)
+        for (const [index,category] of categories.entries()){
+            totalNumber += category.orderNum
+            sourceData.push({
+                "name": category.key,
+                "value": category.orderNum,
+                "extData": sourceDataOrigin[index]
+            })
+        }
+        console.log(totalNumber)
+
+        // 基于准备好的dom，初始化echarts实例
+        let myChart = echarts.getInstanceByDom(
+            document.getElementById("pie-echarts")
+        );
+        if (myChart === undefined) {
+            myChart = echarts.init(document.getElementById("pie-echarts"));
+        }
+        // 绘制图表，option设置图表格式及源数据
+
+
+        myChart.setOption(option);
+        if (!this.state.initdone)
+            window.onresize = function () {
+                myChart.resize();
+            };
+    }
+
+    render() {
+        return (
+            //width和height可由属性值传入
+            <div
+                id="pie-echarts"
+                style={{ width: "100%", height: "100%", minHeight: 1000 }}
+            ></div>
+        );
+    }
+}
