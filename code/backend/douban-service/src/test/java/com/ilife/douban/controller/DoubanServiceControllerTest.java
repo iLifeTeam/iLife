@@ -5,9 +5,11 @@ import com.ilife.douban.dao.MovieDao;
 import com.ilife.douban.dao.UserDao;
 import com.ilife.douban.entity.Book;
 import com.ilife.douban.entity.Movie;
+import com.ilife.douban.entity.Recommendation;
 import com.ilife.douban.entity.User;
 import com.ilife.douban.repository.BookRepository;
 import com.ilife.douban.repository.MovieRepository;
+import com.ilife.douban.repository.RcmdRepository;
 import com.ilife.douban.repository.UserRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -55,6 +57,9 @@ public class DoubanServiceControllerTest {
     private WebApplicationContext context;
 
     @Autowired
+    private RcmdRepository rcmdRepository;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -69,9 +74,11 @@ public class DoubanServiceControllerTest {
         User user = new User("yg", "uk", 111, 222, 333, 444, 555, 666, 777);
         Book book = new Book("yg", "aaaaa", "bbbbb", "4444", 5555, 6666);
         Movie movie = new Movie("yg", "aaaaa", "bbbbb", "ccccc", 5, 6666);
+        Recommendation recommendation=new Recommendation("yg","5561","1555",61,"551","1212","331","142","1",1555,"155","15","412","31","12");
         userRepository.save(user);
         bookRepository.save(book);
         movieRepository.save(movie);
+        rcmdRepository.save(recommendation);
     }
 
     @After
@@ -137,5 +144,77 @@ public class DoubanServiceControllerTest {
         Assert.assertEquals(jsonUser.getJSONObject(0).get("type"),"bbbbb");
     }
 
+    /**
+     * Method: getMovieStats(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid)
+     */
+    @Test
+    public void testGetMovieStats() throws Exception {
+        MvcResult authResult;
+        authResult = mockMvc.perform(get("/douban/getMovieStats")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .param("userId", "yg")//请求的参数（可多个）
+        ).andExpect(status().isOk())
+                .andReturn();
+        Assert.assertEquals("bbbbb","bbbbb");
+    }
 
+    /**
+     * Method: getMovies(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid)
+     */
+    @Test
+    public void testGetBookStats() throws Exception {
+        MvcResult authResult;
+        authResult = mockMvc.perform(get("/douban/getMovies")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .param("userId", "yg")//请求的参数（可多个）
+        ).andExpect(status().isOk())
+                .andReturn();
+        JSONArray jsonUser = new JSONArray(authResult.getResponse().getContentAsString());
+        Assert.assertEquals(jsonUser.getJSONObject(0).get("type"),"bbbbb");
+    }
+
+    /**
+     * Method: getMovies(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid)
+     */
+    @Test
+    public void testGetRefParameter() throws Exception {
+        MvcResult authResult;
+        authResult = mockMvc.perform(get("/douban/getRcmd")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .param("userId", "yg")//请求的参数（可多个）
+        ).andExpect(status().isOk())
+                .andReturn();
+        JSONObject jsonUser = new JSONObject(authResult.getResponse().getContentAsString());
+        Assert.assertEquals(jsonUser.get("preAuthor"),"bbbbb");
+    }
+
+    /**
+     * Method: getMovies(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid)
+     */
+    @Test
+    public void testSaveRcmd() throws Exception {
+        MvcResult authResult;
+        authResult = mockMvc.perform(get("/douban/getStoredRcmd")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .param("userId", "yg")//请求的参数（可多个）
+        ).andExpect(status().isOk())
+                .andReturn();
+        JSONObject jsonUser = new JSONObject(authResult.getResponse().getContentAsString());
+        Assert.assertEquals(jsonUser.get("author_book"),"1555");
+    }
+
+    /**
+     * Method: getMovies(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid)
+     */
+    @Test
+    public void testGetStoredRcmd() throws Exception {
+        MvcResult authResult;
+        authResult = mockMvc.perform(get("/douban/getStoredRcmd")//使用get方式来调用接口。
+                .contentType(MediaType.APPLICATION_JSON_VALUE)//请求参数的类型
+                .param("userId", "yg")//请求的参数（可多个）
+        ).andExpect(status().isOk())
+                .andReturn();
+        JSONObject jsonUser = new JSONObject(authResult.getResponse().getContentAsString());
+        Assert.assertEquals(jsonUser.get("author_book"),"1555");
+    }
 } 
