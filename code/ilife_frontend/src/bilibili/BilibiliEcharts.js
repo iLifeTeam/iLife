@@ -217,7 +217,7 @@ export default class BilibiliEcharts extends Component {
     return (
       //width和height可由属性值传入
       <div
-        id="bilibili-echarts"
+        id="ilibili-echartsb"
         style={{ width: "100%", height: "100%", minHeight: 300 }}
       ></div>
     );
