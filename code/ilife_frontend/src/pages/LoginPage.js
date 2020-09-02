@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
-import axios from "axios";
+import axios from "../axios";
 import { message } from "antd";
 
 var CryptoJS = require("crypto-js");

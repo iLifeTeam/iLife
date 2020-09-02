@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
+import axios from "../../axios";
 import { Button, Radio, Statistic, Row, Col } from "antd";
 import ZhihuActivity from "../../zhihu/ZhihuActivity";
 import "antd/dist/antd.css";

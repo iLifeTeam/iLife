@@ -1,39 +1,48 @@
-import React, { Component } from 'react'
-import axios from 'axios';
-import { Table, Badge, Menu, Dropdown } from 'antd';
-import 'antd/dist/antd.css';
-import { createBrowserHistory } from 'history'
+import React, { Component } from "react";
+import axios from "../../axios";
+import { Table, Badge, Menu, Dropdown } from "antd";
+import "antd/dist/antd.css";
+import { createBrowserHistory } from "history";
 
 const expandedRowRender = (row) => {
-  console.log("expanded row render", row)
+  console.log("expanded row render", row);
   const columns = [
-    { title: '商品名', dataIndex: 'product', key: 'product' },
-    { title: '数量', dataIndex: 'number', key: 'number' },
+    { title: "商品名", dataIndex: "product", key: "product" },
+    { title: "数量", dataIndex: "number", key: "number" },
     {
-      title: '图片', dataIndex: 'imgUrl', key: 'imgUrl',
-      render: (imgUrl) =>
-        <div><img src={"http:" + imgUrl}></img></div>
+      title: "图片",
+      dataIndex: "imgUrl",
+      key: "imgUrl",
+      render: (imgUrl) => (
+        <div>
+          <img src={"http:" + imgUrl}></img>
+        </div>
+      ),
     },
-    { title: '单价', dataIndex: 'price', key: 'price', },
-  ]
+    { title: "单价", dataIndex: "price", key: "price" },
+  ];
   return <Table columns={columns} dataSource={row.items} pagination={false} />;
-}
+};
 const columns = [
-  { title: '订单号', dataIndex: 'orderID', key: 'orderID', align: 'left' },
-  { title: '商店', dataIndex: 'shop', key: 'shop' },
+  { title: "订单号", dataIndex: "orderID", key: "orderID", align: "left" },
+  { title: "商店", dataIndex: "shop", key: "shop" },
   {
-    title: '总价', dataIndex: 'total', key: 'total', render: (price) =>
-      <div>¥ {price}</div>
-    ,
+    title: "总价",
+    dataIndex: "total",
+    key: "total",
+    render: (price) => <div>¥ {price}</div>,
     sorter: (a, b) => a.total > b.total,
-    sortDirections: ['descend', 'ascend'],
+    sortDirections: ["descend", "ascend"],
   },
   {
-    title: '日期', dataIndex: 'date', key: 'date', align: 'left',
+    title: "日期",
+    dataIndex: "date",
+    key: "date",
+    align: "left",
     sorter: (a, b) => a.date > b.date,
-    sortDirections: ['descend', 'ascend'],
+    sortDirections: ["descend", "ascend"],
   },
-]
+];
 export default class JingdongBodyContent extends Component {
   constructor(props) {
     super(props);
@@ -44,8 +53,8 @@ export default class JingdongBodyContent extends Component {
       loginSuccess: false,
       updating: false,
       fetching: false,
-      orders: []
-    }
+      orders: [],
+    };
   }
   componentDidMount() {
     const username = window.sessionStorage.getItem("username");
@@ -62,133 +71,129 @@ export default class JingdongBodyContent extends Component {
 
     this.getUid(username);
     setTimeout(() => {
-      this.checkLoginRequest(this.state.uid)
-      this.loginRequest(this.state.uid)
-    }, 0)
+      this.checkLoginRequest(this.state.uid);
+      this.loginRequest(this.state.uid);
+    }, 0);
   }
 
-  server = "http://18.166.111.161"
-  port = 8096
+  server = "http://18.166.111.161";
+  port = 8096;
   getUid = (username) => {
     this.setState({
-      uid: username
-    })
-  }
+      uid: username,
+    });
+  };
   loginRequest = (uid) => {
     const config = {
-      method: 'post',
-      url: this.server + ":" + this.port + '/login/qrcode',
+      method: "post",
+      url: this.server + ":" + this.port + "/login/qrcode",
       headers: {
-        'Content-Type': 'application/json'
-      },
-      params: {
-        username: uid
-      },
-      withCredentials: true
-    };
-    console.log(config.url)
-    axios(config)
-      .then(response => {
-        console.log("qrCorde", response.data)
-        this.setState({
-          qrCodeBase64: `data:image/png;base64,${response.data}`,
-          qrCodeReady: true
-        })
-      })
-  }
-  checkLoginRequest = (uid) => {
-    console.log("check login")
-    const config = {
-      method: 'get',
-      url: this.server + ":" + this.port + '/login/check',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      params: {
-        username: uid
-      },
-      withCredentials: true
-    };
-    // console.log(config.url)
-    axios(config)
-      .then(response => {
-        console.log(response.data)
-        if (response.data) {
-          this.setState({ loginSuccess: true })
-          this.fetchAll(uid)
-        } else {
-          setTimeout(() => {
-            this.checkLoginRequest(uid)
-          }, 3000)
-        }
-      })
-  }
-  updateIncremental = (uid) => {
-    const config = {
-      method: 'post',
-      url: this.server + ":" + this.port + '/order/crawl/incremental',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      params: {
-        username: uid
-      },
-      withCredentials: true
-    }
-    this.setState({
-      updating: true
-    })
-    axios(config)
-      .then(response => {
-        this.setState({
-          updating: false,
-        })
-        console.log(response)
-        console.log("更新了" + response.data + "条购物信息")
-        this.fetchAll(uid)
-      })
-  }
-  fetchAll = (uid) => {
-    const config = {
-      method: 'get',
-      url: this.server + ":" + this.port + '/order/all',
-      headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       params: {
         username: uid,
       },
-      withCredentials: true
-    }
+      withCredentials: true,
+    };
+    console.log(config.url);
+    axios(config).then((response) => {
+      console.log("qrCorde", response.data);
+      this.setState({
+        qrCodeBase64: `data:image/png;base64,${response.data}`,
+        qrCodeReady: true,
+      });
+    });
+  };
+  checkLoginRequest = (uid) => {
+    console.log("check login");
+    const config = {
+      method: "get",
+      url: this.server + ":" + this.port + "/login/check",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      params: {
+        username: uid,
+      },
+      withCredentials: true,
+    };
+    // console.log(config.url)
+    axios(config).then((response) => {
+      console.log(response.data);
+      if (response.data) {
+        this.setState({ loginSuccess: true });
+        this.fetchAll(uid);
+      } else {
+        setTimeout(() => {
+          this.checkLoginRequest(uid);
+        }, 3000);
+      }
+    });
+  };
+  updateIncremental = (uid) => {
+    const config = {
+      method: "post",
+      url: this.server + ":" + this.port + "/order/crawl/incremental",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      params: {
+        username: uid,
+      },
+      withCredentials: true,
+    };
     this.setState({
-      fetching: true
-    })
-    axios(config)
-      .then(response => {
-        console.log()
-        const orders = response.data.map((order, index) => {
-          order.key = index
-          order.items = order.items.map((item, index) => {
-            item.key = index
-            return item
-          })
-          return order
-        })
-        this.setState({
-          fetching: false,
-          orders: orders
-        })
-      })
-  }
+      updating: true,
+    });
+    axios(config).then((response) => {
+      this.setState({
+        updating: false,
+      });
+      console.log(response);
+      console.log("更新了" + response.data + "条购物信息");
+      this.fetchAll(uid);
+    });
+  };
+  fetchAll = (uid) => {
+    const config = {
+      method: "get",
+      url: this.server + ":" + this.port + "/order/all",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      params: {
+        username: uid,
+      },
+      withCredentials: true,
+    };
+    this.setState({
+      fetching: true,
+    });
+    axios(config).then((response) => {
+      console.log();
+      const orders = response.data.map((order, index) => {
+        order.key = index;
+        order.items = order.items.map((item, index) => {
+          item.key = index;
+          return item;
+        });
+        return order;
+      });
+      this.setState({
+        fetching: false,
+        orders: orders,
+      });
+    });
+  };
   render() {
     const style = {
-      flex: 1
-    }
+      flex: 1,
+    };
     const { orders, loginSuccess, qrCodeBase64, qrCodeReady, uid } = this.state;
-    console.log(this.state)
+    console.log(this.state);
     return (
       <div className="content-wrapper">
-        <section className="content" id='bills'>
+        <section className="content" id="bills">
           <div className="row">
             <div className="col-md-9">
               <div className="box box-primary">
@@ -200,17 +205,23 @@ export default class JingdongBodyContent extends Component {
                   <div className="box-body">
                     <div className="form-group">
                       <div>
-                        {
-                          loginSuccess ?
-                            <div> 登录成功！</div>
-                            :
-                            (qrCodeReady ? <img src={qrCodeBase64} className="img-square" alt="验证码" />
-                              : <div> 正在加载二维码... </div>)
-
-                        }</div>
+                        {loginSuccess ? (
+                          <div> 登录成功！</div>
+                        ) : qrCodeReady ? (
+                          <img
+                            src={qrCodeBase64}
+                            className="img-square"
+                            alt="验证码"
+                          />
+                        ) : (
+                          <div> 正在加载二维码... </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </form></div></div>
+                </form>
+              </div>
+            </div>
           </div>
           <div className="row">
             <div className="col-xs-12">
@@ -230,14 +241,13 @@ export default class JingdongBodyContent extends Component {
                     expandable={{ expandedRowRender }}
                     dataSource={orders}
                     bordered
-                  >
-                  </Table>
+                  ></Table>
                 </div>
               </div>
             </div>
           </div>
         </section>
-      </div >
-    )
+      </div>
+    );
   }
 }

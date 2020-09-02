@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import WyyHistory from '../../wyy/WyyHistory';
+import React, { Component } from "react";
+import axios from "../../axios";
+import WyyHistory from "../../wyy/WyyHistory";
 
 export default class WyyBodyContent extends Component {
   constructor(props) {
@@ -19,13 +19,13 @@ export default class WyyBodyContent extends Component {
   accountOnChange(val) {
     this.setState({
       account: val.target.value,
-    })
+    });
   }
 
   psdOnChange(val) {
     this.setState({
       password: val.target.value,
-    })
+    });
   }
 
   updateHistory() {
@@ -35,9 +35,11 @@ export default class WyyBodyContent extends Component {
     }
 
     var config = {
-      method: 'post',
-      url: 'http://18.166.111.161:8888/music/updatehistorybyid?id=' + this.state.id,
-      headers: { withCredentials: true }
+      method: "post",
+      url:
+        "http://18.166.111.161:8888/music/updatehistorybyid?id=" +
+        this.state.id,
+      headers: { withCredentials: true },
     };
 
     axios(config)
@@ -52,10 +54,8 @@ export default class WyyBodyContent extends Component {
         var response = error.response;
         if (response.status === 401) {
           alert("用户未授权或登录已过期！");
-        }
-        else alert("刷新失败！");
+        } else alert("刷新失败！");
       });
-
   }
 
   async getHistory() {
@@ -64,32 +64,38 @@ export default class WyyBodyContent extends Component {
       return;
     }
     var config = {
-      method: 'post',
-      url: 'http://18.166.111.161:8888/music/gethistorybyid?page=0&size=100&id=' + this.state.id,
-      headers: { withCredentials: true }
+      method: "post",
+      url:
+        "http://18.166.111.161:8888/music/gethistorybyid?page=0&size=100&id=" +
+        this.state.id,
+      headers: { withCredentials: true },
     };
 
     var histories;
     await axios(config)
       .then(function (response) {
         console.log(response.data.content);
-        histories = (response.data.content);
+        histories = response.data.content;
       })
       .catch(function (error) {
         console.log(error);
       });
 
     this.setState({
-      histories: histories
-    })
+      histories: histories,
+    });
   }
 
   async login() {
     var data;
     var config = {
-      method: 'post',
-      url: 'http://18.166.111.161:8888/music/getid?ph=' + this.state.account + '&pw=' + this.state.password,
-      headers: { withCredentials: true }
+      method: "post",
+      url:
+        "http://18.166.111.161:8888/music/getid?ph=" +
+        this.state.account +
+        "&pw=" +
+        this.state.password,
+      headers: { withCredentials: true },
     };
     await axios(config)
       .then(function (response) {
@@ -99,15 +105,14 @@ export default class WyyBodyContent extends Component {
       .catch(function (error) {
         console.log(error.response);
         alert(error.response);
-      })
+      });
 
     this.setState({
-      id: data
-    })
+      id: data,
+    });
   }
 
   render() {
-
     return (
       <div className="content-wrapper">
         <section className="content">
@@ -122,23 +127,35 @@ export default class WyyBodyContent extends Component {
                   <div className="box-body">
                     <div className="form-group">
                       <label htmlFor="exampleInputEmail1">网易云音乐账号</label>
-                      <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Enter email"
-                        onChange={(val) => this.accountOnChange(val)} />
+                      <input
+                        type="email"
+                        className="form-control"
+                        id="exampleInputEmail1"
+                        placeholder="Enter email"
+                        onChange={(val) => this.accountOnChange(val)}
+                      />
                     </div>
                     <div className="form-group">
                       <label htmlFor="exampleInputPassword1">密码</label>
-                      <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"
-                        onChange={(val) => this.psdOnChange(val)} />
+                      <input
+                        type="password"
+                        className="form-control"
+                        id="exampleInputPassword1"
+                        placeholder="Password"
+                        onChange={(val) => this.psdOnChange(val)}
+                      />
                     </div>
                   </div>
                 </form>
                 {/* /.box-body */}
                 <div className="box-footer">
-                  <p className="btn btn-primary" onClick={this.login}>提交</p>
+                  <p className="btn btn-primary" onClick={this.login}>
+                    提交
+                  </p>
                 </div>
               </div>
             </div>
-            <div className="col-md-3" >
+            <div className="col-md-3">
               <div className="box box-primary">
                 <div className="box-header with-border">
                   <h3 className="box-title">用户操作</h3>
@@ -147,36 +164,41 @@ export default class WyyBodyContent extends Component {
                 <form role="form">
                   <div className="box-body">
                     <div className="form-group">
-                      <p className="btn btn-primary" onClick={this.updateHistory}>重新获取听歌历史</p>
-                      <p className="btn btn-primary" onClick={this.getHistory}>查看当前听歌历史</p>
+                      <p
+                        className="btn btn-primary"
+                        onClick={this.updateHistory}
+                      >
+                        重新获取听歌历史
+                      </p>
+                      <p className="btn btn-primary" onClick={this.getHistory}>
+                        查看当前听歌历史
+                      </p>
                     </div>
                   </div>
                 </form>
-                <div className="box-footer">
-                </div>
+                <div className="box-footer"></div>
               </div>
             </div>
           </div>
 
-          <div className="row" id='history'>
+          <div className="row" id="history">
             <div className="col-xs-12">
               <div className="box">
                 <div className="box-header">
                   <h3 className="box-title">听歌历史</h3>
                 </div>
                 <div className="box-body">
-                  {this.state.histories ? <WyyHistory histories={this.state.histories}></WyyHistory> : null}
+                  {this.state.histories ? (
+                    <WyyHistory histories={this.state.histories}></WyyHistory>
+                  ) : null}
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="row" id="analyse">
-
-          </div>
+          <div className="row" id="analyse"></div>
         </section>
-      </div >
-    )
+      </div>
+    );
   }
 }
-

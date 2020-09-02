@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import axios from 'axios';
+import axios from '../../axios';
 import {Table, Badge, Menu, Dropdown, Button, Divider, Row, Col, Typography} from 'antd';
 import 'antd/dist/antd.css';
 import {createBrowserHistory} from 'history'

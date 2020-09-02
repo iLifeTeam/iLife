@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import { Link } from "react-router-dom"
-import { createBrowserHistory } from 'history'
-import axios from 'axios'
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { createBrowserHistory } from "history";
+import axios from "../axios";
 
-const $ = require('jquery');
+const $ = require("jquery");
 
 export default class RegisterPage extends Component {
   constructor(props) {
@@ -26,35 +26,35 @@ export default class RegisterPage extends Component {
     this.register = this.register.bind(this);
   }
   componentDidMount() {
-
     const script = document.createElement("script");
     script.src = "dist/js/login.js";
     script.async = true;
     document.body.appendChild(script);
-
   }
 
   handleNameChange(val) {
     this.setState({
       nickname: val.target.value,
-    })
+    });
   }
 
   handleAccountChange(val) {
     this.setState({
       account: val.target.value,
-    })
+    });
   }
 
   handlePsdChange(val) {
-    if (this.state.password2 === val.target.value) this.setState({
-      check_psd: true,
-      password: val.target.value
-    });
-    else this.setState({
-      check_psd: false,
-      password: val.target.value
-    });
+    if (this.state.password2 === val.target.value)
+      this.setState({
+        check_psd: true,
+        password: val.target.value,
+      });
+    else
+      this.setState({
+        check_psd: false,
+        password: val.target.value,
+      });
   }
 
   handlePsd2Change(val) {
@@ -62,25 +62,26 @@ export default class RegisterPage extends Component {
       this.setState({
         password2: val.target.value,
         check_psd: true,
-      })
-    else this.setState({
-      password2: val.target.value,
-      check_psd: false,
-    })
+      });
+    else
+      this.setState({
+        password2: val.target.value,
+        check_psd: false,
+      });
   }
 
   handleEmailChange(val) {
     this.setState({
       email: val.target.value,
-    })
+    });
   }
 
   handleConfirmChange() {
-    //console.log(val); 
+    //console.log(val);
     console.log("111");
     this.setState({
       confirm: !this.state.confirm,
-    })
+    });
   }
 
   async register() {
@@ -90,21 +91,20 @@ export default class RegisterPage extends Component {
       return;
     }
 
-
     var config = {
-      method: 'post',
-      url: 'http://18.166.111.161:8686/auth/register',
+      method: "post",
+      url: "http://18.166.111.161:8686/auth/register",
       headers: {
-        'Content-Type': 'application/json',
-        withCredentials: true
+        "Content-Type": "application/json",
+        withCredentials: true,
       },
       data: {
-        "nickname": this.state.nickname,
-        "account": this.state.account,
-        "password": this.state.password,
-        "email": this.state.email,
-        "type": "ROLE_USER"
-      }
+        nickname: this.state.nickname,
+        account: this.state.account,
+        password: this.state.password,
+        email: this.state.email,
+        type: "ROLE_USER",
+      },
     };
 
     const history = createBrowserHistory();
@@ -139,57 +139,127 @@ export default class RegisterPage extends Component {
       <body className="hold-transition register-page">
         <div className="register-box">
           <div className="register-logo">
-            <a><b>iLife</b></a>
+            <a>
+              <b>iLife</b>
+            </a>
           </div>
           <div className="register-box-body">
             <p className="login-box-msg">Register a new membership</p>
-            <form >
+            <form>
               <div className="form-group has-feedback">
-                <input type="text" id="nameinput" className="form-control" placeholder="NickName" onChange={(val) => this.handleNameChange(val)} />
-                {this.state.nickname ? <span className="glyphicon glyphicon-leaf form-control-feedback" style={{ color: "#3C8DBC" }} /> :
-                  <span className="glyphicon glyphicon-leaf form-control-feedback" />}
+                <input
+                  type="text"
+                  id="nameinput"
+                  className="form-control"
+                  placeholder="NickName"
+                  onChange={(val) => this.handleNameChange(val)}
+                />
+                {this.state.nickname ? (
+                  <span
+                    className="glyphicon glyphicon-leaf form-control-feedback"
+                    style={{ color: "#3C8DBC" }}
+                  />
+                ) : (
+                  <span className="glyphicon glyphicon-leaf form-control-feedback" />
+                )}
               </div>
               <div className="form-group has-feedback">
-                <input type="text" id="accountinput" className="form-control" placeholder="Account" onChange={(val) => this.handleAccountChange(val)} />
-                {this.state.account ? <span className="glyphicon glyphicon-user form-control-feedback" style={{ color: "#3C8DBC" }} /> :
+                <input
+                  type="text"
+                  id="accountinput"
+                  className="form-control"
+                  placeholder="Account"
+                  onChange={(val) => this.handleAccountChange(val)}
+                />
+                {this.state.account ? (
+                  <span
+                    className="glyphicon glyphicon-user form-control-feedback"
+                    style={{ color: "#3C8DBC" }}
+                  />
+                ) : (
                   <span className="glyphicon glyphicon-user form-control-feedback" />
-                }
+                )}
               </div>
               <div className="form-group has-feedback">
-                <input type="email" id="emailinput" className="form-control" placeholder="Email" onChange={(val) => this.handleEmailChange(val)} />
-                {this.state.email ? <span className="glyphicon glyphicon-envelope form-control-feedback" style={{ color: "#3C8DBC" }} /> :
-                  <span className="glyphicon glyphicon-envelope form-control-feedback" />}
+                <input
+                  type="email"
+                  id="emailinput"
+                  className="form-control"
+                  placeholder="Email"
+                  onChange={(val) => this.handleEmailChange(val)}
+                />
+                {this.state.email ? (
+                  <span
+                    className="glyphicon glyphicon-envelope form-control-feedback"
+                    style={{ color: "#3C8DBC" }}
+                  />
+                ) : (
+                  <span className="glyphicon glyphicon-envelope form-control-feedback" />
+                )}
               </div>
               <div className="form-group has-feedback">
-                <input type="password" id="psdinput" className="form-control" placeholder="Password" onChange={(val) => this.handlePsdChange(val)} />
-                {this.state.password ? <span className="glyphicon glyphicon-lock form-control-feedback" style={{ color: "#3C8DBC" }} /> :
-                  <span className="glyphicon glyphicon-lock form-control-feedback" />}
+                <input
+                  type="password"
+                  id="psdinput"
+                  className="form-control"
+                  placeholder="Password"
+                  onChange={(val) => this.handlePsdChange(val)}
+                />
+                {this.state.password ? (
+                  <span
+                    className="glyphicon glyphicon-lock form-control-feedback"
+                    style={{ color: "#3C8DBC" }}
+                  />
+                ) : (
+                  <span className="glyphicon glyphicon-lock form-control-feedback" />
+                )}
               </div>
               <div className="form-group has-feedback">
-                <input type="password" id="psd2input" className="form-control" placeholder="Retype password" onChange={(val) => this.handlePsd2Change(val)} />
-                {this.state.password2 && this.state.check_psd ? <span className="glyphicon glyphicon-ok-circle form-control-feedback" style={{ color: "#3C8DBC" }} /> : <span className="glyphicon glyphicon-ok-circle form-control-feedback" />}
+                <input
+                  type="password"
+                  id="psd2input"
+                  className="form-control"
+                  placeholder="Retype password"
+                  onChange={(val) => this.handlePsd2Change(val)}
+                />
+                {this.state.password2 && this.state.check_psd ? (
+                  <span
+                    className="glyphicon glyphicon-ok-circle form-control-feedback"
+                    style={{ color: "#3C8DBC" }}
+                  />
+                ) : (
+                  <span className="glyphicon glyphicon-ok-circle form-control-feedback" />
+                )}
               </div>
               <div className="row">
                 <div className="col-xs-8">
-                  <div className="checkbox icheck" >
-                    <label >
+                  <div className="checkbox icheck">
+                    <label>
                       <input type="checkbox" /> I agree to the <a>terms</a>
                     </label>
                   </div>
                 </div>
                 {/* /.col */}
                 <div className="col-xs-4">
-                  <p id="register" onClick={this.register} className="btn btn-primary">注册</p>
+                  <p
+                    id="register"
+                    onClick={this.register}
+                    className="btn btn-primary"
+                  >
+                    注册
+                  </p>
                 </div>
                 {/* /.col */}
               </div>
             </form>
             <br />
             <br />
-            <Link to={"/login"}><p className="text-center">I already have a membership</p></Link>
+            <Link to={"/login"}>
+              <p className="text-center">I already have a membership</p>
+            </Link>
           </div>
         </div>
       </body>
-    )
+    );
   }
 }
