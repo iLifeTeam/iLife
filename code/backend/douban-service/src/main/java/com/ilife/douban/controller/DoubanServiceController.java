@@ -134,8 +134,7 @@ public class DoubanServiceController {
         System.out.println("********** saveRcmd **********");
         JSONObject rcmd = object.getJSONObject("rcmd");
         Recommendation recommendation
-                 =new Recommendation(rcmd.getString("id"),rcmd.getString("actors_list_movie"),rcmd.getString("author_book"),parseInt(rcmd.getString("hot_book")),rcmd.getString("introduction_book"),rcmd.getString("introduction_movie"),rcmd.getString("picture_book"),rcmd.getString("picture_movie"),rcmd.getString("price_book"),parseDouble(rcmd.getString("rate_book")),rcmd.getString("title_book"),rcmd.getString("type_movie"),rcmd.getString("title_movie"),rcmd.getString("url_book"),rcmd.getString("url_movie"));
-        System.out.println(rcmd.get("tit"));
+                 =new Recommendation(rcmd.getString("id"),rcmd.getString("actors_list_movie"),rcmd.getString("author_book"),parseInt(rcmd.getString("hot_book")),rcmd.getString("introduction_book"),rcmd.getString("introduction_movie"),rcmd.getString("picture_book"),rcmd.getString("picture_movie"),rcmd.getString("price_book"),parseDouble(rcmd.getString("rate_book")),parseDouble(rcmd.getString("rate_movie")),rcmd.getString("title_book"),rcmd.getString("type_movie"),rcmd.getString("title_movie"),rcmd.getString("url_book"),rcmd.getString("url_movie"));
         userService.saveRcmd(recommendation);
     }
 }

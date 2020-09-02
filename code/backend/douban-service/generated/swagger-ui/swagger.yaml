@@ -371,6 +371,9 @@ definitions:
       rate_book:
         type: "number"
         format: "double"
+      rate_movie:
+        type: "number"
+        format: "double"
       title_book:
         type: "string"
       type_movie:
@@ -405,16 +408,16 @@ definitions:
         type: "string"
       name:
         type: "string"
-      book_WISH:
-        type: "integer"
-        format: "int32"
-      movie_WISH:
-        type: "integer"
-        format: "int32"
       book_READ:
         type: "integer"
         format: "int32"
       comment:
+        type: "integer"
+        format: "int32"
+      following:
+        type: "integer"
+        format: "int32"
+      movie_WISH:
         type: "integer"
         format: "int32"
       follower:
@@ -423,6 +426,6 @@ definitions:
       movie_WATCHED:
         type: "integer"
         format: "int32"
-      following:
+      book_WISH:
         type: "integer"
         format: "int32"

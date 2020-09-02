@@ -29,6 +29,7 @@ public class Recommendation {
 
     String price_book;
     double rate_book;
+    double rate_movie;
 
     String title_book;
 

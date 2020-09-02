@@ -74,7 +74,7 @@ public class DoubanServiceControllerTest {
         User user = new User("yg", "uk", 111, 222, 333, 444, 555, 666, 777);
         Book book = new Book("yg", "aaaaa", "bbbbb", "4444", 5555, 6666);
         Movie movie = new Movie("yg", "aaaaa", "bbbbb", "ccccc", 5, 6666);
-        Recommendation recommendation=new Recommendation("yg","5561","1555",61,"551","1212","331","142","1",1555,"155","15","412","31","12");
+        Recommendation recommendation=new Recommendation("yg","5561","1555",61,"551","1212","331","142","1",1555,1555,"155","15","412","31","12");
         userRepository.save(user);
         bookRepository.save(book);
         movieRepository.save(movie);
