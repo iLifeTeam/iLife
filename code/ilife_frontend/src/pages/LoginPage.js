@@ -85,7 +85,7 @@ export default class LoginPage extends Component {
       //console.log(ciphertext); // 'my message'
       let Days = 2; //cookie保存时间
       let exp = new Date();
-      exp.setTime(exp.getTime() + 3000);
+      exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
       document.cookie =
         "accountInfo" +
         "=" +
@@ -103,7 +103,7 @@ export default class LoginPage extends Component {
           "accountInfo" + "=" + " " + ";expires=" + exp.toGMTString();
       }
     }
-    /*
+
     var config = {
       method: "post",
       url: "http://18.166.111.161:8686/login",
@@ -133,7 +133,6 @@ export default class LoginPage extends Component {
         message.error("用户名或密码错误！");
         return;
       });
-      */
   }
   render() {
     return (
