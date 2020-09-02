@@ -10,6 +10,7 @@
     "antd": "^4.4.3",
     "axios": "^0.19.2",
     "axios-mock-adapter": "^1.18.2",
+    "crypto-js": "^4.0.0",
     "datatables.net": "^1.10.21",
     "datatables.net-dt": "^1.10.21",
     "echarts": "^4.8.0",
