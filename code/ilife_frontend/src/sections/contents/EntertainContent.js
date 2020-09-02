@@ -332,7 +332,9 @@ export default class EntertainContent extends Component {
     };
     changeSrcMovie = () => {
         let movie = document.getElementById("img");
-        let ram = this.state.movies.length % 4;
+        let ram = 3;
+        if(this.state.movies===null) ram = 7;
+        else ram = this.state.movies.length % 4;
         if (ram <= 1)
             movie.setAttribute(
                 "src",
@@ -346,7 +348,7 @@ export default class EntertainContent extends Component {
         else {
             movie.setAttribute(
                 "src",
-                "https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2589768807.webp"
+                "http://image11.m1905.cn/uploadfile/2015/0827/20150827093855444797.jpg"
             );
         }
     };
