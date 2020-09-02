@@ -279,7 +279,7 @@
       }
     },
     "/douban/saveRcmd" : {
-      "get" : {
+      "post" : {
         "tags" : [ "Douban Service Controller" ],
         "summary" : "get recommendation",
         "description" : "Get Stored Recommendation by userID",
@@ -552,11 +552,7 @@
         "name" : {
           "type" : "string"
         },
-        "following" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "follower" : {
+        "book_WISH" : {
           "type" : "integer",
           "format" : "int32"
         },
@@ -564,7 +560,15 @@
           "type" : "integer",
           "format" : "int32"
         },
+        "book_READ" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
         "comment" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "follower" : {
           "type" : "integer",
           "format" : "int32"
         },
@@ -572,11 +576,7 @@
           "type" : "integer",
           "format" : "int32"
         },
-        "book_WISH" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "book_READ" : {
+        "following" : {
           "type" : "integer",
           "format" : "int32"
         }

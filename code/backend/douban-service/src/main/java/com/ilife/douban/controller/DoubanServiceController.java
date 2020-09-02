@@ -127,7 +127,7 @@ public class DoubanServiceController {
     }
 
     @ApiOperation(notes = "Get Stored Recommendation by userID", value = "get recommendation", httpMethod = "POST")
-    @GetMapping(path = "/douban/saveRcmd")
+    @PostMapping(path = "/douban/saveRcmd")
 //    @PreAuthorize("hasRole('ROLE_USER')")
     public void saveRcmd(@RequestBody JSONObject object) {
 //        JSONObject object = JSON.parseObject(params.get("rcmd"));
