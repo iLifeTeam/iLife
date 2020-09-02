@@ -95,8 +95,10 @@ export default class EntertainContent extends Component {
 
     async saveRcmd(data) {
         data.id = this.state.doubanId;
+        console.log("To send",{'rcmd':data});
         var config = {
             method: "post",
+            data:{'rcmd':data},
             url: "http://121.36.196.234:8383/douban/saveRcmd",
             headers: {
                 withCredentials: true,
@@ -350,7 +352,11 @@ export default class EntertainContent extends Component {
     };
     changeSrcBook = () => {
         let book = document.getElementById("img2");
-        book.setAttribute("src", require("../../pic/backBook1.jpg"));
+        if(this.state.rcmd.picture_book==="https://img1.doubanio.com/view/subject/l/public/s33462079.jpg"){
+            book.setAttribute("src", require("../../pic/backBook2.jpg"));
+        }else {
+            book.setAttribute("src", require("../../pic/backBook1.jpg"));
+        }
     };
 
     render() {
