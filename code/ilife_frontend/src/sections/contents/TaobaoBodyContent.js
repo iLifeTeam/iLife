@@ -1,11 +1,14 @@
 import React, {Component} from 'react'
 import axios from 'axios';
-import {Table, Badge, Menu, Dropdown, Button, Divider, Row, Col, Typography} from 'antd';
+import {Table, Badge, Menu, Dropdown, Button, Divider, Row, Col, Typography, Space, DatePicker} from 'antd';
 import 'antd/dist/antd.css';
 import {createBrowserHistory} from 'history'
 import Pie from "../../taobao/Pie";
 import Pie2 from "../../taobao/Pie2";
+import moment from "moment";
 
+
+const { RangePicker } = DatePicker;
 const {Text, Paragraph} = Typography;
 
 const expandedRowRender = (row) => {
@@ -486,6 +489,7 @@ export default class TaobaoBodyContent extends Component {
                                     <Divider orientation="left" style={{color: '#333', fontWeight: 'normal'}}><h3
                                         className="box-title">我的淘宝购物统计</h3>
                                     </Divider>
+
                                     <Button
                                         loading={statsLoading}
                                         onClick={() => {
@@ -494,6 +498,25 @@ export default class TaobaoBodyContent extends Component {
                                     >
                                         生成报表
                                     </Button>
+
+                                    <Space direction="vertical" size={12}>
+
+                                        <RangePicker
+                                            ranges={{
+                                                Today: [moment(), moment()],
+                                                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                                            }}
+                                            showTime
+                                            format="YYYY/MM/DD HH:mm:ss"
+                                            onChange={(dates) => {
+                                                var GMT = new Date(dates[0]._d);
+                                                var GMT1 = new Date(dates[1]._d);
+                                                this.setState({ startTime: GMT.toUTCString(), endTime: GMT1.toUTCString() })
+                                            }}
+                                            style={{ marginLeft: '20px' }}
+                                        />
+                                    </Space>
+
                                 </div>
                                 {statsReady ?
                                     <div>
