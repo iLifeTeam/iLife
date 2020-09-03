@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import axios from 'axios';
+import axios from '../../axios';
 import { createBrowserHistory } from 'history'
 import WeiboInfo from '../../weibo/WeiboInfo';
 import { Button, Typography, DatePicker, Space, Divider, message, Input, Popconfirm } from 'antd';

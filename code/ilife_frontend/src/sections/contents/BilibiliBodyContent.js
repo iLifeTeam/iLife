@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
+import axios from "../../axios";
 import QRCode from "qrcode.react";
 import BilibiliHistorty from "../../bilibili/BilibiliHistorty";
 import BilibiliEcharts from "../../bilibili/BilibiliEcharts";

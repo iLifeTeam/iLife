@@ -1,11 +1,13 @@
 import React, {Component} from 'react'
-import axios from 'axios';
-import {Table, Badge, Menu, Dropdown, Button, Divider, Row, Col, Typography, Space, DatePicker} from 'antd';
+
+import axios from 'axios'
+import {Table, Badge, Menu, Dropdown, Button, Divider, Row, Col, Typography, Space, DatePicker} from 'antd'
+
 import 'antd/dist/antd.css';
 import {createBrowserHistory} from 'history'
 import Pie from "../../taobao/Pie";
-import Pie2 from "../../taobao/Pie2";
-import moment from "moment";
+import Pie2 from "../../taobao/Pie2"
+import moment from "moment"
 
 
 const { RangePicker } = DatePicker;
