@@ -1,13 +1,23 @@
-import React, { Component } from 'react'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
-import HomePage from './pages/HomePage'
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
+import React, { Component } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import storageUtils from "./storageUtils";
 
+//判断session是否过期
+let arr,
+  reg = new RegExp("(^| )" + "username" + "=([^;]*)(;|$)");
+let username = "";
+if ((arr = document.cookie.match(reg))) {
+  username = unescape(arr[2]);
+} else {
+  username = null;
+}
+
+if (Boolean(username)) {
+  storageUtils.saveUser(username);
+}
 
 export default class App extends Component {
   render() {
@@ -18,6 +28,6 @@ export default class App extends Component {
         <Route path="/login" component={LoginPage} />
         <Route path="/register" component={RegisterPage} />
       </Router>
-    )
+    );
   }
 }

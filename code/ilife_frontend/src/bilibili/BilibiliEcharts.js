@@ -104,14 +104,13 @@ export default class BilibiliEcharts extends Component {
   }
   componentDidMount() {
     //初始化图表
-    this.initChart();
+    this.initChart(this.props);
   }
   componentWillReceiveProps(nextProps) {
     //更新图表
-    this.initChart(nextProps);
+    //this.initChart(nextProps);
   }
-  /*生成图表，做了判断，如果不去判断dom有没有生成，
-  每次更新图表都要生成一个dom节点*/
+
   initChart(props) {
     var datas = [];
     const { plantCap } = this.state;
@@ -199,6 +198,7 @@ export default class BilibiliEcharts extends Component {
       ],
     };
     // 基于准备好的dom，初始化echarts实例
+
     let myChart = echarts.getInstanceByDom(
       document.getElementById("bilibili-echarts")
     );
@@ -206,18 +206,23 @@ export default class BilibiliEcharts extends Component {
       myChart = echarts.init(document.getElementById("bilibili-echarts"));
     }
     // 绘制图表，option设置图表格式及源数据
-    myChart.setOption(option);
-    if (!this.state.initdone)
+    if (!this.state.initdone) {
+      myChart.setOption(option);
       window.onresize = function () {
         myChart.resize();
       };
+    }
+
+    this.setState({
+      initdone: true,
+    });
   }
 
   render() {
     return (
       //width和height可由属性值传入
       <div
-        id="ilibili-echartsb"
+        id="bilibili-echarts"
         style={{ width: "100%", height: "100%", minHeight: 300 }}
       ></div>
     );

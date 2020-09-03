@@ -1,14 +1,23 @@
-import React, { Component } from 'react'
-import $ from 'jquery'
-require('datatables.net')
-require('datatables.net-dt/css/jquery.dataTables.min.css')
+import React, { Component } from "react";
+import $ from "jquery";
+require("datatables.net");
+require("datatables.net-dt/css/jquery.dataTables.min.css");
 
 export default class WeiboInfo extends Component {
-
   componentDidMount() {
     this.$el = $(this.el);
 
     this.$el.DataTable({
+      oLanguage: {
+        sProcessing: "正在查询中......",
+        sZeroRecords: "您尚未绑定账户/没有发表过动态信息...",
+        oPaginate: {
+          sFirst: "首页",
+          sPrevious: "上一页",
+          sNext: "下一页",
+          sLast: "末页",
+        },
+      },
       columns: [
         { data: "id" },
         { data: "publish_time" },
@@ -16,23 +25,31 @@ export default class WeiboInfo extends Component {
         { data: "retweet_num" },
         { data: "comment_count" },
         { data: "up_num" },
-      ]
+      ],
     });
   }
   parseData(data) {
     //console.log(data)
-    data.forEach(element => {
+    data.forEach((element) => {
       if (element.publish_time) {
         var str = JSON.stringify(element.publish_time);
-        element.publish_time = str.split('"')[1].split('T')[0] + " " + str.split('T')[1].split(':')[0] + ':' + str.split('T')[1].split(':')[1];
+        element.publish_time =
+          str.split('"')[1].split("T")[0] +
+          " " +
+          str.split("T")[1].split(":")[0] +
+          ":" +
+          str.split("T")[1].split(":")[1];
       }
     });
 
     return data;
   }
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.activities && this.props.activities !== prevProps.activities) {
-      var table = $('#weiboTable').DataTable()
+    if (
+      this.props.activities &&
+      this.props.activities !== prevProps.activities
+    ) {
+      var table = $("#weiboTable").DataTable();
       table.clear();
       //向table中添加数据
       table.rows.add(this.parseData(this.props.activities));
@@ -41,17 +58,19 @@ export default class WeiboInfo extends Component {
     }
   }
 
-
   componentWillUnmount() {
     console.log("unmount");
     this.setState = () => false;
-    $('#weiboTable').DataTable().destroy(true);
+    $("#weiboTable").DataTable().destroy(true);
   }
-
 
   render() {
     return (
-      <table id="weiboTable" ref={el => this.el = el} className="table table-bordered table-striped" >
+      <table
+        id="weiboTable"
+        ref={(el) => (this.el = el)}
+        className="table table-bordered table-striped"
+      >
         <thead>
           <tr>
             <th style={{ width: "8%" }}>微博id</th>
@@ -63,6 +82,6 @@ export default class WeiboInfo extends Component {
           </tr>
         </thead>
       </table>
-    )
+    );
   }
 }

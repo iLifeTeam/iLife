@@ -3,7 +3,6 @@ import axios from "../../axios";
 import QRCode from "qrcode.react";
 import BilibiliHistorty from "../../bilibili/BilibiliHistorty";
 import BilibiliEcharts from "../../bilibili/BilibiliEcharts";
-import bilibiliUp from "../../bilibili/BilibiliUp";
 import BilibiliUp from "../../bilibili/BilibiliUp";
 import { Divider } from "antd";
 export default class BilibiliBodyContent extends Component {
@@ -33,7 +32,7 @@ export default class BilibiliBodyContent extends Component {
   async QRcodeLogin() {
     this.setState({ loading: true });
     const QRcode = await axios
-      .get("http://18.166.111.161:8848/bili/getloginurl", {
+      .get("http://18.166.111.161:8000/bilibili/bili/getloginurl", {
         headers: { withCredentials: true },
       })
       .then(function (response) {
@@ -61,7 +60,7 @@ export default class BilibiliBodyContent extends Component {
     var config = {
       method: "post",
       url:
-        "http://18.166.111.161:8848/bili/loginconfirm?oauthKey=" +
+        "http://18.166.111.161:8000/bilibili/bili/loginconfirm?oauthKey=" +
         this.state.oauthKey,
       headers: { withCredentials: true },
     };
@@ -90,7 +89,8 @@ export default class BilibiliBodyContent extends Component {
   async getUserId(ans) {
     var config = {
       method: "get",
-      url: "http://18.166.111.161:8848/bili/userinform?SESSDATA=" + ans,
+      url:
+        "http://18.166.111.161:8000/bilibili/bili/userinform?SESSDATA=" + ans,
       headers: { withCredentials: true },
     };
 
@@ -117,7 +117,7 @@ export default class BilibiliBodyContent extends Component {
     var config = {
       method: "post",
       url:
-        "http://18.166.111.161:8848/bili/gethistory?mid=" +
+        "http://18.166.111.161:8000/bilibili/bili/gethistory?mid=" +
         userId +
         "&page=0&size=100",
       headers: { withCredentials: true },
@@ -146,7 +146,7 @@ export default class BilibiliBodyContent extends Component {
     var config = {
       method: "get",
       url:
-        "http://18.166.111.161:8848/bili/updatehistory?SESSDATA=" +
+        "http://18.166.111.161:8000/bilibili/bili/updatehistory?SESSDATA=" +
         this.state.SESSDATA,
       headers: { withCredentials: true },
     };

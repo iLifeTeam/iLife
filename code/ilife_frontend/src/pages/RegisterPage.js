@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import axios from "../axios";
+import { message } from "antd";
 
 const $ = require("jquery");
+var CryptoJS = require("crypto-js");
 
 export default class RegisterPage extends Component {
   constructor(props) {
@@ -87,10 +89,21 @@ export default class RegisterPage extends Component {
   async register() {
     // console.log("111");
     if (!this.state.check_psd) {
-      alert("密码不匹配！");
+      message.warning("密码不匹配！");
+      return;
+    }
+    if (!$("#check-terms")[0].checked) {
+      message.warning("请先勾选用户协议！");
       return;
     }
 
+    const { account, password } = this.state;
+    let password_md5 = CryptoJS.MD5(
+      account + "&" + password,
+      "ilifeteam"
+    ).toString();
+
+    //console.log(password_md5);
     var config = {
       method: "post",
       url: "http://18.166.111.161:8686/auth/register",
@@ -100,8 +113,8 @@ export default class RegisterPage extends Component {
       },
       data: {
         nickname: this.state.nickname,
-        account: this.state.account,
-        password: this.state.password,
+        account: account,
+        password: password_md5,
         email: this.state.email,
         type: "ROLE_USER",
       },
@@ -112,13 +125,13 @@ export default class RegisterPage extends Component {
     await axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        alert("注册成功！请登录！");
+        message.warning("注册成功！请登录！");
         history.push("/login");
         window.location.reload();
       })
       .catch(function (error) {
         console.log(error);
-        alert("注册失败！");
+        message.warning("注册失败！");
         return;
       });
 
@@ -235,7 +248,8 @@ export default class RegisterPage extends Component {
                 <div className="col-xs-8">
                   <div className="checkbox icheck">
                     <label>
-                      <input type="checkbox" /> I agree to the <a>terms</a>
+                      <input id="check-terms" type="checkbox" /> I agree to the{" "}
+                      <a>terms</a>
                     </label>
                   </div>
                 </div>

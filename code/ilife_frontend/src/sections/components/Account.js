@@ -2,18 +2,27 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import axios from "../../axios";
+import storageUtils from "../../storageUtils";
 
 export default class Account extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: window.sessionStorage.getItem("username"),
+      username: storageUtils.getUser(),
     };
   }
 
   logoff() {
     const history = createBrowserHistory();
-    window.sessionStorage.clear();
+    storageUtils.deleteUser();
+
+    let username = document.cookie;
+    var cookie_pos = username.indexOf("username");
+
+    if (cookie_pos != -1) {
+      document.cookie =
+        "username" + "=" + " " + ";expires=" + new Date().toGMTString();
+    }
 
     var config = {
       method: "post",

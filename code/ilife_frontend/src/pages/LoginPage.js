@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import axios from "../axios";
 import { message } from "antd";
+import storageUtils from "../storageUtils";
 
 var CryptoJS = require("crypto-js");
 axios.defaults.withCredentials = true;
@@ -28,6 +29,11 @@ export default class LoginPage extends Component {
   }
 
   loadPassword() {
+    if (!storageUtils.getUser()) {
+      const history = createBrowserHistory();
+      history.push("/home/weibo");
+      window.location.reload();
+    }
     let arr,
       reg = new RegExp("(^| )" + "accountInfo" + "=([^;]*)(;|$)");
     let accountInfo = "";
@@ -37,7 +43,7 @@ export default class LoginPage extends Component {
       accountInfo = null;
     }
 
-    if (Boolean(accountInfo) == false) {
+    if (Boolean(accountInfo) === false) {
       return false;
     } else {
       let userName = "";
@@ -91,7 +97,8 @@ export default class LoginPage extends Component {
         "=" +
         escape(ciphertext) +
         ";expires=" +
-        exp.toGMTString();
+        exp.toGMTString() +
+        ";";
     } else {
       let exp = new Date();
       exp.setTime(exp.getTime() - 1);
@@ -104,6 +111,11 @@ export default class LoginPage extends Component {
       }
     }
 
+    const { username, password } = this.state;
+    let password_md5 = CryptoJS.MD5(
+      username + "&" + password,
+      "ilifeteam"
+    ).toString();
     var config = {
       method: "post",
       url: "http://18.166.111.161:8686/login",
@@ -111,8 +123,8 @@ export default class LoginPage extends Component {
         withCredentials: true,
       },
       data: {
-        account: this.state.username,
-        password: this.state.password,
+        account: username,
+        password: password_md5,
       },
     };
 
@@ -121,9 +133,18 @@ export default class LoginPage extends Component {
       .then(function (response) {
         console.log(JSON.stringify(response.data));
         if (response.data === "iLife login success") {
-          window.sessionStorage.setItem("username", config.data.account);
+          let time = new Date();
+          time.setTime(time.getTime() + 3000000);
+          document.cookie =
+            "username" +
+            "=" +
+            escape(username) +
+            ";expires=" +
+            time.toGMTString() +
+            ";";
           history.push("/home/weibo");
-          message.success("登陆成功");
+          message.success("登录成功！");
+          //console.log(document.cookie);
           window.location.reload();
         } else message.error("登录失败！");
         return;
@@ -157,7 +178,14 @@ export default class LoginPage extends Component {
                     value={this.state.username}
                     onChange={(val) => this.handleNameChange(val)}
                   />
-                  <span className="glyphicon glyphicon-envelope form-control-feedback" />
+                  {this.state.username ? (
+                    <span
+                      className="glyphicon glyphicon-envelope form-control-feedback"
+                      style={{ color: "#3C8DBC" }}
+                    />
+                  ) : (
+                    <span className="glyphicon glyphicon-envelope form-control-feedback" />
+                  )}
                 </div>
                 <div className="form-group has-feedback">
                   <input
@@ -168,7 +196,14 @@ export default class LoginPage extends Component {
                     value={this.state.password}
                     onChange={(val) => this.handlePsdChange(val)}
                   />
-                  <span className="glyphicon glyphicon-lock form-control-feedback" />
+                  {this.state.password ? (
+                    <span
+                      className="glyphicon glyphicon-lock form-control-feedback"
+                      style={{ color: "#3C8DBC" }}
+                    />
+                  ) : (
+                    <span className="glyphicon glyphicon-lock form-control-feedback" />
+                  )}
                 </div>
                 <div className="row">
                   <div className="col-xs-8">
