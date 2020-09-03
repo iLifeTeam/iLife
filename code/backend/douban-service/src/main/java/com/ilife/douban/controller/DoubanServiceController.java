@@ -1,5 +1,6 @@
 package com.ilife.douban.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ilife.douban.entity.*;
 import com.ilife.douban.service.UserService;
 import io.swagger.annotations.*;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+
+import static java.lang.Double.parseDouble;
+import static java.lang.Integer.parseInt;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -112,5 +116,25 @@ public class DoubanServiceController {
     public Reference getRefParameter(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
         System.out.println("********** getRecommendation**********");
         return userService.getRcmd(uid);
+    }
+
+    @ApiOperation(notes = "Get Stored Recommendation by userID", value = "get recommendation", httpMethod = "GET")
+    @GetMapping(path = "/douban/getStoredRcmd")
+//    @PreAuthorize("hasRole('ROLE_USER')")
+    public Recommendation getStoredRcmd(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
+        System.out.println("********** getRecommendation**********");
+        return userService.getStoredRcmd(uid);
+    }
+
+    @ApiOperation(notes = "Get Stored Recommendation by userID", value = "get recommendation", httpMethod = "POST")
+    @PostMapping(path = "/douban/saveRcmd")
+//    @PreAuthorize("hasRole('ROLE_USER')")
+    public void saveRcmd(@RequestBody JSONObject object) {
+//        JSONObject object = JSON.parseObject(params.get("rcmd"));
+        System.out.println("********** saveRcmd **********");
+        JSONObject rcmd = object.getJSONObject("rcmd");
+        Recommendation recommendation
+                 =new Recommendation(rcmd.getString("id"),rcmd.getString("actors_list_movie"),rcmd.getString("author_book"),parseInt(rcmd.getString("hot_book")),rcmd.getString("introduction_book"),rcmd.getString("introduction_movie"),rcmd.getString("picture_book"),rcmd.getString("picture_movie"),rcmd.getString("price_book"),parseDouble(rcmd.getString("rate_book")),parseDouble(rcmd.getString("rate_movie")),rcmd.getString("title_book"),rcmd.getString("type_movie"),rcmd.getString("title_movie"),rcmd.getString("url_book"),rcmd.getString("url_movie"));
+        userService.saveRcmd(recommendation);
     }
 }

@@ -196,6 +196,42 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Reference"
+  /douban/getStoredRcmd:
+    get:
+      tags:
+      - "Douban Service Controller"
+      summary: "get recommendation"
+      description: "Get Stored Recommendation by userID"
+      operationId: "getStoredRcmd"
+      parameters:
+      - name: "userId"
+        in: "query"
+        description: "The user ID of a douban user"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Recommendation"
+  /douban/saveRcmd:
+    post:
+      tags:
+      - "Douban Service Controller"
+      summary: "get recommendation"
+      description: "Get Stored Recommendation by userID"
+      operationId: "saveRcmd"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          type: "object"
+          additionalProperties:
+            type: "object"
+      responses:
+        default:
+          description: "successful operation"
 definitions:
   Book:
     type: "object"
@@ -310,6 +346,44 @@ definitions:
         type: "string"
       preType:
         type: "string"
+  Recommendation:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      actors_list_movie:
+        type: "string"
+      author_book:
+        type: "string"
+      hot_book:
+        type: "integer"
+        format: "int32"
+      introduction_book:
+        type: "string"
+      introduction_movie:
+        type: "string"
+      picture_book:
+        type: "string"
+      picture_movie:
+        type: "string"
+      price_book:
+        type: "string"
+      rate_book:
+        type: "number"
+        format: "double"
+      rate_movie:
+        type: "number"
+        format: "double"
+      title_book:
+        type: "string"
+      type_movie:
+        type: "string"
+      title_movie:
+        type: "string"
+      url_book:
+        type: "string"
+      url_movie:
+        type: "string"
   Reference:
     type: "object"
     properties:
@@ -337,21 +411,21 @@ definitions:
       book_READ:
         type: "integer"
         format: "int32"
-      movie_WISH:
-        type: "integer"
-        format: "int32"
-      book_WISH:
-        type: "integer"
-        format: "int32"
       comment:
-        type: "integer"
-        format: "int32"
-      movie_WATCHED:
         type: "integer"
         format: "int32"
       following:
         type: "integer"
         format: "int32"
+      movie_WISH:
+        type: "integer"
+        format: "int32"
       follower:
+        type: "integer"
+        format: "int32"
+      movie_WATCHED:
+        type: "integer"
+        format: "int32"
+      book_WISH:
         type: "integer"
         format: "int32"
