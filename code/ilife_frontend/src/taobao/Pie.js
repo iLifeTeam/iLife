@@ -197,11 +197,11 @@ function convertData1() {
 
 const option = {
     title: {
-        text: '淘宝购物数据分布',
+        text: '商品数分布',
         left: 'center',
         textStyle: {
             //color: "red",
-            fontSize: 40
+            fontSize: 0
         },
         //backgroundColor: "rgb(199,16,16)",
         top: "2%"

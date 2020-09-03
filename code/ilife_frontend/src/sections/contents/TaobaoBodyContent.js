@@ -1,13 +1,29 @@
 import React, {Component} from 'react'
 
 import axios from 'axios'
-import {Table, Badge, Menu, Dropdown, Button, Divider, Row, Col, Typography, Space, DatePicker} from 'antd'
+import {
+    Table,
+    Badge,
+    Menu,
+    Dropdown,
+    Button,
+    Divider,
+    Row,
+    Col,
+    Typography,
+    Space,
+    DatePicker,
+    Statistic,
+    List,
+    Spin
+} from 'antd'
 
 import 'antd/dist/antd.css';
 import {createBrowserHistory} from 'history'
 import Pie from "../../taobao/Pie";
 import Pie2 from "../../taobao/Pie2"
 import moment from "moment"
+import {AccountBookOutlined, BarChartOutlined} from "@ant-design/icons";
 
 
 const { RangePicker } = DatePicker;
@@ -66,6 +82,8 @@ export default class TaobaoBodyContent extends Component {
             stats: null,
             statsLoading: false,
             statsReady: false,
+            updatingStats: false,
+            updatingComplete:false
         }
     }
 
@@ -141,7 +159,9 @@ export default class TaobaoBodyContent extends Component {
         this.setState({
             loginSuccess: true
         })
-        this.fetchAfter(phone, "2020-01-01") // todo: change this
+        // this.fetchAfter(phone, "2020-01-01") // todo: change this
+        this.updateStats(phone)
+        this.fetchAll(phone)
     }
     loginRequest = (phone, smsCode) => {
         const config = {
@@ -221,7 +241,8 @@ export default class TaobaoBodyContent extends Component {
             params: {
                 username: phone,
             },
-            withCredentials: true
+            withCredentials: true,
+            timeout: 60*1000*10
         }
         this.setState({
             updating: true
@@ -233,8 +254,11 @@ export default class TaobaoBodyContent extends Component {
                 })
                 console.log(response)
                 console.log("更新了" + response.data + "条购物信息")
-                this.fetchAfter(phone, "2020-03-01") // todo: alter this
+                this.updateStats(phone)
+                // this.fetchAfter(phone, "2020-03-01") // todo: alter this
+                this.fetchAll(phone)
             })
+
     }
     updateAll = (phone) => {
         const config = {
@@ -258,7 +282,8 @@ export default class TaobaoBodyContent extends Component {
                 })
                 console.log(response)
                 console.log("更新了" + response.data + "条购物信息")
-                this.fetchAfter(phone, "2020-01-01") // todo: alter this
+                // this.fetchAfter(phone, "2020-01-01") // todo: alter this
+                this.fetchAll(phone)
             })
     }
     fetchAfter = (phone, date) => {
@@ -296,6 +321,29 @@ export default class TaobaoBodyContent extends Component {
             }).catch(err => {
             console.log(err)
         })
+    }
+    updateStats = (phone) => {
+        const config = {
+            method: 'post',
+            url: this.server + ":" + this.port + '/taobao/stats/category/update',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            params: {
+                username: phone,
+            },
+            withCredentials: true,
+            timeout: 20*60*1000
+        }
+        this.setState({updatingStats: true})
+        axios(config)
+            .then(response => {
+                console.log("update complete")
+                this.setState({
+                    updatingStats: false,
+                    updateComplete: true
+                })
+            })
     }
     fetchAll = (phone) => {
         const config = {
@@ -366,7 +414,7 @@ export default class TaobaoBodyContent extends Component {
         const style = {
             flex: 1
         }
-        const {orders, loginSuccess, uid, phone, btnDisabled, loading, updating, loginLoading, smsCode, crawlerEnabled, statsLoading, stats, statsReady} = this.state;
+        const {orders, loginSuccess, uid, phone, btnDisabled, loading, updating, loginLoading, smsCode, crawlerEnabled, statsLoading, stats, statsReady,updatingStats,updateComplete} = this.state;
         console.log(this.state)
         return (
             <div className="content-wrapper">
@@ -442,6 +490,7 @@ export default class TaobaoBodyContent extends Component {
                                 </Button>
                                     {this.state.updating ? <div>正在增量式爬取...</div> : null}
                                     {this.state.fetching ? <div>正在获取...</div> : null}
+                                    {this.state.updatingStats ? <div>正在对数据进一步处理... <Spin /></div> : null}
                                 </div>
                                 <div className="box-body" style={style}>
                                     {/*<table id="example1" className="table table-bordered table-striped">*/}
@@ -452,32 +501,6 @@ export default class TaobaoBodyContent extends Component {
                                         bordered
                                     >
                                     </Table>
-                                    {/*<thead>*/}
-                                    {/*  <tr>*/}
-                                    {/*    <th>orderId</th>*/}
-                                    {/*    <th>question</th>*/}
-                                    {/*    <th>answer</th>*/}
-                                    {/*    <th>target_id</th>*/}
-                                    {/*    <th>created_time</th>*/}
-                                    {/*  </tr>*/}
-                                    {/*</thead>*/}
-                                    {/*<tbody>*/}
-                                    {/*  {orders.length > 0 ?  orders.map((order, index) => (*/}
-                                    {/*    <JingdongOrders*/}
-                                    {/*    ></JingdongOrders>*/}
-                                    {/*  )) : null }*/}
-
-                                    {/*</tbody>*/}
-                                    {/*<tfoot>*/}
-                                    {/*  <tr>*/}
-                                    {/*    <th>action_text</th>*/}
-                                    {/*    <th>question</th>*/}
-                                    {/*    <th>answer</th>*/}
-                                    {/*    <th>target_id</th>*/}
-                                    {/*    <th>created_time</th>*/}
-                                    {/*  </tr>*/}
-                                    {/*</tfoot>*/}
-                                    {/*</table>*/}
                                 </div>
                             </div>
                         </div>
@@ -520,25 +543,42 @@ export default class TaobaoBodyContent extends Component {
                                     </Space>
 
                                 </div>
-                                {statsReady ?
-                                    <div>
-                                        <Row justify="center">
-                                            <Col span={12}>
-
+                                {statsReady && updateComplete ?
+                                    <div style={{marginLeft: '100px'}}>
+                                        <Divider orientation="left">总览</Divider>
+                                        <Row justify="left">
+                                            <Col span={16}>
+                                                <Row gutter={16}>
+                                                    <Col span={12}>
+                                                        <Statistic title="本月消费" value={stats.countMonth} prefix={<AccountBookOutlined/>}/>
+                                                    </Col>
+                                                    <Col span={12}>
+                                                        <Statistic title="今年购入" value={this.computeSum(stats.categories)} prefix={<BarChartOutlined/>} suffix="件"/>
+                                                    </Col>
+                                                    <Col span={12}>
+                                                        <Statistic title="今年消费" value={stats.expenseYear} prefix={<AccountBookOutlined/>}/>
+                                                    </Col>
+                                                </Row>
+                                                <List
+                                                    header={<div>我买过最贵的一单花了{stats.mostExpensive.total.toFixed(2)}元,
+                                                        买了{stats.mostExpensive.items.length}件宝贝</div>}
+                                                    bordered
+                                                    dataSource={stats.mostExpensive.items}
+                                                    renderItem={item => (
+                                                        <List.Item>
+                                                            <Typography.Text mark><img src={item.imgUrl}/></Typography.Text> {item.product}
+                                                        </List.Item>
+                                                    )}
+                                                />
                                                 <Text className="box-body">
-                                                    <Paragraph> 我的本月的消费是 {stats.expenseMonth},我今年一共购买了{this.computeSum(stats.categories)}件商品,消费总计{stats.expenseYear.toFixed(2)}元</Paragraph>
-                                                    <Paragraph> 我买过最贵的一单花了{stats.mostExpensive.total.toFixed(2)}元,
-                                                        是在 "{stats.mostExpensive.shop}" 店里,
-                                                        买了{stats.mostExpensive.items.length}件宝贝 {(stats.mostExpensive.items.length) == 1 ? <img src={stats.mostExpensive.items[0].imgUrl}/>: null }</Paragraph>
                                                 </Text>
-
-
                                             </Col>
                                         </Row>
-
+                                        <Divider orientation="left">购物数量分布</Divider>
                                         <Row justify="center">
                                             <Pie stats={stats}/>
                                         </Row>
+                                        <Divider orientation="left">购物花销分布</Divider>
                                         <Row justify="center">
                                             <Pie2 stats={stats}/>
                                         </Row>
