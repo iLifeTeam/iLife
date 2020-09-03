@@ -351,14 +351,24 @@ export default class EntertainContent extends Component {
                 "http://image11.m1905.cn/uploadfile/2015/0827/20150827093855444797.jpg"
             );
         }
+        if(this.state.rcmd.picture_url==="https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2577799411.jpg"){
+            movie.setAttribute("src", require("../../pic/backMovie1.jpg"));
+        }
+        if(this.state.rcmd.picture_url==="https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2565063791.jpg "){
+            movie.setAttribute("src", require("../../pic/backMovie2.jpg"));
+        }
+
     };
     changeSrcBook = () => {
         let book = document.getElementById("img2");
+        book.setAttribute("src", require("../../pic/backBook1.jpg"));
         if(this.state.rcmd.picture_book==="https://img1.doubanio.com/view/subject/l/public/s33462079.jpg"){
             book.setAttribute("src", require("../../pic/backBook2.jpg"));
-        }else {
-            book.setAttribute("src", require("../../pic/backBook1.jpg"));
         }
+        if(this.state.rcmd.picture_book==="https://img3.doubanio.com/view/subject/l/public/s29866441.jpg"){
+            book.setAttribute("src", require("../../pic/backBook3.jpg"));
+        }
+
     };
 
     render() {
@@ -418,7 +428,7 @@ export default class EntertainContent extends Component {
                                                     onError={this.changeSrcMovie}
                                                 />
                                                 <Card style={{width: "95%"}}>
-                                                    <p>推荐书籍：</p>
+                                                    <p  style={{fontSize:'25px',color:"red"}}>推荐书籍：</p>
                                                     <h1
                                                         style={{
                                                             marginTop: "40px",
@@ -428,23 +438,23 @@ export default class EntertainContent extends Component {
                                                     >
                                                         {this.state.rcmd.title_book}
                                                     </h1>
-                                                    <h3 style={{marginTop: "40px"}}>
-                                                        书籍评分：{this.state.rcmd.rate_book}
-                                                    </h3>
-                                                    <h3 style={{marginTop: "40px"}}>
-                                                        书籍热度：{this.state.rcmd.hot_book}
-                                                    </h3>
-                                                    <h3 style={{marginTop: "40px"}}>
-                                                        书籍价格：{this.state.rcmd.price_book}
-                                                    </h3>
-                                                    <h3 style={{marginTop: "40px"}}>
-                                                        书籍简介：{this.state.rcmd.introduction_book}
-                                                    </h3>
+                                                    <p style={{marginTop: "60px",fontSize:'20px'}}>
+                                                        <span style={{fontWeight:"bold"}}>书籍评分：</span>{this.state.rcmd.rate_book}
+                                                    </p>
+                                                    <p style={{marginTop: "60px",fontSize:'20px'}}>
+                                                        <span style={{fontWeight:"bold"}}>书籍热度：</span>{this.state.rcmd.hot_book}
+                                                    </p>
+                                                    <p style={{marginTop: "60px",fontSize:'20px'}}>
+                                                        <span style={{fontWeight:"bold"}}>书籍价格：</span>{this.state.rcmd.price_book}
+                                                    </p>
+                                                    <p style={{marginTop: "60px",fontSize:'20px'}}>
+                                                        <span style={{fontWeight:"bold"}}>书籍简介：</span>{this.state.rcmd.introduction_book}
+                                                    </p>
                                                 </Card>
                                             </div>
                                             <div className="col-xs-6">
                                                 <Card style={{width: "95%"}}>
-                                                    <p>推荐电影：</p>
+                                                    <p style={{fontSize:'25px',color:"red"}}>推荐电影：</p>
                                                     <h1
                                                         style={{
                                                             marginTop: "40px",
@@ -454,18 +464,18 @@ export default class EntertainContent extends Component {
                                                     >
                                                         {this.state.rcmd.title_movie}
                                                     </h1>
-                                                    <h3 style={{marginTop: "40px"}}>
-                                                        电影类型：{this.state.rcmd.type_movie}
-                                                    </h3>
-                                                    <h3 style={{marginTop: "40px"}}>
-                                                        豆瓣评分：{this.state.rcmd.rate_movie}
-                                                    </h3>
-                                                    <h3 style={{marginTop: "40px"}}>
-                                                        演员列表：{this.state.rcmd.actors_list_movie}
-                                                    </h3>
-                                                    <h3 style={{marginTop: "40px"}}>
-                                                        电影简介：{this.state.rcmd.introduction_movie}
-                                                    </h3>
+                                                    <p style={{marginTop: "60px",fontSize:'20px'}}>
+                                                        <span style={{fontWeight:"bold"}}>电影类型：</span>{this.state.rcmd.type_movie}
+                                                    </p>
+                                                    <p style={{marginTop: "60px",fontSize:'20px'}}>
+                                                        <span style={{fontWeight:"bold"}}>豆瓣评分：</span>{this.state.rcmd.rate_movie}
+                                                    </p>
+                                                    <p style={{marginTop: "60px",fontSize:'20px'}}>
+                                                        <span style={{fontWeight:"bold"}}>演员列表：</span>{this.state.rcmd.actors_list_movie}
+                                                    </p>
+                                                    <p style={{marginTop: "60px",fontSize:'20px'}}>
+                                                        <span style={{fontWeight:"bold"}}>电影简介：</span>{this.state.rcmd.introduction_movie}
+                                                    </p>
                                                 </Card>
                                                 <img
                                                     id="img2"
