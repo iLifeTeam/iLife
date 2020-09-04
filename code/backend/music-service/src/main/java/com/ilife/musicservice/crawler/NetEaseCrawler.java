@@ -158,6 +158,49 @@ NetEaseCrawler {
         Long uid = ParseUid(response);
         return uid;
     }
+
+
+    public JSONArray getsimiSongs(Long uid) {
+        List<NameValuePair> parameters = new ArrayList<>();
+        parameters.add(new BasicNameValuePair("id", uid.toString()));
+        JSONArray jsonArray;
+        JSONObject object = JSON.parseObject(getRequest("/simi/song", parameters));
+        jsonArray = object.getJSONArray("songs");
+
+//        [{
+//            name:
+//            artlists:[{
+//              name:
+//              id:
+//            }]
+//            album:{
+//              name:
+//              type:
+//              picUrl:
+//            }
+//        }]
+        JSONArray jsonArray1 = new JSONArray();
+        for(int i = 0; i < jsonArray.size();++i){
+            JSONObject jsonObject = new JSONObject();
+            JSONObject artlist = new JSONObject();
+            JSONObject album = new JSONObject();
+            JSONArray artlists = new JSONArray();
+            jsonObject.put("name",jsonArray.getJSONObject(i).getString("name"));
+            album.put("name",jsonArray.getJSONObject(i).getJSONObject("album").getString("name"));
+            album.put("type",jsonArray.getJSONObject(i).getJSONObject("album").getString("type"));
+            album.put("picUrl",jsonArray.getJSONObject(i).getJSONObject("album").getString("picUrl"));
+            jsonObject.put("album",album);
+            JSONArray art = jsonArray.getJSONObject(i).getJSONArray("artists");
+            for(int j = 0;j<art.size();j++){
+                artlist.put("name",art.getJSONObject(j).getString("name"));
+                artlist.put("id",art.getJSONObject(j).getString("id"));
+                artlists.add(artlist);
+            }
+            jsonObject.put("artlists",artlists);
+            jsonArray1.add(jsonObject);
+        }
+        return jsonArray1;
+    }
 //    @Transactional
 //    public void  test(String ph,String pw)
 //    {

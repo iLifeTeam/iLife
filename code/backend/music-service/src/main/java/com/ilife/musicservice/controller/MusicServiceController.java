@@ -111,4 +111,10 @@ public class MusicServiceController {
         return wyyhistoryService.getFavorSingers(uid);
     }
 
+    @GetMapping("/music/getSimiSongs")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public JSONArray getSimiSongs(@RequestParam Long mid) {
+        return netEaseCrawler.getsimiSongs(mid);
+    }
+
 }
