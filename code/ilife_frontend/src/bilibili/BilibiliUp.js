@@ -222,6 +222,9 @@ export default class BilibiliUp extends Component {
     links = [];
     texts = [];
     this.initChart();
+    this.setState({
+      initdone: true,
+    });
   }
   componentWillReceiveProps(nextProps) {
     //更新图表
@@ -331,17 +334,14 @@ export default class BilibiliUp extends Component {
       myChart = echarts.init(document.getElementById("Up-echarts"));
     }
     // 绘制图表，option设置图表格式及源数据
+    myChart.setOption(option);
     if (!this.state.initdone) {
-      myChart.setOption(option);
       window.onresize = function () {
         myChart.resize();
       };
 
       myChart.on("click", this.clickFun);
     }
-    this.setState({
-      initdone: true,
-    });
   }
 
   clickFun = (param) => {

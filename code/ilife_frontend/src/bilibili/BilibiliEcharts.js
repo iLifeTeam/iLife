@@ -88,12 +88,17 @@ export default class BilibiliEcharts extends Component {
   }
   componentDidMount() {
     //初始化图表
+    console.log(this.props);
     this.initChart(this.props);
+
+    this.setState({
+      initdone: true,
+    });
   }
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps, prevState) {
     //更新图表
-    console.log(nextProps);
-    this.initChart(nextProps);
+    console.log(this.props);
+    this.initChart(this.props);
   }
 
   initChart(props) {
@@ -103,8 +108,9 @@ export default class BilibiliEcharts extends Component {
     for (var i = 0; i < Tag.length; i++) {
       var item = Tag[i];
       var itemToStyle = datalist[i];
+      console.log(item);
       datas.push({
-        name: item[i],
+        name: item,
         value: itemToStyle.offset,
         symbolSize: itemToStyle.symbolSize,
         label: {
@@ -192,16 +198,13 @@ export default class BilibiliEcharts extends Component {
       myChart = echarts.init(document.getElementById("bilibili-echarts"));
     }
     // 绘制图表，option设置图表格式及源数据
+
+    myChart.setOption(option);
     if (!this.state.initdone) {
-      myChart.setOption(option);
       window.onresize = function () {
         myChart.resize();
       };
     }
-
-    this.setState({
-      initdone: true,
-    });
   }
 
   render() {

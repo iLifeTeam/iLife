@@ -55,10 +55,10 @@ export default class BilibiliHistorty extends Component {
       >
         <thead>
           <tr>
-            <th>历史记录id</th>
-            <th>视频名称</th>
-            <th>up主</th>
-            <th>标签</th>
+            <th style={{ width: "20%" }}>历史记录id</th>
+            <th style={{ width: "40%" }}>视频名称</th>
+            <th style={{ width: "20%" }}>up主</th>
+            <th style={{ width: "20%" }}>标签</th>
           </tr>
         </thead>
       </table>

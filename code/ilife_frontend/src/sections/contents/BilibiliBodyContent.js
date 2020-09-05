@@ -65,12 +65,8 @@ export default class BilibiliBodyContent extends Component {
     const user = await this.getilifeId(username);
     if (user) {
       await this.getHistories(user.biliid);
-      const FavorUp = await this.getFavorUp(user.biliid);
-      const FavorTag = await this.getFavorTag(user.biliid);
-      this.setState({
-        FavorTag: FavorTag,
-        FavorUp: FavorUp,
-      });
+      await this.getFavorUp(user.biliid);
+      await this.getFavorTag(user.biliid);
     }
   }
 
@@ -81,7 +77,7 @@ export default class BilibiliBodyContent extends Component {
       headers: { withCredentials: true },
     };
 
-    axios(config)
+    const Up = await axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
         return response.data;
@@ -90,6 +86,10 @@ export default class BilibiliBodyContent extends Component {
         console.log(error);
         return null;
       });
+    this.setState({
+      FavorUp: Up,
+    });
+    return Up;
   }
 
   async getFavorTag(biliid) {
@@ -99,15 +99,19 @@ export default class BilibiliBodyContent extends Component {
       headers: { withCredentials: true },
     };
 
-    axios(config)
+    const Tag = await axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
+        //console.log(JSON.stringify(response.data));
         return response.data;
       })
       .catch(function (error) {
         console.log(error);
         return null;
       });
+    this.setState({
+      FavorTag: Tag,
+    });
+    return Tag;
   }
 
   async QRcodeLogin() {
@@ -294,7 +298,7 @@ export default class BilibiliBodyContent extends Component {
   }
 
   async updateUserId() {
-    let userId = this.state.iLifeId;
+    let userId = 11;
     let biliId = this.state.userId;
     console.log(biliId);
     let data1 = {
