@@ -31,7 +31,7 @@ public class BiliController {
 
     @GetMapping("/bili/getloginurl")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public JSONObject getloginurl() {
+    public JSONObject getloginurl() throws IOException {
         return JSONObject.parseObject(bilicrawller.getloginurl());
     }
 
@@ -62,8 +62,8 @@ public class BiliController {
 
     @GetMapping("/bili/updatehistory")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public void updatehistory(@RequestParam("SESSDATA") String SESSDATA) throws IOException {
-        bilicrawller.updatehistory(SESSDATA);
+    public String updatehistory(@RequestParam("SESSDATA") String SESSDATA) throws IOException {
+        return bilicrawller.updatehistory(SESSDATA);
     }
 
 

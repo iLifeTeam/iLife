@@ -112,15 +112,15 @@ NetEaseCrawler {
         }
         return null;
     }
-    public String getPlayListRequest(Long uid) {
-        List<NameValuePair> parameters = new ArrayList<>();
-        parameters.add(new BasicNameValuePair("uid", uid.toString()));
-        return getRequest("/user/playlist",parameters);
-    }
-    public String getUserSubCount() {
-        List<NameValuePair> parameters = new ArrayList<>();
-        return getRequest("/user/subcount",parameters);
-    }
+//    public String getPlayListRequest(Long uid) {
+//        List<NameValuePair> parameters = new ArrayList<>();
+//        parameters.add(new BasicNameValuePair("uid", uid.toString()));
+//        return getRequest("/user/playlist",parameters);
+//    }
+//    public String getUserSubCount() {
+//        List<NameValuePair> parameters = new ArrayList<>();
+//        return getRequest("/user/subcount",parameters);
+//    }
     /*
      * weekData = true : only return week data
      * */

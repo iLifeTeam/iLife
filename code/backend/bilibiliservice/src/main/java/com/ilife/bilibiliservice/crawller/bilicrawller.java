@@ -45,34 +45,15 @@ public class bilicrawller {
     private HistoryDao historyDao;
     @Autowired
     private VideoDao videoDao;
-    public String getloginurl() {
+    public String getloginurl() throws IOException {
 //    httpClient = HttpClients.custom().setDefaultCookieStore(cookieStore).build();
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpGet httpGet = new HttpGet("http://passport.bilibili.com/qrcode/getLoginUrl");
         CloseableHttpResponse response = null;
-        try {
-            response = httpClient.execute(httpGet);
-            HttpEntity responseEntity = response.getEntity();
-            return EntityUtils.toString(responseEntity);
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (httpClient != null) {
-                    httpClient.close();
-                }
-                if (response != null) {
-                    response.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
+        response = httpClient.execute(httpGet);
+        HttpEntity responseEntity = response.getEntity();
+        return EntityUtils.toString(responseEntity);
+
     }
     public List<Cookie> loginconfirm(String oauthKey) throws IOException {
 //        PostMethod postMethod = new PostMethod("http://passport.bilibili.com/qrcode/getLoginInfo") ;
@@ -177,12 +158,13 @@ public class bilicrawller {
 
 
     @Transactional
-    public void updatehistory(String SessData) throws IOException {
+    public String updatehistory(String SessData) throws IOException {
 //        JSONObject jsonObject = gethistory(SessData).getJSONObject("data");
 //        JSONArray jsonArray = jsonObject.getJSONArray("list");
 //        JSONArray jsonArray1 = gethistory(SessData,jsonObject.getJSONObject("cursor").getLong("view_at")).getJSONObject("data").getJSONArray("list");
 //        jsonArray.addAll(jsonArray1);
         biliuser biliuser = getuserinform(SessData);
+        if(biliuser==null) return "SessData is overdue";
         Long mid = biliuser.getMid();
         biliUserDao.addUser(biliuser);
         historyDao.deleteAllbymid(mid);
@@ -207,6 +189,7 @@ public class bilicrawller {
             videoDao.addvideo(oid,type,auther_name,auther_id,tag_name,title);
             historyDao.addhistory(mid,oid,type,is_fav);
         }
+        return "ok";
     }
     public biliuser getuserinform(String SessData) throws IOException {
         CloseableHttpResponse response = null;
@@ -217,7 +200,9 @@ public class bilicrawller {
         response = httpClient.execute(httpGet);
         HttpEntity contentEntity = response.getEntity();
         JSONObject jsonObject = JSONObject.parseObject(EntityUtils.toString(contentEntity));
+        System.out.println(jsonObject);
         biliuser biliuser = new biliuser();
+        if(jsonObject.getInteger("code")!=0) return null;
         biliuser.setMid(jsonObject.getJSONObject("data").getLong("mid"));
         biliuser.setUname(jsonObject.getJSONObject("data").getString("uname"));
         return biliuser;

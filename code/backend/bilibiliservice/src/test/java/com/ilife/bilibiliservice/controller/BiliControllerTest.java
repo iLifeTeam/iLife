@@ -69,6 +69,17 @@ class BiliControllerTest {
 
     @Test
     @WithMockUser(roles="USER")
+    void getuserinform() throws Exception {
+        MvcResult result = mockMvc.perform(get("/bili/userinform")
+                .param("SESSDATA", "7c38d094%2C1611034097%2Cbddbf*71")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    @WithMockUser(roles="USER")
     void gethistory() throws Exception {
         MvcResult result = mockMvc.perform(post("/bili/gethistory")
                 .param("mid", "480346309")
@@ -106,7 +117,7 @@ class BiliControllerTest {
     @WithMockUser(roles="USER")
     void getPop() throws Exception {
         MvcResult result = mockMvc.perform(get("/bili/getPopVideo")
-                .param("mid", "35159960")
+                .param("tag", "日常")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
