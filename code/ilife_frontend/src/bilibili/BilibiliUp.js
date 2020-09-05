@@ -211,14 +211,23 @@ export default class BilibiliUp extends Component {
     super(props);
     this.state = {
       initdone: false,
+      upInfo: [],
+      mid: this.props.mid,
+      sname: this.props.sname,
     };
   }
   componentDidMount() {
     //初始化图表
+    listdata = [];
+    links = [];
+    texts = [];
     this.initChart();
   }
   componentWillReceiveProps(nextProps) {
     //更新图表
+    listdata = [];
+    links = [];
+    texts = [];
     this.initChart(nextProps);
   }
   /*生成图表，做了判断，如果不去判断dom有没有生成，

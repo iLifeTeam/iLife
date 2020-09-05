@@ -1,14 +1,29 @@
 import React, { Component } from "react";
 import axios from "../../axios";
-import {Table, Badge, Menu, Dropdown, Divider, Button, Space, Row, Col, DatePicker, Typography,List, Statistic} from "antd";
+import {
+  Table,
+  Badge,
+  Menu,
+  Dropdown,
+  Divider,
+  Button,
+  Space,
+  Row,
+  Col,
+  DatePicker,
+  Typography,
+  List,
+  Statistic,
+} from "antd";
 import "antd/dist/antd.css";
 import { createBrowserHistory } from "history";
 import moment from "moment";
 import Pie2 from "../../taobao/Pie2";
 import Pie from "../../taobao/Pie";
-import {AccountBookOutlined ,BarChartOutlined } from '@ant-design/icons'
+import { AccountBookOutlined, BarChartOutlined } from "@ant-design/icons";
+import storageUtils from "../../storageUtils";
 const { RangePicker } = DatePicker;
-const {Text, Paragraph} = Typography;
+const { Text, Paragraph } = Typography;
 const expandedRowRender = (row) => {
   console.log("expanded row render", row);
   const columns = [
@@ -22,7 +37,8 @@ const expandedRowRender = (row) => {
           <img src={"http:" + imgUrl}></img>
         </div>
       ),
-    }, { title: "一级类目", dataIndex: "firstCategory", key: "firstCategory" },
+    },
+    { title: "一级类目", dataIndex: "firstCategory", key: "firstCategory" },
     { title: "二级类目", dataIndex: "secondCategory", key: "secondCategory" },
     { title: "三级类目", dataIndex: "thirdCategory", key: "thirdCategory" },
   ];
@@ -62,13 +78,22 @@ export default class JingdongBodyContent extends Component {
       stats: null,
       statsLoading: false,
       statsReady: false,
-
     };
   }
   componentDidMount() {
-    const username = window.sessionStorage.getItem("username");
+    let arr,
+      reg = new RegExp("(^| )" + "username" + "=([^;]*)(;|$)");
+    let username = "";
+    if ((arr = document.cookie.match(reg))) {
+      username = unescape(arr[2]);
+    } else {
+      username = null;
+    }
+    this.setState({
+      username: username,
+    });
 
-    if (username === null || username === undefined) {
+    if (!username) {
       const history = createBrowserHistory();
       history.push("/login");
       window.location.reload();
@@ -81,7 +106,6 @@ export default class JingdongBodyContent extends Component {
     this.getUid(username);
     setTimeout(() => {
       this.checkLoginRequest(this.state.uid);
-
     }, 0);
   }
 
@@ -126,7 +150,7 @@ export default class JingdongBodyContent extends Component {
       },
       withCredentials: true,
     };
-    const {qrCodeReady} = this.state
+    const { qrCodeReady } = this.state;
     // console.log(config.url)
     axios(config).then((response) => {
       console.log(response.data);
@@ -134,8 +158,8 @@ export default class JingdongBodyContent extends Component {
         this.setState({ loginSuccess: true });
         this.fetchAll(uid);
       } else {
-        if (!qrCodeReady){
-          this.loginRequest(this.state.uid)
+        if (!qrCodeReady) {
+          this.loginRequest(this.state.uid);
         }
         setTimeout(() => {
           this.checkLoginRequest(uid);
@@ -154,7 +178,7 @@ export default class JingdongBodyContent extends Component {
         username: uid,
       },
       withCredentials: true,
-      timeout: 60*1000*2
+      timeout: 60 * 1000 * 2,
     };
     this.setState({
       updating: true,
@@ -201,68 +225,82 @@ export default class JingdongBodyContent extends Component {
   };
   fetchStats = () => {
     this.setState({
-      statsLoading: true
-    })
-    const {orders} = this.state
-    let mostExpensive = null,maxPrice = 0,expenseYear = 0, expenseMonth = 0,countYear = 0, countMonth = 0,categories={};
-    const today = new Date()
-    for (const order of orders){
-      if(order.total > maxPrice){
-        maxPrice = order.total
-        mostExpensive = order
+      statsLoading: true,
+    });
+    const { orders } = this.state;
+    let mostExpensive = null,
+      maxPrice = 0,
+      expenseYear = 0,
+      expenseMonth = 0,
+      countYear = 0,
+      countMonth = 0,
+      categories = {};
+    const today = new Date();
+    for (const order of orders) {
+      if (order.total > maxPrice) {
+        maxPrice = order.total;
+        mostExpensive = order;
       }
-      const orderDate = new Date(order.date)
+      const orderDate = new Date(order.date);
       // console.log(order,orderDate)
-      if (orderDate.getFullYear() == today.getFullYear()){
-        expenseYear += order.total
-        countYear += order.items.length
-        if (orderDate.getMonth() == today.getMonth()){
-          expenseMonth += order.total
-          countMonth += order.items.length
+      if (orderDate.getFullYear() == today.getFullYear()) {
+        expenseYear += order.total;
+        countYear += order.items.length;
+        if (orderDate.getMonth() == today.getMonth()) {
+          expenseMonth += order.total;
+          countMonth += order.items.length;
         }
-        let category = null,count = 0;
-        for (const item of order.items){
-          if (count == 0){
-            category = item.firstCategory
-            count = 1
-            continue
+        let category = null,
+          count = 0;
+        for (const item of order.items) {
+          if (count == 0) {
+            category = item.firstCategory;
+            count = 1;
+            continue;
           }
-          if (item.firstCategory == category)
-            count ++
-          else
-            count --;
+          if (item.firstCategory == category) count++;
+          else count--;
         }
-        if (categories[category] != null){
-          categories[category].expense += order.total
-          categories[category].orderIds.push(order.orderID)
-        }else {
+        if (categories[category] != null) {
+          categories[category].expense += order.total;
+          categories[category].orderIds.push(order.orderID);
+        } else {
           categories[category] = {
             expense: order.total,
-            orderIds: [order.orderID]
-          }
+            orderIds: [order.orderID],
+          };
         }
       }
     }
-    console.log(categories)
+    console.log(categories);
 
     this.setState({
-      statsReady : true,
+      statsReady: true,
       statsLoading: false,
-      stats:{
+      stats: {
         mostExpensive: mostExpensive,
-        expenseMonth:expenseMonth,
-        expenseYear:expenseYear,
-        countMonth:countMonth,
-        countYear:countYear,
-        categories: categories
-      }
-    })
-  }
+        expenseMonth: expenseMonth,
+        expenseYear: expenseYear,
+        countMonth: countMonth,
+        countYear: countYear,
+        categories: categories,
+      },
+    });
+  };
   render() {
     const style = {
       flex: 1,
     };
-    const { orders, loginSuccess, qrCodeBase64, qrCodeReady, uid,statsLoading, statsReady, stats } = this.state;
+    const {
+      orders,
+      loginSuccess,
+      qrCodeBase64,
+      qrCodeReady,
+      uid,
+      statsLoading,
+      statsReady,
+      stats,
+    } = this.state;
     console.log(this.state);
     return (
       <div className="content-wrapper">
@@ -325,90 +363,123 @@ export default class JingdongBodyContent extends Component {
             <div className="col-xs-12">
               <div className="box">
                 <div className="box-header">
-                  <Divider orientation="left" style={{color: '#333', fontWeight: 'normal'}}><h3
-                      className="box-title">我的京东购物统计</h3>
+                  <Divider
+                    orientation="left"
+                    style={{ color: "#333", fontWeight: "normal" }}
+                  >
+                    <h3 className="box-title">我的京东购物统计</h3>
                   </Divider>
 
                   <Button
-                      loading={statsLoading}
-                      onClick={() => {
-                        this.fetchStats()
-                      }}
+                    loading={statsLoading}
+                    onClick={() => {
+                      this.fetchStats();
+                    }}
                   >
                     生成报表
                   </Button>
 
                   <Space direction="vertical" size={12}>
-
                     <RangePicker
-                        ranges={{
-                          Today: [moment(), moment()],
-                          'This Month': [moment().startOf('month'), moment().endOf('month')],
-                        }}
-                        showTime
-                        format="YYYY/MM/DD HH:mm:ss"
-                        onChange={(dates) => {
-                          var GMT = new Date(dates[0]._d);
-                          var GMT1 = new Date(dates[1]._d);
-                          this.setState({ startTime: GMT.toUTCString(), endTime: GMT1.toUTCString() })
-                        }}
-                        style={{ marginLeft: '20px' }}
+                      ranges={{
+                        Today: [moment(), moment()],
+                        "This Month": [
+                          moment().startOf("month"),
+                          moment().endOf("month"),
+                        ],
+                      }}
+                      showTime
+                      format="YYYY/MM/DD HH:mm:ss"
+                      onChange={(dates) => {
+                        var GMT = new Date(dates[0]._d);
+                        var GMT1 = new Date(dates[1]._d);
+                        this.setState({
+                          startTime: GMT.toUTCString(),
+                          endTime: GMT1.toUTCString(),
+                        });
+                      }}
+                      style={{ marginLeft: "20px" }}
                     />
                   </Space>
                 </div>
-                {statsReady ?
-                    <div style={{marginLeft: '100px'}}>
-
-                      <Divider orientation="left">总览</Divider>
-                      <Row justify="left">
-                        <Col span={16}>
-                          <Row gutter={16}>
-                            <Col span={12}>
-                              <Statistic title="本月购入" value={stats.countMonth} prefix={<BarChartOutlined/>} suffix="件"/>
-                            </Col>
-                            <Col span={12}>
-                              <Statistic title="本月消费" value={stats.countMonth} prefix={<AccountBookOutlined/>}/>
-                            </Col>
-                          </Row>
-                          <Row gutter={16}>
-                            <Col span={12}>
-                              <Statistic title="今年购入" value={stats.countYear} prefix={<BarChartOutlined/>} suffix="件"/>
-                            </Col>
-                            <Col span={12}>
-                              <Statistic title="今年消费" value={stats.expenseYear} prefix={<AccountBookOutlined/>}/>
-                            </Col>
-                          </Row>
-                          <List
-                              header={<div>我买过最贵的一单花了{stats.mostExpensive.total.toFixed(2)}元,
-                                买了{stats.mostExpensive.items.length}件宝贝</div>}
-                              bordered
-                              dataSource={stats.mostExpensive.items}
-                              renderItem={item => (
-                                  <List.Item>
-                                    <Typography.Text mark><img src={item.imgUrl}/></Typography.Text> {item.product}
-                                  </List.Item>
-                              )}
-                          />
-                          <Text className="box-body">
-                          </Text>
-                        </Col>
-                      </Row>
-                      <Divider orientation="left">购物统计</Divider>
-                      <Row justify="center">
-                        <Col span={12}>
-                          <Pie stats={stats}/>
-                        </Col>
-                        <Col span={12}>
-                          <Divider orientation="left">购物花销分布</Divider>
-                          <Pie2 style={{width: "50%"}} stats={stats}/>
-                        </Col>
-                      </Row>
-                      {/*<Row justify="center">*/}
-                      {/*  <Pie2 stats={stats}/>*/}
-                      {/*</Row>*/}
-                    </div>
-                    : statsLoading ? <div> "加载中..." </div> : null
-                }
+                {statsReady ? (
+                  <div style={{ marginLeft: "100px" }}>
+                    <Divider orientation="left">总览</Divider>
+                    <Row justify="left">
+                      <Col span={16}>
+                        <Row gutter={16}>
+                          <Col span={12}>
+                            <Statistic
+                              title="本月购入"
+                              value={stats.countMonth}
+                              prefix={<BarChartOutlined />}
+                              suffix="件"
+                            />
+                          </Col>
+                          <Col span={12}>
+                            <Statistic
+                              title="本月消费"
+                              value={stats.countMonth}
+                              prefix={<AccountBookOutlined />}
+                            />
+                          </Col>
+                        </Row>
+                        <Row gutter={16}>
+                          <Col span={12}>
+                            <Statistic
+                              title="今年购入"
+                              value={stats.countYear}
+                              prefix={<BarChartOutlined />}
+                              suffix="件"
+                            />
+                          </Col>
+                          <Col span={12}>
+                            <Statistic
+                              title="今年消费"
+                              value={stats.expenseYear}
+                              prefix={<AccountBookOutlined />}
+                            />
+                          </Col>
+                        </Row>
+                        <List
+                          header={
+                            <div>
+                              我买过最贵的一单花了
+                              {stats.mostExpensive.total.toFixed(2)}元, 买了
+                              {stats.mostExpensive.items.length}件宝贝
+                            </div>
+                          }
+                          bordered
+                          dataSource={stats.mostExpensive.items}
+                          renderItem={(item) => (
+                            <List.Item>
+                              <Typography.Text mark>
+                                <img src={item.imgUrl} />
+                              </Typography.Text>{" "}
+                              {item.product}
+                            </List.Item>
+                          )}
+                        />
+                        <Text className="box-body"></Text>
+                      </Col>
+                    </Row>
+                    <Divider orientation="left">购物统计</Divider>
+                    <Row justify="center">
+                      <Col span={12}>
+                        <Pie stats={stats} />
+                      </Col>
+                      <Col span={12}>
+                        <Divider orientation="left">购物花销分布</Divider>
+                        <Pie2 style={{ width: "50%" }} stats={stats} />
+                      </Col>
+                    </Row>
+                    {/*<Row justify="center">*/}
+                    {/*  <Pie2 stats={stats}/>*/}
+                    {/*</Row>*/}
+                  </div>
+                ) : statsLoading ? (
+                  <div> "加载中..." </div>
+                ) : null}
               </div>
             </div>
           </div>

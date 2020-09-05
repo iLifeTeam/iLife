@@ -83,23 +83,7 @@ export default class BilibiliEcharts extends Component {
     super(props);
     this.state = {
       initdone: false,
-      plantCap: [
-        {
-          name: "番剧",
-        },
-        {
-          name: "动漫",
-        },
-        {
-          name: "美妆",
-        },
-        {
-          name: "直播",
-        },
-        {
-          name: "游戏",
-        },
-      ],
+      Tag: [],
     };
   }
   componentDidMount() {
@@ -108,17 +92,19 @@ export default class BilibiliEcharts extends Component {
   }
   componentWillReceiveProps(nextProps) {
     //更新图表
-    //this.initChart(nextProps);
+    console.log(nextProps);
+    this.initChart(nextProps);
   }
 
   initChart(props) {
     var datas = [];
-    const { plantCap } = this.state;
-    for (var i = 0; i < plantCap.length; i++) {
-      var item = plantCap[i];
+    const { Tag } = props;
+    if (!Tag) return;
+    for (var i = 0; i < Tag.length; i++) {
+      var item = Tag[i];
       var itemToStyle = datalist[i];
       datas.push({
-        name: item.name,
+        name: item[i],
         value: itemToStyle.offset,
         symbolSize: itemToStyle.symbolSize,
         label: {

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import axios from "../../axios";
 import WyyHistory from "../../wyy/WyyHistory";
-
+import storageUtils from "../../storageUtils";
+import { createBrowserHistory } from "history";
 export default class WyyBodyContent extends Component {
   constructor(props) {
     super(props);
@@ -14,6 +15,26 @@ export default class WyyBodyContent extends Component {
     this.updateHistory = this.updateHistory.bind(this);
     this.getHistory = this.getHistory.bind(this);
     this.login = this.login.bind(this);
+  }
+
+  componentDidMount() {
+    let arr,
+      reg = new RegExp("(^| )" + "username" + "=([^;]*)(;|$)");
+    let username = "";
+    if ((arr = document.cookie.match(reg))) {
+      username = unescape(arr[2]);
+    } else {
+      username = null;
+    }
+    this.setState({
+      username: username,
+    });
+
+    if (!username) {
+      const history = createBrowserHistory();
+      history.push("/login");
+      window.location.reload();
+    }
   }
 
   accountOnChange(val) {
@@ -37,7 +58,7 @@ export default class WyyBodyContent extends Component {
     var config = {
       method: "post",
       url:
-        "http://18.166.111.161:8888/music/updatehistorybyid?id=" +
+        "http://18.166.111.161:8808/wyy/music/updatehistorybyid?id=" +
         this.state.id,
       headers: { withCredentials: true },
     };
@@ -66,7 +87,7 @@ export default class WyyBodyContent extends Component {
     var config = {
       method: "post",
       url:
-        "http://18.166.111.161:8888/music/gethistorybyid?page=0&size=100&id=" +
+        "http://18.166.111.161:8808/wyy/music/gethistorybyid?page=0&size=100&id=" +
         this.state.id,
       headers: { withCredentials: true },
     };
@@ -91,7 +112,7 @@ export default class WyyBodyContent extends Component {
     var config = {
       method: "post",
       url:
-        "http://18.166.111.161:8888/music/getid?ph=" +
+        "http://18.166.111.161:8808/wyy/music/getid?ph=" +
         this.state.account +
         "&pw=" +
         this.state.password,
