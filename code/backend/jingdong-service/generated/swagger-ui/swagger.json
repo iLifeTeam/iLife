@@ -199,6 +199,29 @@
         }
       }
     },
+    "/stats/category/update" : {
+      "post" : {
+        "tags" : [ "JingdongServiceController" ],
+        "summary" : "",
+        "description" : "get user's statistics",
+        "operationId" : "updateUserCategory",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
     "/user" : {
       "get" : {
         "tags" : [ "JingdongServiceController" ],
