@@ -190,6 +190,7 @@ export default class DbMovieContent extends Component {
         console.log(error);
       });
     if (doubanId) this.setState({ doubanId: dbId });
+    this.componentDidMount();
   };
   recommend = (e) => {
     if (e === "动画") {
@@ -297,15 +298,17 @@ export default class DbMovieContent extends Component {
                   <h3 className="box-title">
                     用户{this.state.doubanId}的豆瓣电影报表
                   </h3>
-                  <Button
-                    size={"large"}
-                    loading={statsLoading}
-                    onClick={() => {
-                      this.fetchStats(this.state.doubanId);
-                    }}
-                  >
-                    生成报表
-                  </Button>
+                  {statsReady ? null :
+                      <Button
+                          size={"large"}
+                          loading={statsLoading}
+                          onClick={() => {
+                            this.fetchStats(this.state.doubanId);
+                          }}
+                      >
+                        生成报表
+                      </Button>
+                  }
                 </div>
                 {statsReady ? (
                   <div className="box-body" style={{ fontSize: "18px" }}>

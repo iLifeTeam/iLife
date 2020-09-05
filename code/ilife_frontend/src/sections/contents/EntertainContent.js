@@ -329,6 +329,7 @@ export default class EntertainContent extends Component {
                 console.log(error);
             });
         if (doubanId) this.setState({doubanId: dbId});
+        this.componentDidMount();
     };
     changeSrcMovie = () => {
         let movie = document.getElementById("img");
