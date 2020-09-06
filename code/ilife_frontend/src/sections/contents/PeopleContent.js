@@ -14,6 +14,7 @@ import {
 import "antd/dist/antd.css";
 
 const {Meta} = Card;
+const refList = [1259110474,2718157534,3911702802,5114701632,5224009387,5406347304,5997871048,6141053925,6618048986,7392696954];
 const {Text, Paragraph} = Typography;
 const text = (
     <div>

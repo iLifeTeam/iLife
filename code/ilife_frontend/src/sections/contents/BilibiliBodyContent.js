@@ -125,7 +125,10 @@ export default class BilibiliBodyContent extends Component {
         visible: true,
       });
       this.interval = setInterval(() => this.getResponse(), 2000);
-    } else alert("请求失败，请重新尝试一下。");
+    } else         message.success({
+      content: "请求失败，请重新查询！",
+      style: { marginTop: "40px" },
+    });;
   }
 
   // 获取二维码，返回QRcode信息，失败返回null
@@ -254,12 +257,18 @@ export default class BilibiliBodyContent extends Component {
     const ans = await axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        alert("刷新浏览记录成功！");
+        message.success({
+          content: "刷新浏览记录成功！",
+          style: { marginTop: "40px" },
+        });
         return true;
       })
       .catch(function (error) {
         console.log(error);
-        alert("刷新失败！");
+        message.error({
+          content: "数据更新失败！",
+          style: { marginTop: "40px" },
+        });
         return true;
       });
 

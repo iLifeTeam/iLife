@@ -36,11 +36,7 @@ export default class Account extends Component {
 
     if (cookie_pos != -1) {
       document.cookie =
-        "username" +
-        "=" +
-        " " +
-        ";path=/;domain=.;expires=" +
-        exp.toGMTString();
+        "username" + "=" + " " + ";path=/;expires=" + exp.toGMTString();
     }
 
     var config = {
@@ -54,7 +50,9 @@ export default class Account extends Component {
     });
 
     history.push("/login");
-    window.location.reload();
+    setTimeout(function () {
+      window.location.reload();
+    }, 500);
   }
 
   render() {

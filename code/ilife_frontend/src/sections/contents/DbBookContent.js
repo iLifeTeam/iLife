@@ -17,6 +17,7 @@ export default class DbBookContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user:null,
       show: false,
       doubanId: null,
       username: "",
@@ -66,10 +67,11 @@ export default class DbBookContent extends Component {
         withCredentials: true,
       },
     };
-
+    const that =this ;
     const doubanId = await axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        that.setState({user:response.data});
         return response.data.doubanid;
       })
       .catch(function (error) {
@@ -137,6 +139,7 @@ export default class DbBookContent extends Component {
       headers: {
         withCredentials: true,
       },
+      timeout:"10000ms"
     };
 
     axios(config)
@@ -182,13 +185,14 @@ export default class DbBookContent extends Component {
   /* end 文案 here*/
 
   changeId = async (e) => {
-    let userId = window.sessionStorage.getItem("iLifeId");
+    let userId = this.state.user.id;
     let dbId = document.getElementById("changeId").value;
 
     let data1 = {
       userId: userId,
       dbId: dbId,
     };
+    console.log("updateDbId.data:",data1);
     var config = {
       method: "post",
       data: data1,

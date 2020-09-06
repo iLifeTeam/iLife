@@ -19,27 +19,6 @@ import { configConsumerProps } from "antd/lib/config-provider";
 
 const { RangePicker } = DatePicker;
 const { Text, Paragraph } = Typography;
-const text = (
-  <div>
-    <Paragraph>所有数据和图片均来自网上公开资料，请放心食用。</Paragraph>
-    <Paragraph>数据更新将会花费一段时间，请耐心等待~</Paragraph>
-    希望获取什么时间段的数据？
-    <RangePicker
-      ranges={{
-        Today: [moment(), moment()],
-        "This Month": [moment().startOf("month"), moment().endOf("month")],
-      }}
-      format="YYYY-MM-DD"
-      onChange={(dates) => {
-        console.log(dates);
-        // let GMT = new (dates[0]._d);
-        // let GMT1 = new Date(dates[1]._d);
-        //this.setState({ startDate: GMT.toUTCString(), endDate: GMT1.toUTCString() })
-      }}
-      style={{ marginLeft: "20px" }}
-    />
-  </div>
-);
 export default class WeiboBodyContent extends Component {
   constructor(props) {
     super(props);
@@ -221,10 +200,11 @@ export default class WeiboBodyContent extends Component {
       url:
         "http://121.36.196.234:8585/weibo/crawlWeibo?userId=" +
         this.state.weiboId +
-        "&startDate=2020-07-01&endDate=now",
+        "&startDate="+this.state.startDate+"&endDate="+this.state.endDate,
       headers: {
         withCredentials: true,
       },
+      timeout:"10000ms"
     };
     let that = this;
     axios(config)
@@ -262,11 +242,37 @@ export default class WeiboBodyContent extends Component {
                     orientation="left"
                     style={{ color: "#333", fontWeight: "normal" }}
                   >
-                    <h3 className="box-title">您的微博数据</h3>
+                    <h3 className="box-title">用户{this.state.weiboId}的微博数据</h3>
                   </Divider>
                   <Popconfirm
                     placement="bottomLeft"
-                    title={text}
+                    title={  <div>
+                      <Paragraph>所有数据和图片均来自网上公开资料，请放心食用。</Paragraph>
+                      <Paragraph>数据更新将会花费一段时间，请耐心等待~</Paragraph>
+                      希望获取什么时间段的数据？
+                      <RangePicker
+                          ranges={{
+                            Today: [moment(), moment()],
+                            "This Month": [moment().startOf("month"), moment().endOf("month")],
+                          }}
+                          format="YYYY-MM-DD"
+                          onChange={(dates) => {
+                            let day0 = dates[0].date()<10?"0"+dates[0].date():dates[0].date();
+                            let day1 = dates[1].date()<10?"0"+dates[1].date():dates[1].date();
+                            let month0 = (dates[0].month()+1)<10?"0"+(dates[0].month()+1):(dates[0].month()+1);
+                            let month1 = (dates[1].month()+1)<10?"0"+(dates[1].month()+1):(dates[1].month()+1);
+                            let q0 =dates[0].year()+"-"+month0+"-"+day0;
+                            let q1 =dates[1].year()+"-"+month1+"-"+day1;
+                            console.log(q0);
+                            console.log(q1);
+                            this.setState({startDate: q0,endDate: q1})
+                            // let GMT = new (dates[0]._d);-
+                            // let GMT1 = new Date(dates[1]._d);
+                            //this.setState({ startDate: GMT.toUTCString(), endDate: GMT1.toUTCString() })
+                          }}
+                          style={{ marginLeft: "20px" }}
+                      />
+                    </div>}
                     onConfirm={this.crawl}
                     okText="更新数据"
                     cancelText="再想想"
