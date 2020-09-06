@@ -5,6 +5,7 @@ import com.ilife.jingdongservice.entity.Item;
 import com.ilife.jingdongservice.entity.Order;
 import com.ilife.jingdongservice.entity.User;
 import com.ilife.jingdongservice.repository.UserRepository;
+import com.ilife.jingdongservice.service.AnalyzeService;
 import com.ilife.jingdongservice.service.CrawlerService;
 import com.ilife.jingdongservice.service.JingDongService;
 import org.junit.jupiter.api.Assertions;
@@ -44,6 +45,8 @@ class JingdongControllerTest {
     JingDongService jingDongService;
     @MockBean
     CrawlerService crawlerService;
+    @MockBean
+    AnalyzeService analyzeService;
 
     @BeforeEach
     public void setUp() {
@@ -152,7 +155,7 @@ class JingdongControllerTest {
         when(jingDongService.getUserByUsername(username)).thenReturn(user);
         List<Order> orders = new ArrayList<>();
         Order order = new Order(0L, new Date(Long.MAX_VALUE), 100D,"shop", null, new ArrayList<>());
-        order.getItems().add(new Item(0,"",0D,1,"url",order));
+        order.getItems().add(new Item(0,"",0D,1,"url","","","",order));
         orders.add(order);
         when(jingDongService.getOrderByUser(user)).thenReturn(orders);
 
@@ -175,7 +178,7 @@ class JingdongControllerTest {
         when(jingDongService.getUserByUsername(username)).thenReturn(user);
         List<Order> orders = new ArrayList<>();
         Order order = new Order(0L, new Date(Long.MAX_VALUE), 100D,"shop", null, new ArrayList<>());
-        order.getItems().add(new Item(0,"",0D,1,"url",order));
+        order.getItems().add(new Item(0,"",0D,1,"url","","","",order));
         orders.add(order);
         when(jingDongService.getOrderByUserAndDate(Mockito.any(User.class),Mockito.any(Date.class),Mockito.any(Date.class))).thenReturn(orders);
 
@@ -203,6 +206,22 @@ class JingdongControllerTest {
         String response = mockMvc.perform(loginRequest).andExpect(MockMvcResultMatchers.status().is(200))
                 .andReturn().getResponse().getContentAsString();
         Assertions.assertEquals(JSON.toJSONString(user,true),response);
+
+    }
+
+    @Test
+    void updateUserCategory() throws Exception {
+        String username = "username";
+        User user = new User("name", new Date(0L));
+        when(jingDongService.getUserByUsername(username)).thenReturn(user);
+        when(analyzeService.updateCategory(user)).thenReturn(0);
+        MockHttpServletRequestBuilder loginRequest =
+                MockMvcRequestBuilders.post("/stats/category/update")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("username",username);
+        String response = mockMvc.perform(loginRequest).andExpect(MockMvcResultMatchers.status().is(200))
+                .andReturn().getResponse().getContentAsString();
+        Assertions.assertEquals(JSON.toJSONString(0),response);
 
     }
 }
