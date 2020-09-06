@@ -29,13 +29,21 @@ export default class LoginPage extends Component {
   }
 
   loadPassword() {
-    if (!storageUtils.getUser()) {
+    let arr,
+      reg = new RegExp("(^| )" + "username" + "=([^;]*)(;|$)");
+    let username = "";
+    if ((arr = document.cookie.match(reg))) {
+      username = unescape(arr[2]);
+    } else {
+      username = null;
+    }
+    if (username) {
       const history = createBrowserHistory();
       history.push("/home/weibo");
       window.location.reload();
     }
-    let arr,
-      reg = new RegExp("(^| )" + "accountInfo" + "=([^;]*)(;|$)");
+
+    reg = new RegExp("(^| )" + "accountInfo" + "=([^;]*)(;|$)");
     let accountInfo = "";
     if ((arr = document.cookie.match(reg))) {
       accountInfo = unescape(arr[2]);
@@ -48,7 +56,7 @@ export default class LoginPage extends Component {
     } else {
       let userName = "";
       let passWord = "";
-      console.log(accountInfo);
+      //console.log(accountInfo);
       var bytes = CryptoJS.AES.decrypt(accountInfo, "secretilifeteam");
       var originalText = bytes.toString(CryptoJS.enc.Utf8);
       //console.log(originalText);

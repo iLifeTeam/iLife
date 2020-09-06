@@ -15,6 +15,7 @@ import {
 import "antd/dist/antd.css";
 import moment from "moment";
 import storageUtils from "../../storageUtils";
+import { configConsumerProps } from "antd/lib/config-provider";
 
 const { RangePicker } = DatePicker;
 const { Text, Paragraph } = Typography;
@@ -63,9 +64,19 @@ export default class WeiboBodyContent extends Component {
   }
 
   componentDidMount() {
-    const username = storageUtils.getUser();
+    let arr,
+      reg = new RegExp("(^| )" + "username" + "=([^;]*)(;|$)");
+    let username = "";
+    if ((arr = document.cookie.match(reg))) {
+      username = unescape(arr[2]);
+    } else {
+      username = null;
+    }
+    this.setState({
+      username: username,
+    });
 
-    if (!username === null) {
+    if (!username) {
       const history = createBrowserHistory();
       history.push("/login");
       window.location.reload();
@@ -97,7 +108,7 @@ export default class WeiboBodyContent extends Component {
         console.log(error);
         return null;
       });
-
+    if (!user) return;
     //console.log(weiboId);
     var config = {
       method: "get",
@@ -106,13 +117,10 @@ export default class WeiboBodyContent extends Component {
         withCredentials: true,
       },
     };
-
-    if (user) {
-      this.setState({
-        weiboId: user.weibid,
-        iLifeId: user.id,
-      });
-    }
+    this.setState({
+      weiboId: user.weibid,
+      iLifeId: user.id,
+    });
 
     const activities = await axios(config)
       .then(function (response) {

@@ -4,6 +4,7 @@ import { createBrowserHistory } from "history";
 import DoubanBooks from "../../douban/DoubanBooks";
 import { Button, Divider, message, Popconfirm, Typography, Input } from "antd";
 import "antd/dist/antd.css";
+import storageUtils from "../../storageUtils";
 const { Text, Paragraph } = Typography;
 const text = (
   <div>
@@ -31,9 +32,19 @@ export default class DbBookContent extends Component {
   }
 
   componentDidMount() {
-    const username = window.sessionStorage.getItem("username");
+    let arr,
+      reg = new RegExp("(^| )" + "username" + "=([^;]*)(;|$)");
+    let username = "";
+    if ((arr = document.cookie.match(reg))) {
+      username = unescape(arr[2]);
+    } else {
+      username = null;
+    }
+    this.setState({
+      username: username,
+    });
 
-    if (username === null || username === undefined) {
+    if (!username) {
       const history = createBrowserHistory();
       history.push("/login");
       window.location.reload();
@@ -248,10 +259,7 @@ export default class DbBookContent extends Component {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-        <section>
-          <div className="row" id="analyse">
+
             <div className="col-xs-12">
               <div className="box">
                 <div className="box-header">

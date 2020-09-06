@@ -5,6 +5,7 @@ import ZhihuActivity from "../../zhihu/ZhihuActivity";
 import "antd/dist/antd.css";
 import { createBrowserHistory } from "history";
 import { LikeOutlined, ZhihuOutlined, HeartOutlined } from "@ant-design/icons";
+import storageUtils from "../../storageUtils";
 export default class zhihuBodyContent extends Component {
   constructor(props) {
     super(props);
@@ -30,8 +31,19 @@ export default class zhihuBodyContent extends Component {
     this.loginTwice = this.loginTwice.bind(this);
   }
   componentDidMount() {
-    const username = window.sessionStorage.getItem("username");
-    if (username === null || username === undefined) {
+    let arr,
+      reg = new RegExp("(^| )" + "username" + "=([^;]*)(;|$)");
+    let username = "";
+    if ((arr = document.cookie.match(reg))) {
+      username = unescape(arr[2]);
+    } else {
+      username = null;
+    }
+    this.setState({
+      username: username,
+    });
+
+    if (!username) {
       const history = createBrowserHistory();
       history.push("/login");
       window.location.reload();

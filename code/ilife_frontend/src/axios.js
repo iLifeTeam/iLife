@@ -1,5 +1,8 @@
 //axios拦截器
 import axios from "axios";
+import storageUtils from "./storageUtils";
+import { createBrowserHistory } from "history";
+const history = createBrowserHistory();
 
 axios.defaults.timeout = 10000;
 axios.defaults.withCredentials = true;
@@ -18,22 +21,46 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(
   (response) => {
     //对响应数据做操作
-    if (response.status === 200) {
-      //console.log('请求成功');
-      return response;
-    }
-    if (response.status === 401 || response.status === 403) {
-      console.log("已过期重新登陆", response.data.code);
-      window.location.href = "/login";
-      return Promise.reject(response);
-    } else {
-      console.log("请求失败", response.data.code);
-      alert(response.data.message);
-      return Promise.reject(response);
+    switch (response.status) {
+      case 200:
+        return response;
+      case 302:
+      case 403:
+      case 405:
+        console.log("已过期重新登陆", response.data.code);
+        //storageUtils.deleteUser();
+        document.cookie =
+          "username" +
+          "=" +
+          " " +
+          ";path=/;domain=.;expires=" +
+          new Date().toGMTString();
+        history.push("/login");
+        //window.location.reload();
+        return Promise.reject(response);
+      case 404:
+        history.push("/404");
+        window.location.reload();
+        return Promise.reject(response);
+      default:
+        console.log("请求失败", response.data.code);
+        alert(response.data.message);
+        return Promise.reject(response);
     }
   },
   (error) => {
-    //对响应数据错误做操作
+    if (
+      error.message === "Request failed with status code 405" ||
+      error.message === "Request failed with status code 403"
+    ) {
+      history.push("/login");
+      //storageUtils.deleteUser();
+      let exp = new Date();
+      exp.setTime(exp.getTime() - 1);
+      document.cookie =
+        "username" + "=" + " " + ";path=/;expires=" + exp.toGMTString();
+      window.location.reload();
+    }
     console.log("请求error", error.message);
     return Promise.reject(error);
   }

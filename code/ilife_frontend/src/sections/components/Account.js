@@ -8,8 +8,22 @@ export default class Account extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: storageUtils.getUser(),
+      username: null,
     };
+  }
+
+  componentDidMount() {
+    let arr,
+      reg = new RegExp("(^| )" + "username" + "=([^;]*)(;|$)");
+    let username = "";
+    if ((arr = document.cookie.match(reg))) {
+      username = unescape(arr[2]);
+    } else {
+      username = null;
+    }
+    this.setState({
+      username: username,
+    });
   }
 
   logoff() {
@@ -21,7 +35,11 @@ export default class Account extends Component {
 
     if (cookie_pos != -1) {
       document.cookie =
-        "username" + "=" + " " + ";expires=" + new Date().toGMTString();
+        "username" +
+        "=" +
+        " " +
+        ";path=/;domain=.;expires=" +
+        new Date().toGMTString();
     }
 
     var config = {

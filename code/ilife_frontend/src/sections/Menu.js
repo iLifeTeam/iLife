@@ -8,8 +8,22 @@ class Menu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: storageUtils.getUser(),
+      username: null,
     };
+  }
+
+  componentDidMount() {
+    let arr,
+      reg = new RegExp("(^| )" + "username" + "=([^;]*)(;|$)");
+    let username = "";
+    if ((arr = document.cookie.match(reg))) {
+      username = unescape(arr[2]);
+    } else {
+      username = null;
+    }
+    this.setState({
+      username: username,
+    });
   }
 
   login() {
@@ -91,7 +105,7 @@ class Menu extends Component {
                 </a>
               </li>
               <li>
-                <a href="fake_url">
+                <a href="/home/people">
                   <i className="fa fa-circle-o text-yellow" />{" "}
                   <span>博主推荐</span>
                 </a>

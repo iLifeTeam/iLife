@@ -83,42 +83,34 @@ export default class BilibiliEcharts extends Component {
     super(props);
     this.state = {
       initdone: false,
-      plantCap: [
-        {
-          name: "番剧",
-        },
-        {
-          name: "动漫",
-        },
-        {
-          name: "美妆",
-        },
-        {
-          name: "直播",
-        },
-        {
-          name: "游戏",
-        },
-      ],
+      Tag: [],
     };
   }
   componentDidMount() {
     //初始化图表
+    console.log(this.props);
     this.initChart(this.props);
+
+    this.setState({
+      initdone: true,
+    });
   }
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps, prevState) {
     //更新图表
-    //this.initChart(nextProps);
+    console.log(this.props);
+    this.initChart(this.props);
   }
 
   initChart(props) {
     var datas = [];
-    const { plantCap } = this.state;
-    for (var i = 0; i < plantCap.length; i++) {
-      var item = plantCap[i];
+    const { Tag } = props;
+    if (!Tag) return;
+    for (var i = 0; i < Tag.length; i++) {
+      var item = Tag[i];
       var itemToStyle = datalist[i];
+      console.log(item);
       datas.push({
-        name: item.name,
+        name: item,
         value: itemToStyle.offset,
         symbolSize: itemToStyle.symbolSize,
         label: {
@@ -206,16 +198,13 @@ export default class BilibiliEcharts extends Component {
       myChart = echarts.init(document.getElementById("bilibili-echarts"));
     }
     // 绘制图表，option设置图表格式及源数据
+
+    myChart.setOption(option);
     if (!this.state.initdone) {
-      myChart.setOption(option);
       window.onresize = function () {
         myChart.resize();
       };
     }
-
-    this.setState({
-      initdone: true,
-    });
   }
 
   render() {
