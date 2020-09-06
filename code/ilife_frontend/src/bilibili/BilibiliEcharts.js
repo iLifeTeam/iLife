@@ -105,7 +105,7 @@ export default class BilibiliEcharts extends Component {
     var datas = [];
     const { Tag } = props;
     if (!Tag) return;
-    for (var i = 0; i < Tag.length; i++) {
+    for (var i = 0; i < Math.min(Tag.length, 5); i++) {
       var item = Tag[i];
       var itemToStyle = datalist[i];
       console.log(item);
