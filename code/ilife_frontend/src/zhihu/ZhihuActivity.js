@@ -45,7 +45,7 @@ export default class ZhihuActivity extends Component {
   async getAnswer(id) {
     var answer;
     await axios
-      .get(this.server + ":" + this.port + "answer?id=" + encodeURI(id))
+      .get(this.server + ":" + this.port + "/answer?id=" + encodeURI(id))
       .then(function (response) {
         console.log(response);
         answer = response.data;

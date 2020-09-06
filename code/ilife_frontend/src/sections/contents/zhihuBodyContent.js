@@ -93,7 +93,7 @@ export default class zhihuBodyContent extends Component {
       withCredentials: true,
     };
 
-    axios(config).then((response) => {
+    axios(config).then(response => {
       console.log(response.data);
       if (response.data === "Login successfully!") {
         this.setState({
@@ -106,7 +106,7 @@ export default class zhihuBodyContent extends Component {
               withCredentials: true,
             }
           )
-          .then((response) => {
+          .then(response => {
             console.log(response);
             this.setState({
               activities: response.data,
@@ -127,7 +127,7 @@ export default class zhihuBodyContent extends Component {
         zhId: username,
       },
     };
-    axios(config).then((response) => {
+    axios(config).then(response => {
       console.log("update zhid", response);
     });
   };
@@ -190,7 +190,7 @@ export default class zhihuBodyContent extends Component {
       wordCloudLoading: true,
     });
     axios(config)
-      .then((response) => {
+      .then(response => {
         console.log("pic", response.data);
         this.setState({
           wordCloud: `data:image/png;base64,${response.data}`,
@@ -212,7 +212,7 @@ export default class zhihuBodyContent extends Component {
       },
       withCredentials: true,
     };
-    axios(config).then((response) => {
+    axios(config).then(response => {
       console.log("userinfo", response.data);
       this.setState({
         userinfo: response.data,
@@ -220,14 +220,16 @@ export default class zhihuBodyContent extends Component {
     });
   };
   updateUserActivities = (username) => {
+
     axios
       .post(
         this.zhihuServer + "/updateActivities?username=" + this.state.username,
         {
           withCredentials: true,
-        }
+        },
+          {timeout: 10*60*1000}
       )
-      .then(function (response) {
+      .then(response=> {
         console.log(response.data);
       });
   };
@@ -247,11 +249,11 @@ export default class zhihuBodyContent extends Component {
     };
 
     await axios(config)
-      .then(function (response) {
+      .then(response=> {
         console.log(response);
         data = response;
       })
-      .catch(function (error) {
+      .catch(error=> {
         console.log(error.response);
         data = error.response;
       });
@@ -267,7 +269,7 @@ export default class zhihuBodyContent extends Component {
             withCredentials: true,
           }
         )
-        .then(function (response) {
+        .then(response=>{
           console.log(response);
           activities_data = response.data;
         });
@@ -298,7 +300,7 @@ export default class zhihuBodyContent extends Component {
       withCredentials: true,
     };
 
-    await axios(config).then(function (response) {
+    await axios(config).then(response => {
       console.log(response);
       this.setZhId(this.state.username);
     });
@@ -314,7 +316,7 @@ export default class zhihuBodyContent extends Component {
       .get(this.zhihuServer + "/activity/all?username=" + this.state.username, {
         withCredentials: true,
       })
-      .then(function (response) {
+      .then(response=> {
         console.log(response);
         activities_data = response.data;
       });
@@ -371,7 +373,7 @@ export default class zhihuBodyContent extends Component {
                       />
                     </Col>
                   </Row>
-                  <Button onClick={() => this.update()}>更新数据</Button>
+                  <Button onClick={() => this.updateUserActivities()}>更新数据</Button>
                 </div>
               ) : (
                 <div className="box box-primary">
@@ -467,11 +469,11 @@ export default class zhihuBodyContent extends Component {
                   >
                     <thead>
                       <tr>
-                        <th>action_text</th>
-                        <th>question</th>
-                        <th>answer</th>
-                        <th>target_id</th>
-                        <th>created_time</th>
+                        <th>我的操作</th>
+                        <th>问题</th>
+                        <th>回答</th>
+                        <th>操作编号</th>
+                        <th>时间</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -486,15 +488,6 @@ export default class zhihuBodyContent extends Component {
                         ></ZhihuActivity>
                       ))}
                     </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>action_text</th>
-                        <th>question</th>
-                        <th>answer</th>
-                        <th>target_id</th>
-                        <th>created_time</th>
-                      </tr>
-                    </tfoot>
                   </table>
                 </div>
               </div>
