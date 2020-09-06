@@ -14,8 +14,7 @@ var texts = [];
 var User = {
   mid: 39238459,
   sname: "",
-  url:
-    "http://i1.hdslb.com/bfs/face/834eb0de8d2f470bf03e4ea92831b14f3824c863.jpg",
+  url: "http://static.hdslb.com/images/akari.jpg",
 };
 
 function setDataPerson(json, n) {
