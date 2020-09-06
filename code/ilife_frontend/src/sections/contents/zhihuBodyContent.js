@@ -5,7 +5,7 @@ import ZhihuActivity from "../../zhihu/ZhihuActivity";
 import "antd/dist/antd.css";
 import { createBrowserHistory } from "history";
 import { LikeOutlined, ZhihuOutlined, HeartOutlined } from "@ant-design/icons";
-import storageUtils from "../../storageUtils";
+
 export default class zhihuBodyContent extends Component {
   constructor(props) {
     super(props);

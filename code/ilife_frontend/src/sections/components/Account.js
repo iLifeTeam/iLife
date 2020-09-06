@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import axios from "../../axios";
-import storageUtils from "../../storageUtils";
 
 export default class Account extends Component {
   constructor(props) {
@@ -28,10 +27,12 @@ export default class Account extends Component {
 
   logoff() {
     const history = createBrowserHistory();
-    storageUtils.deleteUser();
 
     let username = document.cookie;
     var cookie_pos = username.indexOf("username");
+
+    let exp = new Date();
+    exp.setTime(exp.getTime() - 1);
 
     if (cookie_pos != -1) {
       document.cookie =
@@ -39,7 +40,7 @@ export default class Account extends Component {
         "=" +
         " " +
         ";path=/;domain=.;expires=" +
-        new Date().toGMTString();
+        exp.toGMTString();
     }
 
     var config = {

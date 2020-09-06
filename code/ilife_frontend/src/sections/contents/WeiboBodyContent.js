@@ -14,7 +14,7 @@ import {
 } from "antd";
 import "antd/dist/antd.css";
 import moment from "moment";
-import storageUtils from "../../storageUtils";
+
 import { configConsumerProps } from "antd/lib/config-provider";
 
 const { RangePicker } = DatePicker;
