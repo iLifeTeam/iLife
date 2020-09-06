@@ -256,10 +256,11 @@ export default class EntertainContent extends Component {
     var config2 = {
       method: "post",
       data: data2,
-      url: "http://121.36.196.234:8484//douban/crawlRcmd",
+      url: "http://121.36.196.234:8484/douban/crawlRcmd",
       headers: {
         withCredentials: true,
       },
+      timeout:"10000ms",
     };
     const finalResult = await axios(config2)
       .then(function (response) {
@@ -439,6 +440,7 @@ export default class EntertainContent extends Component {
                     <div className="row">
                       <div className="col-xs-6">
                         <img
+                            referrerpolicy="no-referrer"
                           id="img"
                           src={this.state.rcmd.picture_movie.trim()}
                           alt={

@@ -16,6 +16,7 @@ export default class DbMovieContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user:null,
       iLifeId: "",
       show: false,
       doubanId: null,
@@ -136,6 +137,7 @@ export default class DbMovieContent extends Component {
       headers: {
         withCredentials: true,
       },
+      timeout:"10000ms"
     };
     let that = this;
     axios(config)
