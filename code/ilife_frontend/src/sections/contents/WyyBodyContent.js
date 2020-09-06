@@ -237,6 +237,7 @@ export default class WyyBodyContent extends Component {
       });
 
     this.getHistory(this.state.id);
+    this.getSingers(this.state.id);
   }
 
   handleOk() {
