@@ -1,11 +1,20 @@
 import React, { Component } from "react";
 import axios from "../../axios";
-import { Button, Radio, Statistic, Row, Col } from "antd";
+import {Button, Radio, Statistic, Row, Col, Divider,Timeline, Switch} from "antd";
 import ZhihuActivity from "../../zhihu/ZhihuActivity";
 import "antd/dist/antd.css";
 import { createBrowserHistory } from "history";
 import { LikeOutlined, ZhihuOutlined, HeartOutlined } from "@ant-design/icons";
 
+
+const colors={
+  "FOLLOW_QUESTION": "red",
+  "CREATE_QUESTION": "red",
+  "VOTEUP_ANSWER" : "green",
+  "CREATE_ANSWER" : "green",
+  "VOTEUP_ARTICLE" :"blue",
+  "CREATE_ARTICLE": "blue"
+}
 export default class zhihuBodyContent extends Component {
   constructor(props) {
     super(props);
@@ -26,6 +35,7 @@ export default class zhihuBodyContent extends Component {
       uid: "default",
       userinfo: null,
       account: "",
+      detail: false,
     };
     this.login = this.login.bind(this);
     this.loginTwice = this.loginTwice.bind(this);
@@ -319,12 +329,18 @@ export default class zhihuBodyContent extends Component {
       .then(response=> {
         console.log(response);
         activities_data = response.data;
+        this.setState({
+          loginSuccess: true,
+          activities: activities_data.sort((a,b) => a.created_time - b.created_time),
+        });
       });
-    this.setState({
-      activities: activities_data,
-    });
-  }
 
+  }
+  onSwitch = (checked)=>{
+    this.setState({
+      detail: checked
+    })
+  }
   render() {
     const {
       activities,
@@ -336,6 +352,7 @@ export default class zhihuBodyContent extends Component {
       userinfo,
       radioValue,
       wordCloudLoading,
+      detail,
     } = this.state;
     return (
       <div className="content-wrapper">
@@ -460,46 +477,67 @@ export default class zhihuBodyContent extends Component {
             <div className="col-xs-12">
               <div className="box">
                 <div className="box-header">
-                  <h3 className="box-title">知乎浏览数据</h3>
+                  <Divider orientation="left">总览</Divider>
                 </div>
-                <div className="box-body">
-                  <table
-                    id="example1"
-                    className="table table-bordered table-striped"
-                  >
-                    <thead>
-                      <tr>
-                        <th>我的操作</th>
-                        <th>问题</th>
-                        <th>回答</th>
-                        <th>操作编号</th>
-                        <th>时间</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {activities.map((activity, index) => (
-                        <ZhihuActivity
-                          key={index}
-                          action_text={activity.action_text}
-                          created_time={activity.created_time}
-                          id={activity.id}
-                          target_id={activity.target_id}
-                          type={activity.type}
-                        ></ZhihuActivity>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                <Row>
+                <Switch onChange={this.onSwitch} style={{marginLeft: "20px"}} />
+                <div> 显示详情 </div>
+                </Row>
+                {
+                  !detail ?
+                      <div className="box-body">
+                        <Timeline>
+                          {
+                            activities.map((activity,index) => <Timeline.Item
+                                key={index}
+                                color={colors[activity.type] != null ? colors[activity.type] : "black"}>
+
+                              {new Date(activity.created_time).toLocaleString()}<br/>{activity.action_text}
+
+                            </Timeline.Item>)
+                          }
+                        </Timeline>
+                      </div> :
+                      <div className="box-body">
+                        <table
+                            id="example1"
+                            className="table table-bordered table-striped"
+                        >
+                          <thead>
+                          <tr>
+                            <th>我的操作</th>
+                            <th>问题</th>
+                            <th>回答</th>
+                            <th>操作编号</th>
+                            <th>时间</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          {activities.map((activity, index) => (
+                              <ZhihuActivity
+                                  key={index}
+                                  action_text={activity.action_text}
+                                  created_time={activity.created_time}
+                                  id={activity.id}
+                                  target_id={activity.target_id}
+                                  type={activity.type}
+                              ></ZhihuActivity>
+                          ))}
+                          </tbody>
+                        </table>
+                      </div>
+                }
               </div>
             </div>
           </div>
           {loginSuccess ? (
-            <div className="row">
+            <div className="row" >
               <div className="col-xs-12">
                 <div className="box">
                   <div className="box-header">
-                    <h3 className="box-title">知乎浏览关键词</h3>
+                    <Divider orientation="left">知乎浏览关键词</Divider>
                   </div>
+                  <div  style={{ marginLeft: "100px", width:"80%" }}>
                   <Radio.Group onChange={this.onRadioChange} value={radioValue}>
                     <Radio value={1}>回答</Radio>
                     <Radio value={2}>提问</Radio>
@@ -513,11 +551,13 @@ export default class zhihuBodyContent extends Component {
                     {" "}
                     生成我的词云报告{" "}
                   </Button>
-                  <div className="box-body" id="analyse"></div>
-                  {wordCloudReady ? (
-                    <img src={wordCloud} className="img-square" alt="词云" />
-                  ) : null}
-                </div>
+                    <div className="box-body" id="analyse"></div>
+                    {wordCloudReady ? (
+                        <img src={wordCloud} className="img-square" alt="词云" />
+                    ) : null}
+                  </div>
+                  </div>
+
               </div>
             </div>
           ) : null}
