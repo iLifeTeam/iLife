@@ -556,6 +556,18 @@
         "name" : {
           "type" : "string"
         },
+        "movie_WISH" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "book_WISH" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "movie_WATCHED" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
         "book_READ" : {
           "type" : "integer",
           "format" : "int32"
@@ -568,19 +580,7 @@
           "type" : "integer",
           "format" : "int32"
         },
-        "movie_WISH" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
         "follower" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "movie_WATCHED" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "book_WISH" : {
           "type" : "integer",
           "format" : "int32"
         }
