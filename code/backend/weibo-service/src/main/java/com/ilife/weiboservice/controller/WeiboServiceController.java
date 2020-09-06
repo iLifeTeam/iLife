@@ -24,7 +24,7 @@ public class WeiboServiceController {
 
     @ApiOperation(notes = "Get all Weibos from database of one user specified by userID", value = "get one user's Weibos", httpMethod = "GET")
     @GetMapping(path = "/weibo/getWeibos")
-    //@PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public List<Weibo> getWeibos(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid, HttpServletResponse response) {
         System.out.println("********** getWeibos **********");
         response.setHeader("Access-Control-Allow-Credentials", "true");
