@@ -267,6 +267,7 @@ export default class BilibiliBodyContent extends Component {
       this.setState({
         updating: false,
       });
+      await this.getHistories(this.state.userId);
     }
   }
 
