@@ -422,7 +422,7 @@ export default class BilibiliBodyContent extends Component {
                 </div>
                 <div className="box-body">
                   <div className="col-xs-8">
-                    <p>点击以跳转推荐up主的个人主页哦~</p>
+                    <p>点击以展示up主的代表视频哦~</p>
                     <BilibiliUp
                       Up={this.state.FavorUp}
                       mid={this.state.userId}
