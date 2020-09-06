@@ -92,7 +92,12 @@ NetEaseCrawler {
         parameters.add(new BasicNameValuePair("password", password));
         return postRequest("/login/cellphone",parameters);
     }
-
+    public String getimage(Long mid){
+        List<NameValuePair> parameters = new ArrayList<>();
+        parameters.add(new BasicNameValuePair("ids", mid.toString()));
+        return JSONObject.parseObject(getRequest("/song/detail",parameters)).getJSONArray("songs").
+                getJSONObject(0).getJSONObject("al").getString("picUrl");
+    }
     String getRequest(String path, List<NameValuePair> parameters){
         try {
             URI uri = new URIBuilder()

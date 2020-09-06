@@ -92,6 +92,12 @@ public class BiliController {
         }
         return jsonArray;
     }
+
+    @GetMapping("/bili/getUp")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public JSONObject getUp(@RequestParam("mid") Long mid) throws IOException {
+        return bilicrawller.getAuther(mid);
+    }
     @GetMapping("/bili/getUpVideo")
     @PreAuthorize("hasRole('ROLE_USER')")
     public JSONObject getUpVideo(@RequestParam("mid") Long id) throws IOException {

@@ -21,10 +21,11 @@
       "post" : {
         "operationId" : "getFavorSingers",
         "parameters" : [ {
-          "name" : "ph",
+          "name" : "uid",
           "in" : "query",
           "required" : true,
-          "type" : "string"
+          "type" : "integer",
+          "format" : "int64"
         } ],
         "responses" : {
           "200" : {
@@ -76,6 +77,26 @@
               "items" : {
                 "type" : "object"
               }
+            }
+          }
+        }
+      }
+    },
+    "/music/getSongImage" : {
+      "get" : {
+        "operationId" : "getImageBySid",
+        "parameters" : [ {
+          "name" : "mid",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "string"
             }
           }
         }
@@ -208,13 +229,13 @@
     "Page" : {
       "type" : "object",
       "properties" : {
-        "totalElements" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
         "totalPages" : {
           "type" : "integer",
           "format" : "int32"
+        },
+        "totalElements" : {
+          "type" : "integer",
+          "format" : "int64"
         },
         "number" : {
           "type" : "integer",
@@ -230,14 +251,14 @@
             "type" : "object"
           }
         },
-        "last" : {
-          "type" : "boolean"
+        "sort" : {
+          "$ref" : "#/definitions/Sort"
         },
         "pageable" : {
           "$ref" : "#/definitions/Pageable"
         },
-        "sort" : {
-          "$ref" : "#/definitions/Sort"
+        "last" : {
+          "type" : "boolean"
         },
         "first" : {
           "type" : "boolean"
@@ -254,13 +275,13 @@
     "PageWyyuser" : {
       "type" : "object",
       "properties" : {
-        "totalElements" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
         "totalPages" : {
           "type" : "integer",
           "format" : "int32"
+        },
+        "totalElements" : {
+          "type" : "integer",
+          "format" : "int64"
         },
         "number" : {
           "type" : "integer",
@@ -276,14 +297,14 @@
             "$ref" : "#/definitions/wyyuser"
           }
         },
-        "last" : {
-          "type" : "boolean"
+        "sort" : {
+          "$ref" : "#/definitions/Sort"
         },
         "pageable" : {
           "$ref" : "#/definitions/Pageable"
         },
-        "sort" : {
-          "$ref" : "#/definitions/Sort"
+        "last" : {
+          "type" : "boolean"
         },
         "first" : {
           "type" : "boolean"
@@ -304,22 +325,22 @@
           "type" : "integer",
           "format" : "int64"
         },
-        "paged" : {
-          "type" : "boolean"
+        "sort" : {
+          "$ref" : "#/definitions/Sort"
         },
         "pageNumber" : {
           "type" : "integer",
           "format" : "int32"
         },
-        "pageSize" : {
-          "type" : "integer",
-          "format" : "int32"
+        "paged" : {
+          "type" : "boolean"
         },
         "unpaged" : {
           "type" : "boolean"
         },
-        "sort" : {
-          "$ref" : "#/definitions/Sort"
+        "pageSize" : {
+          "type" : "integer",
+          "format" : "int32"
         }
       }
     },

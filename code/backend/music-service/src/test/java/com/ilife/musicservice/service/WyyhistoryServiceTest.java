@@ -1,5 +1,7 @@
 package com.ilife.musicservice.service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,4 +34,5 @@ class WyyhistoryServiceTest {
     void getfavorsingers() {
         System.out.println(wyyhistoryService.getFavorSingers(417778610L));
     }
+
 }

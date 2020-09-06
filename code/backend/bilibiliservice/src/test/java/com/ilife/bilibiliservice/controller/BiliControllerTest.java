@@ -133,4 +133,15 @@ class BiliControllerTest {
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
     }
+
+    @Test
+    @WithMockUser(roles="USER")
+    void getAnUp() throws Exception {
+        MvcResult result = mockMvc.perform(get("/bili/getUp")
+                .param("mid", "15875324")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+    }
 }

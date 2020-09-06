@@ -26,7 +26,7 @@ class HistoryServiceTest {
     @Test
     void getTag(){
         System.out.println(historyService.getFavoriteTag((long)35159960));
-        System.out.println(historyService.getFavoriteTagid("搞笑"));
+        System.out.println(historyService.getFavoriteTagid("环球"));
         System.out.println(historyService.getFavoriteTagid("??"));
     }
 

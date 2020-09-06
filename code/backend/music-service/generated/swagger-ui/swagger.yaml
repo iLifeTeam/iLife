@@ -19,10 +19,11 @@ paths:
     post:
       operationId: "getFavorSingers"
       parameters:
-      - name: "ph"
+      - name: "uid"
         in: "query"
         required: true
-        type: "string"
+        type: "integer"
+        format: "int64"
       responses:
         200:
           description: "successful operation"
@@ -59,6 +60,20 @@ paths:
             type: "array"
             items:
               type: "object"
+  /music/getSongImage:
+    get:
+      operationId: "getImageBySid"
+      parameters:
+      - name: "mid"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
   /music/gethistorybyid:
     post:
       operationId: "gethistorybyid"
@@ -151,12 +166,12 @@ definitions:
   Page:
     type: "object"
     properties:
-      totalElements:
-        type: "integer"
-        format: "int64"
       totalPages:
         type: "integer"
         format: "int32"
+      totalElements:
+        type: "integer"
+        format: "int64"
       number:
         type: "integer"
         format: "int32"
@@ -167,12 +182,12 @@ definitions:
         type: "array"
         items:
           type: "object"
-      last:
-        type: "boolean"
-      pageable:
-        $ref: "#/definitions/Pageable"
       sort:
         $ref: "#/definitions/Sort"
+      pageable:
+        $ref: "#/definitions/Pageable"
+      last:
+        type: "boolean"
       first:
         type: "boolean"
       numberOfElements:
@@ -183,12 +198,12 @@ definitions:
   PageWyyuser:
     type: "object"
     properties:
-      totalElements:
-        type: "integer"
-        format: "int64"
       totalPages:
         type: "integer"
         format: "int32"
+      totalElements:
+        type: "integer"
+        format: "int64"
       number:
         type: "integer"
         format: "int32"
@@ -199,12 +214,12 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/wyyuser"
-      last:
-        type: "boolean"
-      pageable:
-        $ref: "#/definitions/Pageable"
       sort:
         $ref: "#/definitions/Sort"
+      pageable:
+        $ref: "#/definitions/Pageable"
+      last:
+        type: "boolean"
       first:
         type: "boolean"
       numberOfElements:
@@ -218,18 +233,18 @@ definitions:
       offset:
         type: "integer"
         format: "int64"
-      paged:
-        type: "boolean"
+      sort:
+        $ref: "#/definitions/Sort"
       pageNumber:
         type: "integer"
         format: "int32"
+      paged:
+        type: "boolean"
+      unpaged:
+        type: "boolean"
       pageSize:
         type: "integer"
         format: "int32"
-      unpaged:
-        type: "boolean"
-      sort:
-        $ref: "#/definitions/Sort"
   Sort:
     type: "object"
     properties:
