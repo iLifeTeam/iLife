@@ -140,8 +140,10 @@ export default class zhihuBodyContent extends Component {
       password: val.target.value,
     });
   }
+  server = "http://18.166.111.161"
+  port = "8000/zhihu"
   authServer = "http://18.166.111.161:8686";
-  zhihuServer = "http://18.166.111.161:8090";
+  zhihuServer = this.server + ":" + this.port
   word_cloud_server = "http://18.166.24.220:8103";
   fetchWordCloud = (username) => {
     let type = "";

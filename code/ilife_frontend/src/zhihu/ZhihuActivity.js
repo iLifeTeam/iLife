@@ -40,10 +40,12 @@ export default class ZhihuActivity extends Component {
         break;
     }
   }
+  server = "http://18.166.111.161"
+  port = "8000/zhihu"
   async getAnswer(id) {
     var answer;
     await axios
-      .get("http://18.166.111.161:8090/answer?id=" + encodeURI(id))
+      .get(this.server + ":" + this.port + "answer?id=" + encodeURI(id))
       .then(function (response) {
         console.log(response);
         answer = response.data;
