@@ -585,10 +585,6 @@ export default class TaobaoBodyContent extends Component {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-        <section>
-          <div className="row">
             <div className="col-xs-12">
               <div className="box">
                 <div className="box-header">

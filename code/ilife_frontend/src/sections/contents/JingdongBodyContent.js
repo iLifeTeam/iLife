@@ -13,7 +13,8 @@ import {
   DatePicker,
   Typography,
   List,
-  Statistic, Spin,
+  Statistic,
+  Spin,
 } from "antd";
 import "antd/dist/antd.css";
 import { createBrowserHistory } from "history";
@@ -170,7 +171,7 @@ export default class JingdongBodyContent extends Component {
       }
     });
   };
-  updateStats = (uid)=> {
+  updateStats = (uid) => {
     const config = {
       method: "post",
       url: this.server + ":" + this.port + "/stats/category/update",
@@ -183,17 +184,16 @@ export default class JingdongBodyContent extends Component {
       withCredentials: true,
       timeout: 20 * 60 * 1000,
     };
-    this.setState({updatingStats: true});
+    this.setState({ updatingStats: true });
     axios(config).then((response) => {
-          console.log("update complete");
-          this.setState({
-            updatingStats: false,
-            updateComplete: true,
-          });
-          this.fetchAll(uid)
-        }
-    )
-  }
+      console.log("update complete");
+      this.setState({
+        updatingStats: false,
+        updateComplete: true,
+      });
+      this.fetchAll(uid);
+    });
+  };
 
   updateIncremental = (uid) => {
     const config = {
@@ -373,9 +373,9 @@ export default class JingdongBodyContent extends Component {
                   {this.state.updating ? <div>正在增量式爬取...</div> : null}
                   {this.state.fetching ? <div>正在获取...</div> : null}
                   {this.state.updatingStats ? (
-                      <div>
-                        正在对数据进一步处理... <Spin />
-                      </div>
+                    <div>
+                      正在对数据进一步处理... <Spin />
+                    </div>
                   ) : null}
                 </div>
                 <div className="box-body" style={style}>
@@ -389,10 +389,6 @@ export default class JingdongBodyContent extends Component {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-        <section>
-          <div className="row">
             <div className="col-xs-12">
               <div className="box">
                 <div className="box-header">
@@ -475,7 +471,7 @@ export default class JingdongBodyContent extends Component {
                           </Col>
                         </Row>
                         <List
-                          style={{width:"100%"}}
+                          style={{ width: "100%" }}
                           header={
                             <div>
                               我买过最贵的一单花了
@@ -500,11 +496,11 @@ export default class JingdongBodyContent extends Component {
                     <Divider orientation="left">购物统计</Divider>
                     <Row justify="center">
                       <Col style={{ width: "70%" }}>
-                        <Pie  stats={stats} />
+                        <Pie stats={stats} />
                       </Col>
                       <Col style={{ width: "30%" }}>
                         <Divider orientation="left">购物花销分布</Divider>
-                        <Pie2  stats={stats} />
+                        <Pie2 stats={stats} />
                       </Col>
                     </Row>
                   </div>
