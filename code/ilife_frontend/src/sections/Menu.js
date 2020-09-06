@@ -91,7 +91,7 @@ class Menu extends Component {
                 </a>
               </li>
               <li>
-                <a href="fake_url">
+                <a href="/home/people">
                   <i className="fa fa-circle-o text-yellow" />{" "}
                   <span>博主推荐</span>
                 </a>
