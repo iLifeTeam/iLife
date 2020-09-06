@@ -12,6 +12,7 @@ import DbBookContent from './contents/DbBookContent';
 import JingdongBodyContent from "./contents/JingdongBodyContent";
 import TaobaoBodyContent from "./contents/TaobaoBodyContent";
 import EntertainContent from "./contents/EntertainContent";
+import PeopleContent from "./contents/PeopleContent";
 
 export default class Content extends Component {
   render() {
@@ -27,6 +28,7 @@ export default class Content extends Component {
         <Route path="/home/jingdong" component={JingdongBodyContent} />
         <Route path="/home/taobao" component={TaobaoBodyContent} />
         <Route path="/home/entertain" component={EntertainContent} />
+        <Route path="/home/people" component={PeopleContent} />
       </div>
     )
   }
