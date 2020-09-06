@@ -31,8 +31,16 @@ const text = (
       }}
       format="YYYY-MM-DD"
       onChange={(dates) => {
-        console.log(dates);
-        // let GMT = new (dates[0]._d);
+        let day0 = dates[0].date()<10?"0"+dates[0].date():dates[0].date();
+        let day1 = dates[1].date()<10?"0"+dates[1].date():dates[1].date();
+        let month0 = (dates[0].month()+1)<10?"0"+(dates[0].month()+1):(dates[0].month()+1);
+        let month1 = (dates[1].month()+1)<10?"0"+(dates[1].month()+1):(dates[1].month()+1);
+        let q0 =dates[0].year()+"-"+month0+"-"+day0;
+        let q1 =dates[1].year()+"-"+month1+"-"+day1;
+        console.log(q0);
+        console.log(q1);
+        this.setState({startDate: q0,endDate: q1})
+        // let GMT = new (dates[0]._d);-
         // let GMT1 = new Date(dates[1]._d);
         //this.setState({ startDate: GMT.toUTCString(), endDate: GMT1.toUTCString() })
       }}
@@ -221,7 +229,7 @@ export default class WeiboBodyContent extends Component {
       url:
         "http://121.36.196.234:8585/weibo/crawlWeibo?userId=" +
         this.state.weiboId +
-        "&startDate=2020-07-01&endDate=now",
+        "&startDate="+this.state.startDate+"&endDate="+this.state.endDate,
       headers: {
         withCredentials: true,
       },
