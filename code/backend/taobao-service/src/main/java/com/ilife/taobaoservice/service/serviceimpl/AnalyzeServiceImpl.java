@@ -94,7 +94,7 @@ public class AnalyzeServiceImpl implements AnalyzeService {
             StringBuilder requestBuilder = new StringBuilder();
             String prefix = "";
             List<Item> items = order.getItems();
-            if (items.get(0).getFirstCategory() != null)
+            if (items.size() > 0 &&  items.get(0).getFirstCategory() != null)
                 continue;
             else
                 counter += items.size();
