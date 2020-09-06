@@ -13,3 +13,11 @@ services:
         image: ilife2020/gateway
         ports:
             - "8000:8090"
+    redis: 
+        image: redis
+        ports:
+            - "6379:6379"
+    auth:
+        image: ilife2020/auth-service
+        ports:
+            - "8686:8080"

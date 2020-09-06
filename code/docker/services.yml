@@ -5,7 +5,23 @@ services:
         image: ilife2020/tb-service
         ports: 
             - "8095:8090"
-networks:
-    default:
-        external:
-            name: backend_default
+    zhihu-service:
+        image: ilife2020/zhihu-service
+        ports:
+            - "8094:8090"
+    jingdong-service:
+        image: ilife2020/jd-service
+        ports: 
+            - "8096:8090"
+    # douban-service:
+    #     image: ilife2020/douban-service
+    #     ports:
+    #         - "8383:8080"
+    bilibili-serivce:
+        image: ilife2020/bili-service
+        ports:
+            - "8848:8848"
+    music-service:
+        image: ilife2020/music-service
+        ports:
+            - "8808:8808"

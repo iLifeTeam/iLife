@@ -516,3 +516,149 @@ java.io.IOException: Connection reset by peer
 	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:144) [product-category-predict-1.0.0-SNAPSHOT.jar:1.0.0-SNAPSHOT]
 	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_265]
 
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::       (v1.0.0-SNAPSHOT)
+
+2020-09-06 05:44:40.575  INFO 22044 --- [           main] c.j.product.category.CategoryPredictApp  : Starting CategoryPredictApp v1.0.0-SNAPSHOT on ip-172-31-4-120 with PID 22044 (/home/ubuntu/iLife/code/mining/taobao-classify/product-category-predict/target/product-category-predict-1.0.0-SNAPSHOT.jar started by ubuntu in /home/ubuntu/iLife/code/mining/taobao-classify/product-category-predict)
+2020-09-06 05:44:40.577  INFO 22044 --- [           main] c.j.product.category.CategoryPredictApp  : No active profile set, falling back to default profiles: default
+2020-09-06 05:44:40.641  INFO 22044 --- [           main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@74a10858: startup date [Sun Sep 06 05:44:40 UTC 2020]; root of context hierarchy
+2020-09-06 05:44:41.920  INFO 22044 --- [           main] f.a.AutowiredAnnotationBeanPostProcessor : JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2020-09-06 05:44:42.435  INFO 22044 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 7002 (http)
+2020-09-06 05:44:42.452  INFO 22044 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-09-06 05:44:42.453  INFO 22044 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.15
+2020-09-06 05:44:42.541  INFO 22044 --- [ost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-09-06 05:44:42.542  INFO 22044 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1904 ms
+2020-09-06 05:44:42.726  INFO 22044 --- [ost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2020-09-06 05:44:42.730  INFO 22044 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2020-09-06 05:44:42.731  INFO 22044 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2020-09-06 05:44:42.731  INFO 22044 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2020-09-06 05:44:42.731  INFO 22044 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2020-09-06 05:44:43.357  WARN 22044 --- [           main] org.apache.hadoop.util.NativeCodeLoader  : Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2020-09-06 05:44:44.073  INFO 22044 --- [           main] org.spark_project.jetty.util.log         : Logging initialized @4131ms
+2020-09-06 05:44:44.113  INFO 22044 --- [           main] org.spark_project.jetty.server.Server    : jetty-9.3.z-SNAPSHOT
+2020-09-06 05:44:44.133  INFO 22044 --- [           main] org.spark_project.jetty.server.Server    : Started @4193ms
+2020-09-06 05:44:44.152  INFO 22044 --- [           main] o.s.jetty.server.AbstractConnector       : Started ServerConnector@7c36db44{HTTP/1.1,[http/1.1]}{0.0.0.0:4040}
+2020-09-06 05:44:44.172  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@4ee5b2d9{/jobs,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.173  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@4c777e7b{/jobs/json,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.174  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@78e22d35{/jobs/job,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.175  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@1aabf50d{/jobs/job/json,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.175  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@de8039f{/stages,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.176  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@582a764a{/stages/json,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.176  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@292158f8{/stages/stage,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.177  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@5d5c04f9{/stages/stage/json,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.178  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@4b790d86{/stages/pool,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.179  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@4339baec{/stages/pool/json,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.179  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@61cd1c71{/storage,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.180  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@6944e53e{/storage/json,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.180  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@5bc7e78e{/storage/rdd,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.182  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@546e61d5{/storage/rdd/json,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.183  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@60783105{/environment,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.183  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@35d5ac51{/environment/json,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.184  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@2a3194c6{/executors,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.185  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@30364216{/executors/json,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.185  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@1e8ab90f{/executors/threadDump,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.186  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@7a729f84{/executors/threadDump/json,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.194  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@554f0dfb{/static,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.195  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@fab35b1{/,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.197  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@65bdd558{/api,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.198  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@3374b5bc{/jobs/job/kill,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.198  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@587a1cfb{/stages/stage/kill,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.550  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@885e7ff{/metrics/json,null,AVAILABLE,@Spark}
+2020-09-06 05:44:44.762  INFO 22044 --- [           main] c.j.product.category.ml.NlpTokenizer     : Start loading product dictionary ...
+main dict load finished, time elapsed 4040 ms
+user dict ./data/product.dict load finished, tot words:295202, time elapsed:787ms
+2020-09-06 05:44:49.595  INFO 22044 --- [           main] c.j.product.category.ml.NlpTokenizer     : Finish loading product dictionary
+model load finished, time elapsed 78 ms.
+2020-09-06 05:44:50.359  INFO 22044 --- [           main] o.apache.hadoop.mapred.FileInputFormat   : Total input paths to process : 1
+2020-09-06 05:44:52.331  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@41def031{/SQL,null,AVAILABLE,@Spark}
+2020-09-06 05:44:52.332  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@39832280{/SQL/json,null,AVAILABLE,@Spark}
+2020-09-06 05:44:52.333  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@5aa76ad2{/SQL/execution,null,AVAILABLE,@Spark}
+2020-09-06 05:44:52.333  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@25791d40{/SQL/execution/json,null,AVAILABLE,@Spark}
+2020-09-06 05:44:52.334  INFO 22044 --- [           main] o.s.jetty.server.handler.ContextHandler  : Started o.s.j.s.ServletContextHandler@1b52699c{/static/sql,null,AVAILABLE,@Spark}
+2020-09-06 05:44:52.600  WARN 22044 --- [           main] o.apache.spark.sql.internal.SharedState  : URL.setURLStreamHandlerFactory failed to set FsUrlStreamHandlerFactory
+2020-09-06 05:44:57.035  INFO 22044 --- [           main] c.j.p.category.ml.FeatureExtractor       : Successfully loading tf-idf model from ./model/idf
+2020-09-06 05:44:57.134  INFO 22044 --- [           main] o.apache.hadoop.mapred.FileInputFormat   : Total input paths to process : 1
+2020-09-06 05:45:02.143  INFO 22044 --- [           main] c.j.p.category.ml.BayesClassification    : Successfully loading bayes model from ./model/bayes
+2020-09-06 05:45:02.513  INFO 22044 --- [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@74a10858: startup date [Sun Sep 06 05:44:40 UTC 2020]; root of context hierarchy
+2020-09-06 05:45:02.598  INFO 22044 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/categories/segment],methods=[GET]}" onto public java.lang.String com.jinpei.product.category.controller.CategoryController.segment(java.lang.String)
+2020-09-06 05:45:02.599  INFO 22044 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/categories/predict],methods=[GET || POST]}" onto public java.util.List<com.jinpei.product.category.common.ProductCategory> com.jinpei.product.category.controller.CategoryController.predict(java.util.List<java.lang.String>,java.util.Map)
+2020-09-06 05:45:02.601  INFO 22044 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/categories],methods=[GET]}" onto public java.util.Collection<com.jinpei.product.category.common.StandardCategory> com.jinpei.product.category.controller.CategoryController.query()
+2020-09-06 05:45:02.602  INFO 22044 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2020-09-06 05:45:02.603  INFO 22044 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2020-09-06 05:45:02.626  INFO 22044 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2020-09-06 05:45:02.627  INFO 22044 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2020-09-06 05:45:02.654  INFO 22044 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2020-09-06 05:45:02.821  INFO 22044 --- [           main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2020-09-06 05:45:02.878  INFO 22044 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 7002 (http)
+2020-09-06 05:45:02.882  INFO 22044 --- [           main] c.j.product.category.CategoryPredictApp  : Started CategoryPredictApp in 22.607 seconds (JVM running for 22.942)
+2020-09-06 05:45:02.932  INFO 22044 --- [           main] o.apache.hadoop.mapred.FileInputFormat   : Total input paths to process : 1
+2020-09-06 05:45:03.702  INFO 22044 --- [           main] c.j.p.category.ml.FeatureExtractor       : Successfully loading tf-idf model from ./model/idf
+2020-09-06 05:45:03.772  INFO 22044 --- [           main] o.apache.hadoop.mapred.FileInputFormat   : Total input paths to process : 1
+2020-09-06 05:45:09.161  INFO 22044 --- [           main] c.j.p.category.ml.BayesClassification    : Successfully loading bayes model from ./model/bayes
+2020-09-06 05:45:09.161  INFO 22044 --- [           main] c.j.product.category.CategoryPredictApp  : ---------------------------------
+2020-09-06 05:45:09.161  INFO 22044 --- [           main] c.j.product.category.CategoryPredictApp  : Finish to start application !
+2020-09-06 05:45:09.161  INFO 22044 --- [           main] c.j.product.category.CategoryPredictApp  : ---------------------------------
+2020-09-06 05:47:58.618  INFO 22044 --- [nio-7002-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet 'dispatcherServlet'
+2020-09-06 05:47:58.619  INFO 22044 --- [nio-7002-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization started
+2020-09-06 05:47:58.629  INFO 22044 --- [nio-7002-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization completed in 10 ms
+[Stage 12:>                                                         (0 + 0) / 2][Stage 12:>                                                         (0 + 2) / 2]                                                                                2020-09-06 05:48:04.263  INFO 22044 --- [nio-7002-exec-1] c.j.p.c.controller.CategoryController    : Predict category spends 5593
+[Stage 13:>                                                         (0 + 0) / 2][Stage 13:>                                                         (0 + 2) / 2]                                                                                2020-09-06 05:48:06.444  INFO 22044 --- [nio-7002-exec-2] c.j.p.c.controller.CategoryController    : Predict category spends 2126
+[Stage 14:>                                                         (0 + 0) / 2][Stage 14:=============================>                            (1 + 1) / 2]                                                                                2020-09-06 05:48:08.353  INFO 22044 --- [nio-7002-exec-3] c.j.p.c.controller.CategoryController    : Predict category spends 1847
+[Stage 15:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:10.314  INFO 22044 --- [nio-7002-exec-4] c.j.p.c.controller.CategoryController    : Predict category spends 1949
+[Stage 16:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:11.799  INFO 22044 --- [nio-7002-exec-5] c.j.p.c.controller.CategoryController    : Predict category spends 1468
+[Stage 17:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:13.348  INFO 22044 --- [nio-7002-exec-6] c.j.p.c.controller.CategoryController    : Predict category spends 1536
+[Stage 18:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:15.420  INFO 22044 --- [nio-7002-exec-7] c.j.p.c.controller.CategoryController    : Predict category spends 2055
+[Stage 19:>                                                         (0 + 0) / 2][Stage 19:>                                                         (0 + 2) / 2]                                                                                2020-09-06 05:48:16.914  INFO 22044 --- [nio-7002-exec-8] c.j.p.c.controller.CategoryController    : Predict category spends 1483
+[Stage 20:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:18.356  INFO 22044 --- [nio-7002-exec-9] c.j.p.c.controller.CategoryController    : Predict category spends 1426
+[Stage 21:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:19.876  INFO 22044 --- [io-7002-exec-10] c.j.p.c.controller.CategoryController    : Predict category spends 1509
+[Stage 22:>                                                         (0 + 0) / 2][Stage 22:>                                                         (0 + 2) / 2]                                                                                2020-09-06 05:48:21.957  INFO 22044 --- [nio-7002-exec-1] c.j.p.c.controller.CategoryController    : Predict category spends 2062
+[Stage 23:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:24.037  INFO 22044 --- [nio-7002-exec-2] c.j.p.c.controller.CategoryController    : Predict category spends 2066
+[Stage 24:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:25.365  INFO 22044 --- [nio-7002-exec-3] c.j.p.c.controller.CategoryController    : Predict category spends 1316
+[Stage 25:>                                                         (0 + 0) / 2][Stage 25:>                                                         (0 + 2) / 2]                                                                                2020-09-06 05:48:27.460  INFO 22044 --- [nio-7002-exec-4] c.j.p.c.controller.CategoryController    : Predict category spends 2080
+[Stage 26:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:29.209  INFO 22044 --- [nio-7002-exec-5] c.j.p.c.controller.CategoryController    : Predict category spends 1732
+[Stage 27:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:30.453  INFO 22044 --- [nio-7002-exec-6] c.j.p.c.controller.CategoryController    : Predict category spends 1232
+[Stage 28:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:31.699  INFO 22044 --- [nio-7002-exec-7] c.j.p.c.controller.CategoryController    : Predict category spends 1237
+[Stage 29:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:33.371  INFO 22044 --- [nio-7002-exec-8] c.j.p.c.controller.CategoryController    : Predict category spends 1661
+[Stage 30:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:34.484  INFO 22044 --- [nio-7002-exec-9] c.j.p.c.controller.CategoryController    : Predict category spends 1101
+[Stage 31:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:35.683  INFO 22044 --- [io-7002-exec-10] c.j.p.c.controller.CategoryController    : Predict category spends 1186
+[Stage 32:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:36.835  INFO 22044 --- [nio-7002-exec-1] c.j.p.c.controller.CategoryController    : Predict category spends 1140
+[Stage 33:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:38.191  INFO 22044 --- [nio-7002-exec-2] c.j.p.c.controller.CategoryController    : Predict category spends 1340
+[Stage 34:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:39.724  INFO 22044 --- [nio-7002-exec-3] c.j.p.c.controller.CategoryController    : Predict category spends 1522
+[Stage 35:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:40.953  INFO 22044 --- [nio-7002-exec-4] c.j.p.c.controller.CategoryController    : Predict category spends 1217
+[Stage 36:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:48:42.222  INFO 22044 --- [nio-7002-exec-5] c.j.p.c.controller.CategoryController    : Predict category spends 1238
+[Stage 37:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:59:34.117  INFO 22044 --- [nio-7002-exec-7] c.j.p.c.controller.CategoryController    : Predict category spends 1645
+[Stage 38:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:59:35.509  INFO 22044 --- [nio-7002-exec-8] c.j.p.c.controller.CategoryController    : Predict category spends 1300
+[Stage 39:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:59:36.992  INFO 22044 --- [nio-7002-exec-9] c.j.p.c.controller.CategoryController    : Predict category spends 1459
+[Stage 40:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:59:38.352  INFO 22044 --- [io-7002-exec-10] c.j.p.c.controller.CategoryController    : Predict category spends 1343
+[Stage 41:>                                                         (0 + 0) / 2]                                                                                2020-09-06 05:59:39.540  INFO 22044 --- [nio-7002-exec-1] c.j.p.c.controller.CategoryController    : Predict category spends 1169
+2020-09-06 08:34:41.579  INFO 22044 --- [nio-7002-exec-5] o.apache.coyote.http11.Http11Processor   : Error parsing HTTP request header
+ Note: further occurrences of HTTP header parsing errors will be logged at DEBUG level.
+
+java.lang.IllegalArgumentException: Invalid character found in method name. HTTP method names must be tokens
+	at org.apache.coyote.http11.Http11InputBuffer.parseRequestLine(Http11InputBuffer.java:422) ~[product-category-predict-1.0.0-SNAPSHOT.jar:1.0.0-SNAPSHOT]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:683) ~[product-category-predict-1.0.0-SNAPSHOT.jar:1.0.0-SNAPSHOT]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66) [product-category-predict-1.0.0-SNAPSHOT.jar:1.0.0-SNAPSHOT]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:861) [product-category-predict-1.0.0-SNAPSHOT.jar:1.0.0-SNAPSHOT]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1455) [product-category-predict-1.0.0-SNAPSHOT.jar:1.0.0-SNAPSHOT]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [product-category-predict-1.0.0-SNAPSHOT.jar:1.0.0-SNAPSHOT]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_265]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_265]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [product-category-predict-1.0.0-SNAPSHOT.jar:1.0.0-SNAPSHOT]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_265]
+
+[Stage 42:>                                                         (0 + 0) / 2]                                                                                2020-09-06 12:43:35.938  INFO 22044 --- [nio-7002-exec-6] c.j.p.c.controller.CategoryController    : Predict category spends 1307
+[Stage 43:>                                                         (0 + 0) / 2]                                                                                2020-09-06 12:43:37.321  INFO 22044 --- [nio-7002-exec-7] c.j.p.c.controller.CategoryController    : Predict category spends 1355
+[Stage 44:>                                                         (0 + 0) / 2]                                                                                2020-09-06 12:43:38.497  INFO 22044 --- [nio-7002-exec-8] c.j.p.c.controller.CategoryController    : Predict category spends 1167
+[Stage 45:>                                                         (0 + 0) / 2]                                                                                2020-09-06 12:43:39.697  INFO 22044 --- [nio-7002-exec-9] c.j.p.c.controller.CategoryController    : Predict category spends 1189
+[Stage 46:>                                                         (0 + 0) / 2]                                                                                2020-09-06 12:43:40.918  INFO 22044 --- [io-7002-exec-10] c.j.p.c.controller.CategoryController    : Predict category spends 1203
+[Stage 47:>                                                         (0 + 0) / 2]                                                                                2020-09-06 12:43:42.702  INFO 22044 --- [nio-7002-exec-1] c.j.p.c.controller.CategoryController    : Predict category spends 1768
+[Stage 48:>                                                         (0 + 0) / 2][Stage 48:>                                                         (0 + 2) / 2][Stage 48:=============================>                            (1 + 1) / 2]                                                                                2020-09-06 12:43:44.687  INFO 22044 --- [nio-7002-exec-2] c.j.p.c.controller.CategoryController    : Predict category spends 1968
+[Stage 49:>                                                         (0 + 0) / 2][Stage 49:>                                                         (0 + 2) / 2]                                                                                2020-09-06 12:43:48.268  INFO 22044 --- [nio-7002-exec-3] c.j.p.c.controller.CategoryController    : Predict category spends 3571
+[Stage 50:>                                                         (0 + 0) / 2][Stage 50:>                                                         (0 + 2) / 2]                                                                                2020-09-06 12:43:51.122  INFO 22044 --- [nio-7002-exec-4] c.j.p.c.controller.CategoryController    : Predict category spends 2818
+[Stage 51:>                                                         (0 + 0) / 2][Stage 51:>                                                         (0 + 2) / 2]                                                                                2020-09-06 12:43:53.720  INFO 22044 --- [nio-7002-exec-5] c.j.p.c.controller.CategoryController    : Predict category spends 2585
