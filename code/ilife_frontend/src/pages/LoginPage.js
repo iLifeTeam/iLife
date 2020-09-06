@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import axios from "../axios";
 import { message } from "antd";
-import storageUtils from "../storageUtils";
 
 var CryptoJS = require("crypto-js");
 axios.defaults.withCredentials = true;

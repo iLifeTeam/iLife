@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import storageUtils from "../../storageUtils";
 import axios from "axios";
 import {
   Table,

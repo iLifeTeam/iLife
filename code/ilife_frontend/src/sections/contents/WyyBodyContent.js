@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "../../axios";
 import WyyHistory from "../../wyy/WyyHistory";
-import storageUtils from "../../storageUtils";
+
 import { createBrowserHistory } from "history";
 export default class WyyBodyContent extends Component {
   constructor(props) {

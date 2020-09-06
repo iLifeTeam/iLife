@@ -12,7 +12,6 @@ import {
   Card,
 } from "antd";
 import "antd/dist/antd.css";
-import storageUtils from "../../storageUtils";
 
 const { Meta } = Card;
 const { Text, Paragraph } = Typography;

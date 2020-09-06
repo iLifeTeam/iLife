@@ -4,7 +4,7 @@ import { createBrowserHistory } from "history";
 import DoubanBooks from "../../douban/DoubanBooks";
 import { Button, Divider, message, Popconfirm, Typography, Input } from "antd";
 import "antd/dist/antd.css";
-import storageUtils from "../../storageUtils";
+
 const { Text, Paragraph } = Typography;
 const text = (
   <div>
@@ -266,20 +266,24 @@ export default class DbBookContent extends Component {
                   <h3 className="box-title">
                     用户{this.state.weiboId}的豆瓣读书报表
                   </h3>
-                  {statsReady?null:
+                  {statsReady ? null : (
                     <Button
-                        size={"large"}
-                        loading={statsLoading}
-                        onClick={() => {
-                          this.fetchStats(this.state.doubanId);
-                        }}
+                      size={"large"}
+                      loading={statsLoading}
+                      onClick={() => {
+                        this.fetchStats(this.state.doubanId);
+                      }}
                     >
                       生成报表
                     </Button>
-                  }
+                  )}
                 </div>
                 {statsReady ? (
-                  <div className="box-body" id="analyse" style={{ fontSize: "18px" }}>
+                  <div
+                    className="box-body"
+                    id="analyse"
+                    style={{ fontSize: "18px" }}
+                  >
                     <Paragraph>
                       孙中山有言：“我一生的嗜好，除了革命之外，就是读书。我一天不读书，就不能够生活。”
                     </Paragraph>

@@ -3,7 +3,7 @@ import axios from "../../axios";
 import { createBrowserHistory } from "history";
 import DoubanMovies from "../../douban/DoubanMovies";
 import { Button, Divider, message, Popconfirm, Typography, Input } from "antd";
-import storageUtils from "../../storageUtils";
+
 const { Text, Paragraph } = Typography;
 const text = (
   <div>
@@ -305,17 +305,17 @@ export default class DbMovieContent extends Component {
                   <h3 className="box-title">
                     用户{this.state.doubanId}的豆瓣电影报表
                   </h3>
-                  {statsReady ? null :
-                      <Button
-                          size={"large"}
-                          loading={statsLoading}
-                          onClick={() => {
-                            this.fetchStats(this.state.doubanId);
-                          }}
-                      >
-                        生成报表
-                      </Button>
-                  }
+                  {statsReady ? null : (
+                    <Button
+                      size={"large"}
+                      loading={statsLoading}
+                      onClick={() => {
+                        this.fetchStats(this.state.doubanId);
+                      }}
+                    >
+                      生成报表
+                    </Button>
+                  )}
                 </div>
                 {statsReady ? (
                   <div className="box-body" style={{ fontSize: "18px" }}>

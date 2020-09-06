@@ -21,7 +21,7 @@ import moment from "moment";
 import Pie2 from "../../taobao/Pie2";
 import Pie from "../../taobao/Pie";
 import { AccountBookOutlined, BarChartOutlined } from "@ant-design/icons";
-import storageUtils from "../../storageUtils";
+
 const { RangePicker } = DatePicker;
 const { Text, Paragraph } = Typography;
 const expandedRowRender = (row) => {

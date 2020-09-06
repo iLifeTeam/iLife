@@ -1,6 +1,5 @@
 //axios拦截器
 import axios from "axios";
-import storageUtils from "./storageUtils";
 import { createBrowserHistory } from "history";
 const history = createBrowserHistory();
 
@@ -28,7 +27,6 @@ axios.interceptors.response.use(
       case 403:
       case 405:
         console.log("已过期重新登陆", response.data.code);
-        //storageUtils.deleteUser();
         document.cookie =
           "username" +
           "=" +
@@ -54,7 +52,6 @@ axios.interceptors.response.use(
       error.message === "Request failed with status code 403"
     ) {
       history.push("/login");
-      //storageUtils.deleteUser();
       let exp = new Date();
       exp.setTime(exp.getTime() - 1);
       document.cookie =

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import MenuItem from "./components/MenuItem";
-import storageUtils from "../storageUtils";
 
 import { withRouter } from "react-router-dom";
 

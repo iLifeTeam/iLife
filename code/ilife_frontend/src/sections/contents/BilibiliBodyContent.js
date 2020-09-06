@@ -4,7 +4,7 @@ import QRCode from "qrcode.react";
 import BilibiliHistorty from "../../bilibili/BilibiliHistorty";
 import BilibiliEcharts from "../../bilibili/BilibiliEcharts";
 import BilibiliUp from "../../bilibili/BilibiliUp";
-import storageUtils from "../../storageUtils";
+
 import { Divider, Spin, message } from "antd";
 import { Modal, Button } from "antd";
 import { createBrowserHistory } from "history";
