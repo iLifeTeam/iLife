@@ -38,7 +38,7 @@ public class UserServiceController {
 
     @ApiOperation(notes = "Delete one user info specified by userId", value = "delete one user", httpMethod = "GET")
     @GetMapping(path = "/user/delById")
-  //  @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> delUserByUserId(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid,HttpServletResponse response) {
         System.out.println("********** deleteUser **********");
         response.setHeader("Access-Control-Allow-Credentials", "true");
