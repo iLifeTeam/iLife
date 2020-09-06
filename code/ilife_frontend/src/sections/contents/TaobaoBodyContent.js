@@ -70,12 +70,23 @@ export default class TaobaoBodyContent extends Component {
       statsReady: false,
       updatingStats: false,
       updatingComplete: false,
-      columns : [
-        { title: "订单号", dataIndex: "orderID", key: "orderID", align: "left" },
-        { title: "商店", dataIndex: "shop", key: "shop",
+      columns: [
+        {
+          title: "订单号",
+          dataIndex: "orderID",
+          key: "orderID",
+          align: "left",
+        },
+        {
+          title: "商店",
+          dataIndex: "shop",
+          key: "shop",
           filters: [],
           filterMultiple: true,
-          onFilter: (value, record) => record.items.some(item => item.firstCategory.indexOf(value) === 0),
+          onFilter: (value, record) =>
+            record.items.some(
+              (item) => item.firstCategory.indexOf(value) === 0
+            ),
         },
         {
           title: "总价",
@@ -95,7 +106,7 @@ export default class TaobaoBodyContent extends Component {
           sortDirections: ["descend", "ascend"],
           defaultSortOrder: ["descend"],
         },
-      ]
+      ],
     };
   }
 
@@ -339,7 +350,7 @@ export default class TaobaoBodyContent extends Component {
           fetching: false,
           orders: orders,
         });
-        this.updateColumns(orders)
+        this.updateColumns(orders);
       })
       .catch((err) => {
         console.log(err);
@@ -396,30 +407,31 @@ export default class TaobaoBodyContent extends Component {
         fetching: false,
         orders: orders,
       });
-      this.updateColumns(orders)
+      this.updateColumns(orders);
     });
   };
-  updateColumns = (orders) =>{
-    let {columns} = this.state
-    let filters = [], set = []
-    for(const order of orders){
-      for (const item of order.items){
-        const cate = item.firstCategory
-        if (!set.includes(cate)){
-          set.push(cate)
+  updateColumns = (orders) => {
+    let { columns } = this.state;
+    let filters = [],
+      set = [];
+    for (const order of orders) {
+      for (const item of order.items) {
+        const cate = item.firstCategory;
+        if (!set.includes(cate)) {
+          set.push(cate);
           filters.push({
             text: cate,
-            value: cate
-          })
+            value: cate,
+          });
         }
       }
     }
-    columns[1].filters = filters
-    console.log(columns)
+    columns[1].filters = filters;
+    console.log(columns);
     this.setState({
-      columns:columns
-    })
-  }
+      columns: columns,
+    });
+  };
   fetchStats = (phone) => {
     const config = {
       method: "get",
@@ -558,7 +570,7 @@ export default class TaobaoBodyContent extends Component {
                     loading={updating}
                   >
                     更新数据
-                  </Button>{" "}
+                  </Button>
                   <Button
                     onClick={() => this.updateAll(phone)}
                     loading={updating}
