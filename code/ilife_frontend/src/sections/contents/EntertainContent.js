@@ -528,6 +528,7 @@ export default class EntertainContent extends Component {
                           </p>
                         </Card>
                         <img
+                            referrerpolicy="no-referrer"
                           id="img2"
                           src={this.state.rcmd.picture_book.trim()}
                           alt={"正在加载中..."}
