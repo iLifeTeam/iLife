@@ -11,7 +11,11 @@ cors = CORS(app, resources={r"/*": {"origins": ["http://49.234.125.131", "http:/
 test_uid = "552399318699515904"
 img_path = "./images"
 
-
+@app.after_request
+def after_request(response) :
+    print(response)
+    response.headers.add("Access-Control-Allow-Headers","Content-Type, Authorization")
+    response.headers.add("Access-Control-Allow-Headers","Content-Type, Authorization")
 def createDirIfNotExists(path):
     if not os.path.exists(path):
         os.makedirs(path)
