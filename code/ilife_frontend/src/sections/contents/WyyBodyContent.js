@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import axios from "../../axios";
 import WyyHistory from "../../wyy/WyyHistory";
-
+import { Divider, Spin, message } from "antd";
+import { Modal, Button } from "antd";
 import { createBrowserHistory } from "history";
 export default class WyyBodyContent extends Component {
   constructor(props) {
@@ -11,6 +12,9 @@ export default class WyyBodyContent extends Component {
       account: "",
       password: "",
       histories: null,
+      islogin: false,
+      visible: false,
+      confirmLoading: false,
     };
     this.updateHistory = this.updateHistory.bind(this);
     this.getHistory = this.getHistory.bind(this);
@@ -133,6 +137,11 @@ export default class WyyBodyContent extends Component {
     });
   }
 
+  handleCancel = () => {
+    this.setState({
+      visible: false,
+    });
+  };
   render() {
     return (
       <div className="content-wrapper">
@@ -145,28 +154,7 @@ export default class WyyBodyContent extends Component {
                 </div>
                 {/* form start */}
                 <form role="form">
-                  <div className="box-body">
-                    <div className="form-group">
-                      <label htmlFor="exampleInputEmail1">网易云音乐账号</label>
-                      <input
-                        type="email"
-                        className="form-control"
-                        id="exampleInputEmail1"
-                        placeholder="Enter email"
-                        onChange={(val) => this.accountOnChange(val)}
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="exampleInputPassword1">密码</label>
-                      <input
-                        type="password"
-                        className="form-control"
-                        id="exampleInputPassword1"
-                        placeholder="Password"
-                        onChange={(val) => this.psdOnChange(val)}
-                      />
-                    </div>
-                  </div>
+                  <div className="box-body"></div>
                 </form>
                 {/* /.box-body */}
                 <div className="box-footer">
@@ -206,8 +194,72 @@ export default class WyyBodyContent extends Component {
             <div className="col-xs-12">
               <div className="box">
                 <div className="box-header">
-                  <h3 className="box-title">听歌历史</h3>
+                  <Divider
+                    orientation="left"
+                    style={{ color: "#333", fontWeight: "normal" }}
+                  >
+                    <h3 className="box-title">听歌历史</h3>
+                  </Divider>
                 </div>
+                <div style={{ margin: 10 }}>
+                  <Button
+                    type="primary"
+                    onClick={() =>
+                      this.setState({ islogin: false, visible: true })
+                    }
+                  >
+                    网易云登录入口
+                  </Button>
+                  {this.state.islogin ? (
+                    <Spin
+                      spinning={this.state.updating}
+                      style={{ width: "100%" }}
+                    >
+                      <Button type="primary" onClick={this.updateHistories}>
+                        更新浏览记录
+                      </Button>
+                    </Spin>
+                  ) : null}
+                </div>
+                <Modal
+                  title="网易云帐号登录"
+                  visible={this.state.visible}
+                  onOk={this.login}
+                  confirmLoading={this.state.confirmLoading}
+                  onCancel={this.handleCancel}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  {this.state.islogin ? (
+                    <p>是否需要绑定帐号信息？</p>
+                  ) : (
+                    <>
+                      <div className="form-group">
+                        <label htmlFor="exampleInputEmail1">
+                          网易云音乐账号
+                        </label>
+                        <input
+                          type="email"
+                          className="form-control"
+                          id="exampleInputEmail1"
+                          placeholder="Enter email"
+                          onChange={(val) => this.accountOnChange(val)}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="exampleInputPassword1">密码</label>
+                        <input
+                          type="password"
+                          className="form-control"
+                          id="exampleInputPassword1"
+                          placeholder="Password"
+                          onChange={(val) => this.psdOnChange(val)}
+                        />
+                      </div>
+                    </>
+                  )}
+                </Modal>
                 <div className="box-body">
                   {this.state.histories ? (
                     <WyyHistory histories={this.state.histories}></WyyHistory>

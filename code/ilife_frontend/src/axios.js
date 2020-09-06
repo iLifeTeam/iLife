@@ -3,7 +3,7 @@ import axios from "axios";
 import { createBrowserHistory } from "history";
 const history = createBrowserHistory();
 
-axios.defaults.timeout = 10000;
+//axios.defaults.timeout = 10000;
 axios.defaults.withCredentials = true;
 
 /*

@@ -4,7 +4,6 @@ import QRCode from "qrcode.react";
 import BilibiliHistorty from "../../bilibili/BilibiliHistorty";
 import BilibiliEcharts from "../../bilibili/BilibiliEcharts";
 import BilibiliUp from "../../bilibili/BilibiliUp";
-
 import { Divider, Spin, message } from "antd";
 import { Modal, Button } from "antd";
 import { createBrowserHistory } from "history";
@@ -115,6 +114,7 @@ export default class BilibiliBodyContent extends Component {
   }
 
   async QRcodeLogin() {
+    this.setState({ islogin: false, SESSDATA: null });
     const QRcode = await this.getloginurl();
     //console.log(QRcode);
     if (QRcode) {
@@ -125,10 +125,11 @@ export default class BilibiliBodyContent extends Component {
         visible: true,
       });
       this.interval = setInterval(() => this.getResponse(), 2000);
-    } else         message.success({
-      content: "请求失败，请重新查询！",
-      style: { marginTop: "40px" },
-    });;
+    } else
+      message.success({
+        content: "请求失败，请重新查询！",
+        style: { marginTop: "40px" },
+      });
   }
 
   // 获取二维码，返回QRcode信息，失败返回null
@@ -308,7 +309,7 @@ export default class BilibiliBodyContent extends Component {
   }
 
   async updateUserId() {
-    let userId = 11;
+    let userId = this.state.iLifeId;
     let biliId = this.state.userId;
     console.log(biliId);
     let data1 = {

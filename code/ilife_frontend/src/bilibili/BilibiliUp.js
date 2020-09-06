@@ -104,7 +104,7 @@ export default class BilibiliUp extends Component {
   每次更新图表都要生成一个dom节点*/
   initChart(props) {
     const { Up, mid, sname } = props;
-    console.log(Up);
+    //console.log(Up);
     for (var i = 0; i < legendes.length; i++) {
       texts.push({
         name: legendes[i],
@@ -114,6 +114,7 @@ export default class BilibiliUp extends Component {
     setDataPhone(Up, 0);
     User.mid = mid;
     User.sname = sname;
+    //console.log(sname);
     setDataPerson(User, 1);
 
     setLinkData(Up, legendes[1]);
@@ -125,7 +126,8 @@ export default class BilibiliUp extends Component {
         position: "right",
         formatter: function (params) {
           if (params.data.category) {
-            return params.data.showName + "（你自己）";
+            //console.log(params.data.showName);
+            return "(你自己）";
           }
           return (
             params.data.showName +
@@ -233,7 +235,7 @@ export default class BilibiliUp extends Component {
 
     const PopVideo = await axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
+        //console.log(JSON.stringify(response.data));
         return response.data.data.list.vlist;
       })
       .catch(function (error) {
@@ -254,7 +256,7 @@ export default class BilibiliUp extends Component {
         <Row gutter={24}>
           {this.state.PopVideo
             ? this.state.PopVideo.map((video) => {
-                console.log(video.title);
+                //console.log(video.title);
                 return (
                   <Col
                     key={video.aid}
