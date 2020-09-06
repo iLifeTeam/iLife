@@ -27,7 +27,6 @@ public class WeiboServiceController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public List<Weibo> getWeibos(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid, HttpServletResponse response) {
         System.out.println("********** getWeibos **********");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
         return weiboService.findAllByUid(uid);
     }
 
@@ -36,7 +35,6 @@ public class WeiboServiceController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public Weibo getWeibo(@ApiParam(name = "Id", value = "The ID of a WeiBo,should be a String") @RequestParam("Id") String id,HttpServletResponse response) {
         System.out.println("********** getWeibo **********");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
         return weiboService.findById(id);
     }
 
@@ -48,7 +46,6 @@ public class WeiboServiceController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> deleteWeibos(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid,HttpServletResponse response){
         System.out.println("********** deleteWeibos **********");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
         return weiboService.deleteByUid(uid);
     }
 
@@ -60,7 +57,6 @@ public class WeiboServiceController {
 //    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> deleteWeibo(@ApiParam(name = "Id", value = "The ID of a WeiBo,should be a String") @RequestParam("Id") String id,HttpServletResponse response) {
         System.out.println("********** deleteWeibos **********");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
         return weiboService.deleteById(id);
     }
 

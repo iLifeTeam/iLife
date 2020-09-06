@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @Api(value = "User Service Controller")
-public class UserServiceController {
+    public class UserServiceController {
 
-    @Autowired
+        @Autowired
     private UserService userService;
 
     @ApiOperation(notes = "Get user info by userID", value = "get user info", httpMethod = "GET")
@@ -23,7 +23,6 @@ public class UserServiceController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public User getUserById(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid, HttpServletResponse response) {
         System.out.println("********** getUserByUserId **********");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
         return userService.findAllById(uid);
     }
 
@@ -32,7 +31,6 @@ public class UserServiceController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public User getUserByNickname(@ApiParam(name = "nickname", value = "The nickname of a WeiBo user,should be a String") @RequestParam("nickname") String nickname,HttpServletResponse response) {
         System.out.println("********** getUserByNickname **********");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
         return userService.findByNickname(nickname);
     }
 
@@ -41,7 +39,6 @@ public class UserServiceController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> delUserByUserId(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid,HttpServletResponse response) {
         System.out.println("********** deleteUser **********");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
         return userService.deleteById(uid);
     }
 }
