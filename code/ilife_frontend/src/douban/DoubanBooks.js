@@ -14,6 +14,16 @@ export default class DoubanBooks extends Component {
 
     this.$el.DataTable({
       data: this.props.activities ? this.props.activities : null,
+      oLanguage: {
+        sProcessing: "正在查询中......",
+        sZeroRecords: "您尚未绑定账户/没有发表过动态信息...",
+        oPaginate: {
+          sFirst: "首页",
+          sPrevious: "上一页",
+          sNext: "下一页",
+          sLast: "末页",
+        },
+      },
       columns: [
         { data: "name" },
         { data: "author" },
