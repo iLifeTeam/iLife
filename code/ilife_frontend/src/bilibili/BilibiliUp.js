@@ -153,7 +153,7 @@ export default class BilibiliUp extends Component {
           force: {
             repulsion: 10,
             gravity: 0,
-            edgeLength: [10, 15],
+            edgeLength: [45, 60],
             layoutAnimation: true,
           },
           data: listdata,
