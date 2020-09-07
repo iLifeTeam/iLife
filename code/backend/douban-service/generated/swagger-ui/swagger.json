@@ -556,10 +556,6 @@
         "name" : {
           "type" : "string"
         },
-        "following" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
         "movie_WISH" : {
           "type" : "integer",
           "format" : "int32"
@@ -568,7 +564,15 @@
           "type" : "integer",
           "format" : "int32"
         },
-        "comment" : {
+        "book_WISH" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "following" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "book_READ" : {
           "type" : "integer",
           "format" : "int32"
         },
@@ -576,11 +580,7 @@
           "type" : "integer",
           "format" : "int32"
         },
-        "book_WISH" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "book_READ" : {
+        "comment" : {
           "type" : "integer",
           "format" : "int32"
         }

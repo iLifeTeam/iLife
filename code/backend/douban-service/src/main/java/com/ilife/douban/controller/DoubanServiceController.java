@@ -15,7 +15,6 @@ import java.util.Map;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
-@CrossOrigin(origins = "*")
 @RestController
 @Api(tags = {"Douban Service Controller"}, description = "Everything about auth & CRUD of iLife User")
 public class DoubanServiceController {
