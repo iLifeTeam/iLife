@@ -86,7 +86,7 @@ function setLinkData(json, title) {
     links.push({
       source: p,
       target: title,
-      value: Math.random() * 10,
+      value: Math.random() * 5,
       lineStyle: {
         normal: {
           color: "source",
@@ -120,7 +120,8 @@ export default class WyyFavor extends Component {
     listdata = [];
     links = [];
     texts = [];
-    if (nextProps.Songs) this.initChart(nextProps);
+    if (nextProps.Songs && nextProps.Songs !== this.props.Songs)
+      this.initChart(nextProps);
   }
   /*生成图表，做了判断，如果不去判断dom有没有生成，
   每次更新图表都要生成一个dom节点*/
@@ -169,9 +170,9 @@ export default class WyyFavor extends Component {
           type: "graph",
           layout: "force",
           force: {
-            repulsion: 10,
+            repulsion: 50,
             gravity: 0,
-            edgeLength: [50, 75],
+            edgeLength: [10, 15],
             layoutAnimation: true,
           },
           data: listdata,
@@ -291,7 +292,7 @@ export default class WyyFavor extends Component {
           newlinks.push({
             source: JSON.stringify(i + 20),
             target: param.data.name,
-            value: Math.random() * 10,
+            value: Math.random() * 5,
             lineStyle: {
               normal: {
                 color: "source",
@@ -327,9 +328,9 @@ export default class WyyFavor extends Component {
               type: "graph",
               layout: "force",
               force: {
-                repulsion: 10,
+                repulsion: 50,
                 gravity: 0,
-                edgeLength: [50, 75],
+                edgeLength: [20, 30],
                 layoutAnimation: true,
               },
               data: simi,
