@@ -2,6 +2,8 @@ package com.ilife.weiboservice.service;
 
 import com.ilife.weiboservice.entity.Statistics;
 import com.ilife.weiboservice.entity.Weibo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Date;
@@ -19,4 +21,6 @@ public interface WeiboService {
     ResponseEntity<?> save(Weibo weibo);
 
     Statistics getStats(Long uid, Date startDate,Date endDate);
+
+    Page<Weibo> findPagesByUid(Long uid, Pageable p);
 }

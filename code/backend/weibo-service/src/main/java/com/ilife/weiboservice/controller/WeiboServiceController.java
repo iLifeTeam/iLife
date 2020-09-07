@@ -5,6 +5,9 @@ import com.ilife.weiboservice.entity.Weibo;
 import com.ilife.weiboservice.service.WeiboService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +31,15 @@ public class WeiboServiceController {
     public List<Weibo> getWeibos(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid, HttpServletResponse response) {
         System.out.println("********** getWeibos **********");
         return weiboService.findAllByUid(uid);
+    }
+
+    @ApiOperation(notes = "Get part of Weibos from database of one user specified by userID", value = "get one user's Weibos", httpMethod = "GET")
+    @GetMapping(path = "/weibo/getPages")
+//    @PreAuthorize("hasRole('ROLE_USER')")
+    public Page<Weibo> getPages(@ApiParam(name = "userId", value = "The user ID of a WeiBo user,should be a Long Integer") @RequestParam("userId") Long uid, @RequestParam("page") int page, @RequestParam("size") int size, HttpServletResponse response) {
+        Pageable p = PageRequest.of(page,size);
+        System.out.println("********** getWeibos **********");
+        return weiboService.findPagesByUid(uid,p);
     }
 
     @ApiOperation(notes = "Get One Weibo from database specified by Weibo ID", value = "get one Weibo", httpMethod = "GET")

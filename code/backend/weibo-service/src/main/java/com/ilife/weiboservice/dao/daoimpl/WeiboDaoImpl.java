@@ -4,6 +4,8 @@ import com.ilife.weiboservice.dao.WeiboDao;
 import com.ilife.weiboservice.entity.Weibo;
 import com.ilife.weiboservice.repository.WeiboRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
@@ -41,7 +43,13 @@ public class WeiboDaoImpl implements WeiboDao {
         return weibo;
     }
 
+    @Override
+    public Page<Weibo> findPagesByUid(Long uid, Pageable p){
+        return weiboRepository.findAllByUid(uid,p);
+    }
+
     public List<Weibo> findLimits(Long uid, Timestamp startTime, Timestamp endTime){
         return weiboRepository.findLimits(uid,startTime,endTime);
     }
+
 }
