@@ -39,7 +39,7 @@ export default class WeiboBodyContent extends Component {
             activities: null,
             /* hardcode parameter, need to be passed in */
             startTime: "Mon May 28 09:51:52 GMT 2019",
-            endTime: "Mon July 29 09:51:52 GMT 2020",
+            endTime: "Mon October 29 09:51:52 GMT 2020",
             startDate: "2020-07-01",
             endDate: "now",
             stats: null,
