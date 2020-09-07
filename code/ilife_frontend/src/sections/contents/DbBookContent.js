@@ -83,7 +83,7 @@ export default class DbBookContent extends Component {
     console.log(doubanId);
     var config = {
       method: "get",
-      url: "http://18.166.111.161:8000/douban/douban/getBooks?userId=" + doubanId,
+      url: "http://121.36.196.234:8383/douban/getBooks?userId=" + doubanId,
       headers: {
         withCredentials: true,
       },

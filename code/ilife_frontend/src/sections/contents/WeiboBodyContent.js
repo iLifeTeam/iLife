@@ -362,11 +362,13 @@ export default class WeiboBodyContent extends Component {
                                                                           width: "95%",
                                                                           marginLeft: "40px",
                                                                           borderWidth: "3px"
-                                                                      }}>
+                                                                      }}
+                                                                            onClick={this.handlePrev}
+                                                                      >
 
-                      <Carousel autoplay style={{fontSize: "18px", textAlign: "center"}}>
+                      <Carousel ref='img' style={{fontSize: "18px", textAlign: "center", background: 'white'}}  >
 
-                        <div>
+                        <div style={{background: 'white'}}>
                                                 <Paragraph>
                         {" "}
                                                     {stats.avgWb > 1
@@ -393,8 +395,6 @@ export default class WeiboBodyContent extends Component {
                         </span>{" "}
                           条微博呢！
                       </Paragraph>
-                        </div>
-                        <div>
                                                 <Paragraph>
                         {" "}
                                                     <span style={{fontSize: "28px", fontFamily: 'Georgia'}}>
@@ -423,9 +423,13 @@ export default class WeiboBodyContent extends Component {
                           {stats.maxUp}
                         </span>{" "}
                          个赞，还记得你发了什么内容吗！
+                                                 </Paragraph>
+                                                        <Paragraph>
                         <span style={{fontSize: "24px", fontFamily: 'Georgia'}}>
                           "{stats.maxUpWb}"
                         </span>{" "}
+                                                </Paragraph>
+                                                        <Paragraph>
                          是这个哟，写得确实很出彩！
                       </Paragraph>
                         </div>
@@ -445,9 +449,13 @@ export default class WeiboBodyContent extends Component {
                           {stats.maxRt}
                         </span>{" "}
                                                     次转发，还记得你发了什么内容吗！
+                                                     </Paragraph>
+                                                    <Paragraph>
                         <span style={{fontSize: "24px", fontFamily: 'Georgia'}}>
                           "{stats.maxRtWb}"
                         </span>{" "}
+                        </Paragraph>
+                                                        <Paragraph>
                                                     是这个哟，果然很有传播力！
                       </Paragraph>
                         </div>
@@ -467,9 +475,13 @@ export default class WeiboBodyContent extends Component {
                           {stats.maxCm}
                         </span>{" "}
                          个评论，还记得你发了什么内容吗！
+                                                 </Paragraph>
+                                                        <Paragraph>
                         <span style={{fontSize: "24px", fontFamily: 'Georgia'}}>
                           "{stats.maxCmWb}"
                         </span>{" "}
+                                                </Paragraph>
+                                                        <Paragraph>
                          是这个哟，很辩证的话题呢！
                       </Paragraph>
                         </div>
@@ -490,5 +502,8 @@ export default class WeiboBodyContent extends Component {
                 </section>
             </div>
         );
+    }
+    handlePrev = ()=>{
+        this.refs.img.next(); //ref = img
     }
 }

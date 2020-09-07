@@ -149,11 +149,11 @@ export default class RegisterPage extends Component {
 
   render() {
     return (
-      <body className="hold-transition register-page">
+      <body className="hold-transition register-page kin-bg">
         <div className="register-box">
           <div className="register-logo">
             <a>
-              <b>iLife</b>
+              <b style={{color:'white',fontSize:'80px'}}>iLife</b>
             </a>
           </div>
           <div className="register-box-body">

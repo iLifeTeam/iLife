@@ -169,7 +169,7 @@ export default class LoginPage extends Component {
           <div className="login-box ">
             <div className="login-logo">
               <a>
-                <b>iLife</b>
+                <h1 style={{color:'white',fontSize:'80px'}}>iLife</h1>
               </a>
             </div>
             {/* /.login-logo */}

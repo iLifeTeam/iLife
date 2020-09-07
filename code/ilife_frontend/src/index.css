@@ -12,11 +12,12 @@ code {
     monospace;
 }
 
-html{
-   background-image:url("pic/bk1.jpg");
-   background-size:cover;
-}
+/*html{*/
+/*   background-image:url("pic/bk1.jpg");*/
+/*   background-size:cover;*/
+/*}*/
 .kin-bg{
+  height: 1000px;
   background-image:url("pic/bk3.jpg");
   background-size:cover;
 }
