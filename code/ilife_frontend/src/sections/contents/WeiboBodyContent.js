@@ -182,11 +182,12 @@ export default class WeiboBodyContent extends Component {
                 withCredentials: true,
             },
         };
-
+        const that=this;
         const weiboId = await axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 message.success("更新成功！");
+                that.componentDidMount();
                 return response;
             })
             .catch(function (error) {

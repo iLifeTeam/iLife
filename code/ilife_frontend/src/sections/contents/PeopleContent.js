@@ -154,6 +154,7 @@ export default class PeopleContent extends Component {
             },
         };
         const that = this;
+        for(var t = Date.now(); Date.now() - t <= 3000;);
         const movies = await axios(config)
             .then(function (response) {
                 return response.data;
@@ -190,6 +191,7 @@ export default class PeopleContent extends Component {
     }
 
     getWeibos = async (weibid) => {
+        setTimeout(null,3000);
         var config = {
             method: "get",
             url: "http://121.36.196.234:8787/weibo/getWeibos?userId=" + weibid,
@@ -197,6 +199,7 @@ export default class PeopleContent extends Component {
                 withCredentials: true,
             },
         };
+        for(var t = Date.now(); Date.now() - t <= 3000;);
         const activities = await axios(config)
             .then(function (response) {
                 //console.log(JSON.stringify(response.data));
