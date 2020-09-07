@@ -166,7 +166,7 @@ export default class zhihuBodyContent extends Component {
   port = "8000/zhihu"
   authServer = "http://18.166.111.161:8686";
   zhihuServer = this.server + ":" + this.port
-  word_cloud_server = "http://18.166.24.220:8103";
+  word_cloud_server = "http://18.166.24.220:8105";
   fetchWordCloud = (username) => {
     let type = "";
     switch (this.state.radioValue) {
@@ -553,7 +553,7 @@ export default class zhihuBodyContent extends Component {
                   </Button>
                     <div className="box-body" id="analyse"></div>
                     {wordCloudReady ? (
-                        <img src={wordCloud} className="img-square" alt="词云" />
+                        <img src={wordCloud} style ={{width:"70%", margin:"10px"}}className="img-square" alt="词云" />
                     ) : null}
                   </div>
                   </div>
