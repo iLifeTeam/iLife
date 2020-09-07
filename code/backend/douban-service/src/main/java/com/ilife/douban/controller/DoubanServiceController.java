@@ -120,7 +120,7 @@ public class DoubanServiceController {
 
     @ApiOperation(notes = "Get Stored Recommendation by userID", value = "get recommendation", httpMethod = "GET")
     @GetMapping(path = "/douban/getStoredRcmd")
-    @PreAuthorize("hasRole('ROLE_USER')")
+ //   @PreAuthorize("hasRole('ROLE_USER')")
     public Recommendation getStoredRcmd(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
         System.out.println("********** getRecommendation**********");
         return userService.getStoredRcmd(uid);
