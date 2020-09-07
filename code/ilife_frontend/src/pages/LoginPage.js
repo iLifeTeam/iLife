@@ -164,7 +164,7 @@ export default class LoginPage extends Component {
   }
   render() {
     return (
-      <body className="hold-transition login-page">
+      <body className="hold-transition login-page kin-bg"  >
         <div className="kin-blue sidebar-mini">
           <div className="login-box ">
             <div className="login-logo">
