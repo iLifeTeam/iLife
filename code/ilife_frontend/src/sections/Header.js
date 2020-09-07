@@ -33,11 +33,7 @@ export default class Header extends Component {
               <ul className="nav navbar-nav">
                 <Account />
                 {/* Control Sidebar Toggle Button */}
-                <li>
-                  <a href="fake_url" data-toggle="control-sidebar">
-                    <i className="fa fa-gears" />
-                  </a>
-                </li>
+                <li style={{ paddingLeft: 10 }}></li>
               </ul>
             </div>
           </nav>
