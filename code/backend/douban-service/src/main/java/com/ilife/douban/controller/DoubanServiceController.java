@@ -15,6 +15,7 @@ import java.util.Map;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
+@CrossOrigin("*")
 @RestController
 @Api(tags = {"Douban Service Controller"}, description = "Everything about auth & CRUD of iLife User")
 public class DoubanServiceController {
@@ -38,7 +39,7 @@ public class DoubanServiceController {
     )
     @ApiOperation(notes = "Delete one douban user By user Id", value = "delete one user", httpMethod = "POST")
     @PostMapping(path = "/douban/delById")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> deleteById(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestBody Map<String, String> params) {
         String id = params.get("userId");
         System.out.println("********** deleteById **********");
@@ -47,7 +48,7 @@ public class DoubanServiceController {
 
     @ApiOperation(notes = "get douban user's read list By user Id", value = "get user's books", httpMethod = "GET")
     @GetMapping(path = "/douban/getBooks")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     public List<Book> getBooks(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
         System.out.println("********** getBooks **********");
         return userService.getBooksById(uid);
@@ -55,7 +56,7 @@ public class DoubanServiceController {
 
     @ApiOperation(notes = "get douban user's watch list By user Id", value = "get user's movies", httpMethod = "GET")
     @GetMapping(path = "/douban/getMovies")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     public List<Movie> getMovies(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
         System.out.println("********** getMovies **********");
         return userService.getMoviesById(uid);
@@ -70,7 +71,7 @@ public class DoubanServiceController {
     )
     @ApiOperation(notes = "Delete Books By user Id", value = "delete books", httpMethod = "POST")
     @PostMapping(path = "/douban/delBooks")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> deleteBooks(@RequestBody Map<String, String> params) {
         String id = params.get("userId");
         System.out.println("********** deleteBooks **********");
@@ -86,7 +87,7 @@ public class DoubanServiceController {
     )
     @ApiOperation(notes = "Delete Books By user Id", value = "delete movies", httpMethod = "POST")
     @PostMapping(path = "/douban/delMovies")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> deleteMovies(@RequestBody Map<String, String> params) {
         String id = params.get("userId");
         System.out.println("********** deleteMovies **********");
@@ -95,7 +96,7 @@ public class DoubanServiceController {
 
     @ApiOperation(notes = "Get book Statistics by userID", value = "get book statistics", httpMethod = "GET")
     @GetMapping(path = "/douban/getBookStats")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     public BookStats getBookStats(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
         System.out.println("********** getBookStats **********");
         return userService.getBookStats(uid);
@@ -103,7 +104,7 @@ public class DoubanServiceController {
 
     @ApiOperation(notes = "Get movie Statistics by userID", value = "get movie statistics", httpMethod = "GET")
     @GetMapping(path = "/douban/getMovieStats")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     public MovieStats getMovieStats(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
         System.out.println("********** getMovieStats **********");
         return userService.getMovieStats(uid);
@@ -111,7 +112,7 @@ public class DoubanServiceController {
 
     @ApiOperation(notes = "Get Recommendation parameter by userID", value = "get movie recommendation", httpMethod = "GET")
     @GetMapping(path = "/douban/getRcmd")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     public Reference getRefParameter(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
         System.out.println("********** getRecommendation**********");
         return userService.getRcmd(uid);
@@ -127,7 +128,7 @@ public class DoubanServiceController {
 
     @ApiOperation(notes = "Get Stored Recommendation by userID", value = "get recommendation", httpMethod = "POST")
     @PostMapping(path = "/douban/saveRcmd")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     public void saveRcmd(@RequestBody JSONObject object) {
 //        JSONObject object = JSON.parseObject(params.get("rcmd"));
         System.out.println("********** saveRcmd **********");
