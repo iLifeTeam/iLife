@@ -164,12 +164,13 @@ export default class LoginPage extends Component {
   }
   render() {
     return (
-      <body className="hold-transition login-page kin-bg"  >
+      <body className=" login-page kin-bg">
+        <br />
         <div className="kin-blue sidebar-mini">
           <div className="login-box ">
             <div className="login-logo">
               <a>
-                <h1 style={{color:'white',fontSize:'80px'}}>iLife</h1>
+                <h1 style={{ color: "white", fontSize: "80px" }}>iLife</h1>
               </a>
             </div>
             {/* /.login-logo */}
@@ -241,6 +242,11 @@ export default class LoginPage extends Component {
             </div>
           </div>
         </div>
+        <br />
+        <br />
+
+        <br />
+        <br />
       </body>
     );
   }

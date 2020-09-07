@@ -153,7 +153,7 @@ export default class RegisterPage extends Component {
         <div className="register-box">
           <div className="register-logo">
             <a>
-              <b style={{color:'white',fontSize:'80px'}}>iLife</b>
+              <b style={{ color: "white", fontSize: "80px" }}>iLife</b>
             </a>
           </div>
           <div className="register-box-body">
@@ -266,7 +266,6 @@ export default class RegisterPage extends Component {
                 {/* /.col */}
               </div>
             </form>
-            <br />
             <br />
             <Link to={"/login"}>
               <p className="text-center">I already have a membership</p>
