@@ -87,11 +87,7 @@ export default class Account extends Component {
             </p>
           </li>
           <li className="user-footer">
-            <div className="pull-left">
-              <a href="/setting" className="btn btn-default btn-flat">
-                设置
-              </a>
-            </div>
+            <div className="pull-left"></div>
             <div className="pull-right">
               <p onClick={this.logoff} className="btn btn-default btn-flat">
                 注销
