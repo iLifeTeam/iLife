@@ -99,7 +99,7 @@ export default class WeiboBodyContent extends Component {
         //console.log(weiboId);
         var config = {
             method: "get",
-            url: "http://18.166.111.161:8000/weibo/weibo/getWeibos?userId=" + user.weibid,
+            url: "http://121.36.196.234:8787/weibo/getWeibos?userId=" + user.weibid,
             headers: {
                 withCredentials: true,
             },
@@ -143,7 +143,7 @@ export default class WeiboBodyContent extends Component {
     fetchStats = (userId, startTime, endTime) => {
         const config = {
             method: "get",
-            url: this.weiboServer + "/weibo/weibo/getStats",
+            url: this.weiboServer + "/weibo/getStats",
             headers: {
                 "Content-Type": "application/json",
             },
