@@ -25,4 +25,9 @@ class NetEaseCrawlerTest {
         long id =3220012996L;
         netEaseCrawler.crawlbyid(417778610L);
     }
+    @Test
+    void test4(){
+        System.out.println(netEaseCrawler.getimage(88926L));
+        System.out.println(netEaseCrawler.getsimiSongs(88926L));
+    }
 }

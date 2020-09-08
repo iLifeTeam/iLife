@@ -14,7 +14,7 @@ class bilicrawllerTest {
     private bilicrawller bilicrawller;
 
     @Test
-    void getloginurl() {
+    void getloginurl() throws IOException {
         System.out.println(bilicrawller.getloginurl());
     }
 
