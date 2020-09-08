@@ -45,7 +45,7 @@ public interface UserRepository extends CrudRepository<Users, Long> {
     @Transactional
     @Modifying
     @Query(value = "update Users set biliid=?2 where id =?1")
-    int updateBiliId(Long id, String biliId);
+    int updateBiliId(Long id, Long biliId);
 
     @Transactional
     @Modifying
