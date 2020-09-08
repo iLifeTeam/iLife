@@ -1,0 +1,20 @@
+server:
+  port: 8888 # map port to 8888
+
+spring:
+  application:
+    name: config
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: classpath:/config
+      discovery:
+        enabled: true
+  profiles:
+    active: native
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://18.166.111.161:1001/eureka/

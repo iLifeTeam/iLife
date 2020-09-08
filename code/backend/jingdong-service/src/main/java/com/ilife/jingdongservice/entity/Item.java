@@ -37,6 +37,13 @@ public class Item {
     @Column(name = "`img_url`")
     private String imgUrl;
 
+    @Column(name = "`cate1`")
+    private String firstCategory;
+    @Column(name = "`cate2`")
+    private String secondCategory;
+    @Column(name = "`cate3`")
+    private String thirdCategory;
+
     @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
     @JoinColumn(name = "order_id",referencedColumnName = "id")
     @JSONField(serialize = false)

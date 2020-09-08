@@ -3,6 +3,7 @@ package com.ilife.jingdongservice.controller;
 
 import com.ilife.jingdongservice.entity.Order;
 import com.ilife.jingdongservice.entity.User;
+import com.ilife.jingdongservice.service.AnalyzeService;
 import com.ilife.jingdongservice.service.CrawlerService;
 import com.ilife.jingdongservice.service.JingDongService;
 import io.swagger.annotations.Api;
@@ -26,6 +27,8 @@ public class JingdongController {
     JingDongService jingDongService;
     @Autowired
     CrawlerService crawlerService;
+    @Autowired
+    AnalyzeService analyzeService;
 
     @ApiOperation(notes = "login with qrcode", value = "",httpMethod = "POST")
     @PostMapping(value = "/login/qrcode", produces = "application/json")
@@ -98,5 +101,15 @@ public class JingdongController {
     public ResponseEntity<?> getUser(@RequestParam String username){
         User user = jingDongService.getUserByUsername(username);
         return ResponseEntity.ok().body(user);
+    }
+
+
+    @ApiOperation(notes = "get user's statistics", value = "", httpMethod = "GET")
+    @PostMapping(value = "/stats/category/update", produces = "application/json")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> updateUserCategory(@RequestParam String username){
+        User user = jingDongService.getUserByUsername(username);
+        analyzeService.updateCategory(user);
+        return ResponseEntity.ok().body(0);
     }
 }

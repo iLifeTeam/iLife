@@ -1,12 +1,13 @@
+
 spring:
   application:
-    name:  eureka-server
+    name:  registry
 
 server:
-  port: 1001
+  port: 8090
 eureka:
   instance:
-    hostname: localhost
+    hostname: 0.0.0.0 # ip
   client:
     register-with-eureka: false
-    fetch-registry: false
+    fetch-registry:  false
