@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "../axios";
 
 export default class ZhihuActivity extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ export default class ZhihuActivity extends Component {
       excerpt: "",
       question: "",
       date: null,
-    }
+    };
     this.getAnswer = this.getAnswer.bind(this);
   }
 
@@ -32,7 +32,7 @@ export default class ZhihuActivity extends Component {
           id: this.props.id,
           target_id: this.props.target_id,
           type: this.props.type,
-        })
+        });
         break;
       }
       case "FOLLOW_TOPIC":
@@ -40,18 +40,21 @@ export default class ZhihuActivity extends Component {
         break;
     }
   }
+  server = "http://18.166.111.161"
+  port = "8000/zhihu"
   async getAnswer(id) {
     var answer;
-    await axios.get("http://18.166.111.161:8090/answer?id=" + encodeURI(id))
+    await axios
+      .get(this.server + ":" + this.port + "/answer?id=" + encodeURI(id))
       .then(function (response) {
         console.log(response);
         answer = response.data;
-      })
+      });
     this.setState({
       excerpt: answer.excerpt,
       question: answer.question.excerpt,
-      isvalid: true
-    })
+      isvalid: true,
+    });
   }
 
   render() {
@@ -64,7 +67,7 @@ export default class ZhihuActivity extends Component {
           <td>{this.state.target_id}</td>
           <td>{this.state.created_time}</td>
         </tr>
-      )
+      );
     else return null;
   }
 }

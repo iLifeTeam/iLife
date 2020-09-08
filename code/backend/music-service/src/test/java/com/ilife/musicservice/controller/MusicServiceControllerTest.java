@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -104,10 +105,43 @@ class MusicServiceControllerTest {
 
     @Test
     @WithMockUser(roles="USER")
-    public void getFaovorSingers() throws Exception {
-        MvcResult result = mockMvc.perform(post("/music/getFavorSingers")
+    public void getId() throws Exception {
+        MvcResult result = mockMvc.perform(post("/music/getid")
                 .param("ph", "18679480337")
                 .param("pw", "Xiong0608")
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    @WithMockUser(roles="USER")
+    public void getFaovorSingers() throws Exception {
+        MvcResult result = mockMvc.perform(post("/music/getFavorSingers")
+                .param("uid", "562690552")
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    @WithMockUser(roles="USER")
+    public void getSimiSongs() throws Exception {
+        MvcResult result = mockMvc.perform(get("/music/getSimiSongs")
+                .param("mid", "88926")
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    @WithMockUser(roles="USER")
+    public void getImg() throws Exception {
+        MvcResult result = mockMvc.perform(get("/music/getSongImage")
+                .param("mid", "88926")
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andReturn();

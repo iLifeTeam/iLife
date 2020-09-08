@@ -1,0 +1,39 @@
+version: '3.2'
+
+services:
+    config-server:
+        image: ilife2020/config-server
+        ports:
+            - "8888:8888"
+        deploy:
+            restart_policy:
+                condition: on-failure
+    registry:
+        image: ilife2020/registry
+        ports:
+            - "1001:8090"
+        hostname: registry
+        deploy:
+            restart_policy:
+                condition: on-failure
+    gateway:
+        image: ilife2020/gateway
+        ports:
+            - "8000:8090"
+        deploy:
+            restart_policy:
+                condition: on-failure
+    redis: 
+        image: redis
+        ports:
+            - "6379:6379"
+        deploy:
+            restart_policy:
+                condition: on-failure
+    auth:
+        image: ilife2020/auth-service
+        ports:
+            - "8686:8080"
+        deploy:
+            restart_policy:
+                condition: on-failure

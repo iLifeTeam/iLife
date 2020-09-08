@@ -47,7 +47,7 @@ public class WeiboServiceImplTest {
 
     @Before
     public void before() throws Exception {
-        User user = new User(123L, "david", 100, 200, 300, "", "man", "home", "patient", "kinderGarden", "home");
+        User user = new User(123L, "david", 100, 200, 300, "", "man", "home", "patient", "kinderGarden", "home","shit");
         userDao.save(user);
         for (int i = 0; i < 10; ++i) {
             Weibo weibo = new Weibo("sE2Rhe7epn" + i, 123L, "today is a good day", "home", 100 * i, 200 * i, 300 * i, new Timestamp(new Date().getTime()));

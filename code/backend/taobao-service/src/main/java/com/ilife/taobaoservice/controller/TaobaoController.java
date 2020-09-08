@@ -112,16 +112,26 @@ public class TaobaoController {
         Stats stats = taobaoService.getStats(user);
         return ResponseEntity.ok().body(stats);
     }
+//
+//    @ApiOperation(notes = "get user's statistics", value = "", httpMethod = "GET")
+//    @GetMapping(value = "/stats/between", produces = "application/json")
+//    @PreAuthorize("hasRole('ROLE_USER')")
+//    public ResponseEntity<?> getUserStatisticsBetween(@RequestParam String username, @RequestParam Date low, @RequestParam Date high ){
+//        User user = taobaoService.getUserByUsername(username);
+//        Stats stats = taobaoService.getStats(user);
+//        return ResponseEntity.ok().body(stats);
+//    }
 
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public class UpdateCate extends Thread {
-        private User user;
-        @Override
-        public void run() {
-            analyzeService.updateCategory(user);
-        }
-    }
+
+//    @AllArgsConstructor
+//    @NoArgsConstructor
+//    public class UpdateCate extends Thread {
+//        private User user;
+//        @Override
+//        public void run() {
+//            analyzeService.updateCategory(user);
+//        }
+//    }
 
     @ApiOperation(notes = "get user's statistics", value = "", httpMethod = "GET")
     @PostMapping(value = "/stats/category/update", produces = "application/json")

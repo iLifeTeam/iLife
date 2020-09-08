@@ -1,6 +1,7 @@
 from flask import Flask, request
-import os
+import os, json
 from flask_cors import CORS
+from douban_crawler.crawler_rcmd import main
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": ["http://49.234.125.131", "http://localhost:3000"]}})
@@ -26,9 +27,30 @@ def login():
         print(command)
         os.system(command)
         return "0"
-    except TypeError:
-        print("TypeError")
-        return "TypeError"
+    except AttributeError:
+        print("AttributeError occurs!Please check the crawler status.")
+        return "Error"
+
+
+@app.route('/douban/crawlRcmd', methods=['POST'])
+def recommendation():
+    try:
+        data = request.get_data()
+        json_data = json.loads(data.decode("utf-8"))
+        print(json_data)
+        bookTagList = json_data.get('bookTagList')
+        preAuthor = json_data.get('preAuthor')
+        movieTagList = json_data.get('movieTagList')
+        musicTag = json_data.get('preAuthor')
+        gameTag = json_data.get('preAuthor')
+        attitude = json_data.get('attitude')
+        hashTag = json_data.get('hashTag')
+        tag =main(bookTagList, preAuthor, movieTagList, musicTag, gameTag, attitude,hashTag)
+        print(tag)
+        return tag
+    except AttributeError or TypeError:
+        print("TypeError or AttributeError")
+        return "Error"
 
 
 if __name__ == "__main__":

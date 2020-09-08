@@ -30,13 +30,7 @@ public interface HistoryRepository extends JpaRepository<history,Long> {
             "where mid = ?1\n" +
             "GROUP BY tag_name\n" +
             ") as T\n" +
-            "where times in (SELECT MAX(times)\n" +
-            "from (\n" +
-            "select tag_name,COUNT(tag_name) as times\n" +
-            "from video NATURAL join history\n" +
-            "where mid = ?1\n" +
-            "GROUP BY tag_name\n" +
-            ") as w)",nativeQuery = true)
+            "where times >= 5",nativeQuery = true)
     List<String> getFavoriteTag(Long id);
 
 
@@ -47,13 +41,7 @@ public interface HistoryRepository extends JpaRepository<history,Long> {
             "where mid = ?1\n" +
             "GROUP BY auther_id\n" +
             ") as T\n" +
-            "where times in (SELECT MAX(times)\n" +
-            "from (\n" +
-            "select auther_id,COUNT(auther_id) as times\n" +
-            "from video NATURAL join history\n" +
-            "where mid = ?1\n" +
-            "GROUP BY auther_id\n" +
-            ") as w)",nativeQuery = true)
+            "where times >= 5",nativeQuery = true)
     List<Long> getFavoriteUp(Long id);
 
 

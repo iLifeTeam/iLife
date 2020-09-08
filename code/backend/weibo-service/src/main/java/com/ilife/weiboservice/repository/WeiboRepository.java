@@ -1,6 +1,8 @@
 package com.ilife.weiboservice.repository;
 
 import com.ilife.weiboservice.entity.Weibo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -13,8 +15,9 @@ public interface WeiboRepository extends CrudRepository<Weibo, String> {
 
 
     Weibo findAllById(String id);
-
     List<Weibo> findAllByUid(Long uid);
+    Page<Weibo> findAllByUid(Long uid, Pageable p);
+
 
     @Transactional
     @Modifying

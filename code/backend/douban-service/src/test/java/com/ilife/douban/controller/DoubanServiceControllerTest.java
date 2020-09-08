@@ -159,7 +159,7 @@ public class DoubanServiceControllerTest {
     }
 
     /**
-     * Method: getMovies(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid)
+     * Method: getBookStats(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid)
      */
     @Test
     public void testGetBookStats() throws Exception {
@@ -174,7 +174,7 @@ public class DoubanServiceControllerTest {
     }
 
     /**
-     * Method: getMovies(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid)
+     * Method: getRefParameter(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid)
      */
     @Test
     public void testGetRefParameter() throws Exception {

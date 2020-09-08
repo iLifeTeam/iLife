@@ -45,7 +45,8 @@ app.get('/login/sms/fetch',async function (req, res) {
         browser.close()
         browsers.delete(phone)
     }
-    browser = await crawler.newBrowser(HEADLESS)
+    const browser = await crawler.newBrowser(HEADLESS)
+    console.log("new browser\n")
     fs.readFile(filename,async(err, data) => {
             if (err) {
                 console.log(err)
@@ -56,6 +57,7 @@ app.get('/login/sms/fetch',async function (req, res) {
                     browser: browser,
                     page: page
                 })
+                console.log("sms sent, browser saved\n")
                 // fs.writeFile(filename,JSON.stringify(cookies),err => {if (err) {console.log(err)}})
                 res.send("success")
             } else {
@@ -69,11 +71,13 @@ app.get('/login/sms/fetch',async function (req, res) {
                         browser: browser,
                         page: page
                     })
+                    console.log("login expired, sms sent, browser saved\n")
                     // fs.writeFile(filename,JSON.stringify(cookies),err => {if (err) {console.log(err)}})
                     res.send("success")
                 }else {
                     browser.close()
                     browsers.delete(phone)
+                    console.log("already login")
                     res.send("already login")
                 }
             }
@@ -86,13 +90,17 @@ app.get('/login/sms',async function (req, res) {
     const filename = "./cookies/" + phone + ".cookie"
     const {browser,page} = browsers.get(phone)
     if (browser == null) {
+        console.log(" null browser open, get sms first\n")
         res.send("error, get sms first")
         return
     }
     const cookies = await crawler.login(page,phone,code)
+
+    console.log("login done for ",phone ," browser closed.\n")
     browser.close()
     browsers.delete(phone)
     fs.writeFile(filename,JSON.stringify(cookies),err => {if (err) {console.log(err)}})
+    console.log("sms send, cookies stored for ",phone ," return.\n")
     res.send("success")
 })
 // const login = async (browser,username, password) => {

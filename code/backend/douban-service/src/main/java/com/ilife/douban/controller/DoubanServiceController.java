@@ -15,7 +15,7 @@ import java.util.Map;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin("*")
 @RestController
 @Api(tags = {"Douban Service Controller"}, description = "Everything about auth & CRUD of iLife User")
 public class DoubanServiceController {
@@ -24,7 +24,7 @@ public class DoubanServiceController {
 
     @ApiOperation(notes = "Get user info by userID", value = "get user info by id", httpMethod = "GET")
     @GetMapping(path = "/douban/getById")
-//    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public User getUserById(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
         System.out.println("********** getUserById **********");
         return userService.findById(uid);
@@ -120,7 +120,7 @@ public class DoubanServiceController {
 
     @ApiOperation(notes = "Get Stored Recommendation by userID", value = "get recommendation", httpMethod = "GET")
     @GetMapping(path = "/douban/getStoredRcmd")
-//    @PreAuthorize("hasRole('ROLE_USER')")
+ //   @PreAuthorize("hasRole('ROLE_USER')")
     public Recommendation getStoredRcmd(@ApiParam(name = "userId", value = "The user ID of a douban user") @RequestParam("userId") String uid) {
         System.out.println("********** getRecommendation**********");
         return userService.getStoredRcmd(uid);

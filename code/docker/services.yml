@@ -1,0 +1,36 @@
+version: '3.2'
+
+services:
+    taobao-service:
+        image: ilife2020/tb-service
+        ports: 
+            - "8095:8090"
+        deploy:
+            restart_policy:
+                condition: on-failure
+    zhihu-service:
+        image: ilife2020/zhihu-service
+        ports:
+            - "8094:8090"
+        deploy:
+            restart_policy:
+                condition: on-failure
+    jingdong-service:
+        image: ilife2020/jd-service
+        ports: 
+            - "8096:8090"
+        deploy:
+            restart_policy:
+                condition: on-failure
+    # douban-service:
+    #     image: ilife2020/douban-service
+    #     ports:
+    #         - "8383:8080"
+    bilibili-service:
+        image: ilife2020/bili-service:V5
+        ports:
+            - "8848:8848"
+    music-service:
+        image: ilife2020/music-service:V3
+        ports:
+            - "8808:8808"

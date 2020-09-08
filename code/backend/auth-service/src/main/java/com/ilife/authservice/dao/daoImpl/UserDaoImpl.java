@@ -7,6 +7,8 @@ import com.ilife.authservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import static java.lang.Long.parseLong;
+
 @Repository
 public class UserDaoImpl implements UserDao {
 
@@ -60,7 +62,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int updateBiliId(Long id, String biliId){
-        return userRepository.updateBiliId(id, biliId);
+        return userRepository.updateBiliId(id, parseLong(biliId));
     }
 
     @Override

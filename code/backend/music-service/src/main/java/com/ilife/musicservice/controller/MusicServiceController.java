@@ -37,12 +37,14 @@ public class MusicServiceController {
         if (uid == -1) return null;
         Pageable pageable = PageRequest.of(page, size);
         Page<wyyuser> t = wyyhistoryService.findAllbyid(uid, pageable);
-        if (t.isEmpty() == true) {
-            if (t.getTotalPages() >= (page + 1)) {
-                netEaseCrawler.crawlbyid(netEaseCrawler.getuid(ph,pw));
-            }
-            return wyyhistoryService.findAllbyid(uid, pageable);
-        } else return t;
+//        if (t.isEmpty() == true) {
+//            if (t.getTotalPages() >= (page + 1)) {
+//                netEaseCrawler.crawlbyid(netEaseCrawler.getuid(ph,pw));
+//            }
+//            return wyyhistoryService.findAllbyid(uid, pageable);
+//        }
+//        else
+            return t;
     }
 
 
@@ -73,12 +75,14 @@ public class MusicServiceController {
         Long uid = id.longValue();
         Pageable pageable = PageRequest.of(page, size);
         Page<wyyuser> t = wyyhistoryService.findAllbyid(uid, pageable);
-        if (t.isEmpty() == true) {
-            if (t.getTotalPages() >= (page + 1)) {
-                netEaseCrawler.crawlbyid(id);
-            }
-            return wyyhistoryService.findAllbyid(uid, pageable);
-        } else return t;
+//        if (t.isEmpty() == true) {
+//            if (t.getTotalPages() >= (page + 1)) {
+//                netEaseCrawler.crawlbyid(id);
+//            }
+//            return wyyhistoryService.findAllbyid(uid, pageable);
+//        }
+//        else
+            return t;
     }
 
 
@@ -103,12 +107,20 @@ public class MusicServiceController {
 
     @PostMapping("/music/getFavorSingers")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public JSONArray getFavorSingers(@RequestParam String ph, String pw) {
-        long uid = netEaseCrawler.getuid(ph, pw);
-        if (uid == -1) return null;
-//        wyyhistoryService.deletebyid(uid);
-
+    public JSONArray getFavorSingers(@RequestParam Long uid) {
         return wyyhistoryService.getFavorSingers(uid);
+    }
+
+    @GetMapping("/music/getSimiSongs")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public JSONArray getSimiSongs(@RequestParam Long mid) {
+        return netEaseCrawler.getsimiSongs(mid);
+    }
+
+    @GetMapping("/music/getSongImage")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public String getImageBySid(@RequestParam Long mid) {
+        return netEaseCrawler.getimage(mid);
     }
 
 }
