@@ -37,7 +37,7 @@ public class UserServiceImplTest {
 
     @Before
     public void before() throws Exception {
-        User user = new User(123L, "david", 100, 200, 300, "", "man", "home", "patient", "kinderGarden", "home");
+        User user = new User(123L, "david", 100, 200, 300, "", "man", "home", "patient", "kinderGarden", "home","elike");
         try {
             userDao.save(user);
         } catch (Exception e1) {

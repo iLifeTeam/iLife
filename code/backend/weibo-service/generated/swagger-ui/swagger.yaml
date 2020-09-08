@@ -117,6 +117,35 @@ paths:
             type: "object"
         501:
           description: "userId not exists"
+  /weibo/getPages:
+    get:
+      tags:
+      - "pet"
+      summary: "get one user's Weibos"
+      description: "Get part of Weibos from database of one user specified by userID"
+      operationId: "getPages"
+      parameters:
+      - name: "userId"
+        in: "query"
+        description: "The user ID of a WeiBo user,should be a Long Integer"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "page"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "size"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PageWeibo"
   /weibo/getStats:
     get:
       tags:
@@ -186,6 +215,97 @@ paths:
             items:
               $ref: "#/definitions/Weibo"
 definitions:
+  Page:
+    type: "object"
+    properties:
+      totalPages:
+        type: "integer"
+        format: "int32"
+      totalElements:
+        type: "integer"
+        format: "int64"
+      number:
+        type: "integer"
+        format: "int32"
+      size:
+        type: "integer"
+        format: "int32"
+      content:
+        type: "array"
+        items:
+          type: "object"
+      sort:
+        $ref: "#/definitions/Sort"
+      first:
+        type: "boolean"
+      pageable:
+        $ref: "#/definitions/Pageable"
+      last:
+        type: "boolean"
+      numberOfElements:
+        type: "integer"
+        format: "int32"
+      empty:
+        type: "boolean"
+  PageWeibo:
+    type: "object"
+    properties:
+      totalPages:
+        type: "integer"
+        format: "int32"
+      totalElements:
+        type: "integer"
+        format: "int64"
+      number:
+        type: "integer"
+        format: "int32"
+      size:
+        type: "integer"
+        format: "int32"
+      content:
+        type: "array"
+        items:
+          $ref: "#/definitions/Weibo"
+      sort:
+        $ref: "#/definitions/Sort"
+      first:
+        type: "boolean"
+      pageable:
+        $ref: "#/definitions/Pageable"
+      last:
+        type: "boolean"
+      numberOfElements:
+        type: "integer"
+        format: "int32"
+      empty:
+        type: "boolean"
+  Pageable:
+    type: "object"
+    properties:
+      offset:
+        type: "integer"
+        format: "int64"
+      sort:
+        $ref: "#/definitions/Sort"
+      pageNumber:
+        type: "integer"
+        format: "int32"
+      paged:
+        type: "boolean"
+      unpaged:
+        type: "boolean"
+      pageSize:
+        type: "integer"
+        format: "int32"
+  Sort:
+    type: "object"
+    properties:
+      sorted:
+        type: "boolean"
+      unsorted:
+        type: "boolean"
+      empty:
+        type: "boolean"
   Statistics:
     type: "object"
     properties:
@@ -262,6 +382,8 @@ definitions:
       education:
         type: "string"
       work:
+        type: "string"
+      avatar:
         type: "string"
   Weibo:
     type: "object"

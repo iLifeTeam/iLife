@@ -7,6 +7,8 @@ import com.ilife.weiboservice.entity.Weibo;
 import com.ilife.weiboservice.service.WeiboService;
 import org.assertj.core.error.ShouldBeAfterYear;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,10 @@ public class WeiboServiceImpl implements WeiboService {
         return weiboDao.findAllByUid(uid);
     }
 
+    @Override
+    public Page<Weibo> findPagesByUid(Long uid, Pageable p){
+        return weiboDao.findPagesByUid(uid,p);
+    }
     @Override
     public ResponseEntity<?> deleteByUid(Long uid) {
         if (userDao.findAllById(uid) == null) {
