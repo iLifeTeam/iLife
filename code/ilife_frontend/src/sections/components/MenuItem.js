@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
-export default class MenuItem extends Component {
+class MenuItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -9,11 +9,11 @@ export default class MenuItem extends Component {
       itemName: "支付宝",
       childItems: [{
         name: "账单信息",
-        url: "/bills"
+        url: "bills"
       },
       {
         name: "趋势分析",
-        url: "/analyse"
+        url: "analyse"
       }
       ]
     }
@@ -26,6 +26,26 @@ export default class MenuItem extends Component {
         itemName: this.props.itemName,
         childItems: this.props.childItems
       });
+  }
+
+  router(childitem) {
+    if (window.location.href.toLowerCase().match(this.state.itemURL)) {
+      this.props.history.push(this.state.itemURL + "#" + childitem.id);
+      //console.log(childitem.id)
+      let anchorElement = document.getElementById(childitem.id);
+      //console.log(anchorElement);
+      if (anchorElement) {
+        anchorElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    else {
+      this.props.history.push(this.state.itemURL + "#" + childitem.id);
+      let anchorElement = document.getElementById(childitem.id);
+      //console.log(anchorElement);
+      if (anchorElement) {
+        anchorElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   }
 
   render() {
@@ -41,7 +61,7 @@ export default class MenuItem extends Component {
         {childItems === undefined ? null :
           <ul className="treeview-menu">
             {childItems.map((childItem, index) => (
-              <li key={index}><Link to={this.state.itemURL + childItem.url}><i className="fa fa-circle-o" />{childItem.name}</ Link></li>
+              <li key={index}><a onClick={() => this.router(childItem)}><i className="fa fa-circle-o" />{childItem.name}</a></li>
             ))}
           </ul>
         }
@@ -49,3 +69,5 @@ export default class MenuItem extends Component {
     )
   }
 }
+
+export default withRouter(MenuItem);

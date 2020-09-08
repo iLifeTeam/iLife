@@ -25,7 +25,7 @@ export default class WyyHistory extends Component {
       var table = $('#example0').DataTable()
       table.clear();
       //向table中添加数据
-      table.rows.add(this.props.histories ? this.props.histories : null);
+      table.rows.add(this.props.histories);
       //重新绘画表格
       table.draw();
       /*
